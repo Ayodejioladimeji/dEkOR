@@ -1,0 +1,49 @@
+*,
+:after,
+:before {
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+:focus,
+input:focus,
+select:focus,
+textarea:focus,
+button:focus,
+.btn:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+textarea {
+  resize: none;
+}
+
+ul,
+li {
+  list-style-type: none;
+}
+
+body {
+  font-size: 16px;
+  font-family: $primary-font;
+  -moz-osx-font-smoothing: grayscale !important;
+  -webkit-font-smoothing: antialiased !important;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: #e1e6ef;
+    border-radius: 10px;
+    margin-left: 5px;
+  }
+}
