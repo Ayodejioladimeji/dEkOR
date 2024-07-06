@@ -114,12 +114,14 @@ const Hero = (props: Props) => {
       </div>
 
       <div className="marquee">
-        {/* @ts-ignore */}
-        <marquee>
-          CHECK OUT OUR TOP DEALS FOR THE DAY!!!! 5% DISCOUNT FOR ALL SPECIFIED
-          PRODUCT!!!!
+        <div className="container">
           {/* @ts-ignore */}
-        </marquee>
+          <marquee>
+            CHECK OUT OUR TOP DEALS FOR THE DAY!!!! 5% DISCOUNT FOR ALL
+            SPECIFIED PRODUCT!!!!
+            {/* @ts-ignore */}
+          </marquee>
+        </div>
       </div>
     </div>
   );

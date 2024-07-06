@@ -5,6 +5,7 @@ import Navbar from "react-bootstrap/Navbar";
 import { Cart, Heart, Logo, Profile, Search } from "../../public/assets";
 import { useContext } from "react";
 import { DataContext } from "@/store/GlobalState";
+import Link from "next/link";
 
 //
 
@@ -29,47 +30,47 @@ function Header() {
           <ul className="navbar-nav nav-top ms-auto">
             <Nav>
               <li className="nav-item">
-                <a
+                <Link
                   className={`nav-link ${
                     router.pathname === "/" ? "active" : ""
                   }`}
                   href="/"
                 >
                   Home
-                </a>
+                </Link>
               </li>
 
               <li className="nav-item">
-                <a
+                <Link
                   className={`nav-link ${
                     router.pathname === "/about" ? "active" : ""
                   }`}
                   href="#"
                 >
                   About
-                </a>
+                </Link>
               </li>
 
               <li className="nav-item">
-                <a
+                <Link
                   className={`nav-link ${
                     router.pathname === "/contact" ? "active" : ""
                   }`}
                   href="#"
                 >
                   Contact
-                </a>
+                </Link>
               </li>
 
               <li className="nav-item">
-                <a
+                <Link
                   className={`nav-link ${
                     router.pathname === "/categories" ? "active" : ""
                   }`}
                   href="#"
                 >
                   Categories
-                </a>
+                </Link>
               </li>
             </Nav>
           </ul>

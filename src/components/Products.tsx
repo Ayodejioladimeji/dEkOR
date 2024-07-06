@@ -31,7 +31,7 @@ const Products = (props: Props) => {
           ) : (
             <>
               {products?.map((item: any) => {
-                return <Productcard {...item} />;
+                return <Productcard {...item} key={item.id} />;
               })}
             </>
           )}
