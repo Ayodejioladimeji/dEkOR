@@ -33,7 +33,7 @@ function Header() {
                   className={`nav-link ${
                     router.pathname === "/" ? "active" : ""
                   }`}
-                  href="/about-us"
+                  href="/"
                 >
                   Home
                 </a>
@@ -44,7 +44,7 @@ function Header() {
                   className={`nav-link ${
                     router.pathname === "/about" ? "active" : ""
                   }`}
-                  href="/advertise"
+                  href="#"
                 >
                   About
                 </a>
@@ -55,7 +55,7 @@ function Header() {
                   className={`nav-link ${
                     router.pathname === "/contact" ? "active" : ""
                   }`}
-                  href="/howto"
+                  href="#"
                 >
                   Contact
                 </a>
@@ -66,7 +66,7 @@ function Header() {
                   className={`nav-link ${
                     router.pathname === "/categories" ? "active" : ""
                   }`}
-                  href="/contact"
+                  href="#"
                 >
                   Categories
                 </a>

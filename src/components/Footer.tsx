@@ -16,10 +16,10 @@ const Footer = () => {
 
             <ul>
               <li>
-                <Link href="/about">About</Link>
+                <Link href="#">About</Link>
               </li>
               <li>
-                <Link href="/contact">Contact Us</Link>
+                <Link href="#">Contact Us</Link>
               </li>
             </ul>
           </div>
@@ -29,10 +29,10 @@ const Footer = () => {
 
             <ul>
               <li>
-                <Link href="/about-us">Terms</Link>
+                <Link href="#">Terms</Link>
               </li>
               <li>
-                <Link href="/howto">Privacy</Link>
+                <Link href="#">Privacy</Link>
               </li>
             </ul>
           </div>
@@ -42,19 +42,19 @@ const Footer = () => {
 
             <ul>
               <li>
-                <Link href="/faqs">Categories</Link>
+                <Link href="#">Categories</Link>
               </li>
               <li>
-                <Link href="/terms">New Products</Link>
+                <Link href="#">New Products</Link>
               </li>
               <li>
-                <Link href="/privacy">Top Deals</Link>
+                <Link href="#">Top Deals</Link>
               </li>
               <li>
-                <Link href="/privacy">Subscription</Link>
+                <Link href="#">Subscription</Link>
               </li>
               <li>
-                <Link href="/privacy">Our Furniture Makers</Link>
+                <Link href="#">Our Furniture Makers</Link>
               </li>
             </ul>
           </div>
@@ -64,16 +64,16 @@ const Footer = () => {
 
             <ul>
               <li>
-                <Link href="/faqs">Delivery Information</Link>
+                <Link href="#">Delivery Information</Link>
               </li>
               <li>
-                <Link href="/terms">Shipping</Link>
+                <Link href="#">Shipping</Link>
               </li>
               <li>
-                <Link href="/privacy">Help and Support</Link>
+                <Link href="#">Help and Support</Link>
               </li>
               <li>
-                <Link href="/privacy">FAQs</Link>
+                <Link href="#">FAQs</Link>
               </li>
             </ul>
           </div>
@@ -85,42 +85,6 @@ const Footer = () => {
               © {new Date().getFullYear()} dEKOR e-commerce
             </span>
           </div>
-
-          {/* <div className="col-sm-6 icon-box">
-            <div className="footer-icons">
-              <a
-                href="https://www.facebook.com/profile.php?id=100085724386292&mibextid=ZbWKwL"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <i className="bi bi-facebook"></i>
-              </a>
-
-              <a
-                href="https://www.instagram.com/invites/contact/?i=1pqlgg45pg0nl&utm_content=pldblyb"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <i className="bi bi-instagram"></i>
-              </a>
-
-              <a
-                href="https://twitter.com/Hapartment11?t=cmOAR5aAypWeGzbLvebt-A&s=09"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <i className="bi bi-twitter"></i>
-              </a>
-
-              <a
-                href="https://www.linkedin.com/in/hapartment-rentals"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <i className="bi bi-linkedin"></i>
-              </a>
-            </div>
-          </div> */}
         </div>
       </div>
     </footer>
