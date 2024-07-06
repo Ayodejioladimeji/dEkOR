@@ -31,6 +31,10 @@
       @include body-text(20px, 600, $text-color);
       background: none;
       border: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
     }
   }
 }
