@@ -1,5 +1,5 @@
 .hero {
-  height: 110vh;
+  height: 115vh;
   background: $primary-color;
   width: 100%;
 
@@ -45,16 +45,16 @@
         left: 50%;
         top: 50%;
         text-align: center;
-        width: 1000px;
+        width: 850px;
         z-index: 2;
 
         h1 {
-          @include heading(74px, 600, $white);
+          @include heading(64px, 600, $white);
           margin-bottom: 40px;
         }
 
         p {
-          @include body-text(36px, 400, $white);
+          @include body-text(24px, 400, $white);
           margin-bottom: 60px;
           line-height: 45px;
         }
@@ -63,18 +63,18 @@
           @include buttons($button-color);
           margin: 0 auto;
           color: $white;
-          padding: 30px 50px;
+          padding: 25px 50px;
           border-radius: 20px;
           font-weight: 600;
-          font-size: 30px;
+          font-size: 20px;
         }
       }
     }
   }
 
   .marquee {
-    @include body-text(24px, 600, $white);
-    height: 10vh;
+    @include body-text(20px, 600, $white);
+    height: 15vh;
     display: flex;
     align-items: center;
     justify-content: center;

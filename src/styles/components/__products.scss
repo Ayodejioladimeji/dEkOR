@@ -1,8 +1,7 @@
 .products {
-  height: 100vh;
-  background: $white;
+  background: $secondary-color;
   width: 100%;
-  padding: 100px 0;
+  padding: 80px 0;
 
   header {
     h1 {
@@ -13,7 +12,19 @@
 
   .product-box {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 30px;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 30px;
+    row-gap: 60px;
+  }
+
+  .view-all {
+    @include buttons($primary-color);
+    margin: 80px auto 0 auto;
+    padding: 20px 30px;
+    width: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $white;
   }
 }

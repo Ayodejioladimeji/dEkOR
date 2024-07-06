@@ -1,43 +1,44 @@
 import CardSkeleton from "@/common/cardskeleton";
 import Productcard from "@/common/productcard";
-import { Product } from "@/typings/typings";
 import React, { useEffect, useState } from "react";
+import Heading from "./Heading";
+import { data } from "@/constants/data";
 
 interface Props {}
 
 const Products = (props: Props) => {
-  const [products, setProducts] = useState<Product[] | null>(null);
+  const [products, setProducts] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   //
   useEffect(() => {
-    const product: any = Array.from({ length: 8 }, (_, index) => ({
-      key: String(index),
-      value: `Item ${index + 1}`,
-    }));
-    setProducts(product);
-    setLoading(false);
+    // to show the product card skeletal loader, i will delay the products
+    setTimeout(() => {
+      setProducts(data);
+      setLoading(false);
+    }, 1000);
   }, []);
 
   //
   return (
-    <div className="container">
-      <div className="products">
-        <header>
-          <h1>Products</h1>
-        </header>
+    <div className="products">
+      <div className="container">
+        <Heading title="Products" />
 
         <div className="product-box">
-          {!loading ? (
+          {loading ? (
             <CardSkeleton length={8} />
           ) : (
             <>
-              {products?.map((item) => {
-                return <Productcard />;
+              {products?.map((item: any) => {
+                return <Productcard {...item} />;
               })}
             </>
           )}
         </div>
+
+        {/* view all button */}
+        <button className="view-all">View All</button>
       </div>
     </div>
   );
