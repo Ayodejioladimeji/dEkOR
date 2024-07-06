@@ -1,25 +1,10 @@
-import CardSkeleton from "@/common/cardskeleton";
-import Productcard from "@/common/productcard";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Heading from "./Heading";
-import { data } from "@/constants/data";
 import Image from "next/image";
 
 interface Props {}
 
 const Categories = (props: Props) => {
-  const [products, setProducts] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
-
-  //
-  useEffect(() => {
-    // to show the product card skeletal loader, i will delay the products
-    setTimeout(() => {
-      setProducts(data);
-      setLoading(false);
-    }, 1000);
-  }, []);
-
   //
   return (
     <div className="categories">
@@ -51,7 +36,7 @@ const Categories = (props: Props) => {
                   height={100}
                   unoptimized
                 />
-                <div className="content">Flower vases</div>
+                <div className="content">Lightning</div>
               </div>
               <div className="image-box">
                 <Image
@@ -61,7 +46,7 @@ const Categories = (props: Props) => {
                   height={100}
                   unoptimized
                 />
-                <div className="content">Flower vases</div>
+                <div className="content">Curtains</div>
               </div>
 
               <div className="image-box">
@@ -72,7 +57,7 @@ const Categories = (props: Props) => {
                   height={100}
                   unoptimized
                 />
-                <div className="content">Flower vases</div>
+                <div className="content">Furniture</div>
               </div>
               <div className="image-box">
                 <Image
@@ -82,7 +67,7 @@ const Categories = (props: Props) => {
                   height={100}
                   unoptimized
                 />
-                <div className="content">Flower vases</div>
+                <div className="content">Ceramics</div>
               </div>
             </div>
           </div>

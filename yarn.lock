@@ -3182,6 +3182,7 @@ __metadata:
     react-loader-spinner: ^6.1.6
     react-loading-skeleton: ^3.4.0
     sass: ^1.77.6
+    swiper: ^11.1.4
     typescript: ^5
     uuid: ^10.0.0
   languageName: unknown
@@ -3869,6 +3870,13 @@ __metadata:
   version: 1.0.0
   resolution: "supports-preserve-symlinks-flag@npm:1.0.0"
   checksum: 53b1e247e68e05db7b3808b99b892bd36fb096e6fba213a06da7fab22045e97597db425c724f2bbd6c99a3c295e1e73f3e4de78592289f38431049e1277ca0ae
+  languageName: node
+  linkType: hard
+
+"swiper@npm:^11.1.4":
+  version: 11.1.4
+  resolution: "swiper@npm:11.1.4"
+  checksum: 386ea824ae8ab3b1992c54f02c8593068c96203feb9da4c23e165a7277a539de7bba6f9d40adc068268ff06314443ca714d75348f5b20039e43b022f62e65f67
   languageName: node
   linkType: hard
 

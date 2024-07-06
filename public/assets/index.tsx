@@ -117,6 +117,7 @@ export const Search = () => {
     </svg>
   );
 };
+
 export const Heart = () => {
   return (
     <svg
@@ -130,6 +131,50 @@ export const Heart = () => {
         d="M12.62 20.81C12.28 20.93 11.72 20.93 11.38 20.81C8.48 19.82 2 15.69 2 8.69C2 5.6 4.49 3.1 7.56 3.1C9.38 3.1 10.99 3.98 12 5.34C13.01 3.98 14.63 3.1 16.44 3.1C19.51 3.1 22 5.6 22 8.69C22 15.69 15.52 19.82 12.62 20.81Z"
         stroke="#292D32"
         stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+};
+
+export const LeftArrow = () => {
+  return (
+    <svg
+      width="60"
+      height="60"
+      viewBox="0 0 60 60"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <rect width="60" height="60" rx="8" fill="black" fill-opacity="0.6" />
+      <path
+        d="M33.09 22.0799L26.57 28.5999C25.8 29.3699 25.8 30.6299 26.57 31.3999L33.09 37.9199"
+        stroke="white"
+        stroke-width="1.5"
+        stroke-miterlimit="10"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+};
+
+export const RightArrow = () => {
+  return (
+    <svg
+      width="60"
+      height="60"
+      viewBox="0 0 60 60"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <rect width="60" height="60" rx="8" fill="#27493E" />
+      <path
+        d="M26.91 37.9201L33.43 31.4001C34.2 30.6301 34.2 29.3701 33.43 28.6001L26.91 22.0801"
+        stroke="white"
+        stroke-width="1.5"
+        stroke-miterlimit="10"
         stroke-linecap="round"
         stroke-linejoin="round"
       />

@@ -1,0 +1,103 @@
+.top-deals {
+  background: $white;
+  width: 100%;
+  padding: 80px 0;
+
+  .top-deal-container {
+    position: relative;
+    padding: 0 80px;
+
+    .deals {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      position: relative;
+
+      .image-box {
+        width: 900px;
+        height: 518px;
+        border-radius: 40px;
+        overflow: hidden;
+        position: relative;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+
+        .discount {
+          position: absolute;
+          @include body-text(24px, 600, $white);
+          right: 0;
+          top: 0;
+          height: 83px;
+          width: 95px;
+          background: $primary-color;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+
+      h3 {
+        @include heading(28px, 500, $text-color);
+        margin-bottom: 12px;
+        margin-top: 40px;
+      }
+
+      p {
+        @include body-text(24px, 700, $text-color);
+        margin-bottom: 20px;
+      }
+
+      .count-down {
+        display: flex;
+        align-items: center;
+        column-gap: 10px;
+        justify-content: center;
+        font-size: 14px;
+        font-weight: 600;
+
+        .count {
+          height: 70px;
+          width: 70px;
+          border-radius: 10px;
+          background: $primary-color;
+          color: $white;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+        }
+      }
+    }
+
+    .left-arrow {
+      position: absolute;
+      left: 0;
+      top: 25%;
+    }
+
+    .right-arrow {
+      position: absolute;
+      right: 0;
+      top: 25%;
+    }
+  }
+
+  .view-all {
+    @include buttons(transparent);
+    margin: 80px auto 0 auto;
+    padding: 20px 30px;
+    width: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $primary-color;
+    font-size: 24px;
+    border: 1px solid $primary-color;
+  }
+}

@@ -21,10 +21,6 @@ footer {
           transition: $transitions;
           border: none !important;
           text-decoration: none;
-
-          &:hover {
-            color: $primary-color;
-          }
         }
       }
     }
