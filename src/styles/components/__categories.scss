@@ -17,7 +17,7 @@
 
     .content {
       @include body-text(24px, 500, $white);
-      background: #1010107c;
+      background: $light-color;
       display: flex;
       align-items: center;
       justify-content: center;

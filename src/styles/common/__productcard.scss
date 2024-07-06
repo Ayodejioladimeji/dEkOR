@@ -6,11 +6,35 @@
     margin-bottom: 20px;
     border-radius: 30px;
     overflow: hidden;
+    position: relative;
 
     img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+    }
+
+    .add-to-cart {
+      background: $light-color;
+      border: none;
+      width: 100%;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      bottom: 0;
+      transition: $transitions;
+      font-size: 24px;
+      color: $white;
+      transform: translateY(100%);
+      cursor: pointer;
+    }
+
+    &:hover {
+      .add-to-cart {
+        transform: translateY(0);
+      }
     }
   }
 

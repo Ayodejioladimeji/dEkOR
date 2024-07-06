@@ -2,6 +2,7 @@ import { data } from "@/constants/data";
 import { ACTIONS } from "@/store/Actions";
 import { DataContext } from "@/store/GlobalState";
 import cogoToast from "cogo-toast";
+import { useRouter } from "next/router";
 import React, { useContext } from "react";
 import { Image } from "react-bootstrap";
 
@@ -16,6 +17,7 @@ interface Props {
 
 const Productcard = (props: Props) => {
   const { state, dispatch } = useContext<any>(DataContext);
+  const router = useRouter();
 
   // add items to cart
   const addToCart = () => {
@@ -51,12 +53,18 @@ const Productcard = (props: Props) => {
           width={100}
           height={100}
         />
+
+        <button onClick={addToCart} className="add-to-cart">
+          Add to cart
+        </button>
       </div>
 
       <div className="product-content">
         <h3>{props?.title}</h3>
         <p>${props?.price}</p>
-        <button onClick={addToCart}>Shop Now</button>
+        <button onClick={() => router.push(`/product/${props?.id}`)}>
+          Shop Now
+        </button>
       </div>
     </div>
   );
