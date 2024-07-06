@@ -1,13 +1,47 @@
-import React from "react";
+import { data } from "@/constants/data";
+import { ACTIONS } from "@/store/Actions";
+import { DataContext } from "@/store/GlobalState";
+import cogoToast from "cogo-toast";
+import React, { useContext } from "react";
 import { Image } from "react-bootstrap";
 
 interface Props {
+  id: string;
   title: string;
   price: string;
   images: string[];
+  ratings: string;
+  category: string;
 }
 
 const Productcard = (props: Props) => {
+  const { state, dispatch } = useContext<any>(DataContext);
+
+  // add items to cart
+  const addToCart = () => {
+    // check if items is already added
+    const check = state?.cart.every((item) => {
+      return item.id !== props?.id;
+    });
+
+    if (check) {
+      const cartData = {
+        id: props?.id,
+        title: props?.title,
+        price: props?.price,
+        category: props?.category,
+        ratings: props?.ratings,
+        images: props?.images,
+        quantity: 1,
+      };
+
+      dispatch({ type: ACTIONS.CART, payload: cartData });
+    } else {
+      cogoToast.error("Item already added to your cart");
+    }
+  };
+
+  //
   return (
     <div className="product-card">
       <div className="product-image">
@@ -22,7 +56,7 @@ const Productcard = (props: Props) => {
       <div className="product-content">
         <h3>{props?.title}</h3>
         <p>${props?.price}</p>
-        <button>Shop Now</button>
+        <button onClick={addToCart}>Shop Now</button>
       </div>
     </div>
   );

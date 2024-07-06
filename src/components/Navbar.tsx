@@ -3,11 +3,16 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { Cart, Heart, Logo, Profile, Search } from "../../public/assets";
+import { useContext } from "react";
+import { DataContext } from "@/store/GlobalState";
 
 //
 
 function Header() {
   const router = useRouter();
+  const { state } = useContext(DataContext);
+
+  console.log(state?.cart);
 
   //
 
@@ -79,6 +84,7 @@ function Header() {
               </li>
               <li className="nav-item">
                 <Cart />
+                <div className="badge">{state?.cart?.length}</div>
               </li>
               <li className="nav-item">
                 <Profile />

@@ -9,6 +9,11 @@ const reducers = (state: any, action: any) => {
         ...state,
         toggle: payload,
       };
+    case ACTIONS.CART:
+      return {
+        ...state,
+        cart: [payload, ...state?.cart],
+      };
 
     default:
       return state;

@@ -19,6 +19,8 @@
 
     .nav-item {
       margin-right: 25px;
+      cursor: pointer;
+      position: relative;
 
       &:last-child {
         margin-right: 0;
@@ -41,6 +43,21 @@
       .active {
         color: $button-color;
         font-weight: 700;
+      }
+
+      .badge {
+        height: 20px;
+        max-width: 20px;
+        border-radius: 50%;
+        background: $primary-color;
+        color: $white;
+        position: absolute;
+        top: -12px;
+        right: -12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
       }
     }
 

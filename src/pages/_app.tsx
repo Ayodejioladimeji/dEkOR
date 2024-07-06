@@ -1,3 +1,4 @@
+import { DataProvider } from "@/store/GlobalState";
 import "@/styles/styles.scss";
 import type { AppProps } from "next/app";
 import Script from "next/script";
@@ -16,7 +17,9 @@ export default function App({ Component, pageProps }: AppProps) {
         crossOrigin="anonymous"
       ></Script>
 
-      <Component {...pageProps} />
+      <DataProvider>
+        <Component {...pageProps} />
+      </DataProvider>
     </>
   );
 }

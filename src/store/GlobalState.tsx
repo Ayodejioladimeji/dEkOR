@@ -3,6 +3,7 @@ import reducers from "./Reducers";
 
 type StateType = {
   toggle: boolean;
+  cart: any;
 };
 
 type ActionType = { type: string };
@@ -20,6 +21,7 @@ type DataProviderProps = {
 export const DataProvider = ({ children }: DataProviderProps) => {
   const initialState = {
     toggle: false,
+    cart: [],
   };
 
   const [state, dispatch] = useReducer(reducers, initialState);
