@@ -1,0 +1,19 @@
+.products {
+  height: 100vh;
+  background: $white;
+  width: 100%;
+  padding: 100px 0;
+
+  header {
+    h1 {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+  }
+
+  .product-box {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+  }
+}

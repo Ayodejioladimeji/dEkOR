@@ -1,0 +1,57 @@
+/* Navbar Styling */
+.navbar {
+  background: $white;
+
+  .navbar-brand {
+    border: none !important;
+  }
+
+  .navbar-nav {
+    @media (max-width: 992px) {
+      &:first-child {
+        margin-top: 20px;
+      }
+    }
+
+    &:last-child {
+      margin-top: 0;
+    }
+
+    .nav-item {
+      margin-right: 25px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+      .nav-link {
+        font-size: 24px;
+        border: none !important;
+        font-weight: 400;
+        cursor: pointer;
+
+        span {
+          &:focus {
+            outline: none !important;
+            box-shadow: none !important;
+            border: none !important;
+          }
+        }
+      }
+
+      .active {
+        color: $button-color;
+      }
+    }
+
+    .nav-login {
+      @media (max-width: 768px) {
+        flex-direction: column;
+      }
+    }
+  }
+
+  .navbar-toggler {
+    border: none !important;
+    color: $black;
+  }
+}

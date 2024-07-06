@@ -4,3 +4,12 @@
 @import "./global/__colors";
 @import "./global/_mixins";
 @import "./global/__resets";
+
+// components
+@import "./components/__navbar";
+@import "./components/__footer";
+@import "./components/__hero";
+@import "./components/__products";
+
+// common
+@import "./common/__productcard";

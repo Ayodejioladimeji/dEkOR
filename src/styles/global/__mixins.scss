@@ -9,14 +9,7 @@
   padding: 0;
   margin: 0;
   font-weight: $weight;
-
-  @if $size == 32px {
-    line-height: 41px;
-  }
-
-  @if $weight == bold {
-    font-weight: 700;
-  }
+  color: $color;
 }
 
 @mixin body-text($size, $weight, $color) {
@@ -112,27 +105,14 @@
 }
 
 @mixin buttons($color) {
-  padding: 14px 31.5px;
+  padding: 30px;
   border-radius: 5px;
   outline: none;
-  font-size: 14px;
+  font-size: 16px;
   cursor: pointer;
   display: flex;
   align-items: center;
   font-family: $primary-font;
-
-  @if $color == black {
-    background: $button-bg;
-    color: $white;
-    transition: $transitions !important;
-    &:hover {
-      color: $white;
-      background: $primary-color;
-    }
-
-    .bi {
-      color: $white;
-      font-size: 16px;
-    }
-  }
+  background: $color;
+  border: none;
 }

@@ -1,0 +1,13 @@
+.product-card {
+  height: 300px;
+  border: 1px solid $border-color;
+
+  .product-image {
+    height: 180px;
+    background: blue;
+  }
+
+  .product-content {
+    padding: 20px;
+  }
+}
