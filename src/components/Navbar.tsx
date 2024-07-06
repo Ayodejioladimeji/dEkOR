@@ -20,9 +20,9 @@ function Header() {
   return (
     <Navbar collapseOnSelect expand="lg" className="navbar fixed-top py-4">
       <Container className="d-flex align-items-center justify-content-between">
-        <a className="navbar-brand" href="/">
+        <Link className="navbar-brand" href="/">
           <Logo />
-        </a>
+        </Link>
 
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
 

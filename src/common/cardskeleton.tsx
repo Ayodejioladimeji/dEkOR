@@ -15,8 +15,8 @@ const CardSkeleton = (props: Props) => {
   //
   return (
     <>
-      {loadingdata?.map((item) => (
-        <div className="mb-4 text-left">
+      {loadingdata?.map((item, index) => (
+        <div className="mb-4 text-left" key={index}>
           <Skeleton height={220} />
           <Skeleton
             height={12}
