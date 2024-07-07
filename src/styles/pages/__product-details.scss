@@ -1,5 +1,6 @@
 .product-details {
   padding-top: 120px;
+  padding-bottom: 80px;
 
   .heading-section {
     height: 50px;
@@ -12,9 +13,11 @@
     }
   }
 
+  //   content
+
   .content {
     margin-top: 40px;
-    height: 80vh;
+    margin-bottom: 80px;
 
     // image section
 
@@ -177,5 +180,55 @@
     display: flex;
     justify-content: center;
     margin-top: 150px;
+  }
+
+  //   information section
+
+  .information {
+    margin-top: 30px;
+
+    .top {
+      display: flex;
+      align-items: center;
+      column-gap: 30px;
+      border-radius: 4px;
+
+      button {
+        @include body-text(20px, 400, $text-color);
+        background: transparent;
+        border: none;
+        padding-bottom: 10px;
+        border-bottom: 4px solid transparent;
+        transition: $transitions;
+
+        &.active {
+          border-bottom: 4px solid $primary-color;
+        }
+      }
+    }
+
+    .bottom {
+      margin-top: 24px;
+
+      .policy {
+        h4 {
+          @include heading(20px, 600, $text-color);
+          margin-bottom: 16px;
+        }
+        p {
+          @include body-text(20px, 400, $text-color);
+          margin-bottom: 16px;
+        }
+
+        ol {
+          padding-left: 20px;
+
+          li {
+            @include body-text(20px, 400, $text-color);
+            margin-bottom: 16px;
+          }
+        }
+      }
+    }
   }
 }
