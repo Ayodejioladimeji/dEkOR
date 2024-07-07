@@ -1,0 +1,29 @@
+.similar-product {
+  margin-top: 80px;
+
+  h1 {
+    @include heading(36px, 600, $text-color);
+    margin-bottom: 40px;
+  }
+
+  .product-box {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    column-gap: 30px;
+    row-gap: 60px;
+
+    .product-image {
+      height: 280px;
+    }
+
+    .product-content {
+      h3 {
+        font-size: 24px;
+      }
+
+      p {
+        font-size: 20px;
+      }
+    }
+  }
+}

@@ -8,6 +8,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useContext, useEffect, useState } from "react";
 import { Ratings } from "../../../public/assets";
+import SimilarProduct from "@/components/SimilarProduct";
 
 interface Props {}
 
@@ -252,6 +253,9 @@ const Product = (props: Props) => {
                 )}
               </div>
             </div>
+
+            {/* similar products */}
+            <SimilarProduct />
           </div>
         )}
       </div>
