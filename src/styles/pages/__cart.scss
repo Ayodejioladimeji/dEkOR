@@ -91,6 +91,8 @@
     width: 100%;
     border-radius: 30px;
     padding: 40px 24px;
+    position: sticky;
+    top: 100px;
 
     h4 {
       @include heading(20px, 500, $text-color);
@@ -99,7 +101,7 @@
 
     .order-box {
       overflow: auto;
-     margin-bottom:50px;
+      margin-bottom: 50px;
     }
 
     .order-items {
