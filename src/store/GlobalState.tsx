@@ -1,24 +1,9 @@
 import { createContext, useReducer, ReactNode, Dispatch } from "react";
 import reducers from "./Reducers";
 
-type StateType = {
-  toggle: boolean;
-  cart: any;
-};
+export const DataContext = createContext(null);
 
-type ActionType = { type: string };
-type ContextType = {
-  state: StateType;
-  dispatch: Dispatch<ActionType>;
-};
-
-export const DataContext = createContext<ContextType | null>(null);
-
-type DataProviderProps = {
-  children: ReactNode;
-};
-
-export const DataProvider = ({ children }: DataProviderProps) => {
+export const DataProvider = ({ children }) => {
   const initialState = {
     toggle: false,
     cart: [],

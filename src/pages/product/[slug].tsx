@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import React, { useContext, useEffect, useState } from "react";
 import { Ratings } from "../../../public/assets";
 import SimilarProduct from "@/components/SimilarProduct";
+import cogoToast from "cogo-toast";
 
 interface Props {}
 
@@ -72,7 +73,24 @@ const Product = (props: Props) => {
     //  dispatch({ type: ACTIONS.CART, payload: cartData });
   };
 
-  console.log(product?.images);
+  // add items to cart
+  const addToCart = () => {
+    // check if items is already added
+    const check = state?.cart.every((item) => {
+      return item.id !== product?.id;
+    });
+
+    if (check) {
+      const cartData = {
+        ...product,
+        quantity: 1,
+      };
+
+      dispatch({ type: ACTIONS.CART, payload: cartData });
+    } else {
+      cogoToast.error("Item already added to your cart");
+    }
+  };
 
   //
 
@@ -172,8 +190,10 @@ const Product = (props: Props) => {
                   </div>
 
                   <div className="button-container">
-                    <button>Add To Cart</button>
-                    <button>Checkout</button>
+                    <button onClick={addToCart}>Add To Cart</button>
+                    <button onClick={() => router.push("/cart")}>
+                      Checkout
+                    </button>
                   </div>
                 </div>
               </div>

@@ -1103,6 +1103,31 @@ __metadata:
   languageName: node
   linkType: hard
 
+"dekor@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "dekor@workspace:."
+  dependencies:
+    "@types/node": ^20
+    "@types/react": ^18
+    "@types/react-dom": ^18
+    "@types/uuid": ^10.0.0
+    bootstrap: ^5.3.3
+    cogo-toast: ^4.2.3
+    eslint: ^8
+    eslint-config-next: 14.2.4
+    next: 14.2.4
+    react: ^18
+    react-bootstrap: ^2.10.4
+    react-dom: ^18
+    react-loader-spinner: ^6.1.6
+    react-loading-skeleton: ^3.4.0
+    sass: ^1.77.6
+    swiper: ^11.1.4
+    typescript: ^5
+    uuid: ^10.0.0
+  languageName: unknown
+  linkType: soft
+
 "dequal@npm:^2.0.3":
   version: 2.0.3
   resolution: "dequal@npm:2.0.3"
@@ -3162,31 +3187,6 @@ __metadata:
   checksum: 98f6cd012d54b5334144c5255ecb941ee171744f45fca8b43b58ae5a0c1af07352475f481cadd9848e7f0250376ee584f6aa0951a856ff8f021bdfbff4eb33fc
   languageName: node
   linkType: hard
-
-"product@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "product@workspace:."
-  dependencies:
-    "@types/node": ^20
-    "@types/react": ^18
-    "@types/react-dom": ^18
-    "@types/uuid": ^10.0.0
-    bootstrap: ^5.3.3
-    cogo-toast: ^4.2.3
-    eslint: ^8
-    eslint-config-next: 14.2.4
-    next: 14.2.4
-    react: ^18
-    react-bootstrap: ^2.10.4
-    react-dom: ^18
-    react-loader-spinner: ^6.1.6
-    react-loading-skeleton: ^3.4.0
-    sass: ^1.77.6
-    swiper: ^11.1.4
-    typescript: ^5
-    uuid: ^10.0.0
-  languageName: unknown
-  linkType: soft
 
 "promise-retry@npm:^2.0.1":
   version: 2.0.1

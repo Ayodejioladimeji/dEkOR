@@ -13,8 +13,6 @@ function Header() {
   const router = useRouter();
   const { state } = useContext(DataContext);
 
-  console.log(state?.cart);
-
   //
 
   return (
@@ -43,11 +41,11 @@ function Header() {
               <li className="nav-item">
                 <Link
                   className={`nav-link ${
-                    router.pathname === "/about" ? "active" : ""
+                    router.pathname === "/product" ? "active" : ""
                   }`}
-                  href="#"
+                  href="/product"
                 >
-                  About
+                  Products
                 </Link>
               </li>
 
@@ -84,8 +82,10 @@ function Header() {
                 <Heart />
               </li>
               <li className="nav-item">
-                <Cart />
-                <div className="badge">{state?.cart?.length}</div>
+                <Link href="/cart">
+                  <Cart />
+                  <div className="badge">{state?.cart?.length}</div>
+                </Link>
               </li>
               <li className="nav-item">
                 <Profile />

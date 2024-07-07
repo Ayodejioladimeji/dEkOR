@@ -1,6 +1,8 @@
 /* Navbar Styling */
 .navbar {
   background: $white;
+  position: fixed;
+  width: 100%;
 
   .navbar-brand {
     border: none !important;
