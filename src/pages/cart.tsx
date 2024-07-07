@@ -98,7 +98,7 @@ const Cart = (props: Props) => {
                 <div className="col-8">
                   {state?.cart?.map((item: any) => {
                     return (
-                      <div className="cart-items">
+                      <div className="cart-items" key={item.id}>
                         <div className="cart-div">
                           <div className="cart-image">
                             <Image
@@ -150,9 +150,9 @@ const Cart = (props: Props) => {
                     <h4>Order Summary</h4>
 
                     <div className="order-box">
-                      {state?.cart?.map((item) => {
+                      {state?.cart?.map((item:any) => {
                         return (
-                          <div className="order-items">
+                          <div className="order-items" key={item.id}>
                             <div className="d-flex align-items-center gap-2">
                               <CheckIcon />
                               <p>{item?.title} ({item.quantity})</p>

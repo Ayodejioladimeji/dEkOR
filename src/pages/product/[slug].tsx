@@ -169,7 +169,7 @@ const Product = (props: Props) => {
                   <h3>${product?.price}</h3>
 
                   <div className="color-div">
-                    {product?.colors?.map((color, index) => {
+                    {product?.colors?.map((color:any, index:number) => {
                       return (
                         <div
                           key={index}
