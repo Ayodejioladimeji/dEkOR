@@ -25,7 +25,7 @@ const AllProducts = (props: Props) => {
 
   return (
     <Layout>
-      <div className="products">
+      <div className="all-products">
         <div className="container">
           <div className="heading-section">
             <Breadcumb title="All Products" />

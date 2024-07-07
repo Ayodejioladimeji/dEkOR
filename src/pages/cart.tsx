@@ -74,7 +74,7 @@ const Cart = (props: Props) => {
 
                 <h3>Your cart is empty</h3>
                 <button
-                  onClick={() => router.push("/products")}
+                  onClick={() => router.push("/product")}
                   className="start-shopping"
                 >
                   Start Shopping

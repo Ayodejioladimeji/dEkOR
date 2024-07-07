@@ -17,19 +17,22 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import { data } from "@/constants/data";
 import { LeftArrow, RightArrow } from "../../public/assets";
+import { useRouter } from "next/router";
 
 interface Props {}
 
 const TopDeals = (props: Props) => {
-  const countdownDate = new Date();
-  countdownDate.setDate(countdownDate.getDate() + 10); // 10 days from now
+  const router = useRouter();
 
+  //
+  const countdownDate = new Date();
+  countdownDate.setDate(countdownDate.getDate() + 10);
   const [remainingTime, setRemainingTime] = useState(calculateTimeRemaining());
 
   function calculateTimeRemaining() {
     const now = new Date();
     const difference = countdownDate.getTime() - now.getTime();
-    return Math.max(0, Math.floor(difference / 1000)); // in seconds, ensure it doesn't go negative
+    return Math.max(0, Math.floor(difference / 1000));
   }
 
   useEffect(() => {
@@ -40,7 +43,7 @@ const TopDeals = (props: Props) => {
     return () => clearInterval(timer);
   }, []);
 
-  // Convert remainingTime into days, hours, minutes, seconds
+  // here, i'm converting remainingTime into days, hours, minutes, seconds
   const days = Math.floor(remainingTime / (24 * 60 * 60));
   const hours = Math.floor((remainingTime % (24 * 60 * 60)) / (60 * 60));
   const minutes = Math.floor((remainingTime % (60 * 60)) / 60);
@@ -110,7 +113,12 @@ const TopDeals = (props: Props) => {
                     </div>
                   </div>
 
-                  <button className="view-all">View Details</button>
+                  <button
+                    onClick={() => router.push(`/product/${item.id}`)}
+                    className="view-all"
+                  >
+                    View Details
+                  </button>
                 </div>
               </SwiperSlide>
             ))}

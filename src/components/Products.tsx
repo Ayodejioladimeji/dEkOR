@@ -3,12 +3,14 @@ import Productcard from "@/common/productcard";
 import React, { useEffect, useState } from "react";
 import Heading from "./Heading";
 import { data } from "@/constants/data";
+import { useRouter } from "next/router";
 
 interface Props {}
 
 const Products = (props: Props) => {
   const [products, setProducts] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   //
   useEffect(() => {
@@ -30,7 +32,7 @@ const Products = (props: Props) => {
             <CardSkeleton length={8} />
           ) : (
             <>
-              {products?.map((item: any) => {
+              {products?.slice(0, 9)?.map((item: any) => {
                 return <Productcard {...item} key={item.id} />;
               })}
             </>
@@ -38,7 +40,9 @@ const Products = (props: Props) => {
         </div>
 
         {/* view all button */}
-        <button className="view-all">View All</button>
+        <button onClick={() => router.push("/product")} className="view-all">
+          View All
+        </button>
       </div>
     </div>
   );
