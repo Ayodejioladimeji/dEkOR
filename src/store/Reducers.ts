@@ -14,6 +14,11 @@ const reducers = (state: any, action: any) => {
         ...state,
         cart: [payload, ...state?.cart],
       };
+    case ACTIONS.UPDATECART:
+      return {
+        ...state,
+        cart: [...state?.cart],
+      };
 
     default:
       return state;

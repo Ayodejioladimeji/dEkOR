@@ -29,7 +29,7 @@ const Cart = (props: Props) => {
       quantity: carting?.quantity,
     };
 
-    dispatch({ type: ACTIONS.CART, payload: cartData });
+    dispatch({ type: ACTIONS.UPDATECART, payload: cartData });
   };
 
   // // decrease cart items
@@ -48,7 +48,7 @@ const Cart = (props: Props) => {
       quantity: carting?.quantity,
     };
 
-    dispatch({ type: ACTIONS.CART, payload: cartData });
+    dispatch({ type: ACTIONS.UPDATECART, payload: cartData });
   };
 
   // remove item from crt
