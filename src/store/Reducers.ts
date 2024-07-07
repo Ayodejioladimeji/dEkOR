@@ -19,6 +19,11 @@ const reducers = (state: any, action: any) => {
         ...state,
         cart: [...state?.cart],
       };
+    case ACTIONS.DELETECART:
+      return {
+        ...state,
+        cart: payload,
+      };
 
     default:
       return state;
