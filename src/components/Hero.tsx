@@ -1,9 +1,14 @@
 import Image from "next/image";
+import { useRouter } from "next/router";
 import React from "react";
 
 interface Props {}
 
 const Hero = (props: Props) => {
+  const router = useRouter();
+
+  //
+
   return (
     <div className="hero">
       <div
@@ -108,7 +113,9 @@ const Hero = (props: Props) => {
               Explore curated collection of home decor, get inspired by latest
               trends and create your unique style
             </p>
-            <button>Explore All Interior Designs </button>
+            <button onClick={() => router.push("/product")}>
+              Explore All Interior Designs{" "}
+            </button>
           </div>
         </div>
       </div>

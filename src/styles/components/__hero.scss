@@ -1,5 +1,5 @@
 .hero {
-  height: 115vh;
+  height: 112vh;
   background: $primary-color;
   width: 100%;
 
@@ -74,7 +74,7 @@
 
   .marquee {
     @include body-text(20px, 600, $white);
-    height: 15vh;
+    height: 12vh;
     display: flex;
     align-items: center;
     justify-content: center;

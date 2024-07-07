@@ -1,13 +1,14 @@
 import Breadcumb from "@/common/breadcumb";
 import Layout from "@/components/Layout";
-import React from "react";
-import { CheckIcon } from "../../public/assets";
+import React, { useState } from "react";
+import { CheckIcon, CircleIcon } from "../../public/assets";
 import { useRouter } from "next/router";
 
 interface Props {}
 
 const Checkout = (props: Props) => {
   const router = useRouter();
+  const [shippingType, setShippingType] = useState("standard");
 
   //
   return (
@@ -68,17 +69,31 @@ const Checkout = (props: Props) => {
                 <h4>Shipping Type</h4>
 
                 <div className="order-box">
-                  <div className="order-items">
+                  <div
+                    className="order-items"
+                    onClick={() => setShippingType("standard")}
+                  >
                     <div className="d-flex align-items-center gap-2">
-                      <CheckIcon />
+                      {shippingType === "standard" ? (
+                        <CheckIcon />
+                      ) : (
+                        <CircleIcon />
+                      )}
                       <p>Standard Shipping</p>
                     </div>
                     <p>$80</p>
                   </div>
 
-                  <div className="order-items">
+                  <div
+                    className="order-items"
+                    onClick={() => setShippingType("express")}
+                  >
                     <div className="d-flex align-items-center gap-2">
-                      <CheckIcon />
+                      {shippingType === "express" ? (
+                        <CheckIcon />
+                      ) : (
+                        <CircleIcon />
+                      )}
                       <p>Express Shipping</p>
                     </div>
                     <p>$100</p>
