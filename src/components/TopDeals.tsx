@@ -57,13 +57,10 @@ const TopDeals = (props: Props) => {
 
         <div className="top-deal-container">
           <Swiper
-            // Install Swiper modules
             modules={[Pagination, Scrollbar, A11y, Autoplay]}
             spaceBetween={1}
             slidesPerView={1}
-            // pagination={{ clickable: false }}
             onSwiper={(swiper) => console.log("")}
-            // onSlideChange={(item) => console.log(item.realIndex)}
             autoplay={{
               delay: 13500,
               disableOnInteraction: false,
@@ -97,19 +94,23 @@ const TopDeals = (props: Props) => {
 
                   <div className="count-down">
                     <div className="count">
-                      {days} <br /> Days
+                      <p>{days}</p>
+                      <p>Days</p>
                     </div>
                     :
                     <div className="count">
-                      {hours} <br /> Hours
+                      <p>{hours}</p>
+                      <p>Hours</p> 
                     </div>
                     :
                     <div className="count">
-                      {minutes} <br /> Mins
+                      <p>{minutes}</p>
+                      <p>Mins</p>
                     </div>
                     :
                     <div className="count">
-                      {seconds} <br /> Secs
+                      <p>{seconds}</p>
+                      <p>Secs</p>
                     </div>
                   </div>
 

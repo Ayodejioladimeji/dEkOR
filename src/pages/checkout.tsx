@@ -1,14 +1,29 @@
 import Breadcumb from "@/common/breadcumb";
 import Layout from "@/components/Layout";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { CheckIcon, CircleIcon } from "../../public/assets";
 import { useRouter } from "next/router";
+import { calculateTotal, formatMoney } from "@/utils/utils";
+import { DataContext } from "@/store/GlobalState";
 
 interface Props {}
 
 const Checkout = (props: Props) => {
   const router = useRouter();
   const [shippingType, setShippingType] = useState("standard");
+  const [amount, setAmount] = useState(80)
+  const {state} = useContext(DataContext)
+
+  // handle shipping
+  const handleShipping = (item:string) => {
+    setShippingType(item);
+    if(item === "standard"){
+      setAmount(80)
+    }
+    else{
+      setAmount(100)
+    }
+  }
 
   //
   return (
@@ -16,7 +31,7 @@ const Checkout = (props: Props) => {
       <div className="checkout">
         <div className="container">
           <div className="heading-section">
-            <Breadcumb title="Checkout" />
+            <Breadcumb title="Checkout" route="cart"/>
           </div>
 
           <div className="row">
@@ -71,7 +86,7 @@ const Checkout = (props: Props) => {
                 <div className="order-box">
                   <div
                     className="order-items"
-                    onClick={() => setShippingType("standard")}
+                    onClick={() => handleShipping("standard")}
                   >
                     <div className="d-flex align-items-center gap-2">
                       {shippingType === "standard" ? (
@@ -86,7 +101,7 @@ const Checkout = (props: Props) => {
 
                   <div
                     className="order-items"
-                    onClick={() => setShippingType("express")}
+                    onClick={() => handleShipping("express")}
                   >
                     <div className="d-flex align-items-center gap-2">
                       {shippingType === "express" ? (
@@ -103,15 +118,15 @@ const Checkout = (props: Props) => {
                 <h4>Order Summary</h4>
                 <div className="order-items">
                   <h5>Subtotal</h5>
-                  <h5>$200</h5>
+                  <h5>${formatMoney(calculateTotal(state?.cart))}</h5>
                 </div>
                 <div className="order-items">
                   <h5>Total</h5>
-                  <h5>$280</h5>
+                  <h5>${formatMoney(calculateTotal(state?.cart) + (amount))}</h5>
                 </div>
 
                 <button onClick={() => router.push("/checkout")}>
-                  Checkout Payment ($280)
+                  Checkout Payment (${formatMoney(calculateTotal(state?.cart) + amount)})
                 </button>
               </div>
             </div>

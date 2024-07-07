@@ -37,20 +37,29 @@ const Product = (props: Props) => {
 
   // increase item
   const increment = () => {
-    state?.cart.forEach((item) => {
-      if (item.id === product?.id) {
-        item.quantity += 1;
-      }
+    // Check if item is in the cart
+    const check = state?.cart.every((item) => {
+      return item.id !== product?.id;
     });
 
-    const carting = state?.cart.find((item) => item.id === product?.id);
+      // 
+      state?.cart.forEach((item) => {
+        if (item.id === product?.id) {
+          item.quantity += 1;
+        }
+      });
 
-    const cartData = {
-      ...product,
-      quantity: carting?.quantity,
-    };
 
-    dispatch({ type: ACTIONS.UPDATECART, payload: cartData });
+
+      const carting = state?.cart.find((item) => item.id === product?.id);
+
+      const cartData = {
+        ...product,
+        quantity: carting?.quantity,
+      };
+
+      dispatch({ type: ACTIONS.UPDATECART, payload: cartData });
+    
   };
 
   // // decrease cart items
@@ -86,6 +95,7 @@ const Product = (props: Props) => {
       };
 
       dispatch({ type: ACTIONS.CART, payload: cartData });
+      setProduct(cartData)
     } else {
       cogoToast.error("Item already added to your cart");
     }
@@ -181,15 +191,16 @@ const Product = (props: Props) => {
 
                   <h4>Quantity</h4>
                   <div className="quantities">
-                    <i className="bi bi-dash" onClick={decrement}></i>
+                    <i className="bi bi-dash"></i>
 
-                    <p>{product?.quantity}</p>
+                    <p>{product?.quantity || 0}</p>
 
-                    <i className="bi bi-plus" onClick={increment}></i>
+                    <i className="bi bi-plus"></i>
                   </div>
 
                   <div className="button-container">
                     <button onClick={addToCart}>Add To Cart</button>
+
                     <button onClick={() => router.push("/cart")}>
                       Checkout
                     </button>

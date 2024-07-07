@@ -17,7 +17,7 @@ const CardSkeleton = (props: Props) => {
     <>
       {loadingdata?.map((item, index) => (
         <div className="mb-4 text-center" key={index}>
-          <Skeleton height={220} />
+          <Skeleton height={250} style={{borderRadius:'20px'}}/>
           <Skeleton
             height={12}
             width={160}

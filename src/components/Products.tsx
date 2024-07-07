@@ -29,7 +29,7 @@ const Products = (props: Props) => {
 
         <div className="product-box">
           {loading ? (
-            <CardSkeleton length={8} />
+            <CardSkeleton length={9} />
           ) : (
             <>
               {products?.slice(0, 9)?.map((item: any) => {

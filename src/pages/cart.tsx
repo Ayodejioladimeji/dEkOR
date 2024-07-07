@@ -8,6 +8,7 @@ import { CheckIcon, DeleteIcon } from "../../public/assets";
 import SimilarProduct from "@/components/SimilarProduct";
 import { useRouter } from "next/router";
 import cogoToast from "cogo-toast";
+import { calculateTotal, formatMoney } from "@/utils/utils";
 
 interface Props {}
 
@@ -110,7 +111,7 @@ const Cart = (props: Props) => {
 
                           <div className="cart-content">
                             <h4>{item?.title}</h4>
-                            <h3>${item?.price}</h3>
+                            <h3>${formatMoney(Number(item.price) * item.quantity)}</h3>
 
                             <div
                               style={{ background: item?.color }}
@@ -154,7 +155,7 @@ const Cart = (props: Props) => {
                           <div className="order-items">
                             <div className="d-flex align-items-center gap-2">
                               <CheckIcon />
-                              <p>{item?.title} (2)</p>
+                              <p>{item?.title} ({item.quantity})</p>
                             </div>
                             <p>${item?.price}</p>
                           </div>
@@ -166,11 +167,11 @@ const Cart = (props: Props) => {
 
                     <div className="order-items">
                       <h5>Total</h5>
-                      <h5>$200</h5>
+                        <h5>${formatMoney(calculateTotal(state?.cart))}</h5>
                     </div>
 
                     <button onClick={() => router.push("/checkout")}>
-                      Checkout (2)
+                      Checkout ({state?.cart?.length})
                     </button>
                   </div>
                 </div>

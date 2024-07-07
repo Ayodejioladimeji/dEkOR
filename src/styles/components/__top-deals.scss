@@ -71,6 +71,13 @@
           align-items: center;
           justify-content: center;
           text-align: center;
+          flex-direction: column;
+
+          p{
+            @include body-text(14px, 600, $white);
+            margin:0;
+            line-height:20px
+          }
         }
       }
     }

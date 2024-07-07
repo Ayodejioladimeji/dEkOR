@@ -14,7 +14,6 @@
   }
 
   //   content
-
   .content {
     margin-top: 40px;
     margin-bottom: 80px;
@@ -183,7 +182,6 @@
   }
 
   //   information section
-
   .information {
     margin-top: 30px;
 
@@ -192,6 +190,7 @@
       align-items: center;
       column-gap: 30px;
       border-radius: 4px;
+      margin-bottom:40px;
 
       button {
         @include body-text(20px, 400, $text-color);
