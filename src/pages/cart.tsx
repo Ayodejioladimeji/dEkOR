@@ -7,6 +7,7 @@ import React, { useContext } from "react";
 import { CheckIcon, DeleteIcon } from "../../public/assets";
 import SimilarProduct from "@/components/SimilarProduct";
 import { useRouter } from "next/router";
+import cogoToast from "cogo-toast";
 
 interface Props {}
 
@@ -52,6 +53,11 @@ const Cart = (props: Props) => {
   };
 
   // remove item from crt
+  const removeCartItem = (id) => {
+    const newData = state?.cart.filter((item) => item.id !== id);
+    dispatch({ type: ACTIONS.DELETECART, payload: newData });
+    cogoToast.success("Item removed successfully");
+  };
 
   //
 
@@ -127,7 +133,10 @@ const Cart = (props: Props) => {
                           </div>
                         </div>
 
-                        <div className="delete">
+                        <div
+                          className="delete"
+                          onClick={() => removeCartItem(item.id)}
+                        >
                           <DeleteIcon />
                         </div>
                       </div>

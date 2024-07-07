@@ -27,7 +27,6 @@ const Product = (props: Props) => {
   useEffect(() => {
     if (slug) {
       data?.find((item) => {
-        console.log(item.id, slug);
         if (item.id === slug) {
           setProduct(item);
           setLoading(false);
@@ -51,7 +50,7 @@ const Product = (props: Props) => {
       quantity: carting?.quantity,
     };
 
-    //  dispatch({ type: ACTIONS.CART, payload: cartData });
+    dispatch({ type: ACTIONS.UPDATECART, payload: cartData });
   };
 
   // // decrease cart items
@@ -70,7 +69,7 @@ const Product = (props: Props) => {
       quantity: carting?.quantity,
     };
 
-    //  dispatch({ type: ACTIONS.CART, payload: cartData });
+    dispatch({ type: ACTIONS.UPDATECART, payload: cartData });
   };
 
   // add items to cart
