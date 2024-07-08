@@ -6,17 +6,29 @@
     overflow: hidden;
     position: relative;
 
+    @media (max-width: 767px) {
+      height: 300px;
+    }
+
+    @media (max-width: 565px) {
+      height: 200px;
+    }
+
+    @media (max-width: 365px) {
+      height: 140px;
+    }
+
     img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
 
-    .item-cart{
-      position:absolute;
-      top:20px;
-      right:20px;
-      cursor:pointer;
+    .item-cart {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      cursor: pointer;
     }
 
     .add-to-cart {
@@ -34,6 +46,10 @@
       color: $white;
       transform: translateY(100%);
       cursor: pointer;
+
+      @media (max-width: 767px) {
+        font-size: 16px;
+      }
     }
 
     &:hover {
@@ -49,17 +65,41 @@
     h3 {
       @include body-text(28px, 500, $text-color);
       margin-bottom: 5px;
+
+      @media (max-width: 767px) {
+        font-size: 20px;
+      }
+
+      @media (max-width: 565px) {
+        font-size: 18px;
+      }
     }
 
     p {
       @include body-text(24px, 700, $text-color);
       margin-bottom: 16px;
+
+      @media (max-width: 767px) {
+        font-size: 18px;
+      }
+
+      @media (max-width: 565px) {
+        font-size: 14px;
+      }
     }
 
     button {
       @include body-text(20px, 600, $text-color);
       background: none;
       border: none;
+
+      @media (max-width: 767px) {
+        font-size: 16px;
+      }
+
+      @media (max-width: 565px) {
+        font-size: 14px;
+      }
 
       &:hover {
         text-decoration: underline;

@@ -51,14 +51,14 @@
     column-gap: 30px;
     row-gap: 30px;
 
-    @media (max-width: 400px) {
-      grid-template-columns: 1fr;
-    }
-
     .image-box {
       border-radius: 30px;
       position: relative;
       overflow: hidden;
+
+      @media (max-width: 400px) {
+        height: 150px;
+      }
 
       .content {
         @include body-text(24px, 500, $white);
