@@ -22,27 +22,30 @@ const MetaTags = (props: any) => {
         sizes="16x16"
         href="/favicon-16x16.png"
       />
-      <title>{`PRODUCTS - ${props.title}`}</title>
-      <meta name="title" content={`PRODUCTS - ${props.title}`} />
-      <meta name="description" content="Welcome to products" />
+      <title>{`DEKOR - ${props.title}`}</title>
+      <meta name="title" content={`DEKOR - ${props.title}`} />
+      <meta name="description" content="Welcome to dekor" />
 
       <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-      <meta property="og:title" content={`PRODUCTS - ${props.title}`} />
-      <meta property="og:description" content="Welcome to products" />
+      <meta property="og:title" content={`DEKOR - ${props.title}`} />
+      <meta property="og:description" content="Welcome to dekor" />
 
-      <meta property="og:image" content="" />
+      <meta
+        property="og:image"
+        content="https://res.cloudinary.com/devsource/image/upload/v1720462318/dEKOR_pjzmtq.png"
+      />
       <meta property="og:type" content="website" />
 
       <meta property="og:url" content={process.env.NEXT_PUBLIC_HOMEPAGE_URL} />
-      <meta name="twitter:card" content="PRODUCTS" />
+      <meta name="twitter:card" content="DEKOR" />
 
       <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
       <meta name="language" content="English" />
-      <meta name="author" content="Products" />
+      <meta name="author" content="Dekor" />
 
-      <meta property="og:site_name" content="PRODUCTS" />
-      <meta name="twitter:image:alt" content="PRODUCTS" />
+      <meta property="og:site_name" content="DEKOR" />
+      <meta name="twitter:image:alt" content="DEKOR" />
     </Head>
   );
 };
