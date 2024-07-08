@@ -26,6 +26,10 @@
       border-radius: 30px;
       overflow: hidden;
 
+      @media (max-width: 767px) {
+        border-radius: 10px;
+      }
+
       img {
         height: 100%;
         width: 100%;

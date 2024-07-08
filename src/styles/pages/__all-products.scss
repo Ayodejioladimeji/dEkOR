@@ -40,12 +40,18 @@
       grid-template-columns: repeat(2, 1fr);
     }
 
+    @media (max-width: 600px) {
+      column-gap: 20px;
+      row-gap: 20px;
+    }
+
     .product-image {
       height: 280px;
-      background:$border-color;
+      background: $border-color;
 
       @media (max-width: 767px) {
         height: 300px;
+        border-radius: 8px;
       }
 
       @media (max-width: 565px) {

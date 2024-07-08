@@ -120,4 +120,8 @@
   &:hover {
     background: #27493eb2;
   }
+
+  @media (max-width:767px){
+      border-radius:10px;
+  }
 }
