@@ -96,11 +96,15 @@
 
 // marquee
 .marquee {
+  background: $primary-color;
   @include body-text(20px, 600, $white);
-  height: 12vh;
+  height: 110px;
   display: flex;
   align-items: center;
   justify-content: center;
   letter-spacing: 7px;
-  display: none;
+
+  @media (max-width: 767px) {
+    font-size: 16px;
+  }
 }

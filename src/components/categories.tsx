@@ -12,7 +12,7 @@ const Categories = (props: Props) => {
         <Heading title="Categories" />
 
         <div className="row">
-          <div className="col-4">
+          <div className="col-12 col-sm-4 col-md-4">
             <div className="first-box">
               <Image
                 src="/images/category1.svg"
@@ -26,7 +26,7 @@ const Categories = (props: Props) => {
             </div>
           </div>
 
-          <div className="col-8">
+          <div className="col-12 col-sm-8 col-md-8">
             <div className="category-div">
               <div className="image-box">
                 <Image

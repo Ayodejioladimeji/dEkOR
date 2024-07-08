@@ -15,7 +15,7 @@ export default function Home() {
     <Layout>
       <Hero />
       <Marquee />
-      {/* <Categories /> */}
+      <Categories />
       {/* <Products /> */}
       {/* <TopDeals /> */}
     </Layout>
