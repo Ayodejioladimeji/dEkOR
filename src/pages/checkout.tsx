@@ -5,6 +5,7 @@ import { CheckIcon, CircleIcon } from "../../public/assets";
 import { useRouter } from "next/router";
 import { calculateTotal, formatMoney } from "@/utils/utils";
 import { DataContext } from "@/store/GlobalState";
+import SuccessModal from "@/common/modals/success";
 
 interface Props {}
 
@@ -13,6 +14,7 @@ const Checkout = (props: Props) => {
   const [shippingType, setShippingType] = useState("standard");
   const [amount, setAmount] = useState(80);
   const { state } = useContext(DataContext);
+  const [showmodal, setShowmodal] = useState(false);
 
   // handle shipping
   const handleShipping = (item: string) => {
@@ -22,6 +24,11 @@ const Checkout = (props: Props) => {
     } else {
       setAmount(100);
     }
+  };
+
+  // handle submit
+  const handleCheckout = () => {
+    setShowmodal(true);
   };
 
   //
@@ -131,7 +138,7 @@ const Checkout = (props: Props) => {
                   <h5>${formatMoney(calculateTotal(state?.cart) + amount)}</h5>
                 </div>
 
-                <button onClick={() => router.push("/checkout")}>
+                <button onClick={handleCheckout}>
                   Checkout Payment ($
                   {formatMoney(calculateTotal(state?.cart) + amount)})
                 </button>
@@ -140,6 +147,9 @@ const Checkout = (props: Props) => {
           </div>
         </div>
       </div>
+
+      {/* success modal */}
+      {showmodal && <SuccessModal show={showmodal} onHide={setShowmodal} />}
     </Layout>
   );
 };

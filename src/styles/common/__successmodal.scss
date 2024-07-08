@@ -1,0 +1,38 @@
+.success-modal {
+  width: 600px !important;
+  margin-top: 130px;
+  border-radius: 20px;
+
+  @media (max-width: 600px) {
+    width: 95vw !important;
+    max-width: 95vw !important;
+  }
+
+  .success {
+    padding: 50px 25px;
+    position: relative;
+    border-radius: 20px;
+
+    @media (max-width: 600px) {
+      padding: 50px 10px;
+    }
+
+    p {
+      @include body-text(16px, 400, $text-color);
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+    button {
+      @include buttons($primary-color);
+      margin: 0 auto;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 50px;
+      color: $white;
+      padding: 20px 30px;
+    }
+  }
+}

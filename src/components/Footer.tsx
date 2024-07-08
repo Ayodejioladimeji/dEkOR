@@ -43,19 +43,10 @@ const Footer = () => {
 
             <ul>
               <li>
-                <Link href="#">Categories</Link>
+                <Link href="#">Products</Link>
               </li>
               <li>
-                <Link href="#">New Products</Link>
-              </li>
-              <li>
-                <Link href="#">Top Deals</Link>
-              </li>
-              <li>
-                <Link href="#">Subscription</Link>
-              </li>
-              <li>
-                <Link href="#">Our Furniture Makers</Link>
+                <Link href="#">Cart</Link>
               </li>
             </ul>
           </div>
@@ -73,16 +64,13 @@ const Footer = () => {
               <li>
                 <Link href="#">Help and Support</Link>
               </li>
-              <li>
-                <Link href="#">FAQs</Link>
-              </li>
             </ul>
           </div>
         </div>
 
         <div className="footer-bottom">
           <div className="logo-box">
-            <LogoWhite/>
+            <LogoWhite />
           </div>
         </div>
       </div>
