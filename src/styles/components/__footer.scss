@@ -3,6 +3,10 @@ footer {
   padding-top: 90px;
   padding-bottom: 20px;
 
+  @media (max-width: 767px) {
+    padding-top: 50px;
+  }
+
   .footer-middle {
     margin-bottom: 100px;
     small {
@@ -58,19 +62,22 @@ footer {
 
   .footer-bottom {
     padding: 20px 0;
-    display:flex;
-    justify-content:center;
+    display: flex;
+    justify-content: center;
 
-    .logo-box{
-      height:130px;
-      width:130px;
-      border-radius:50%;
-      border:2px solid $white;
-      display:flex;
-      align-items:center;
+    .logo-box {
+      height: 130px;
+      width: 130px;
+      border-radius: 50%;
+      border: 2px solid $white;
+      display: flex;
+      align-items: center;
       justify-content: center;
+
+      @media (max-width: 767px) {
+        height: 110px;
+        width: 110px;
+      }
     }
-    
-    
   }
 }
