@@ -77,6 +77,18 @@ footer {
       @media (max-width: 767px) {
         height: 110px;
         width: 110px;
+
+       
+      }
+
+      @media (max-width:600px){
+         height: 80px;
+        width: 80px;
+
+         svg {
+          width: 60px !important;
+          height: 60px !important;
+        }
       }
     }
   }
