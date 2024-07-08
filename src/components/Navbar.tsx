@@ -18,9 +18,9 @@ function Header() {
   return (
     <Navbar collapseOnSelect expand="lg" className="navbar fixed-top py-4">
       <Container className="main-container">
-        <div>
+        <div className="toggle-section">
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-          <Link className="navbar-brand" href="/">
+          <Link className="navbar-brand" href="/" >
             <Logo />
           </Link>
         </div>

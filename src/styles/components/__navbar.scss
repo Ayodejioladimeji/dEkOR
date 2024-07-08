@@ -8,9 +8,16 @@
     display: flex;
     align-items: center !important;
     justify-content: space-between;
-
+ 
     .navbar-brand {
       border: none !important;
+
+      @media (max-width:500px){
+        svg{
+          width: 50px!important;
+          margin-top:-5px;
+        }
+      }
     }
 
     .mobile-navbar {
@@ -110,9 +117,24 @@
       }
     }
 
+    .toggle-section{
+      display:flex;
+      column-gap:20px;
+      align-items:center;
+
+      @media (max-width:500px){
+        column-gap:10px;
+      }
+    }
+
     .navbar-toggler {
       border: none !important;
       color: $black;
+      padding:0;
+
+      @media (max-width:500px){
+        font-size:16px;
+      }
     }
   }
 }
