@@ -44,3 +44,26 @@ body {
     margin-left: 5px;
   }
 }
+
+// styles. for product skeleton
+.skeletal-image {
+  @media (max-width: 500px) {
+    height: 150px !important;
+  }
+
+  @media (max-width: 365px) {
+    width: 100% !important;
+  }
+}
+
+.skeletal-top {
+  @media (max-width: 500px) {
+    width: 100% !important;
+  }
+}
+
+.skeletal-bottom {
+  @media (max-width: 500px) {
+    width: 100% !important;
+  }
+}

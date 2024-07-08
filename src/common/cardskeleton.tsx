@@ -17,7 +17,11 @@ const CardSkeleton = (props: Props) => {
     <>
       {loadingdata?.map((item, index) => (
         <div className="mb-4 text-center" key={index}>
-          <Skeleton height={250} style={{borderRadius:'20px'}}/>
+          <Skeleton
+            height={250}
+            style={{ borderRadius: "20px" }}
+            className="skeletal-image"
+          />
           <Skeleton
             height={12}
             width={160}
@@ -26,8 +30,14 @@ const CardSkeleton = (props: Props) => {
               marginBottom: "10px",
               marginTop: "20px",
             }}
+            className="skeletal-top"
           />
-          <Skeleton height={12} width={140} style={{ borderRadius: "8px" }} />
+          <Skeleton
+            height={12}
+            width={140}
+            style={{ borderRadius: "8px" }}
+            className="skeletal-bottom"
+          />
         </div>
       ))}
     </>
