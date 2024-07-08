@@ -7,6 +7,10 @@
     position: relative;
     padding: 0 80px;
 
+    @media (max-width: 550px) {
+      padding: 0;
+    }
+
     .deals {
       width: 100%;
       display: flex;
@@ -21,6 +25,10 @@
         border-radius: 40px;
         overflow: hidden;
         position: relative;
+
+        @media (max-width: 1199px) {
+          width: 100%;
+        }
 
         img {
           width: 100%;
@@ -73,10 +81,10 @@
           text-align: center;
           flex-direction: column;
 
-          p{
+          p {
             @include body-text(14px, 600, $white);
-            margin:0;
-            line-height:20px
+            margin: 0;
+            line-height: 20px;
           }
         }
       }
@@ -86,12 +94,20 @@
       position: absolute;
       left: 0;
       top: 25%;
+
+      @media (max-width: 550px) {
+        display: none;
+      }
     }
 
     .right-arrow {
       position: absolute;
       right: 0;
       top: 25%;
+
+      @media (max-width: 550px) {
+        display: none;
+      }
     }
   }
 
@@ -106,5 +122,10 @@
     color: $primary-color;
     font-size: 24px;
     border: 1px solid $primary-color;
+
+    @media (max-width: 767px) {
+      font-size: 18px;
+      padding: 15px 30px;
+    }
   }
 }

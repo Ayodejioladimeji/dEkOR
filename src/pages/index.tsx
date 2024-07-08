@@ -17,7 +17,7 @@ export default function Home() {
       <Marquee />
       <Categories />
       <Products />
-      {/* <TopDeals /> */}
+      <TopDeals />
     </Layout>
   );
 }
