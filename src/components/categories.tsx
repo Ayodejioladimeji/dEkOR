@@ -72,9 +72,6 @@ const Categories = (props: Props) => {
             </div>
           </div>
         </div>
-
-        {/* view all button */}
-        <button className="view-all">View All</button>
       </div>
     </div>
   );

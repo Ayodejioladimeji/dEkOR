@@ -43,10 +43,19 @@ const Footer = () => {
 
             <ul>
               <li>
-                <Link href="#">Products</Link>
+                <Link href="#">Categories</Link>
               </li>
               <li>
-                <Link href="#">Cart</Link>
+                <Link href="#">New Products</Link>
+              </li>
+              <li>
+                <Link href="#">Top Deals</Link>
+              </li>
+              <li>
+                <Link href="#">Subscription</Link>
+              </li>
+              <li>
+                <Link href="#">Our Furniture Makers</Link>
               </li>
             </ul>
           </div>
@@ -63,6 +72,9 @@ const Footer = () => {
               </li>
               <li>
                 <Link href="#">Help and Support</Link>
+              </li>
+              <li>
+                <Link href="#">FAQs</Link>
               </li>
             </ul>
           </div>

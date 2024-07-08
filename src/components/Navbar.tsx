@@ -68,7 +68,7 @@ function Header() {
                 </Link>
               </li>
 
-              {/* <li className="nav-item">
+              <li className="nav-item">
                 <Link
                   className={`nav-link ${
                     router.pathname === "/contact" ? "active" : ""
@@ -88,7 +88,7 @@ function Header() {
                 >
                   Categories
                 </Link>
-              </li> */}
+              </li>
             </Nav>
           </ul>
 

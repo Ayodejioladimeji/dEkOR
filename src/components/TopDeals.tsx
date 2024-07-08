@@ -125,13 +125,13 @@ const TopDeals = (props: Props) => {
             ))}
           </Swiper>
 
-          <div className="left-arrow">
+          {/* <div className="left-arrow">
             <LeftArrow />
           </div>
 
           <div className="right-arrow image-swiper-button-next">
             <RightArrow />
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
