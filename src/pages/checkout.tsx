@@ -11,19 +11,18 @@ interface Props {}
 const Checkout = (props: Props) => {
   const router = useRouter();
   const [shippingType, setShippingType] = useState("standard");
-  const [amount, setAmount] = useState(80)
-  const {state} = useContext(DataContext)
+  const [amount, setAmount] = useState(80);
+  const { state } = useContext(DataContext);
 
   // handle shipping
-  const handleShipping = (item:string) => {
+  const handleShipping = (item: string) => {
     setShippingType(item);
-    if(item === "standard"){
-      setAmount(80)
+    if (item === "standard") {
+      setAmount(80);
+    } else {
+      setAmount(100);
     }
-    else{
-      setAmount(100)
-    }
-  }
+  };
 
   //
   return (
@@ -31,11 +30,11 @@ const Checkout = (props: Props) => {
       <div className="checkout">
         <div className="container">
           <div className="heading-section">
-            <Breadcumb title="Checkout" route="cart"/>
+            <Breadcumb title="Checkout" route="cart" />
           </div>
 
           <div className="row">
-            <div className="col-8">
+            <div className="col-12 col-12 col-lg-8">
               <div className="form-box">
                 <label>Full Name</label>
                 <input type="text" placeholder="Enter your fullname" />
@@ -51,35 +50,42 @@ const Checkout = (props: Props) => {
                 <input type="text" placeholder="Enter your phone number" />
               </div>
 
+              <div className="form-box">
+                <label>Address</label>
+                <input type="text" placeholder="Enter your address" />
+              </div>
+
               <div className="row">
-                <div className="col-6">
+                <div className="col-12 col-sm-6 col-md-6">
                   <div className="form-box">
                     <label>Country</label>
-                    <input type="text" placeholder="Enter your country" />
+                    <select className="form-select">
+                      <option>Nigeria</option>
+                    </select>
                   </div>
                 </div>
-                <div className="col-6">
+                <div className="col-12 col-sm-6 col-md-6">
                   <div className="form-box">
                     <label>State</label>
                     <input type="text" placeholder="Enter your state" />
                   </div>
                 </div>
-                <div className="col-6">
+                <div className="col-12 col-sm-6 col-md-6">
                   <div className="form-box">
                     <label>City</label>
                     <input type="text" placeholder="Enter your city" />
                   </div>
                 </div>
-                <div className="col-6">
+                <div className="col-12 col-sm-6 col-md-6">
                   <div className="form-box">
-                    <label>Address</label>
-                    <input type="text" placeholder="Enter your address" />
+                    <label>Postal Code</label>
+                    <input type="text" placeholder="Enter your postal code" />
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="col-4">
+            <div className="col-12 col-12 col-lg-4">
               <div className="order-summary">
                 <h4>Shipping Type</h4>
 
@@ -122,11 +128,12 @@ const Checkout = (props: Props) => {
                 </div>
                 <div className="order-items">
                   <h5>Total</h5>
-                  <h5>${formatMoney(calculateTotal(state?.cart) + (amount))}</h5>
+                  <h5>${formatMoney(calculateTotal(state?.cart) + amount)}</h5>
                 </div>
 
                 <button onClick={() => router.push("/checkout")}>
-                  Checkout Payment (${formatMoney(calculateTotal(state?.cart) + amount)})
+                  Checkout Payment ($
+                  {formatMoney(calculateTotal(state?.cart) + amount)})
                 </button>
               </div>
             </div>
