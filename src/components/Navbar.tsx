@@ -19,30 +19,28 @@ function Header() {
     <Navbar collapseOnSelect expand="lg" className="navbar fixed-top py-4">
       <Container className="main-container">
         <div>
-           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        <Link className="navbar-brand" href="/">
-          <Logo />
-        </Link>
+          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+          <Link className="navbar-brand" href="/">
+            <Logo />
+          </Link>
         </div>
 
         <ul className="mobile-navbar">
-      
-            <li className="nav-item">
-              <Search />
-            </li>
-            <li className="nav-item">
-              <Heart />
-            </li>
-            <li className="nav-item">
-              <Link href="/cart">
-                <Cart />
-                <div className="badge">{state?.cart?.length}</div>
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Profile />
-            </li>
-        
+          <li className="nav-item">
+            <Search />
+          </li>
+          <li className="nav-item">
+            <Heart />
+          </li>
+          <li className="nav-item">
+            <Link href="/cart">
+              <Cart />
+              <div className="badge">{state?.cart?.length}</div>
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Profile />
+          </li>
         </ul>
 
         <Navbar.Collapse id="responsive-navbar-nav">
@@ -70,7 +68,7 @@ function Header() {
                 </Link>
               </li>
 
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <Link
                   className={`nav-link ${
                     router.pathname === "/contact" ? "active" : ""
@@ -90,7 +88,7 @@ function Header() {
                 >
                   Categories
                 </Link>
-              </li>
+              </li> */}
             </Nav>
           </ul>
 
