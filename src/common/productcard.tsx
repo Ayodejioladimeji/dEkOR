@@ -5,6 +5,7 @@ import cogoToast from "cogo-toast";
 import { useRouter } from "next/router";
 import React, { useContext } from "react";
 import { Image } from "react-bootstrap";
+import { ItemCart } from "../../public/assets";
 
 interface Props {
   id: string;
@@ -53,6 +54,10 @@ const Productcard = (props: Props) => {
           width={100}
           height={100}
         />
+
+        <div className="item-cart" onClick={addToCart}>
+          <ItemCart/>
+        </div>
 
         <button onClick={addToCart} className="add-to-cart">
           Add to cart

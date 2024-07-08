@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { LogoWhite } from "../../public/assets";
 
 //
 
@@ -79,11 +80,9 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="row footer-bottom mt-5 text-white">
-          <div className="text-box">
-            <span className="d-block">
-              © {new Date().getFullYear()} dEKOR e-commerce
-            </span>
+        <div className="footer-bottom">
+          <div className="logo-box">
+            <LogoWhite/>
           </div>
         </div>
       </div>

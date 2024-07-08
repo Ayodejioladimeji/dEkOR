@@ -12,6 +12,13 @@
       object-fit: cover;
     }
 
+    .item-cart{
+      position:absolute;
+      top:20px;
+      right:20px;
+      cursor:pointer;
+    }
+
     .add-to-cart {
       background: $light-color;
       border: none;
