@@ -35,6 +35,7 @@
       height: 64px;
       font-size: 16px;
       color: $text-color;
+      background: #fafafa;
 
       &:focus {
         border: 1px solid $primary-color;
@@ -47,6 +48,8 @@
       height: 64px;
       font-size: 16px;
       color: $text-color;
+      background: #fafafa;
+      border:1px solid $border-color;
 
       &:focus {
         border: 1px solid $primary-color;

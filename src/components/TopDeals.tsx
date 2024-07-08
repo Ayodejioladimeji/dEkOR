@@ -100,7 +100,7 @@ const TopDeals = (props: Props) => {
                     :
                     <div className="count">
                       <p>{hours}</p>
-                      <p>Hours</p> 
+                      <p>Hours</p>
                     </div>
                     :
                     <div className="count">

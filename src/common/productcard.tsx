@@ -56,7 +56,7 @@ const Productcard = (props: Props) => {
         />
 
         <div className="item-cart" onClick={addToCart}>
-          <ItemCart/>
+          <ItemCart />
         </div>
 
         <button onClick={addToCart} className="add-to-cart">

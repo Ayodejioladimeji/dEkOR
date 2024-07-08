@@ -129,6 +129,7 @@ const Product = (props: Props) => {
                           alt="product-image"
                           width={100}
                           height={100}
+                          unoptimized
                         />
                       </div>
                     </div>
@@ -148,6 +149,7 @@ const Product = (props: Props) => {
                               onClick={() => setImageIndex(index)}
                               width={100}
                               height={100}
+                              unoptimized
                             />
                           </div>
                         ))}

@@ -106,6 +106,7 @@ const Cart = (props: Props) => {
                               alt="cart-image"
                               width={100}
                               height={100}
+                              unoptimized
                             />
                           </div>
 

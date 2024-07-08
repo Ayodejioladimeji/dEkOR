@@ -8,14 +8,14 @@
     display: flex;
     align-items: center !important;
     justify-content: space-between;
- 
+
     .navbar-brand {
       border: none !important;
 
-      @media (max-width:500px){
-        svg{
-          width: 50px!important;
-          margin-top:-5px;
+      @media (max-width: 500px) {
+        svg {
+          width: 70px !important;
+          margin-top: -5px;
         }
       }
     }
@@ -25,13 +25,10 @@
       list-style-type: none;
       display: none;
       margin: 0;
+      align-items: center;
 
       @media (max-width: 991px) {
         display: flex;
-      }
-
-      @media (max-width: 360px) {
-        margin-top: 20px;
       }
 
       .nav-item {
@@ -86,6 +83,10 @@
           font-weight: 400;
           cursor: pointer;
 
+          @media (max-width: 500px) {
+            font-size: 16px;
+          }
+
           span {
             &:focus {
               outline: none !important;
@@ -117,23 +118,23 @@
       }
     }
 
-    .toggle-section{
-      display:flex;
-      column-gap:20px;
-      align-items:center;
+    .toggle-section {
+      display: flex;
+      column-gap: 20px;
+      align-items: center;
 
-      @media (max-width:500px){
-        column-gap:10px;
+      @media (max-width: 500px) {
+        column-gap: 10px;
       }
     }
 
     .navbar-toggler {
       border: none !important;
       color: $black;
-      padding:0;
+      padding: 0;
 
-      @media (max-width:500px){
-        font-size:16px;
+      @media (max-width: 500px) {
+        font-size: 16px;
       }
     }
   }

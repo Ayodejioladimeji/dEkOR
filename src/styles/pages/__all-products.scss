@@ -42,6 +42,7 @@
 
     .product-image {
       height: 280px;
+      background:$border-color;
 
       @media (max-width: 767px) {
         height: 300px;
