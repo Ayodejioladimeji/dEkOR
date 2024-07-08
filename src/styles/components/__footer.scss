@@ -2,6 +2,7 @@ footer {
   background: $primary-color;
   padding-top: 90px;
   padding-bottom: 20px;
+  display: none;
 
   @media (max-width: 767px) {
     padding-top: 50px;

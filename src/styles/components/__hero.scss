@@ -1,11 +1,14 @@
 .hero {
-  height: 112vh;
-  background: $primary-color;
+  // height: 100vh;
   width: 100%;
 
   .carousel {
     .carousel-indicators {
       margin-bottom: 150px;
+
+      @media (max-width: 650px) {
+        margin-bottom: 80px;
+      }
 
       button {
         height: 5px;
@@ -15,11 +18,11 @@
     }
 
     .carousel-inner {
-      height: 100vh;
       position: relative;
 
       .carousel-item {
         position: relative;
+        height: 100vh;
 
         img {
           width: 100%;
@@ -47,16 +50,29 @@
         text-align: center;
         width: 850px;
         z-index: 2;
+        padding: 0 10px;
+
+        @media (max-width: 991px) {
+          width: 100%;
+        }
 
         h1 {
           @include heading(64px, 600, $white);
           margin-bottom: 40px;
+
+          @media (max-width: 991px) {
+            font-size: 54px;
+          }
+
+          @media (max-width: 500px) {
+            font-size: 44px;
+          }
         }
 
         p {
           @include body-text(24px, 400, $white);
           margin-bottom: 60px;
-          line-height: 45px;
+          line-height: 40px;
         }
 
         button {
@@ -67,17 +83,24 @@
           border-radius: 20px;
           font-weight: 600;
           font-size: 20px;
+
+          @media (max-width: 767px) {
+            font-size: 16px;
+            padding: 20px 40px;
+          }
         }
       }
     }
   }
+}
 
-  .marquee {
-    @include body-text(20px, 600, $white);
-    height: 12vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    letter-spacing: 7px;
-  }
+// marquee
+.marquee {
+  @include body-text(20px, 600, $white);
+  height: 12vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 7px;
+  display: none;
 }
