@@ -28,14 +28,29 @@
       margin-bottom: 12px;
     }
 
-    input,
-    select {
+    input {
       @include input($border-color);
       width: 100%;
       border-radius: 10px;
       height: 64px;
       font-size: 16px;
       color: $text-color;
+
+      &:focus {
+        border: 1px solid $primary-color;
+      }
+    }
+
+    .form-select {
+      width: 100%;
+      border-radius: 10px;
+      height: 64px;
+      font-size: 16px;
+      color: $text-color;
+
+      &:focus {
+        border: 1px solid $primary-color;
+      }
     }
   }
 

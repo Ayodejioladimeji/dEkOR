@@ -115,4 +115,9 @@
   font-family: $primary-font;
   background: $color;
   border: none;
+  transition: $transitions;
+
+  &:hover {
+    background: #27493eb2;
+  }
 }
