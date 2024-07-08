@@ -95,7 +95,7 @@ const Cart = (props: Props) => {
               </div>
 
               <div className="row">
-                <div className="col-8">
+                <div className="col-12 col-lg-8">
                   {state?.cart?.map((item: any) => {
                     return (
                       <div className="cart-items" key={item.id}>
@@ -111,12 +111,14 @@ const Cart = (props: Props) => {
 
                           <div className="cart-content">
                             <h4>{item?.title}</h4>
-                            <h3>${formatMoney(Number(item.price) * item.quantity)}</h3>
+                            <h3>
+                              ${formatMoney(Number(item.price) * item.quantity)}
+                            </h3>
 
-                            <div
+                            {/* <div
                               style={{ background: item?.color }}
                               className="color"
-                            ></div>
+                            ></div> */}
 
                             <div className="quantities">
                               <i
@@ -145,17 +147,19 @@ const Cart = (props: Props) => {
                   })}
                 </div>
 
-                <div className="col-4">
+                <div className="col-12 col-lg-4">
                   <div className="order-summary">
                     <h4>Order Summary</h4>
 
                     <div className="order-box">
-                      {state?.cart?.map((item:any) => {
+                      {state?.cart?.map((item: any) => {
                         return (
                           <div className="order-items" key={item.id}>
                             <div className="d-flex align-items-center gap-2">
                               <CheckIcon />
-                              <p>{item?.title} ({item.quantity})</p>
+                              <p>
+                                {item?.title} ({item.quantity})
+                              </p>
                             </div>
                             <p>${item?.price}</p>
                           </div>
@@ -167,7 +171,7 @@ const Cart = (props: Props) => {
 
                     <div className="order-items">
                       <h5>Total</h5>
-                        <h5>${formatMoney(calculateTotal(state?.cart))}</h5>
+                      <h5>${formatMoney(calculateTotal(state?.cart))}</h5>
                     </div>
 
                     <button onClick={() => router.push("/checkout")}>
