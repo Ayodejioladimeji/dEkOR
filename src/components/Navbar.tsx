@@ -17,12 +17,33 @@ function Header() {
 
   return (
     <Navbar collapseOnSelect expand="lg" className="navbar fixed-top py-4">
-      <Container className="d-flex align-items-center justify-content-between">
+      <Container className="main-container">
+        <div>
+           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Link className="navbar-brand" href="/">
           <Logo />
         </Link>
+        </div>
 
-        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <ul className="mobile-navbar">
+      
+            <li className="nav-item">
+              <Search />
+            </li>
+            <li className="nav-item">
+              <Heart />
+            </li>
+            <li className="nav-item">
+              <Link href="/cart">
+                <Cart />
+                <div className="badge">{state?.cart?.length}</div>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Profile />
+            </li>
+        
+        </ul>
 
         <Navbar.Collapse id="responsive-navbar-nav">
           <ul className="navbar-nav nav-top ms-auto">
@@ -73,7 +94,7 @@ function Header() {
             </Nav>
           </ul>
 
-          <ul className="navbar-nav ms-auto">
+          <ul className="navbar-nav web-nav ms-auto">
             <Nav>
               <li className="nav-item">
                 <Search />

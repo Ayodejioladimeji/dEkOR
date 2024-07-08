@@ -4,74 +4,123 @@
   position: fixed;
   width: 100%;
 
-  .navbar-brand {
-    border: none !important;
-  }
+  .main-container{
+    display:flex;
+    align-items: center!important;
+    justify-content: space-between;
 
-  .navbar-nav {
-    @media (max-width: 992px) {
-      &:first-child {
-        margin-top: 20px;
-      }
+    .navbar-brand {
+      border: none !important;
     }
 
-    &:last-child {
-      margin-top: 0;
-    }
+    .mobile-navbar{
+        column-gap:20px;
+        list-style-type:none;
+        display:none;
+        margin:0;
 
-    .nav-item {
-      margin-right: 25px;
-      cursor: pointer;
-      position: relative;
+        @media (max-width:991px){
+          display:flex;
+        }
 
-      &:last-child {
-        margin-right: 0;
-      }
-      .nav-link {
-        font-size: 20px;
-        border: none !important;
-        font-weight: 400;
+        @media (max-width:360px){
+          margin-top:20px;
+        }
+
+        .nav-item{
         cursor: pointer;
+        position: relative;
 
-        span {
-          &:focus {
-            outline: none !important;
-            box-shadow: none !important;
-            border: none !important;
-          }
+        .badge {
+         height: 20px;
+         max-width: 20px;
+         border-radius: 50%;
+         background: $primary-color;
+         color: $white;
+         position: absolute;
+         top: -12px;
+         right: -12px;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         font-size: 11px;
+       }
+        }
+
+
+      }
+  
+    .navbar-nav {
+      &.web-nav{
+        @media (max-width:991px){
+          display:none;
         }
       }
 
-      .active {
-        color: $button-color;
-        font-weight: 700;
+      @media (max-width: 992px) {
+        &:first-child {
+          margin-top: 20px;
+        }
       }
-
-      .badge {
-        height: 20px;
-        max-width: 20px;
-        border-radius: 50%;
-        background: $primary-color;
-        color: $white;
-        position: absolute;
-        top: -12px;
-        right: -12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 11px;
+  
+      &:last-child {
+        margin-top: 0;
       }
+  
+      .nav-item {
+        margin-right: 25px;
+        cursor: pointer;
+        position: relative;
+  
+        &:last-child {
+          margin-right: 0;
+        }
+        .nav-link {
+          font-size: 20px;
+          border: none !important;
+          font-weight: 400;
+          cursor: pointer;
+  
+          span {
+            &:focus {
+              outline: none !important;
+              box-shadow: none !important;
+              border: none !important;
+            }
+          }
+        }
+  
+        .active {
+          color: $button-color;
+          font-weight: 700;
+        }
+  
+        .badge {
+          height: 20px;
+          max-width: 20px;
+          border-radius: 50%;
+          background: $primary-color;
+          color: $white;
+          position: absolute;
+          top: -12px;
+          right: -12px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 11px;
+        }
+      }
+  
+  
     }
+  
+    .navbar-toggler {
+      border: none !important;
+      color: $black;
+      // position:absolute;
+      // left:0;
 
-    .nav-login {
-      @media (max-width: 768px) {
-        flex-direction: column;
-      }
     }
   }
 
-  .navbar-toggler {
-    border: none !important;
-    color: $black;
-  }
 }
