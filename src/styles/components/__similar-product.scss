@@ -4,6 +4,14 @@
   h1 {
     @include heading(36px, 600, $text-color);
     margin-bottom: 40px;
+
+    @media (max-width: 991px) {
+      font-size: 30px;
+    }
+
+    @media (max-width: 767px) {
+      font-size: 27px;
+    }
   }
 
   .product-box {

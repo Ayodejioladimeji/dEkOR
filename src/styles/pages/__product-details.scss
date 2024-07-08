@@ -40,11 +40,27 @@
       flex-direction: column;
       justify-content: space-between;
 
+      @media (max-width: 575px) {
+        flex-direction: row;
+        height: 100%;
+        width: 100%;
+        column-gap: 10px;
+      }
+
       .image-box {
         height: 80px;
         width: 90px;
         border-radius: 10px;
         overflow: hidden;
+
+        @media (max-width: 991px) {
+          width: 100%;
+        }
+
+        @media (max-width: 575px) {
+          margin-top: 20px;
+          width: 85px;
+        }
 
         &.image-active {
           border: 2px solid $primary-color;
@@ -60,115 +76,126 @@
     }
 
     // right section
-    .title {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 12px;
-
-      h1 {
-        @include heading(32px, 600, $text-color);
+    .content-details {
+      @media (max-width: 991px) {
+        margin-top: 40px;
       }
-    }
 
-    p {
-      @include body-text(16px, 400, $text-color);
-      margin-bottom: 12px;
-    }
-
-    h3 {
-      @include heading(24px, 600, $text-color);
-      margin-bottom: 12px;
-    }
-
-    h4 {
-      @include heading(20px, 600, $text-color);
-      margin-bottom: 12px;
-    }
-
-    .color-div {
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      padding: 0;
-      margin-bottom: 12px;
-
-      .main-color {
-        padding: 10px 0;
-        border: 1px solid transparent;
-        border-radius: 50%;
-        height: 35px;
-        width: 35px;
+      .title {
         display: flex;
         align-items: center;
-        justify-content: center;
-        transition: var(--transition);
-      }
+        justify-content: space-between;
+        margin-bottom: 12px;
 
-      .actual-color {
-        height: 28px;
-        width: 28px;
-        border-radius: 50%;
-        cursor: pointer;
-        border: 1px solid $border-color;
+        h1 {
+          @include heading(32px, 600, $text-color);
+        }
       }
-
-      .active-color {
-        border: 2px solid $primary-color;
-        padding: 10px 0;
-        border-radius: 50%;
-        height: 35px;
-        width: 35px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: var(--transition);
-      }
-    }
-
-    .quantities {
-      border: 1px solid $primary-color;
-      border-radius: 8px;
-      padding: 0px;
-      width: 129px;
-      display: flex;
-      align-items: center;
-      justify-content: space-around;
-      height: 40px;
-      transition: $transitions;
 
       p {
-        margin: 0;
+        @include body-text(16px, 400, $text-color);
+        margin-bottom: 12px;
       }
 
-      .bi {
-        display: block;
-        cursor: pointer;
-        font-size: 24px;
-        font-weight: 700;
+      h3 {
+        @include heading(24px, 600, $text-color);
+        margin-bottom: 12px;
       }
-    }
 
-    .button-container {
-      display: flex;
-      align-items: center;
-      column-gap: 32px;
-      margin-top: 40px;
+      h4 {
+        @include heading(20px, 600, $text-color);
+        margin-bottom: 12px;
+      }
 
-      button {
-        @include buttons($primary-color);
-        height: 56px;
-        width: 190px;
+      .color-div {
         display: flex;
         align-items: center;
-        justify-content: center;
-        color: $white;
-        border-radius: 10px;
+        justify-content: flex-start;
+        padding: 0;
+        margin-bottom: 12px;
 
-        &:first-child {
-          background: transparent;
-          border: 1px solid $primary-color;
-          color: $primary-color;
+        .main-color {
+          padding: 10px 0;
+          border: 1px solid transparent;
+          border-radius: 50%;
+          height: 35px;
+          width: 35px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: var(--transition);
+        }
+
+        .actual-color {
+          height: 28px;
+          width: 28px;
+          border-radius: 50%;
+          cursor: pointer;
+          border: 1px solid $border-color;
+        }
+
+        .active-color {
+          border: 2px solid $primary-color;
+          padding: 10px 0;
+          border-radius: 50%;
+          height: 35px;
+          width: 35px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: var(--transition);
+        }
+      }
+
+      .quantities {
+        border: 1px solid $primary-color;
+        border-radius: 8px;
+        padding: 0px;
+        width: 129px;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        height: 40px;
+        transition: $transitions;
+
+        p {
+          margin: 0;
+        }
+
+        .bi {
+          display: block;
+          cursor: pointer;
+          font-size: 24px;
+          font-weight: 700;
+        }
+      }
+
+      .button-container {
+        display: flex;
+        align-items: center;
+        column-gap: 32px;
+        margin-top: 40px;
+
+        button {
+          @include buttons($primary-color);
+          height: 56px;
+          width: 190px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: $white;
+          border-radius: 10px;
+
+          &:first-child {
+            background: transparent;
+            border: 1px solid $primary-color;
+            color: $primary-color;
+          }
+
+          @media (max-width: 500px) {
+            width: 100%;
+            padding: 15px;
+          }
         }
       }
     }
@@ -184,13 +211,18 @@
   //   information section
   .information {
     margin-top: 30px;
+    overflow: auto;
 
     .top {
       display: flex;
       align-items: center;
       column-gap: 30px;
       border-radius: 4px;
-      margin-bottom:40px;
+      margin-bottom: 40px;
+
+      @media (max-width: 500px) {
+        width: 500px;
+      }
 
       button {
         @include body-text(20px, 400, $text-color);

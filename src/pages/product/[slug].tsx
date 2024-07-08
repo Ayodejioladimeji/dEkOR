@@ -42,24 +42,21 @@ const Product = (props: Props) => {
       return item.id !== product?.id;
     });
 
-      // 
-      state?.cart.forEach((item) => {
-        if (item.id === product?.id) {
-          item.quantity += 1;
-        }
-      });
+    //
+    state?.cart.forEach((item) => {
+      if (item.id === product?.id) {
+        item.quantity += 1;
+      }
+    });
 
+    const carting = state?.cart.find((item) => item.id === product?.id);
 
+    const cartData = {
+      ...product,
+      quantity: carting?.quantity,
+    };
 
-      const carting = state?.cart.find((item) => item.id === product?.id);
-
-      const cartData = {
-        ...product,
-        quantity: carting?.quantity,
-      };
-
-      dispatch({ type: ACTIONS.UPDATECART, payload: cartData });
-    
+    dispatch({ type: ACTIONS.UPDATECART, payload: cartData });
   };
 
   // // decrease cart items
@@ -95,7 +92,7 @@ const Product = (props: Props) => {
       };
 
       dispatch({ type: ACTIONS.CART, payload: cartData });
-      setProduct(cartData)
+      setProduct(cartData);
     } else {
       cogoToast.error("Item already added to your cart");
     }
@@ -123,9 +120,9 @@ const Product = (props: Props) => {
 
             <div className="content">
               <div className="row">
-                <div className="col">
+                <div className="col-12 col-lg-6">
                   <div className="row">
-                    <div className="col-9">
+                    <div className="col-12 col-sm-9">
                       <div className="detail-image">
                         <Image
                           src={product?.images && product?.images[imageIndex]}
@@ -136,7 +133,7 @@ const Product = (props: Props) => {
                       </div>
                     </div>
 
-                    <div className="col-3">
+                    <div className="col-12 col-sm-3">
                       <div className="thumb">
                         {product?.images?.map((img, index) => (
                           <div
@@ -159,7 +156,7 @@ const Product = (props: Props) => {
                   </div>
                 </div>
 
-                <div className="col">
+                <div className="col-12 col-lg-6 content-details">
                   <div className="title">
                     <h1>{product?.title}</h1>
                     <Ratings />
@@ -169,7 +166,7 @@ const Product = (props: Props) => {
                   <h3>${product?.price}</h3>
 
                   <div className="color-div">
-                    {product?.colors?.map((color:any, index:number) => {
+                    {product?.colors?.map((color: any, index: number) => {
                       return (
                         <div
                           key={index}
