@@ -25,7 +25,7 @@ const AllProducts = (props: Props) => {
     // to show the product card skeletal loader, i will delay the products
     setTimeout(() => {
       setProducts(data);
-      setTotalCount(data?.length)
+      setTotalCount(data?.length);
       setLoading(false);
     }, 1000);
   }, [router]);
@@ -52,7 +52,9 @@ const AllProducts = (props: Props) => {
 
           <div className="product-box">
             {loading ? (
-              <CardSkeleton length={8} />
+              
+                <CardSkeleton length={12} />
+              
             ) : (
               <>
                 {currentProducts?.map((item: any) => {
@@ -63,26 +65,23 @@ const AllProducts = (props: Props) => {
           </div>
 
           {/* pagination */}
-          {products?.length !== 0 &&
-            totalCount > PageSize && (
-              <div className="page-navigation">
-                <div className="mt-3">
-                  <Paginate
-                    className="pagination-bar"
-                    currentPage={
-                      !loading && page === undefined
-                        ? currentPage
-                        : Number(page)
-                    }
-                    totalCount={totalCount}
-                    pageSize={PageSize}
-                    onPageChange={(page) => setCurrentPage(page)}
-                    loading={loading}
-                    setLoading={setLoading}
-                  />
-                </div>
+          {!loading && products?.length !== 0 && totalCount > PageSize && (
+            <div className="page-navigation">
+              <div className="mt-3">
+                <Paginate
+                  className="pagination-bar"
+                  currentPage={
+                    !loading && page === undefined ? currentPage : Number(page)
+                  }
+                  totalCount={totalCount}
+                  pageSize={PageSize}
+                  onPageChange={(page) => setCurrentPage(page)}
+                  loading={loading}
+                  setLoading={setLoading}
+                />
               </div>
-            )}
+            </div>
+          )}
         </div>
       </div>
     </Layout>
