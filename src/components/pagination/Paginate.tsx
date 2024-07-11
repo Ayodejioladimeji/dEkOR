@@ -38,13 +38,13 @@ const Paginate = (props) => {
   const onNext = () => {
     setLoading(true);
     onPageChange(currentPage + 1);
-    // router.push(`${router.route}?page=${currentPage + 1}`);
+    router.push(`${router.route}?page=${currentPage + 1}`);
   };
 
   const onPrevious = () => {
     setLoading(true);
     onPageChange(currentPage - 1);
-    // router.push(`${router.route}?page=${currentPage - 1}`);
+    router.push(`${router.route}?page=${currentPage - 1}`);
   };
 
   const numChange = (pageNumber: number) => {
@@ -62,50 +62,53 @@ const Paginate = (props) => {
     <ul
       className={classnames("pagination-container", { [className]: className })}
     >
-      {!device && <li
-        className={classnames("pagination-item", {
-          disabled: currentPage === 1,
-        })}
-        onClick={onPrevious}
-      >
-        <div className="arrow left" />
-      </li>}
+      {!device && (
+        <li
+          className={classnames("pagination-item", {
+            disabled: currentPage === 1,
+          })}
+          onClick={onPrevious}
+        >
+          <div className="arrow left" />
+        </li>
+      )}
 
       {/* {!device && ( */}
-        <>
-          {paginationRange?.map((pageNumber, index) => {
-            if (pageNumber === DOTS) {
-              return (
-                <li key={index} className="pagination-item dots">
-                  &#8230;
-                </li>
-              );
-            }
-
+      <>
+        {paginationRange?.map((pageNumber, index) => {
+          if (pageNumber === DOTS) {
             return (
-              <li
-                key={index}
-                className={classnames("pagination-item", {
-                  selected: pageNumber === currentPage,
-                })}
-                onClick={() => numChange(pageNumber)}
-              >
-                {pageNumber}
+              <li key={index} className="pagination-item dots">
+                &#8230;
               </li>
             );
-          })}
-        </>
+          }
+
+          return (
+            <li
+              key={index}
+              className={classnames("pagination-item", {
+                selected: pageNumber === currentPage,
+              })}
+              onClick={() => numChange(pageNumber)}
+            >
+              {pageNumber}
+            </li>
+          );
+        })}
+      </>
       {/* )} */}
 
-
-      {!device && <li
-        className={classnames("pagination-item", {
-          disabled: currentPage === lastPage,
-        })}
-        onClick={onNext}
-      >
-        <div className="arrow right" />
-      </li>}
+      {!device && (
+        <li
+          className={classnames("pagination-item", {
+            disabled: currentPage === lastPage,
+          })}
+          onClick={onNext}
+        >
+          <div className="arrow right" />
+        </li>
+      )}
     </ul>
   );
 };
