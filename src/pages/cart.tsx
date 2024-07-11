@@ -100,7 +100,10 @@ const Cart = (props: Props) => {
                     return (
                       <div className="cart-items" key={item.id}>
                         <div className="cart-div">
-                          <div className="cart-image">
+                          <div
+                            className="cart-image"
+                            onClick={() => router.push(`/product/${item?.id}`)}
+                          >
                             <Image
                               src={item?.images[0]}
                               alt="cart-image"
