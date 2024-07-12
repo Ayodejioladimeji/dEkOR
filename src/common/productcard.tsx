@@ -7,16 +7,9 @@ import React, { useContext } from "react";
 import { Image } from "react-bootstrap";
 import { ItemCart } from "../../public/assets";
 
-interface Props {
-  id: string;
-  title: string;
-  price: string;
-  images: string[];
-  ratings: string;
-  category: string;
-}
+//
 
-const Productcard = (props: Props) => {
+const Productcard = (props: any) => {
   const { state, dispatch } = useContext<any>(DataContext);
   const router = useRouter();
 
@@ -65,7 +58,7 @@ const Productcard = (props: Props) => {
       </div>
 
       <div className="product-content">
-        <h3>{props?.title}</h3>
+        <h3>{props?.name}</h3>
         <p>${props?.price}</p>
         <button onClick={() => router.push(`/product/${props?.id}`)}>
           Shop Now
