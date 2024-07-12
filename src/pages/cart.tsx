@@ -116,7 +116,7 @@ const Cart = (props: Props) => {
                           </div>
 
                           <div className="cart-content">
-                            <h4>{item?.title}</h4>
+                            <h4>{item?.name}</h4>
                             <h3>
                               ${formatMoney(Number(item.current_price[0]?.USD[0]) * item.quantity)}
                             </h3>
