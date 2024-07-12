@@ -55,8 +55,9 @@ const Product = (props: Props) => {
           if (existingCartItem) {
             setQuantity(existingCartItem.quantity); // Set quantity from cart
           }
+
+          setLoading(false);
         }
-        setLoading(false);
       }
       getProduct()
     }
@@ -113,13 +114,20 @@ const Product = (props: Props) => {
   if (loading) {
     return (
       <Layout>
-        <div className="loading">
+        <div style={{
+          height:'80vh',
+          display:'flex',
+          alignItems:'center',
+          justifyContent:'center',
+          flexDirection:'column'
+        }}>
           <Loading
             primaryColor="#000"
             secondaryColor="#000"
             width="50px"
             height="50px"
           />
+          Loading Product
         </div>
       </Layout>
     );
