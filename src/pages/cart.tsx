@@ -9,6 +9,7 @@ import SimilarProduct from "@/components/SimilarProduct";
 import { useRouter } from "next/router";
 import cogoToast from "cogo-toast";
 import { calculateTotal, formatMoney } from "@/utils/utils";
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
 
 interface Props {}
 
@@ -97,6 +98,7 @@ const Cart = (props: Props) => {
               <div className="row">
                 <div className="col-12 col-lg-8">
                   {state?.cart?.map((item: any) => {
+                    
                     return (
                       <div className="cart-items" key={item.id}>
                         <div className="cart-div">
@@ -105,7 +107,7 @@ const Cart = (props: Props) => {
                             onClick={() => router.push(`/product/${item?.id}`)}
                           >
                             <Image
-                              src={item?.images[0]}
+                              src={BASE_URL + "/images/" + item?.photos[0]?.url}
                               alt="cart-image"
                               width={100}
                               height={100}
@@ -116,13 +118,8 @@ const Cart = (props: Props) => {
                           <div className="cart-content">
                             <h4>{item?.title}</h4>
                             <h3>
-                              ${formatMoney(Number(item.price) * item.quantity)}
+                              ${formatMoney(Number(item.current_price[0]?.USD[0]) * item.quantity)}
                             </h3>
-
-                            {/* <div
-                              style={{ background: item?.color }}
-                              className="color"
-                            ></div> */}
 
                             <div className="quantities">
                               <i
@@ -162,10 +159,10 @@ const Cart = (props: Props) => {
                             <div className="d-flex align-items-center gap-2">
                               <CheckIcon />
                               <p>
-                                {item?.title} ({item.quantity})
+                                {item?.name} ({item.quantity})
                               </p>
                             </div>
-                            <p>${item?.price}</p>
+                            <p>${item?.current_price[0]?.USD[0]}</p>
                           </div>
                         );
                       })}

@@ -6,12 +6,15 @@ import { useRouter } from "next/router";
 import React, { useContext } from "react";
 import { Image } from "react-bootstrap";
 import { ItemCart } from "../../public/assets";
+import { formatMoney } from "@/utils/utils";
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
 
 //
 
 const Productcard = (props: any) => {
   const { state, dispatch } = useContext<any>(DataContext);
   const router = useRouter();
+
 
   // add items to cart
   const addToCart = () => {
@@ -22,12 +25,7 @@ const Productcard = (props: any) => {
 
     if (check) {
       const cartData = {
-        id: props?.id,
-        title: props?.title,
-        price: props?.price,
-        category: props?.category,
-        ratings: props?.ratings,
-        images: props?.images,
+        ...props,
         quantity: 1,
       };
 
@@ -42,7 +40,7 @@ const Productcard = (props: any) => {
     <div className="product-card">
       <div className="product-image">
         <Image
-          src={props?.images[0]}
+          src={BASE_URL+"/images/"+ props?.photos[0]?.url}
           alt="product-image"
           width={100}
           height={100}
@@ -59,7 +57,7 @@ const Productcard = (props: any) => {
 
       <div className="product-content">
         <h3>{props?.name}</h3>
-        <p>${props?.price}</p>
+        <p>${formatMoney(Number(props?.current_price[0]?.USD[0]))}</p>
         <button onClick={() => router.push(`/product/${props?.id}`)}>
           Shop Now
         </button>

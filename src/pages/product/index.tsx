@@ -24,15 +24,6 @@ const AllProducts = (props: Props) => {
   const { page } = router.query;
 
   //
-  // useEffect(() => {
-  //   // to show the product card skeletal loader, i will delay the products
-  //   setTimeout(() => {
-  //     setProducts(data);
-  //     setTotalCount(data?.length);
-  //     setLoading(false);
-  //   }, 1000);
-  // }, [router]);
-
   useEffect(() => {
     const getProducts = async () => {
       const res: any = await GetRequest(
@@ -40,10 +31,11 @@ const AllProducts = (props: Props) => {
           page === undefined ? currentPage : page
         }&size=${PageSize}&Appid=${APP_ID}&Apikey=${API_KEY}`
       );
-      console.log(res?.data?.items);
-      setProducts(res?.data.items);
+      if(res?.status === 200){
+        setProducts(res?.data.items);
+        setLoading(false);
+      }
     };
-    setLoading(false);
     getProducts();
   }, []);
 
