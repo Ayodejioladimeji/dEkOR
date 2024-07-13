@@ -15,7 +15,6 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
-import { data } from "@/constants/data";
 import { LeftArrow, RightArrow } from "../../public/assets";
 import { useRouter } from "next/router";
 import { GetRequest } from "@/utils/requests";
@@ -37,7 +36,7 @@ const TopDeals = (props: Props) => {
   useEffect(() => {
     const getProducts = async () => {
       const res: any = await GetRequest(
-        `/products?organization_id=${ORGANISATION_ID}&reverse_sort=false&page=1&size=9&Appid=${APP_ID}&Apikey=${API_KEY}`
+        `?organization_id=${ORGANISATION_ID}&reverse_sort=false&page=1&size=9&Appid=${APP_ID}&Apikey=${API_KEY}`
       );
 
       if (res?.status === 200) {
@@ -116,7 +115,7 @@ const TopDeals = (props: Props) => {
                 disabledClass: "swiper-button-disabled",
               }}
             >
-              {products?.slice(0, 9)?.map((item, key) => (
+              {products?.slice(0, 15)?.map((item, key) => (
                 <SwiperSlide key={key}>
                   <div className="deals">
                     <div className="image-box">
@@ -132,7 +131,7 @@ const TopDeals = (props: Props) => {
                       <div className="discount">-0.5%</div>
                     </div>
 
-                    <h3>{item.title}</h3>
+                    <h3>{item.name}</h3>
                     <p>$99.5</p>
 
                     <div className="count-down">

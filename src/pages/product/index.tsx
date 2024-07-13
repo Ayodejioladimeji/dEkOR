@@ -27,13 +27,13 @@ const AllProducts = (props: Props) => {
   useEffect(() => {
     const getProducts = async () => {
       const res: any = await GetRequest(
-        `/products?organization_id=${ORGANISATION_ID}&reverse_sort=false&page=${
+        `?organization_id=${ORGANISATION_ID}&reverse_sort=false&page=${
           page === undefined ? currentPage : page
         }&size=${PageSize}&Appid=${APP_ID}&Apikey=${API_KEY}`
       );
-      if(res?.status === 200){
+      if (res?.status === 200) {
         setProducts(res?.data.items);
-        setTotalCount(res?.data?.total)
+        setTotalCount(res?.data?.total);
         setLoading(false);
       }
     };
