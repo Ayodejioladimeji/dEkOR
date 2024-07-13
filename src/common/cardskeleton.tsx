@@ -20,7 +20,7 @@ const CardSkeleton = (props: Props) => {
           <Skeleton
             height={250}
             className="skeletal-image"
-          />
+          /> 
           <Skeleton
             height={12}
             width={160}
