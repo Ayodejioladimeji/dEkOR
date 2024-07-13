@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import React, { useContext } from "react";
 import { Image } from "react-bootstrap";
 import { ItemCart } from "../../public/assets";
-import { formatMoney } from "@/utils/utils";
+import { firstTwoWords, formatMoney } from "@/utils/utils";
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
 
 //
@@ -29,6 +29,7 @@ const Productcard = (props: any) => {
         quantity: 1,
       };
 
+      dispatch({ type: ACTIONS.TOGGLE, payload: true })
       dispatch({ type: ACTIONS.CART, payload: cartData });
     } else {
       cogoToast.error("Item already added to your cart");
@@ -56,7 +57,7 @@ const Productcard = (props: any) => {
       </div>
 
       <div className="product-content">
-        <h3>{props?.name}</h3>
+        <h3>{firstTwoWords(props?.name)}</h3>
         <p>${formatMoney(Number(props?.current_price[0]?.USD[0]))}</p>
         <button onClick={() => router.push(`/product/${props?.id}`)}>
           Shop Now

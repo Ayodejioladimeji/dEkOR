@@ -33,11 +33,12 @@ const AllProducts = (props: Props) => {
       );
       if(res?.status === 200){
         setProducts(res?.data.items);
+        setTotalCount(res?.data?.total)
         setLoading(false);
       }
     };
     getProducts();
-  }, []);
+  }, [page]);
 
   const currentProducts = products?.slice(
     (currentPage - 1) * PageSize,

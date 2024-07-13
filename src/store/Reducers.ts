@@ -24,6 +24,16 @@ const reducers = (state: any, action: any) => {
         ...state,
         cart: payload,
       };
+    case ACTIONS.SETCART:
+      return {
+        ...state,
+        cart: payload,
+      };
+    case ACTIONS.LOADING:
+      return {
+        ...state,
+        loading: payload,
+      };
 
     default:
       return state;

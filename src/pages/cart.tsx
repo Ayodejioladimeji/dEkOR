@@ -3,12 +3,14 @@ import Layout from "@/components/Layout";
 import { ACTIONS } from "@/store/Actions";
 import { DataContext } from "@/store/GlobalState";
 import Image from "next/image";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { CheckIcon, DeleteIcon } from "../../public/assets";
 import SimilarProduct from "@/components/SimilarProduct";
 import { useRouter } from "next/router";
 import cogoToast from "cogo-toast";
 import { calculateTotal, formatMoney } from "@/utils/utils";
+import MoreProduct from "../components/MoreProducts";
+import Loading from "@/common/loading";
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
 
 interface Props {}
@@ -16,6 +18,7 @@ interface Props {}
 const Cart = (props: Props) => {
   const { state, dispatch } = useContext(DataContext);
   const router = useRouter();
+  const [loading, setLoading] = useState(true)
 
   // increase item
   const increment = (data: any) => {
@@ -31,7 +34,7 @@ const Cart = (props: Props) => {
       ...data,
       quantity: carting?.quantity,
     };
-
+    dispatch({ type: ACTIONS.TOGGLE, payload: true })
     dispatch({ type: ACTIONS.UPDATECART, payload: cartData });
   };
 
@@ -50,16 +53,41 @@ const Cart = (props: Props) => {
       ...data,
       quantity: carting?.quantity,
     };
-
+    dispatch({ type: ACTIONS.TOGGLE, payload: true })
     dispatch({ type: ACTIONS.UPDATECART, payload: cartData });
   };
 
   // remove item from crt
   const removeCartItem = (id) => {
     const newData = state?.cart.filter((item) => item.id !== id);
+    dispatch({ type: ACTIONS.TOGGLE, payload: true })
     dispatch({ type: ACTIONS.DELETECART, payload: newData });
     cogoToast.success("Item removed successfully");
   };
+
+
+// 
+  if (state?.loading) {
+    return (
+      <Layout>
+        <div style={{
+          height: '90vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexDirection: 'column'
+        }}>
+          <Loading
+            primaryColor="#000"
+            secondaryColor="#000"
+            width="50px"
+            height="50px"
+          />
+          Loading Cart
+        </div>
+      </Layout>
+    );
+  }
 
   //
 
@@ -98,6 +126,7 @@ const Cart = (props: Props) => {
               <div className="row">
                 <div className="col-12 col-lg-8">
                   {state?.cart?.map((item: any) => {
+                    const img = item?.photos?.find((_, index) => index === 0)
                     
                     return (
                       <div className="cart-items" key={item.id}>
@@ -107,7 +136,7 @@ const Cart = (props: Props) => {
                             onClick={() => router.push(`/product/${item?.id}`)}
                           >
                             <Image
-                              src={BASE_URL + "/images/" + item?.photos[0]?.url}
+                              src={BASE_URL + "/images/" + img?.url}
                               alt="cart-image"
                               width={100}
                               height={100}
@@ -162,7 +191,7 @@ const Cart = (props: Props) => {
                                 {item?.name} ({item.quantity})
                               </p>
                             </div>
-                            <p>${item?.current_price[0]?.USD[0]}</p>
+                            {/* <p>${item?.current_price[0]?.USD[0]}</p> */}
                           </div>
                         );
                       })}
@@ -172,7 +201,7 @@ const Cart = (props: Props) => {
 
                     <div className="order-items">
                       <h5>Total</h5>
-                      <h5>${formatMoney(calculateTotal(state?.cart))}</h5>
+                      {/* <h5>${formatMoney(calculateTotal(state?.cart))}</h5> */}
                     </div>
 
                     <button onClick={() => router.push("/checkout")}>
@@ -183,8 +212,8 @@ const Cart = (props: Props) => {
               </div>
 
               <hr />
-              {/* similar products */}
-              <SimilarProduct />
+              {/* more products */}
+              <MoreProduct />
             </>
           )}
         </div>

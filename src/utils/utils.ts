@@ -40,3 +40,10 @@ export function screenPixels(size, setState) {
         mediaQuery.removeEventListener("change", handleScreenSizeChange);
     };
 }
+
+
+// first two words
+export const firstTwoWords = (str) => {
+    const words = str.split(' ');
+    return words.slice(0, 2).join(' ');
+};

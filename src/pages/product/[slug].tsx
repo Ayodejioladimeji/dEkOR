@@ -71,6 +71,7 @@ const Product = (props: Props) => {
         ...product,
         quantity: quantity,
       };
+      dispatch({ type: ACTIONS.TOGGLE, payload: true })
       dispatch({ type: ACTIONS.CART, payload: cartData });
       setProduct(cartData);
       cogoToast.success("Item added to your cart");
@@ -86,6 +87,7 @@ const Product = (props: Props) => {
       return cogoToast.error("Please add item to you cart to continue");
     }
     setQuantity(quantity + 1);
+    dispatch({ type: ACTIONS.TOGGLE, payload: true })
     state?.cart.forEach((item: any) => {
       if (item.id === product?.id) {
         item.quantity += 1;
@@ -102,6 +104,7 @@ const Product = (props: Props) => {
 
     if (quantity > 1) {
       setQuantity(quantity - 1);
+      dispatch({ type: ACTIONS.TOGGLE, payload: true })
        state?.cart.forEach((item: any) => {
          if (item.id === product?.id) {
            if (item.quantity === 1) return;
@@ -132,6 +135,10 @@ const Product = (props: Props) => {
       </Layout>
     );
   }
+
+
+
+  // 
 
   return (
     <Layout>
@@ -292,7 +299,7 @@ const Product = (props: Props) => {
           </div>
 
           {/* similar products */}
-          <SimilarProduct/>
+          <SimilarProduct id={product?.categories[0]?.id}/>
         </div>
       </div>
     </Layout>

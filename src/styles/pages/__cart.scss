@@ -41,6 +41,7 @@
         overflow: hidden;
         cursor: pointer;
         border:1px solid $border-color;
+        background:$border-color;
 
         @media (max-width: 450px) {
           height: 130px;
