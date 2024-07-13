@@ -19,19 +19,18 @@ const Products = (props: Props) => {
   //
 
   useEffect(() => {
-    const getProducts = async () => {
-      const res: any = await GetRequest(
-        `/products?organization_id=${ORGANISATION_ID}&reverse_sort=false&page=1&size=9&Appid=${APP_ID}&Apikey=${API_KEY}`
-      );
-     
-      if(res?.status === 200){
-        setProducts(res?.data.items);
-      }
-      setLoading(false);
-    };
-    getProducts();
-  }, []);
+      const getProducts = async () => {
+        const res: any = await GetRequest(
+          `?organization_id=${ORGANISATION_ID}&reverse_sort=false&page=1&size=9&Appid=${APP_ID}&Apikey=${API_KEY}`
+        );
 
+        if (res?.status === 200) {
+          setProducts(res?.data.items);
+        }
+        setLoading(false);
+      };
+      getProducts();
+  }, []);
 
   //
   return (

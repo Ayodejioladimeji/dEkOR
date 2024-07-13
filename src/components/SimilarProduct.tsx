@@ -20,7 +20,7 @@ const SimilarProduct = (props: Props) => {
     if (props?.id) {
       const getProducts = async () => {
         const res: any = await GetRequest(
-          `/products?organization_id=${ORGANISATION_ID}&reverse_sort=false&page=1&size=40&Appid=${APP_ID}&Apikey=${API_KEY}`
+          `?organization_id=${ORGANISATION_ID}&reverse_sort=false&page=1&size=40&Appid=${APP_ID}&Apikey=${API_KEY}`
         );
 
         if (res?.status === 200) {

@@ -13,6 +13,8 @@ export const GetRequest = async (url: string, token?: string) => {
 
     return res;
   } catch (error) {
-    cogoToast.error("Something went wrong", { hideAfter: 5 });
+    cogoToast.error("Something went wrong, Please refresh the page", {
+      hideAfter: 5,
+    });
   }
 };
