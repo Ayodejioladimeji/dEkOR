@@ -7,14 +7,13 @@ import React, { useContext } from "react";
 import { Image } from "react-bootstrap";
 import { ItemCart } from "../../public/assets";
 import { firstTwoWords, formatMoney } from "@/utils/utils";
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
+const IMAGE_URL = process.env.NEXT_PUBLIC_IMAGE_URL;
 
 //
 
 const Productcard = (props: any) => {
   const { state, dispatch } = useContext<any>(DataContext);
   const router = useRouter();
-
 
   // add items to cart
   const addToCart = () => {
@@ -29,7 +28,7 @@ const Productcard = (props: any) => {
         quantity: 1,
       };
 
-      dispatch({ type: ACTIONS.TOGGLE, payload: true })
+      dispatch({ type: ACTIONS.TOGGLE, payload: true });
       dispatch({ type: ACTIONS.CART, payload: cartData });
     } else {
       cogoToast.error("Item already added to your cart");
@@ -41,7 +40,7 @@ const Productcard = (props: any) => {
     <div className="product-card">
       <div className="product-image">
         <Image
-          src={BASE_URL+"/images/"+ props?.photos[0]?.url}
+          src={IMAGE_URL + "/images/" + props?.photos[0]?.url}
           alt="product-image"
           width={100}
           height={100}
