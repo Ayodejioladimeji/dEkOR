@@ -42,10 +42,11 @@ const Product = (props: Props) => {
       const getProduct = async () => {
         const res: any = await GetRequest(
           `/products?organization_id=${ORGANISATION_ID}&reverse_sort=false&page=1&size=50&Appid=${APP_ID}&Apikey=${API_KEY}`
+          // `/products/${slug}?organization_id=${ORGANISATION_ID}&reverse_sort=false&page=1&size=50&Appid=${APP_ID}&Apikey=${API_KEY}`
         );     
 
         if(res?.status === 200){
-          const foundProduct = res?.data?.items.find((item) => item.id === slug);
+          const foundProduct = res?.data?.items?.find((item) => item.id === slug);
 
           setProduct(foundProduct);
           // Check if the product already exists in the cart

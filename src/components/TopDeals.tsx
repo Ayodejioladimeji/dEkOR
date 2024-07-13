@@ -18,11 +18,35 @@ import "swiper/css/scrollbar";
 import { data } from "@/constants/data";
 import { LeftArrow, RightArrow } from "../../public/assets";
 import { useRouter } from "next/router";
+import { GetRequest } from "@/utils/requests";
+import Loading from "@/common/loading";
+const ORGANISATION_ID = process.env.NEXT_PUBLIC_ORGANISATION_ID;
+const APP_ID = process.env.NEXT_PUBLIC_APP_ID;
+const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
 
 interface Props {}
 
 const TopDeals = (props: Props) => {
   const router = useRouter();
+  const [products, setProducts] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  //
+
+  useEffect(() => {
+    const getProducts = async () => {
+      const res: any = await GetRequest(
+        `/products?organization_id=${ORGANISATION_ID}&reverse_sort=false&page=1&size=9&Appid=${APP_ID}&Apikey=${API_KEY}`
+      );
+
+      if (res?.status === 200) {
+        setProducts(res?.data.items);
+      }
+      setLoading(false);
+    };
+    getProducts();
+  }, []);
 
   //
   const countdownDate = new Date();
@@ -55,6 +79,24 @@ const TopDeals = (props: Props) => {
       <div className="container">
         <Heading title="Top Deals For The Day" />
 
+       {loading ? <div style={{
+          height: '60vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexDirection: 'column'
+        }}>
+          <Loading
+            primaryColor="#000"
+            secondaryColor="#000"
+            width="50px"
+            height="50px"
+          />
+          Loading Products
+        </div>
+        
+      :
+
         <div className="top-deal-container">
           <Swiper
             modules={[Pagination, Scrollbar, A11y, Autoplay]}
@@ -73,7 +115,7 @@ const TopDeals = (props: Props) => {
               disabledClass: "swiper-button-disabled",
             }}
           >
-            {data?.map((item, key) => (
+            {products?.slice(0, 9)?.map((item, key) => (
               <SwiperSlide key={key}>
                 <div className="deals">
                   <div className="image-box">
@@ -81,7 +123,7 @@ const TopDeals = (props: Props) => {
                       height={100}
                       width={100}
                       unoptimized
-                      src={item.images[0]}
+                      src={BASE_URL + "/images/" + item?.photos[0]?.url}
                       alt="images"
                       className="image1"
                     />
@@ -133,6 +175,8 @@ const TopDeals = (props: Props) => {
             <RightArrow />
           </div> */}
         </div>
+      }
+
       </div>
     </div>
   );
