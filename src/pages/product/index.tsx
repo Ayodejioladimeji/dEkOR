@@ -31,7 +31,7 @@ const AllProducts = (props: Props) => {
          `?organization_id=${ORGANISATION_ID}&reverse_sort=false&page=${page === undefined ? currentPage : page
          }&size=${PageSize}&Appid=${APP_ID}&Apikey=${API_KEY}`
        );
-       
+
        if (res?.status === 200) {
          setProducts(res?.data.items);
          setTotalCount(res?.data?.total);
@@ -45,7 +45,7 @@ const AllProducts = (props: Props) => {
      };
      getProducts();
    }
-  }, [router?.isReady]);
+  }, [router]);
 
 
   //
