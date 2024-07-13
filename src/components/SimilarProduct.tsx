@@ -50,7 +50,7 @@ const SimilarProduct = (props: Props) => {
           <CardSkeleton length={4} />
         ) : (
           <>
-            {products?.map((item: any) => {
+            {products?.slice(0, 8)?.map((item: any) => {
               return <Productcard {...item} key={item.id} />;
             })}
           </>
