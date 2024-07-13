@@ -26,8 +26,8 @@ export const DataProvider = ({ children }) => {
     const cartData = localStorage.getItem("cart");
     if (cartData) {
       dispatch({ type: ACTIONS.SETCART, payload: JSON.parse(cartData) });
-      dispatch({ type: ACTIONS.LOADING, payload: false });
     }
+    dispatch({ type: ACTIONS.LOADING, payload: false });
   }, []);
 
   // persists item in the cart
