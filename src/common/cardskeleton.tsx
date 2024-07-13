@@ -19,7 +19,6 @@ const CardSkeleton = (props: Props) => {
         <div className="mb-4 text-center" key={index}>
           <Skeleton
             height={250}
-            style={{ borderRadius: "20px" }}
             className="skeletal-image"
           />
           <Skeleton
