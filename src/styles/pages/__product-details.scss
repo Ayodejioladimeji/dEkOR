@@ -94,9 +94,14 @@
         align-items: center;
         justify-content: space-between;
         margin-bottom: 12px;
+        flex-wrap: wrap;
 
         h1 {
           @include heading(32px, 600, $text-color);
+
+          @media (max-width:500px){
+            font-size:25px;
+          }
         }
       }
 

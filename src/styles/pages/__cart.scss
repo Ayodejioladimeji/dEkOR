@@ -59,11 +59,19 @@
         h4 {
           @include heading(20px, 500, $text-color);
           margin-bottom: 12px;
+
+          @media (max-width:500px){
+            font-size:14px;
+          }
         }
 
         h3 {
           @include heading(20px, 700, $text-color);
           margin-bottom: 12px;
+
+          @media (max-width:500px) {
+              font-size: 14px;
+            }
         }
 
         .color {
@@ -82,6 +90,11 @@
           justify-content: space-around;
           height: 40px;
           transition: $transitions;
+
+          @media (max-width:500px){
+            height:35px;
+            width:100px;
+          }
 
           p {
             margin: 0;
