@@ -4,6 +4,10 @@ import React, { useEffect, useState } from "react";
 import Heading from "./Heading";
 import { data } from "@/constants/data";
 import { useRouter } from "next/router";
+import { GetRequest } from "@/utils/requests";
+const ORGANISATION_ID = process.env.NEXT_PUBLIC_ORGANISATION_ID;
+const APP_ID = process.env.NEXT_PUBLIC_APP_ID;
+const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 
 interface Props {}
 
@@ -13,12 +17,19 @@ const Products = (props: Props) => {
   const router = useRouter();
 
   //
+
   useEffect(() => {
-    // to show the product card skeletal loader, i will delay the products
-    setTimeout(() => {
-      setProducts(data);
-      setLoading(false);
-    }, 1000);
+      const getProducts = async () => {
+        const res: any = await GetRequest(
+          `?organization_id=${ORGANISATION_ID}&reverse_sort=false&page=1&size=9&Appid=${APP_ID}&Apikey=${API_KEY}`
+        );
+
+        if (res?.status === 200) {
+          setProducts(res?.data.items);
+        }
+        setLoading(false);
+      };
+      getProducts();
   }, []);
 
   //
@@ -32,7 +43,7 @@ const Products = (props: Props) => {
             <CardSkeleton length={9} />
           ) : (
             <>
-              {products?.slice(0, 9)?.map((item: any) => {
+              {products?.map((item: any) => {
                 return <Productcard {...item} key={item.id} />;
               })}
             </>

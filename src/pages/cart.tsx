@@ -3,18 +3,22 @@ import Layout from "@/components/Layout";
 import { ACTIONS } from "@/store/Actions";
 import { DataContext } from "@/store/GlobalState";
 import Image from "next/image";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { CheckIcon, DeleteIcon } from "../../public/assets";
 import SimilarProduct from "@/components/SimilarProduct";
 import { useRouter } from "next/router";
 import cogoToast from "cogo-toast";
 import { calculateTotal, formatMoney } from "@/utils/utils";
+import MoreProduct from "../components/MoreProducts";
+import Loading from "@/common/loading";
+const IMAGE_URL = process.env.NEXT_PUBLIC_IMAGE_URL;
 
 interface Props {}
 
 const Cart = (props: Props) => {
   const { state, dispatch } = useContext(DataContext);
   const router = useRouter();
+  const [loading, setLoading] = useState(true);
 
   // increase item
   const increment = (data: any) => {
@@ -30,7 +34,7 @@ const Cart = (props: Props) => {
       ...data,
       quantity: carting?.quantity,
     };
-
+    dispatch({ type: ACTIONS.TOGGLE, payload: true });
     dispatch({ type: ACTIONS.UPDATECART, payload: cartData });
   };
 
@@ -49,16 +53,48 @@ const Cart = (props: Props) => {
       ...data,
       quantity: carting?.quantity,
     };
-
+    dispatch({ type: ACTIONS.TOGGLE, payload: true });
     dispatch({ type: ACTIONS.UPDATECART, payload: cartData });
   };
 
   // remove item from crt
   const removeCartItem = (id) => {
     const newData = state?.cart.filter((item) => item.id !== id);
+    dispatch({ type: ACTIONS.TOGGLE, payload: true });
     dispatch({ type: ACTIONS.DELETECART, payload: newData });
     cogoToast.success("Item removed successfully");
   };
+
+  // clear cart
+  const clearCart = () => {
+    dispatch({ type: ACTIONS.TOGGLE, payload: true });
+    dispatch({ type: ACTIONS.DELETECART, payload: [] });
+  };
+
+  //
+  if (state?.loading) {
+    return (
+      <Layout>
+        <div
+          style={{
+            height: "90vh",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            flexDirection: "column",
+          }}
+        >
+          <Loading
+            primaryColor="#000"
+            secondaryColor="#000"
+            width="50px"
+            height="50px"
+          />
+          Loading Cart
+        </div>
+      </Layout>
+    );
+  }
 
   //
 
@@ -97,6 +133,8 @@ const Cart = (props: Props) => {
               <div className="row">
                 <div className="col-12 col-lg-8">
                   {state?.cart?.map((item: any) => {
+                    const img = item?.photos?.find((_, index) => index === 0);
+
                     return (
                       <div className="cart-items" key={item.id}>
                         <div className="cart-div">
@@ -105,7 +143,7 @@ const Cart = (props: Props) => {
                             onClick={() => router.push(`/product/${item?.id}`)}
                           >
                             <Image
-                              src={item?.images[0]}
+                              src={IMAGE_URL + "/images/" + img?.url}
                               alt="cart-image"
                               width={100}
                               height={100}
@@ -114,15 +152,14 @@ const Cart = (props: Props) => {
                           </div>
 
                           <div className="cart-content">
-                            <h4>{item?.title}</h4>
+                            <h4>{item?.name}</h4>
                             <h3>
-                              ${formatMoney(Number(item.price) * item.quantity)}
+                              $
+                              {formatMoney(
+                                Number(item.current_price[0]?.USD[0]) *
+                                  item.quantity
+                              )}
                             </h3>
-
-                            {/* <div
-                              style={{ background: item?.color }}
-                              className="color"
-                            ></div> */}
 
                             <div className="quantities">
                               <i
@@ -149,6 +186,10 @@ const Cart = (props: Props) => {
                       </div>
                     );
                   })}
+
+                  <div className="clear-cart">
+                    <button onClick={clearCart}>Clear cart</button>
+                  </div>
                 </div>
 
                 <div className="col-12 col-lg-4">
@@ -162,10 +203,10 @@ const Cart = (props: Props) => {
                             <div className="d-flex align-items-center gap-2">
                               <CheckIcon />
                               <p>
-                                {item?.title} ({item.quantity})
+                                {item?.name} ({item.quantity})
                               </p>
                             </div>
-                            <p>${item?.price}</p>
+                            {/* <p>${item?.current_price[0]?.USD[0]}</p> */}
                           </div>
                         );
                       })}
@@ -175,7 +216,7 @@ const Cart = (props: Props) => {
 
                     <div className="order-items">
                       <h5>Total</h5>
-                      <h5>${formatMoney(calculateTotal(state?.cart))}</h5>
+                      {/* <h5>${formatMoney(calculateTotal(state?.cart))}</h5> */}
                     </div>
 
                     <button onClick={() => router.push("/checkout")}>
@@ -186,8 +227,8 @@ const Cart = (props: Props) => {
               </div>
 
               <hr />
-              {/* similar products */}
-              <SimilarProduct />
+              {/* more products */}
+              <MoreProduct />
             </>
           )}
         </div>

@@ -40,6 +40,8 @@
         border-radius: 20px;
         overflow: hidden;
         cursor: pointer;
+        border:1px solid $border-color;
+        background:$border-color;
 
         @media (max-width: 450px) {
           height: 130px;
@@ -57,11 +59,19 @@
         h4 {
           @include heading(20px, 500, $text-color);
           margin-bottom: 12px;
+
+          @media (max-width:500px){
+            font-size:14px;
+          }
         }
 
         h3 {
           @include heading(20px, 700, $text-color);
           margin-bottom: 12px;
+
+          @media (max-width:500px) {
+              font-size: 14px;
+            }
         }
 
         .color {
@@ -81,6 +91,11 @@
           height: 40px;
           transition: $transitions;
 
+          @media (max-width:500px){
+            height:35px;
+            width:100px;
+          }
+
           p {
             margin: 0;
           }
@@ -97,6 +112,24 @@
 
     .delete {
       cursor: pointer;
+    }
+  }
+
+  // clear cart
+  .clear-cart{
+    display:flex;
+    justify-content: flex-end;
+
+    @media (max-width:991px){
+      margin-bottom:50px;
+    }
+
+    button{
+      background:transparent;
+      color:red;
+      text-decoration:underline;
+      font-size:18px;
+      border:none;
     }
   }
 

@@ -19,14 +19,12 @@ const CardSkeleton = (props: Props) => {
         <div className="mb-4 text-center" key={index}>
           <Skeleton
             height={250}
-            style={{ borderRadius: "20px" }}
             className="skeletal-image"
           />
           <Skeleton
             height={12}
             width={160}
             style={{
-              borderRadius: "8px",
               marginBottom: "10px",
               marginTop: "20px",
             }}
