@@ -24,6 +24,10 @@
       object-fit: cover;
     }
 
+    .single-image{
+      height:600px;
+    }
+
     .content {
       @include body-text(24px, 500, $white);
       background: $light-color;
@@ -68,6 +72,10 @@
         height: 150px;
       }
 
+       .multiple-image{
+      height:280px;
+    }
+
       .content {
         @include body-text(24px, 500, $white);
         background: #1010107c;
@@ -80,6 +88,7 @@
         width: 100%;
         transform: translateY(100%);
         transition: $transitions;
+        text-transform:capitalize;
 
         @media (max-width: 767px) {
           font-size: 16px;

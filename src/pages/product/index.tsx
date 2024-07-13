@@ -7,6 +7,10 @@ import Productcard from "../../common/productcard";
 import { FilterIcon } from "../../../public/assets";
 import Paginate from "@/components/pagination/Paginate";
 import { useRouter } from "next/router";
+import { GetRequest } from "@/utils/requests";
+const ORGANISATION_ID = process.env.NEXT_PUBLIC_ORGANISATION_ID;
+const APP_ID = process.env.NEXT_PUBLIC_APP_ID;
+const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 
 interface Props {}
 
@@ -17,18 +21,24 @@ const AllProducts = (props: Props) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
   const router = useRouter();
-
   const { page } = router.query;
 
   //
   useEffect(() => {
-    // to show the product card skeletal loader, i will delay the products
-    setTimeout(() => {
-      setProducts(data);
-      setTotalCount(data?.length);
-      setLoading(false);
-    }, 1000);
-  }, [router]);
+    const getProducts = async () => {
+      const res: any = await GetRequest(
+        `/products?organization_id=${ORGANISATION_ID}&reverse_sort=false&page=${
+          page === undefined ? currentPage : page
+        }&size=${PageSize}&Appid=${APP_ID}&Apikey=${API_KEY}`
+      );
+      if(res?.status === 200){
+        setProducts(res?.data.items);
+        setTotalCount(res?.data?.total)
+        setLoading(false);
+      }
+    };
+    getProducts();
+  }, [page]);
 
   const currentProducts = products?.slice(
     (currentPage - 1) * PageSize,
@@ -52,12 +62,10 @@ const AllProducts = (props: Props) => {
 
           <div className="product-box">
             {loading ? (
-              
-                <CardSkeleton length={12} />
-              
+              <CardSkeleton length={12} />
             ) : (
               <>
-                {currentProducts?.map((item: any) => {
+                {products?.map((item: any) => {
                   return <Productcard {...item} key={item.id} />;
                 })}
               </>

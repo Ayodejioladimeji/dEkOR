@@ -10,6 +10,14 @@ import React, { useContext, useEffect, useState } from "react";
 import { Ratings } from "../../../public/assets";
 import SimilarProduct from "@/components/SimilarProduct";
 import cogoToast from "cogo-toast";
+import { GetRequest } from "@/utils/requests";
+import { formatMoney } from "@/utils/utils";
+const ORGANISATION_ID = process.env.NEXT_PUBLIC_ORGANISATION_ID;
+const APP_ID = process.env.NEXT_PUBLIC_APP_ID;
+const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
+const IMAGE_URL = process.env.NEXT_PUBLIC_IMAGE_URL;
+
+const colors = ["#BCA287", "#101010", "#A2A1A1"];
 
 interface Props {}
 
@@ -24,24 +32,37 @@ const Product = (props: Props) => {
   const [quantity, setQuantity] = useState(1); // Initialize quantity to 1
   const [count, setCount] = useState(4);
 
-  // Get product details
+  // -----------PLEASE READ THIS----------------------------
+  // The get single product endpoint is returning the price as null,
+  // so i have to use the main endpoint to implement it
   useEffect(() => {
-    setLoading(true);
     if (slug) {
-      const foundProduct = data.find((item) => item.id === slug);
-      if (foundProduct) {
-        setProduct(foundProduct);
-        // Check if the product already exists in the cart
-        const existingCartItem = state.cart.find(
-          (item) => item.id === foundProduct.id
+      const getProduct = async () => {
+        const res: any = await GetRequest(
+          `/products?organization_id=${ORGANISATION_ID}&reverse_sort=false&page=1&size=40&Appid=${APP_ID}&Apikey=${API_KEY}`
+          // `/products/${slug}?organization_id=${ORGANISATION_ID}&reverse_sort=false&page=1&size=40&Appid=${APP_ID}&Apikey=${API_KEY}`
         );
-        if (existingCartItem) {
-          setQuantity(existingCartItem.quantity); // Set quantity from cart
+
+        if (res?.status === 200) {
+          const foundProduct = res?.data?.items?.find(
+            (item) => item.id === slug
+          );
+
+          setProduct(foundProduct);
+          // Check if the product already exists in the cart
+          const existingCartItem = state.cart.find(
+            (item) => item.id === foundProduct?.id
+          );
+          if (existingCartItem) {
+            setQuantity(existingCartItem.quantity); // Set quantity from cart
+          }
+
+          setLoading(false);
         }
-      }
-      setLoading(false);
+      };
+      getProduct();
     }
-  }, [slug, state.cart]);
+  }, [slug, state?.cart]);
 
   // Add item to cart
   const addToCart = () => {
@@ -51,6 +72,7 @@ const Product = (props: Props) => {
         ...product,
         quantity: quantity,
       };
+      dispatch({ type: ACTIONS.TOGGLE, payload: true });
       dispatch({ type: ACTIONS.CART, payload: cartData });
       setProduct(cartData);
       cogoToast.success("Item added to your cart");
@@ -66,6 +88,7 @@ const Product = (props: Props) => {
       return cogoToast.error("Please add item to you cart to continue");
     }
     setQuantity(quantity + 1);
+    dispatch({ type: ACTIONS.TOGGLE, payload: true });
     state?.cart.forEach((item: any) => {
       if (item.id === product?.id) {
         item.quantity += 1;
@@ -82,36 +105,50 @@ const Product = (props: Props) => {
 
     if (quantity > 1) {
       setQuantity(quantity - 1);
-       state?.cart.forEach((item: any) => {
-         if (item.id === product?.id) {
-           if (item.quantity === 1) return;
-           item.quantity -= 1;
-         }
-       });
+      dispatch({ type: ACTIONS.TOGGLE, payload: true });
+      state?.cart.forEach((item: any) => {
+        if (item.id === product?.id) {
+          if (item.quantity === 1) return;
+          item.quantity -= 1;
+        }
+      });
     }
   };
 
   if (loading) {
     return (
       <Layout>
-        <div className="loading">
+        <div
+          style={{
+            height: "80vh",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            flexDirection: "column",
+          }}
+        >
           <Loading
             primaryColor="#000"
             secondaryColor="#000"
             width="50px"
             height="50px"
           />
+          Loading Product
         </div>
       </Layout>
     );
   }
+
+  const firstCategory = product?.categories?.find((_, index) => index === 0);
+
+  //
 
   return (
     <Layout>
       <div className="product-details">
         <div className="container">
           <div className="heading-section">
-            <Breadcumb title={product?.title} />
+            <Breadcumb title={product?.name} />
           </div>
 
           <div className="content">
@@ -121,7 +158,11 @@ const Product = (props: Props) => {
                   <div className="col-12 col-sm-9">
                     <div className="detail-image">
                       <Image
-                        src={product?.images && product?.images[imageIndex]}
+                        src={
+                          IMAGE_URL +
+                          "/images/" +
+                          product?.photos[imageIndex]?.url
+                        }
                         alt="product-image"
                         width={100}
                         height={100}
@@ -132,7 +173,7 @@ const Product = (props: Props) => {
 
                   <div className="col-12 col-sm-3">
                     <div className="thumb">
-                      {product?.images?.map((img, index) => (
+                      {product?.photos?.map((img, index) => (
                         <div
                           className={`image-box ${
                             imageIndex === index ? "image-active" : ""
@@ -140,7 +181,7 @@ const Product = (props: Props) => {
                           key={index}
                         >
                           <Image
-                            src={img}
+                            src={IMAGE_URL + "/images/" + img?.url}
                             alt=""
                             onClick={() => setImageIndex(index)}
                             width={100}
@@ -156,15 +197,17 @@ const Product = (props: Props) => {
 
               <div className="col-12 col-lg-6 content-details">
                 <div className="title">
-                  <h1>{product?.title}</h1>
+                  <h1>{product?.name}</h1>
                   <Ratings />
                 </div>
                 <p>{product?.description}</p>
 
-                <h3>${product?.price}</h3>
+                <h3>
+                  ${formatMoney(Number(product?.current_price[0]?.USD[0]))}
+                </h3>
 
                 <div className="color-div">
-                  {product?.colors?.map((color: any, index: number) => (
+                  {colors?.map((color: any, index: number) => (
                     <div
                       key={index}
                       onClick={() => setProductColor(color)}
@@ -264,8 +307,8 @@ const Product = (props: Props) => {
             </div>
           </div>
 
-          {/* similar products */}
-          <SimilarProduct />
+          {/* similar products - render if a product category is found */}
+          <SimilarProduct id={firstCategory?.id} />
         </div>
       </div>
     </Layout>

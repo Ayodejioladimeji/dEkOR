@@ -18,7 +18,7 @@ export const formatMoney = (amount) => {
 
 export const calculateTotal = (data) => {
     const subtotal = data.reduce((prev, item) => {
-        return prev + Number(item.price) * item.quantity;
+        return prev + Number(item.current_price[0]?.USD[0]) * item.quantity;
     }, 0);
     return subtotal;
 }
@@ -40,3 +40,10 @@ export function screenPixels(size, setState) {
         mediaQuery.removeEventListener("change", handleScreenSizeChange);
     };
 }
+
+
+// first two words
+export const firstTwoWords = (str) => {
+    const words = str.split(' ');
+    return words.slice(0, 2).join(' ');
+};

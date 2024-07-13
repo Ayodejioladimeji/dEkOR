@@ -25,6 +25,8 @@
       width: 100%;
       border-radius: 30px;
       overflow: hidden;
+      border:1px solid $border-color;
+      background:$border-color;
 
       @media (max-width: 767px) {
         border-radius: 10px;
@@ -42,7 +44,7 @@
       height: 450px;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      row-gap: 20px;
 
       @media (max-width: 575px) {
         flex-direction: row;
@@ -56,6 +58,8 @@
         width: 90px;
         border-radius: 10px;
         overflow: hidden;
+        border:1px solid $border-color;
+        background:$border-color;
 
         @media (max-width: 991px) {
           width: 100%;

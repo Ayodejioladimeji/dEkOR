@@ -6,17 +6,12 @@ import { useRouter } from "next/router";
 import React, { useContext } from "react";
 import { Image } from "react-bootstrap";
 import { ItemCart } from "../../public/assets";
+import { firstTwoWords, formatMoney } from "@/utils/utils";
+const IMAGE_URL = process.env.NEXT_PUBLIC_IMAGE_URL;
 
-interface Props {
-  id: string;
-  title: string;
-  price: string;
-  images: string[];
-  ratings: string;
-  category: string;
-}
+//
 
-const Productcard = (props: Props) => {
+const Productcard = (props: any) => {
   const { state, dispatch } = useContext<any>(DataContext);
   const router = useRouter();
 
@@ -29,15 +24,11 @@ const Productcard = (props: Props) => {
 
     if (check) {
       const cartData = {
-        id: props?.id,
-        title: props?.title,
-        price: props?.price,
-        category: props?.category,
-        ratings: props?.ratings,
-        images: props?.images,
+        ...props,
         quantity: 1,
       };
 
+      dispatch({ type: ACTIONS.TOGGLE, payload: true });
       dispatch({ type: ACTIONS.CART, payload: cartData });
     } else {
       cogoToast.error("Item already added to your cart");
@@ -49,7 +40,7 @@ const Productcard = (props: Props) => {
     <div className="product-card">
       <div className="product-image">
         <Image
-          src={props?.images[0]}
+          src={IMAGE_URL + "/images/" + props?.photos[0]?.url}
           alt="product-image"
           width={100}
           height={100}
@@ -65,8 +56,8 @@ const Productcard = (props: Props) => {
       </div>
 
       <div className="product-content">
-        <h3>{props?.title}</h3>
-        <p>${props?.price}</p>
+        <h3>{firstTwoWords(props?.name)}</h3>
+        <p>${formatMoney(Number(props?.current_price[0]?.USD[0]))}</p>
         <button onClick={() => router.push(`/product/${props?.id}`)}>
           Shop Now
         </button>
