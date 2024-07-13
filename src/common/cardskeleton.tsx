@@ -25,7 +25,6 @@ const CardSkeleton = (props: Props) => {
             height={12}
             width={160}
             style={{
-              borderRadius: "8px",
               marginBottom: "10px",
               marginTop: "20px",
             }}

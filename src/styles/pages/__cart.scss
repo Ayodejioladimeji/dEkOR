@@ -102,6 +102,20 @@
     }
   }
 
+  // clear cart
+  .clear-cart{
+    display:flex;
+    justify-content: flex-end;
+
+    button{
+      background:transparent;
+      color:red;
+      text-decoration:underline;
+      font-size:18px;
+      border:none;
+    }
+  }
+
   .order-summary {
     background: $secondary-color;
     width: 100%;

@@ -65,6 +65,12 @@ const Cart = (props: Props) => {
     cogoToast.success("Item removed successfully");
   };
 
+  // clear cart
+  const clearCart = () => {
+    dispatch({ type: ACTIONS.TOGGLE, payload: true })
+    dispatch({ type: ACTIONS.DELETECART, payload: [] });
+  }
+
 
 // 
   if (state?.loading) {
@@ -175,6 +181,10 @@ const Cart = (props: Props) => {
                       </div>
                     );
                   })}
+
+                    <div className="clear-cart">
+                      <button onClick={clearCart}>Clear cart</button>
+                    </div>
                 </div>
 
                 <div className="col-12 col-lg-4">
@@ -210,6 +220,8 @@ const Cart = (props: Props) => {
                   </div>
                 </div>
               </div>
+
+             
 
               <hr />
               {/* more products */}

@@ -137,8 +137,6 @@ const Product = (props: Props) => {
     );
   }
 
-
-
   // 
 
   return (
@@ -299,8 +297,8 @@ const Product = (props: Props) => {
             </div>
           </div>
 
-          {/* similar products */}
-          <SimilarProduct id={product?.categories[0]?.id}/>
+          {/* similar products - render if a product category is found */}
+          {product?.categories && <SimilarProduct id={product?.categories[0]?.id}/>}
         </div>
       </div>
     </Layout>
