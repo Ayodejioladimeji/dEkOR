@@ -173,7 +173,7 @@ const Checkout = (props: Props) => {
       </div>
 
       {/* success modal */}
-      {showmodal && <SuccessModal show={showmodal} onHide={setShowmodal} />}
+      {showmodal && <SuccessModal show={showmodal} onHide={setShowmodal} name={values.fullname} />}
     </Layout>
   );
 };

@@ -9,7 +9,7 @@ import { SuccessCheckMark } from "../../../public/assets";
 
 //
 
-const SuccessModal = ({ show, onHide }) => {
+const SuccessModal = ({ show, onHide, name }) => {
   const router = useRouter();
   const { dispatch } = useContext(DataContext);
 
@@ -32,6 +32,7 @@ const SuccessModal = ({ show, onHide }) => {
           <SuccessCheckMark />
         </div>
 
+      <h4>Hi, {name}</h4>
         <p>
           Your order has been successfully confirmed. Kindly download your order
           receipt from the registered email you entered.
