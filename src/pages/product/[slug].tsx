@@ -137,6 +137,9 @@ const Product = (props: Props) => {
     );
   }
 
+    const firstCategory = product?.categories?.find((_, index) => index === 0)
+
+
   // 
 
   return (
@@ -298,7 +301,7 @@ const Product = (props: Props) => {
           </div>
 
           {/* similar products - render if a product category is found */}
-          {product?.categories && <SimilarProduct id={product?.categories[0]?.id}/>}
+          <SimilarProduct id={firstCategory?.id}/>
         </div>
       </div>
     </Layout>

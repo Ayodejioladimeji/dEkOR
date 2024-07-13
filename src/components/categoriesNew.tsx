@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import Heading from "./Heading";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { GetRequest } from "@/utils/requests";
-import Skeletons from "@/common/skeleton";
+import { GetRequest } from '@/utils/requests';
 const ORGANISATION_ID = process.env.NEXT_PUBLIC_ORGANISATION_ID;
 const APP_ID = process.env.NEXT_PUBLIC_APP_ID;
 const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
@@ -12,7 +11,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
 
 interface Props {}
 
-const Categories = (props: Props) => {
+const CategoriesNew = (props: Props) => {
 
   const [categories, setCategories] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -105,4 +104,4 @@ const Categories = (props: Props) => {
   );
 };
 
-export default Categories;
+export default CategoriesNew;

@@ -7,7 +7,7 @@ const APP_ID = process.env.NEXT_PUBLIC_APP_ID;
 const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 
 interface Props {
-  id:string
+  id?:string
 }
 
 const SimilarProduct = (props: Props) => {
@@ -25,10 +25,16 @@ const SimilarProduct = (props: Props) => {
 
        if (res?.status === 200) {
          const filtered = res?.data?.items?.filter((item:any) => item?.categories[0]?.id === props?.id)
-         setProducts(filtered);
+
+         if(props?.id){
+           setProducts(filtered);
+         }
+         else{
+          setProducts(res?.data?.items)
+         }
+         setLoading(false);
        }
-       setLoading(false);
-     };
+      };
      getProducts();
    }
   }, []);
