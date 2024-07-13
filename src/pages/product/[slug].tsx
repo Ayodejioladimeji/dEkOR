@@ -33,7 +33,7 @@ const Product = (props: Props) => {
   const [count, setCount] = useState(4);
 
   // -----------PLEASE READ THIS----------------------------
-  // The get single product endpoint is returning the price as null,
+  // The get single product endpoint is returning the current_price as null,
   // so i have to use the main endpoint to implement it
   useEffect(() => {
     if (slug) {
@@ -44,8 +44,9 @@ const Product = (props: Props) => {
         );
 
         if (res?.status === 200) {
+          // get single item
           const foundProduct = res?.data?.items?.find(
-            (item) => item.id === slug
+            (item:any) => item.id === slug
           );
 
           setProduct(foundProduct);

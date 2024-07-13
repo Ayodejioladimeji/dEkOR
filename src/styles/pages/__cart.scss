@@ -107,6 +107,10 @@
     display:flex;
     justify-content: flex-end;
 
+    @media (max-width:991px){
+      margin-bottom:50px;
+    }
+
     button{
       background:transparent;
       color:red;
