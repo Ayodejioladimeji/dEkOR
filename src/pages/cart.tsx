@@ -16,7 +16,7 @@ const Cart = () => {
   const { state, dispatch } = useContext(DataContext);
   const router = useRouter();
 
-  // increase item
+  // increase cart item
   const increment = (data: any) => {
     state?.cart.forEach((item: any) => {
       if (item.id === data?.id) {
@@ -53,7 +53,7 @@ const Cart = () => {
     dispatch({ type: ACTIONS.UPDATECART, payload: cartData });
   };
 
-  // remove item from crt
+  // remove item from cart
   const removeCartItem = (id) => {
     const newData = state?.cart.filter((item) => item.id !== id);
     dispatch({ type: ACTIONS.TOGGLE, payload: true });
@@ -61,7 +61,7 @@ const Cart = () => {
     cogoToast.success("Item removed successfully");
   };
 
-  // clear cart
+  // clear user cart
   const clearCart = () => {
     dispatch({ type: ACTIONS.TOGGLE, payload: true });
     dispatch({ type: ACTIONS.DELETECART, payload: [] });
