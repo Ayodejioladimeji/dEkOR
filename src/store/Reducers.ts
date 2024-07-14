@@ -45,6 +45,7 @@ const reducers = (state: any, action: any) => {
         ...state,
         favourite: [...state.cart],
       };
+
     case ACTIONS.DELETEFAVOURITE:
       return {
         ...state,

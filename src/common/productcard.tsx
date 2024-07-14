@@ -34,6 +34,25 @@ const Productcard = (props: any) => {
     }
   };
 
+  const addFavourite = () => {
+    // check if items is already added
+    const check = state?.favourite.every((item) => {
+      return item.id !== props?.id;
+    });
+
+    if (check) {
+      const data = {
+        ...props,
+        quantity: 1,
+      };
+
+      dispatch({ type: ACTIONS.TOGGLE, payload: true });
+      dispatch({ type: ACTIONS.FAVOURITE, payload: data });
+    } else {
+      cogoToast.error("Item already added to your favourite");
+    }
+  };
+
   //
   return (
     <div className="product-card">
@@ -45,7 +64,7 @@ const Productcard = (props: any) => {
           height={100}
         />
 
-        <div className="favourite" onClick={addToCart}>
+        <div className="favourite" onClick={addFavourite}>
           <Favourite />
         </div>
 
