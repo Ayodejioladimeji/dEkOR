@@ -2,7 +2,7 @@ module.exports = {
   // extends: ['@commitlint/config-conventional'],
   extends: [],
   rules: {
-    'header-min-length': [2, 'always', 10],
+    'header-min-length': [2, 'always', 15],
     'header-case-start-capital': [2, 'always'],
     'header-end-period': [2, 'always'],
   },

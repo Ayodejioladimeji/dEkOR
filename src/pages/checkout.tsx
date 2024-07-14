@@ -25,7 +25,7 @@ const Checkout = () => {
   const [showmodal, setShowmodal] = useState(false);
   const [values, setValues] = useState(initialValues);
 
-  // handle change
+  // handle change for inputs
   const handleChange = (e) => {
     const { name, value } = e.target;
     setValues({ ...values, [name]: value });
