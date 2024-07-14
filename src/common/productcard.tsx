@@ -48,6 +48,7 @@ const Productcard = (props: any) => {
 
       dispatch({ type: ACTIONS.TOGGLE, payload: true });
       dispatch({ type: ACTIONS.FAVOURITE, payload: data });
+      cogoToast.success("Item added to your favourite");
     } else {
       cogoToast.error("Item already added to your favourite");
     }

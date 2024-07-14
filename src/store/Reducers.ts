@@ -38,12 +38,12 @@ const reducers = (state: any, action: any) => {
     case ACTIONS.FAVOURITE:
       return {
         ...state,
-        favourite: [payload, ...state.cart],
+        favourite: [payload, ...state.favourite],
       };
     case ACTIONS.UPDATEFAVOURITE:
       return {
         ...state,
-        favourite: [...state.cart],
+        favourite: [...state.favourite],
       };
 
     case ACTIONS.DELETEFAVOURITE:

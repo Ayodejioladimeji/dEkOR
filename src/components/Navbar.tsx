@@ -98,7 +98,10 @@ function Header() {
                 <Search />
               </li>
               <li className="nav-item">
-                <Heart />
+                <Link href="/cart">
+                  <Heart />
+                  <div className="badge">{state?.favourite?.length}</div>
+                </Link>
               </li>
               <li className="nav-item">
                 <Link href="/cart">
