@@ -4,7 +4,7 @@ import cogoToast from "cogo-toast";
 import { useRouter } from "next/router";
 import React, { useContext } from "react";
 import { Image } from "react-bootstrap";
-import { Favourite, ItemCart } from "../../public/assets";
+import { DeleteFavourite, ItemCart } from "../../public/assets";
 import { firstTwoWords, formatMoney } from "@/utils/utils";
 const IMAGE_URL = process.env.NEXT_PUBLIC_IMAGE_URL;
 
@@ -34,24 +34,12 @@ const Favouritecard = (props: any) => {
     }
   };
 
-  const addFavourite = () => {
-    // check if items is already added
-    const check = state?.favourite.every((item) => {
-      return item.id !== props?.id;
-    });
-
-    if (check) {
-      const data = {
-        ...props,
-        quantity: 1,
-      };
-
-      dispatch({ type: ACTIONS.TOGGLE, payload: true });
-      dispatch({ type: ACTIONS.FAVOURITE, payload: data });
-      cogoToast.success("Item added to your favourite");
-    } else {
-      cogoToast.error("Item already added to your favourite");
-    }
+  // remove item from favourites
+  const removeFavourite = () => {
+    const newData = state?.favourite.filter((item) => item.id !== props?.id);
+    dispatch({ type: ACTIONS.TOGGLE, payload: true });
+    dispatch({ type: ACTIONS.DELETEFAVOURITE, payload: newData });
+    cogoToast.success("Item removed successfully");
   };
 
   //
@@ -65,8 +53,8 @@ const Favouritecard = (props: any) => {
           height={100}
         />
 
-        <div className="favourite" onClick={addFavourite}>
-          <Favourite />
+        <div className="favourite" onClick={removeFavourite}>
+          <DeleteFavourite />
         </div>
 
         <div className="item-cart" onClick={addToCart}>

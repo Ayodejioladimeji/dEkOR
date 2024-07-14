@@ -59,7 +59,7 @@ const Favourites = () => {
                   />
                 </div>
 
-                <h3>You have not added favourites</h3>
+                <h3>Your favourite is empty</h3>
                 <button
                   onClick={() => router.push("/product")}
                   className="start-shopping"
