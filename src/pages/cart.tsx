@@ -7,7 +7,7 @@ import React, { useContext } from "react";
 import { CheckIcon, DeleteIcon } from "../../public/assets";
 import { useRouter } from "next/router";
 import cogoToast from "cogo-toast";
-import { formatMoney } from "@/utils/utils";
+import { calculateTotal, formatMoney } from "@/utils/utils";
 import MoreProduct from "../components/MoreProducts";
 import Loading from "@/common/loading";
 const IMAGE_URL = process.env.NEXT_PUBLIC_IMAGE_URL;
@@ -213,7 +213,7 @@ const Cart = () => {
 
                     <div className="order-items">
                       <h5>Total</h5>
-                      {/* <h5>${formatMoney(calculateTotal(state?.cart))}</h5> */}
+                      <h5>${formatMoney(calculateTotal(state?.cart))}</h5>
                     </div>
 
                     <button onClick={() => router.push("/checkout")}>
