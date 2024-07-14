@@ -35,6 +35,22 @@ const reducers = (state: any, action: any) => {
         loading: payload,
       };
 
+    case ACTIONS.FAVOURITE:
+      return {
+        ...state,
+        favourite: [payload, ...state.cart],
+      };
+    case ACTIONS.UPDATEFAVOURITE:
+      return {
+        ...state,
+        favourite: [...state.cart],
+      };
+    case ACTIONS.DELETEFAVOURITE:
+      return {
+        ...state,
+        favourite: payload,
+      };
+
     default:
       return state;
   }

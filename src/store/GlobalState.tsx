@@ -8,6 +8,7 @@ export const DataProvider = ({ children }) => {
   const initialState = {
     toggle: false,
     cart: [],
+    favourite: [],
     loading: true,
   };
 
