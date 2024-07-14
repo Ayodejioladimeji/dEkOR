@@ -1,5 +1,9 @@
 # dEKOR - Ecommerce
 
+## ⭐ Star the Repository
+
+If you find this project useful or interesting, please give it a star on GitHub! Your support is greatly appreciated.
+
 ## Overview
 
 Welcome to the **dEKOR** repository! This project is built with [Next.js](https://nextjs.org/) and TypeScript. We have set up a continuous integration (CI) pipeline to ensure code quality and consistency. This README will guide you through setting up the project and contributing effectively.
@@ -121,7 +125,7 @@ We welcome contributions from everyone. To contribute:
 
     - Go to the original repository.
     - Click on the "New Pull Request" button.
-    - Submit your PR.
+    - Submit your PR to the Dev Branch.
 
 ## CI/CD Pipeline
 
