@@ -1,7 +1,5 @@
-import { useState, useContext, useEffect } from "react";
+import { useContext } from "react";
 import { useRouter } from "next/router";
-
-import Loading from "../loading";
 import { Modal } from "react-bootstrap";
 import { ACTIONS } from "@/store/Actions";
 import { DataContext } from "@/store/GlobalState";
@@ -32,7 +30,7 @@ const SuccessModal = ({ show, onHide, name }) => {
           <SuccessCheckMark />
         </div>
 
-      <h4>Hi, {name}</h4>
+        <h4>Hi, {name}</h4>
         <p>
           Your order has been successfully confirmed. Kindly download your order
           receipt from the registered email you entered.

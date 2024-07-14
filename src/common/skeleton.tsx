@@ -8,11 +8,9 @@ interface Props {
 const Skeletons = (props: Props) => {
   //
   return (
-        <div>
-          <Skeleton
-            className={props?.style}
-          />
-        </div>
+    <div>
+      <Skeleton className={props?.style} />
+    </div>
   );
 };
 

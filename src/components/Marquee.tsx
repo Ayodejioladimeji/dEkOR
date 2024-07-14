@@ -1,8 +1,6 @@
 import React from "react";
 
-interface Props {}
-
-const Marquee = (props: Props) => {
+const Marquee = () => {
   return (
     <div className="marquee">
       <div className="container">

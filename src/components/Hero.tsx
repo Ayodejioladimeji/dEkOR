@@ -2,15 +2,14 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import React from "react";
 
-interface Props {}
-
-const Hero = (props: Props) => {
+const Hero = () => {
   const router = useRouter();
 
   //
 
   return (
     <div className="hero">
+      {/* hero carousel */}
       <div
         id="carouselExampleIndicators"
         className="carousel slide"

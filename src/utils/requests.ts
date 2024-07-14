@@ -3,7 +3,7 @@ import cogoToast from "cogo-toast";
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 // =================================
-export const GetRequest = async (url: string, token?: string) => {
+export const GetRequest = async (url: string) => {
   try {
     const res: AxiosResponse<any> = await axios.get(BASE_URL + url, {
       headers: {

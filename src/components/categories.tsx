@@ -2,9 +2,7 @@ import React from "react";
 import Heading from "./Heading";
 import Image from "next/image";
 
-interface Props {}
-
-const Categories = (props: Props) => {
+const Categories = () => {
   //
   return (
     <div className="categories">

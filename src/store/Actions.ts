@@ -5,5 +5,4 @@ export const ACTIONS = {
   DELETECART: "DELETECART",
   SETCART: "SETCART",
   LOADING: "LOADING",
-  
 };

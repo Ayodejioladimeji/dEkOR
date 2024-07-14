@@ -12,12 +12,12 @@ const reducers = (state: any, action: any) => {
     case ACTIONS.CART:
       return {
         ...state,
-        cart: [payload, ...state?.cart],
+        cart: [payload, ...state.cart],
       };
     case ACTIONS.UPDATECART:
       return {
         ...state,
-        cart: [...state?.cart],
+        cart: [...state.cart],
       };
     case ACTIONS.DELETECART:
       return {
