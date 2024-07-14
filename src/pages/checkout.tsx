@@ -2,13 +2,10 @@ import Breadcumb from "@/common/breadcumb";
 import Layout from "@/components/Layout";
 import React, { useContext, useState } from "react";
 import { CheckIcon, CircleIcon } from "../../public/assets";
-import { useRouter } from "next/router";
 import { calculateTotal, formatMoney } from "@/utils/utils";
 import { DataContext } from "@/store/GlobalState";
 import SuccessModal from "@/common/modals/success";
 import cogoToast from "cogo-toast";
-
-interface Props {}
 
 const initialValues = {
   fullname: "",
@@ -21,8 +18,7 @@ const initialValues = {
   postalCode: "",
 };
 
-const Checkout = (props: Props) => {
-  const router = useRouter();
+const Checkout = () => {
   const [shippingType, setShippingType] = useState("standard");
   const [amount, setAmount] = useState(80);
   const { state } = useContext(DataContext);

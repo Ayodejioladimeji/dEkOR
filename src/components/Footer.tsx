@@ -1,11 +1,9 @@
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { LogoWhite } from "../../public/assets";
 
 //
 
 const Footer = () => {
-  const router = useRouter();
   //
 
   return (

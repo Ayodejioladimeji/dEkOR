@@ -1,7 +1,6 @@
 import Breadcumb from "@/common/breadcumb";
 import Loading from "@/common/loading";
 import Layout from "@/components/Layout";
-import { data } from "@/constants/data";
 import { ACTIONS } from "@/store/Actions";
 import { DataContext } from "@/store/GlobalState";
 import Image from "next/image";
@@ -19,9 +18,7 @@ const IMAGE_URL = process.env.NEXT_PUBLIC_IMAGE_URL;
 
 const colors = ["#BCA287", "#101010", "#A2A1A1"];
 
-interface Props {}
-
-const Product = (props: Props) => {
+const Product = () => {
   const router = useRouter();
   const { slug } = router.query;
   const { state, dispatch } = useContext(DataContext);

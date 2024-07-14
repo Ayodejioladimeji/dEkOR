@@ -6,9 +6,7 @@ const ORGANISATION_ID = process.env.NEXT_PUBLIC_ORGANISATION_ID;
 const APP_ID = process.env.NEXT_PUBLIC_APP_ID;
 const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 
-interface Props {}
-
-const MoreProduct = (props: Props) => {
+const MoreProduct = () => {
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState(null);
 

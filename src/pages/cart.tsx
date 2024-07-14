@@ -3,22 +3,18 @@ import Layout from "@/components/Layout";
 import { ACTIONS } from "@/store/Actions";
 import { DataContext } from "@/store/GlobalState";
 import Image from "next/image";
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { CheckIcon, DeleteIcon } from "../../public/assets";
-import SimilarProduct from "@/components/SimilarProduct";
 import { useRouter } from "next/router";
 import cogoToast from "cogo-toast";
-import { calculateTotal, formatMoney } from "@/utils/utils";
+import { formatMoney } from "@/utils/utils";
 import MoreProduct from "../components/MoreProducts";
 import Loading from "@/common/loading";
 const IMAGE_URL = process.env.NEXT_PUBLIC_IMAGE_URL;
 
-interface Props {}
-
-const Cart = (props: Props) => {
+const Cart = () => {
   const { state, dispatch } = useContext(DataContext);
   const router = useRouter();
-  const [loading, setLoading] = useState(true);
 
   // increase item
   const increment = (data: any) => {

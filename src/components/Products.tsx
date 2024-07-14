@@ -2,16 +2,13 @@ import CardSkeleton from "@/common/cardskeleton";
 import Productcard from "@/common/productcard";
 import React, { useEffect, useState } from "react";
 import Heading from "./Heading";
-import { data } from "@/constants/data";
 import { useRouter } from "next/router";
 import { GetRequest } from "@/utils/requests";
 const ORGANISATION_ID = process.env.NEXT_PUBLIC_ORGANISATION_ID;
 const APP_ID = process.env.NEXT_PUBLIC_APP_ID;
 const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 
-interface Props {}
-
-const Products = (props: Props) => {
+const Products = () => {
   const [products, setProducts] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();

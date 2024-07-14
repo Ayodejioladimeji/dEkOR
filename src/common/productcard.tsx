@@ -1,4 +1,3 @@
-import { data } from "@/constants/data";
 import { ACTIONS } from "@/store/Actions";
 import { DataContext } from "@/store/GlobalState";
 import cogoToast from "cogo-toast";

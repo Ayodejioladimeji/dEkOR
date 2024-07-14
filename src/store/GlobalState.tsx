@@ -1,15 +1,10 @@
-import {
-  createContext,
-  useReducer,
-  useEffect
-} from "react";
+import { createContext, useReducer, useEffect } from "react";
 import reducers from "./Reducers";
 import { ACTIONS } from "./Actions";
 
 export const DataContext = createContext(null);
 
 export const DataProvider = ({ children }) => {
-
   const initialState = {
     toggle: false,
     cart: [],

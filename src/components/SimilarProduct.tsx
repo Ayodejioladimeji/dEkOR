@@ -38,7 +38,7 @@ const SimilarProduct = (props: Props) => {
       };
       getProducts();
     }
-  }, []);
+  }, [props?.id]);
   //
 
   return (

@@ -2,20 +2,13 @@ import React, { useEffect, useState } from "react";
 import Heading from "./Heading";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
-import {
-  Navigation,
-  Pagination,
-  Scrollbar,
-  A11y,
-  Autoplay,
-} from "swiper/modules";
+import { Pagination, Scrollbar, A11y, Autoplay } from "swiper/modules";
 
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
-import { LeftArrow, RightArrow } from "../../public/assets";
 import { useRouter } from "next/router";
 import { GetRequest } from "@/utils/requests";
 import Loading from "@/common/loading";
@@ -24,9 +17,7 @@ const APP_ID = process.env.NEXT_PUBLIC_APP_ID;
 const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 const IMAGE_URL = process.env.NEXT_PUBLIC_IMAGE_URL;
 
-interface Props {}
-
-const TopDeals = (props: Props) => {
+const TopDeals = () => {
   const router = useRouter();
   const [products, setProducts] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -64,7 +55,7 @@ const TopDeals = (props: Props) => {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, []);
+  });
 
   // here, i'm converting remainingTime into days, hours, minutes, seconds
   const days = Math.floor(remainingTime / (24 * 60 * 60));
@@ -102,7 +93,6 @@ const TopDeals = (props: Props) => {
               modules={[Pagination, Scrollbar, A11y, Autoplay]}
               spaceBetween={1}
               slidesPerView={1}
-              onSwiper={(swiper) => console.log("")}
               autoplay={{
                 delay: 13500,
                 disableOnInteraction: false,
@@ -166,14 +156,6 @@ const TopDeals = (props: Props) => {
                 </SwiperSlide>
               ))}
             </Swiper>
-
-            {/* <div className="left-arrow">
-            <LeftArrow />
-          </div>
-
-          <div className="right-arrow image-swiper-button-next">
-            <RightArrow />
-          </div> */}
           </div>
         )}
       </div>
