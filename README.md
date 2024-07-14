@@ -1,45 +1,143 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# dEKOR - Ecommerce
+
+## ⭐ Star the Repository
+
+If you find this project useful or interesting, please give it a star on GitHub! Your support is greatly appreciated.
+
+## Overview
+
+Welcome to the **dEKOR** repository! This project is built with [Next.js](https://nextjs.org/) and TypeScript. We have set up a continuous integration (CI) pipeline to ensure code quality and consistency. This README will guide you through setting up the project and contributing effectively.
+
+## Table of Contents
+
+1. [Getting Started](#getting-started)
+2. [Installation](#installation)
+3. [Running the Project](#running-the-project)
+4. [Code Quality and Linting](#code-quality-and-linting)
+5. [Commit Guidelines](#commit-guidelines)
+6. [Contributing](#contributing)
+7. [CI/CD Pipeline](#cicd-pipeline)
 
 ## Getting Started
 
-First, run the development server:
+Follow these steps to get the project up and running on your local machine.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Prerequisites
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Node.js (>= 20.x)
+- Yarn (>= 1.x)
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Installation
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+1. **Clone the repository:**
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+    ```bash
+    git clone https://github.com/Ayodejioladimeji/dEKOR.git
+    cd dEKOR
+    ```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+2. **Install dependencies:**
 
-## Learn More
+    ```bash
+    yarn install
+    ```
 
-To learn more about Next.js, take a look at the following resources:
+## Running the Project
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. **Start the development server:**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+    ```bash
+    yarn dev
+    ```
 
-## Deploy on Vercel
+2. **Build the project for production:**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+    ```bash
+    yarn build
+    ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+3. **Run the production build:**
 
-npm install eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint-plugin-react eslint-plugin-prettier eslint-config-prettier --save-dev
+    ```bash
+    yarn start
+    ```
 
-npm run lint       # To check for linting errors
-npm run lint:fix  
+## Code Quality and Linting
+
+We use ESLint and Prettier to maintain code quality and formatting. Husky is used to enforce commit message guidelines.
+
+1. **Run ESLint to check for errors:**
+
+    ```bash
+    yarn lint
+    ```
+
+2. **Automatically fix fixable ESLint errors:**
+
+    ```bash
+    yarn lint:fix
+    ```
+
+3. **Run Prettier to format code:**
+
+    ```bash
+    yarn format
+    ```
+
+## Commit Guidelines
+
+We follow specific commit message guidelines to ensure clear and concise commit history.
+
+- Commit messages should be descriptive and meaningful.
+- Each commit should relate to a single task or issue.
+
+Husky will check your commit messages against our guidelines when you try to commit. Make sure your commit message follows the specified format.
+
+## Contributing
+
+We welcome contributions from everyone. To contribute:
+
+1. **Fork the repository:**
+
+    ```bash
+    git fork https://github.com/Ayodejioladimeji/dEKOR.git
+    ```
+
+2. **Create a new branch:**
+
+    ```bash
+    git checkout -b feature/your-feature-name
+    ```
+
+3. **Make your changes and commit them:**
+
+    ```bash
+    git commit -m "Your detailed commit message which should be more than 15 characters, It should start with Capital case and your commit message should end with Fullstop(.)"
+    ```
+
+4. **Push to your fork:**
+
+    ```bash
+    git push origin feature/your-feature-name
+    ```
+
+5. **Create a Pull Request (PR):**
+
+    - Go to the original repository.
+    - Click on the "New Pull Request" button.
+    - Submit your PR to the Dev Branch.
+
+## CI/CD Pipeline
+
+Our CI/CD pipeline ensures code quality and consistency. The following checks are performed on every push and pull request:
+
+- ESLint: Lints the code to ensure it follows our style guide.
+- Prettier: Formats the code.
+- Commit Lint: Ensures commit messages follow our guidelines.
+- Commit Message Length: Ensures commit messages are more than 20 characters.
+
+## Conclusion
+
+Thank you for contributing to the **dEKOR Ecommerce** repository. If you have any questions or need further assistance, please feel free to reach out.
+
+Happy coding!
