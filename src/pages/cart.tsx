@@ -3,9 +3,8 @@ import Layout from "@/components/Layout";
 import { ACTIONS } from "@/store/Actions";
 import { DataContext } from "@/store/GlobalState";
 import Image from "next/image";
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { CheckIcon, DeleteIcon } from "../../public/assets";
-import SimilarProduct from "@/components/SimilarProduct";
 import { useRouter } from "next/router";
 import cogoToast from "cogo-toast";
 import { calculateTotal, formatMoney } from "@/utils/utils";
@@ -13,14 +12,11 @@ import MoreProduct from "../components/MoreProducts";
 import Loading from "@/common/loading";
 const IMAGE_URL = process.env.NEXT_PUBLIC_IMAGE_URL;
 
-interface Props {}
-
-const Cart = (props: Props) => {
+const Cart = () => {
   const { state, dispatch } = useContext(DataContext);
   const router = useRouter();
-  const [loading, setLoading] = useState(true);
 
-  // increase item
+  // increase cart item
   const increment = (data: any) => {
     state?.cart.forEach((item: any) => {
       if (item.id === data?.id) {
@@ -57,7 +53,7 @@ const Cart = (props: Props) => {
     dispatch({ type: ACTIONS.UPDATECART, payload: cartData });
   };
 
-  // remove item from crt
+  // remove item from cart
   const removeCartItem = (id) => {
     const newData = state?.cart.filter((item) => item.id !== id);
     dispatch({ type: ACTIONS.TOGGLE, payload: true });
@@ -65,7 +61,7 @@ const Cart = (props: Props) => {
     cogoToast.success("Item removed successfully");
   };
 
-  // clear cart
+  // clear user cart
   const clearCart = () => {
     dispatch({ type: ACTIONS.TOGGLE, payload: true });
     dispatch({ type: ACTIONS.DELETECART, payload: [] });
@@ -217,7 +213,7 @@ const Cart = (props: Props) => {
 
                     <div className="order-items">
                       <h5>Total</h5>
-                      {/* <h5>${formatMoney(calculateTotal(state?.cart))}</h5> */}
+                      <h5>${formatMoney(calculateTotal(state?.cart))}</h5>
                     </div>
 
                     <button onClick={() => router.push("/checkout")}>

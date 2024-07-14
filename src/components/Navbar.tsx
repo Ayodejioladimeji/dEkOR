@@ -20,7 +20,7 @@ function Header() {
       <Container className="main-container">
         <div className="toggle-section">
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-          <Link className="navbar-brand" href="/" >
+          <Link className="navbar-brand" href="/">
             <Logo />
           </Link>
         </div>

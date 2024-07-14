@@ -1,8 +1,8 @@
-.page-navigation{
-  display:flex;
-  align-items:center;
+.page-navigation {
+  display: flex;
+  align-items: center;
   justify-content: center;
-  margin-top:90px;
+  margin-top: 90px;
 }
 
 .pagination-container {
@@ -24,8 +24,8 @@
     line-height: 1.43;
     font-size: 20px;
     min-width: 40px;
-    font-weight:500;
-    justify-content:center;
+    font-weight: 500;
+    justify-content: center;
 
     &:first-child {
       margin-left: 0 !important;
@@ -42,7 +42,7 @@
 
     &.selected {
       background-color: $primary-color;
-      color:$white;
+      color: $white;
     }
 
     .arrow {
