@@ -27,6 +27,14 @@
       object-fit: cover;
     }
 
+    .favourite {
+      position: absolute;
+      top: 20px;
+      cursor: pointer;
+      transform: translateX(-100%);
+      transition:$transitions;
+    }
+
     .item-cart {
       position: absolute;
       top: 20px;
@@ -58,6 +66,11 @@
     &:hover {
       .add-to-cart {
         transform: translateY(0);
+      }
+
+      .favourite {
+        transform: translateX(0);
+        left:20px;
       }
     }
   }
