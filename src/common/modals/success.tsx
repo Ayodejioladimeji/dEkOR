@@ -32,7 +32,7 @@ const SuccessModal = ({ show, onHide, name }) => {
           <SuccessCheckMark />
         </div>
 
-      <h4>Hi, {name}</h4>
+        <h4>Hi, {name}</h4>
         <p>
           Your order has been successfully confirmed. Kindly download your order
           receipt from the registered email you entered.

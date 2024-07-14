@@ -1,10 +1,7 @@
 import {
   createContext,
   useReducer,
-  ReactNode,
-  Dispatch,
-  useEffect,
-  useState,
+  useEffect
 } from "react";
 import reducers from "./Reducers";
 import { ACTIONS } from "./Actions";
@@ -12,7 +9,6 @@ import { ACTIONS } from "./Actions";
 export const DataContext = createContext(null);
 
 export const DataProvider = ({ children }) => {
-  const [cartItems, setCartItems] = useState(null);
 
   const initialState = {
     toggle: false,

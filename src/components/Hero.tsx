@@ -11,6 +11,7 @@ const Hero = (props: Props) => {
 
   return (
     <div className="hero">
+      {/* hero carousel */}
       <div
         id="carouselExampleIndicators"
         className="carousel slide"

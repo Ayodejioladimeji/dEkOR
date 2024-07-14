@@ -25,28 +25,28 @@ const AllProducts = (props: Props) => {
 
   //
   useEffect(() => {
-   if(router.isReady){
-     const getProducts = async () => {
-       const res: any = await GetRequest(
-         `?organization_id=${ORGANISATION_ID}&reverse_sort=false&page=${page === undefined ? currentPage : page
-         }&size=${PageSize}&Appid=${APP_ID}&Apikey=${API_KEY}`
-       );
+    if (router.isReady) {
+      const getProducts = async () => {
+        const res: any = await GetRequest(
+          `?organization_id=${ORGANISATION_ID}&reverse_sort=false&page=${
+            page === undefined ? currentPage : page
+          }&size=${PageSize}&Appid=${APP_ID}&Apikey=${API_KEY}`
+        );
 
-       if (res?.status === 200) {
-         setProducts(res?.data.items);
-         setTotalCount(res?.data?.total);
+        if (res?.status === 200) {
+          setProducts(res?.data.items);
+          setTotalCount(res?.data?.total);
 
-         if (page === undefined) {
-           setCurrentPage(1);
-         }
+          if (page === undefined) {
+            setCurrentPage(1);
+          }
 
-         setLoading(false);
-       }
-     };
-     getProducts();
-   }
+          setLoading(false);
+        }
+      };
+      getProducts();
+    }
   }, [router]);
-
 
   //
 
@@ -64,7 +64,7 @@ const AllProducts = (props: Props) => {
           </div>
 
           <div className="product-box">
-            {loading ? (              
+            {loading ? (
               <CardSkeleton length={12} />
             ) : (
               <>

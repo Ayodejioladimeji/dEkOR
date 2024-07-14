@@ -46,7 +46,7 @@ const Product = (props: Props) => {
         if (res?.status === 200) {
           // get single item
           const foundProduct = res?.data?.items?.find(
-            (item:any) => item.id === slug
+            (item: any) => item.id === slug
           );
 
           setProduct(foundProduct);
