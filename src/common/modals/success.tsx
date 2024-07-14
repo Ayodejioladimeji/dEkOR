@@ -13,6 +13,7 @@ const SuccessModal = ({ show, onHide, name }) => {
 
   //
   const handleContinue = () => {
+    dispatch({ type: ACTIONS.TOGGLE, payload: true });
     dispatch({ type: ACTIONS.DELETECART, payload: [] });
     router.push("/product");
   };
