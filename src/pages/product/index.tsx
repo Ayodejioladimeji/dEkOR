@@ -22,7 +22,7 @@ const AllProducts = () => {
   const router = useRouter();
   const { page } = router.query;
 
-  //get all products
+  //get all products on products page
   useEffect(() => {
     if (router.isReady) {
       const getProducts = async () => {
