@@ -46,7 +46,7 @@ const Favourites = () => {
     <Layout>
       <div className="all-products">
         <div className="container">
-          {state?.favourite?.length === 0 ? (
+          {!state?.loading && state?.favourite?.length === 0 ? (
             <div className="main-favourite-empty">
               <div className="favourite-empty">
                 <div className="image-box">
@@ -80,8 +80,8 @@ const Favourites = () => {
               </div>
 
               <div className="product-box">
-                {loading ? (
-                  <CardSkeleton length={12} />
+                {loading || state?.loading ? (
+                  <CardSkeleton length={8} />
                 ) : (
                   <>
                     {currentProducts?.map((item: any) => {

@@ -14,6 +14,7 @@ export const DataProvider = ({ children }) => {
 
   const [state, dispatch] = useReducer(reducers, initialState);
 
+  // persits cart
   useEffect(() => {
     const cartData = localStorage.getItem("cart");
     if (cartData) {
@@ -22,16 +23,26 @@ export const DataProvider = ({ children }) => {
     dispatch({ type: ACTIONS.LOADING, payload: false });
   }, []);
 
+  // persits favourites
+  useEffect(() => {
+    const data = localStorage.getItem("favourite");
+    if (data) {
+      dispatch({ type: ACTIONS.SETFAVOURITE, payload: JSON.parse(data) });
+    }
+    dispatch({ type: ACTIONS.LOADING, payload: false });
+  }, []);
+
   // persists item in the cart
   useEffect(() => {
     if (state?.toggle) {
       localStorage.setItem("cart", JSON.stringify(state.cart));
+      localStorage.setItem("favourite", JSON.stringify(state.favourite));
 
       setTimeout(() => {
         dispatch({ type: ACTIONS.TOGGLE, payload: false });
       }, 50);
     }
-  }, [state.cart, state?.toggle]);
+  }, [state?.favourite, state.cart, state?.toggle]);
 
   //
 

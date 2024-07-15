@@ -52,6 +52,12 @@ const reducers = (state: any, action: any) => {
         favourite: payload,
       };
 
+    case ACTIONS.SETFAVOURITE:
+      return {
+        ...state,
+        favourite: payload,
+      };
+
     default:
       return state;
   }
