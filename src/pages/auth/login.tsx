@@ -8,6 +8,7 @@ import Link from "next/link";
 // import cogoToast from "cogo-toast";
 import Loading from "@/common/loading";
 import Goback from "@/common/Goback";
+import Image from "next/image";
 
 // VALIDATION REGEX
 
@@ -68,8 +69,96 @@ const Login = () => {
         return (
           <div className="auth">
             <div className="auth-left">
-              <div className="back">
-                <Goback />
+              <div
+                id="carouselExampleIndicators"
+                className="carousel slide"
+                data-bs-ride="carousel"
+              >
+                <div className="back bg-danger">
+                  <Goback />
+                </div>
+
+                <div className="carousel-indicators">
+                  <button
+                    type="button"
+                    data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide-to="0"
+                    className="active"
+                    aria-current="true"
+                    aria-label="Slide 1"
+                  ></button>
+                  <button
+                    type="button"
+                    data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide-to="1"
+                    aria-label="Slide 2"
+                  ></button>
+                  <button
+                    type="button"
+                    data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide-to="2"
+                    aria-label="Slide 3"
+                  ></button>
+                </div>
+
+                <div className="carousel-inner">
+                  <div className="carousel-item active">
+                    <Image
+                      src="/images/hero7.svg"
+                      className="d-block w-100"
+                      alt="hero-images"
+                      width={100}
+                      height={100}
+                      unoptimized
+                    />
+
+                    <div className="contents">
+                      <h1>Make Your Home a Haven</h1>
+                      <p>
+                        Explore curated collection of home decor, get inspired
+                        by latest trends and create your unique style
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="carousel-item">
+                    <Image
+                      src="/images/hero6.svg"
+                      className="d-block w-100"
+                      alt="hero-images"
+                      width={100}
+                      height={100}
+                      unoptimized
+                    />
+
+                    <div className="contents">
+                      <h1>Make Your Home a Haven</h1>
+                      <p>
+                        Explore curated collection of home decor, get inspired
+                        by latest trends and create your unique style
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="carousel-item">
+                    <Image
+                      src="/images/hero5.svg"
+                      className="d-block w-100"
+                      alt="hero-images"
+                      width={100}
+                      height={100}
+                      unoptimized
+                    />
+
+                    <div className="contents">
+                      <h1>Make Your Home a Haven</h1>
+                      <p>
+                        Explore curated collection of home decor, get inspired
+                        by latest trends and create your unique style
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
