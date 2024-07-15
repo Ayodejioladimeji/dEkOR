@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { DataContext } from "@/store/GlobalState";
 import Layout from "@/components/Layout";
 import Breadcumb from "@/common/breadcumb";
-import { FilterIcon } from "../../public/assets";
+import { FilterIcon } from "../../../public/assets";
 import CardSkeleton from "@/common/cardskeleton";
 import Favouritecard from "@/common/favouritecard";
 import Image from "next/image";
