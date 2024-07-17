@@ -30,7 +30,10 @@ function Header() {
             <Search />
           </li>
           <li className="nav-item">
-            <Heart />
+            <Link href="/favourites">
+              <Heart />
+              <div className="badge">{state?.favourite?.length}</div>
+            </Link>
           </li>
           <li className="nav-item">
             <Link href="/cart">
@@ -39,7 +42,9 @@ function Header() {
             </Link>
           </li>
           <li className="nav-item">
+            {/* <Link href="/auth/login"> */}
             <Profile />
+            {/* </Link> */}
           </li>
         </ul>
 
@@ -98,7 +103,10 @@ function Header() {
                 <Search />
               </li>
               <li className="nav-item">
-                <Heart />
+                <Link href="/favourites">
+                  <Heart />
+                  <div className="badge">{state?.favourite?.length}</div>
+                </Link>
               </li>
               <li className="nav-item">
                 <Link href="/cart">
@@ -107,7 +115,9 @@ function Header() {
                 </Link>
               </li>
               <li className="nav-item">
+                {/* <Link href="/auth/login"> */}
                 <Profile />
+                {/* </Link> */}
               </li>
             </Nav>
           </ul>

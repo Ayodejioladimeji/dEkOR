@@ -28,6 +28,7 @@
   font-size: 16px;
   font-weight: 400;
   padding: 14px;
+  border-radius: 5px;
 
   &::-webkit-input-placeholder {
     /* Chrome/Opera/Safari */
@@ -112,10 +113,13 @@
   cursor: pointer;
   display: flex;
   align-items: center;
+  justify-content: center;
   font-family: $primary-font;
   background: $color;
   border: none;
   transition: $transitions;
+  color: $white;
+  font-weight: 500;
 
   &:hover {
     background: #27493eb2;
