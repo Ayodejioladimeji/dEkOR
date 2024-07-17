@@ -7,7 +7,6 @@ import Link from "next/link";
 // import { useRouter } from "next/router";
 // import cogoToast from "cogo-toast";
 import Loading from "@/common/loading";
-import Goback from "@/common/Goback";
 import Image from "next/image";
 
 // VALIDATION REGEX
@@ -69,19 +68,19 @@ const Login = () => {
         return (
           <div className="auth">
             <div className="auth-left">
-              <div
-                id="carouselExampleIndicators"
+              {/* <div
+                id="carouselExampleAutoplaying"
                 className="carousel slide"
                 data-bs-ride="carousel"
               >
-                <div className="back bg-danger">
+                <div className="back">
                   <Goback />
                 </div>
 
                 <div className="carousel-indicators">
                   <button
                     type="button"
-                    data-bs-target="#carouselExampleIndicators"
+                    data-bs-target="#carouselExampleAutoplaying"
                     data-bs-slide-to="0"
                     className="active"
                     aria-current="true"
@@ -89,20 +88,20 @@ const Login = () => {
                   ></button>
                   <button
                     type="button"
-                    data-bs-target="#carouselExampleIndicators"
+                    data-bs-target="#carouselExampleAutoplaying"
                     data-bs-slide-to="1"
                     aria-label="Slide 2"
                   ></button>
                   <button
                     type="button"
-                    data-bs-target="#carouselExampleIndicators"
+                    data-bs-target="#carouselExampleAutoplaying"
                     data-bs-slide-to="2"
                     aria-label="Slide 3"
                   ></button>
                 </div>
 
                 <div className="carousel-inner">
-                  <div className="carousel-item active">
+                  <div className="carousel-item active" data-bs-interval="500">
                     <Image
                       src="/images/hero7.svg"
                       className="d-block w-100"
@@ -159,6 +158,66 @@ const Login = () => {
                     </div>
                   </div>
                 </div>
+              </div> */}
+
+              <div
+                id="carouselExampleRide"
+                className="carousel slide"
+                data-bs-ride="true"
+              >
+                <div className="carousel-inner">
+                  <div className="carousel-item active">
+                    <Image
+                      src="/images/hero1.svg"
+                      className="d-block w-100"
+                      alt="..."
+                      width={100}
+                      height={100}
+                    />
+                  </div>
+                  <div className="carousel-item">
+                    <Image
+                      src="/images/hero2.svg"
+                      className="d-block w-100"
+                      alt="..."
+                      width={100}
+                      height={100}
+                    />
+                  </div>
+                  <div className="carousel-item">
+                    <Image
+                      src="/images/hero3.svg"
+                      className="d-block w-100"
+                      alt="..."
+                      width={100}
+                      height={100}
+                    />
+                  </div>
+                </div>
+                <button
+                  className="carousel-control-prev"
+                  type="button"
+                  data-bs-target="#carouselExampleRide"
+                  data-bs-slide="prev"
+                >
+                  <span
+                    className="carousel-control-prev-icon"
+                    aria-hidden="true"
+                  ></span>
+                  <span className="visually-hidden">Previous</span>
+                </button>
+                <button
+                  className="carousel-control-next"
+                  type="button"
+                  data-bs-target="#carouselExampleRide"
+                  data-bs-slide="next"
+                >
+                  <span
+                    className="carousel-control-next-icon"
+                    aria-hidden="true"
+                  ></span>
+                  <span className="visually-hidden">Next</span>
+                </button>
               </div>
             </div>
 

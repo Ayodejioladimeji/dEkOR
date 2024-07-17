@@ -10,109 +10,108 @@
     width: 50%;
 
     .carousel {
-      position:relative;
-      
-       .back {
-      position: absolute;
-      left: 20px;
-      top: 20px;
-      border: 1px solid $white;
-      border-radius: 4px;
-      height: 40px;
-      width: 100px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: $white;
-      font-size: 14px;
-      cursor: pointer;
-      transition: $transitions;
+      position: relative;
 
-      .bi {
+      .back {
+        position: absolute;
+        left: 20px;
+        top: 20px;
+        border: 1px solid $white;
+        border-radius: 4px;
+        height: 40px;
+        width: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         color: $white;
+        font-size: 14px;
+        cursor: pointer;
+        transition: $transitions;
+        z-index:100;
+
+        .bi {
+          color: $white;
+        }
+
+        &:hover {
+          background: $hover-color;
+        }
       }
 
-      &:hover {
-        background: $hover-color;
+      .carousel-indicators {
+        position: absolute;
+        bottom: 35%;
+        text-align: left;
+        margin: 0 left;
+
+        button {
+          height: 5px;
+          width: 150px;
+          border-radius: 4px;
+        }
+      }
+
+      .carousel-inner {
+        position: relative;
+
+        .carousel-item {
+          position: relative;
+          height: 100vh;
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+
+          &::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #10101070;
+            z-index: 1;
+          }
+        }
+
+        .contents {
+          position: absolute;
+          bottom: 50%;
+          z-index: 2;
+          text-align: center;
+
+          @media (max-width: 991px) {
+            width: 100%;
+          }
+
+          h1 {
+            @include heading(40px, 600, $white);
+            margin-bottom: 10px;
+
+            @media (max-width: 991px) {
+              font-size: 34px;
+            }
+
+            @media (max-width: 500px) {
+              font-size: 24px;
+            }
+          }
+
+          p {
+            @include body-text(18px, 400, $white);
+            line-height: 25px;
+            padding: 0 50px;
+
+            @media (max-width: 500px) {
+              font-size: 14px;
+              margin-bottom: 20px;
+            }
+          }
+        }
       }
     }
-
-        .carousel-indicators {
-          position:absolute;
-          bottom:0;
-          text-align:left;
-          margin:0 left;
-    
-          button {
-            height: 5px;
-            width: 150px;
-            border-radius: 4px;
-          }
-        }
-    
-        .carousel-inner {
-          position: relative;
-    
-          .carousel-item {
-            position: relative;
-            height: 100vh;
-    
-            img {
-              width: 100%;
-              height: 100%;
-              object-fit: cover;
-            }
-    
-            &::before {
-              content: "";
-              position: absolute;
-              top: 0;
-              left: 0;
-              width: 100%;
-              height: 100%;
-              background-color: #10101070;
-              z-index: 1;
-            }
-          }
-    
-          .contents {
-            position: absolute;
-            bottom: 20%;
-            z-index: 2;
-            text-align:center;
-    
-            @media (max-width: 991px) {
-              width: 100%;
-            }
-    
-            h1 {
-              @include heading(40px, 600, $white);
-              margin-bottom: 10px;
-    
-              @media (max-width: 991px) {
-                font-size: 34px;
-              }
-    
-              @media (max-width: 500px) {
-                font-size: 24px;
-              }
-            }
-    
-            p {
-              @include body-text(18px, 400, $white);
-              line-height: 25px;
-              padding:0 50px;
-    
-              @media (max-width: 500px) {
-                font-size: 14px;
-                margin-bottom: 20px;
-              }
-            }
-          }
-        }
-      }
-    
-
 
     .image-box {
       img {
@@ -127,8 +126,6 @@
       height: 100%;
       object-fit: cover;
     }
-
-   
   }
 
   .auth-right {
@@ -173,6 +170,10 @@
         input {
           @include input($border-color);
           width: 100%;
+
+          &:focus{
+            border:1px solid $primary-color
+          }
         }
 
         .phoneinput input {
@@ -192,7 +193,7 @@
         }
 
         .input_feedback {
-          color: red;
+          color: $red-color;
           margin-top: 5px;
           font-size: 12px;
           margin-bottom: 0px;
@@ -204,43 +205,6 @@
           width: 100%;
         }
       }
-    }
-
-    .reg {
-      margin-top: 10px;
-      text-align: center;
-    }
-
-    .input_feed {
-      color: var(--text-color);
-      margin-top: 5px;
-      font-size: 9px;
-      margin-bottom: 0px;
-    }
-
-    .validate {
-      padding: 10px;
-      background: blue;
-      margin: 5px 0;
-    }
-
-    .validate p {
-      font-size: var(--font-smalling);
-      margin-bottom: 5px;
-    }
-
-    .signup-cancel {
-      position: absolute;
-      top: 1%;
-      right: -6%;
-      background: var(--white-color);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 40px;
-      width: 40px;
-      border-radius: 50%;
-      cursor: pointer;
     }
   }
 }

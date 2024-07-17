@@ -42,9 +42,9 @@ function Header() {
             </Link>
           </li>
           <li className="nav-item">
-            <Link href="/auth/login">
-              <Profile />
-            </Link>
+            {/* <Link href="/auth/login"> */}
+            <Profile />
+            {/* </Link> */}
           </li>
         </ul>
 
@@ -115,9 +115,9 @@ function Header() {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link href="/auth/login">
-                  <Profile />
-                </Link>
+                {/* <Link href="/auth/login"> */}
+                <Profile />
+                {/* </Link> */}
               </li>
             </Nav>
           </ul>
