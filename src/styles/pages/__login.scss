@@ -27,7 +27,7 @@
         font-size: 14px;
         cursor: pointer;
         transition: $transitions;
-        z-index:100;
+        z-index: 100;
 
         .bi {
           color: $white;
@@ -171,8 +171,8 @@
           @include input($border-color);
           width: 100%;
 
-          &:focus{
-            border:1px solid $primary-color
+          &:focus {
+            border: 1px solid $primary-color;
           }
         }
 
