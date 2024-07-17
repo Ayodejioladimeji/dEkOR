@@ -1,7 +1,7 @@
 import Breadcumb from "@/common/breadcumb";
 import Layout from "@/components/Layout";
 import React, { useContext, useState } from "react";
-import { CheckIcon, CircleIcon } from "../../public/assets";
+import { CheckIcon, CircleIcon } from "../../../public/assets";
 import { calculateTotal, formatMoney } from "@/utils/utils";
 import { DataContext } from "@/store/GlobalState";
 import SuccessModal from "@/common/modals/success";

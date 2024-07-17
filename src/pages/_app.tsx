@@ -17,6 +17,8 @@ export default function App({ Component, pageProps }: AppProps) {
         crossOrigin="anonymous"
       ></Script>
 
+      {/* <Script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></Script> */}
+
       <DataProvider>
         <Component {...pageProps} />
       </DataProvider>

@@ -27,7 +27,7 @@ const AllProducts = () => {
     if (router.isReady) {
       const getProducts = async () => {
         const res: any = await GetRequest(
-          `?organization_id=${ORGANISATION_ID}&reverse_sort=false&page=${
+          `/products?organization_id=${ORGANISATION_ID}&reverse_sort=false&page=${
             page === undefined ? currentPage : page
           }&size=${PageSize}&Appid=${APP_ID}&Apikey=${API_KEY}`
         );

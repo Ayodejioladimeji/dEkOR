@@ -27,11 +27,28 @@
       object-fit: cover;
     }
 
+    .favourite {
+      position: absolute;
+      top: 20px;
+      cursor: pointer;
+      transform: translateX(-100%);
+      transition: $transitions;
+
+      @media (max-width: 500px) {
+        top: 10px;
+      }
+    }
+
     .item-cart {
       position: absolute;
       top: 20px;
       right: 20px;
       cursor: pointer;
+
+      @media (max-width: 500px) {
+        top: 10px;
+        right: 10px;
+      }
     }
 
     .add-to-cart {
@@ -53,11 +70,25 @@
       @media (max-width: 767px) {
         font-size: 16px;
       }
+
+      @media (max-width: 500px) {
+        height: 50px;
+        font-size: 14px;
+      }
     }
 
     &:hover {
       .add-to-cart {
         transform: translateY(0);
+      }
+
+      .favourite {
+        transform: translateX(0);
+        left: 20px;
+
+        @media (max-width: 500px) {
+          left: 10px;
+        }
       }
     }
   }
