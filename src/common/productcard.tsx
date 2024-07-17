@@ -27,6 +27,7 @@ const Productcard = (props: any) => {
         quantity: 1,
       };
 
+      cogoToast.success("Item added to your cart");
       dispatch({ type: ACTIONS.TOGGLE, payload: true });
       dispatch({ type: ACTIONS.CART, payload: cartData });
     } else {
