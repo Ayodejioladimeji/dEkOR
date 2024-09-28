@@ -75,9 +75,7 @@
           }
 
           &:hover {
-            background-color: #fdf6e3 !important;
-            color: $text-color;
-            border-radius: 8px !important;
+            background-color: $hover-color !important;
           }
 
           .bi {

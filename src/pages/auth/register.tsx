@@ -192,7 +192,7 @@ const Register = () => {
 
                   <form onSubmit={handleSubmit}>
                     <div className="form-box">
-                      <label htmlFor="email">name</label>
+                      <label htmlFor="email">Fullname</label>
                       <input
                         name="name"
                         type="text"

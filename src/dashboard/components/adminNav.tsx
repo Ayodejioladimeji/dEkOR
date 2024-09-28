@@ -65,8 +65,8 @@ export default function Navbar() {
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
               <Link
-                href={"/dashboard/overview"}
-                className={`nav-link ${router.asPath.includes("/overview") && "active"}`}
+                href={""}
+                className={`nav-link ${router.asPath.includes("") && "active"}`}
               >
                 <i className="bi bi-grid" />
                 Dashboard
@@ -75,32 +75,75 @@ export default function Navbar() {
 
             <li className="nav-item">
               <Link
-                href="/dashboard/orders"
+                href="/fleet-management"
                 className={`nav-link ${
-                  router.asPath.includes("/orders") && "active"
+                  router.asPath.includes("fleet-management") && "active"
                 }`}
               >
-                <i className="bi bi-geo-alt"></i>
-                Orders
+                <i className="bi bi-file-text"></i>
+                Fleet Management
               </Link>
             </li>
 
             <li className="nav-item">
               <Link
-                href={"/dashboard/payments"}
-                className={`nav-link ${router.asPath.includes("/payments") && "active"}`}
+                href="/riders-management"
+                className={`nav-link ${
+                  router.asPath.includes("riders-management") && "active"
+                }`}
+              >
+                <i className="bi bi-people"></i>
+                Riders Management
+              </Link>
+            </li>
+
+            <li className="nav-item">
+              <Link
+                href="/real-time-tracking"
+                className={`nav-link ${
+                  router.asPath.includes("real-time-tracking") && "active"
+                }`}
+              >
+                <i className="bi bi-geo-alt"></i>
+                Real Time Tracking
+              </Link>
+            </li>
+
+            <li className="nav-item">
+              <Link
+                href={""}
+                className={`nav-link ${router.asPath.includes("") && "active"}`}
               >
                 <i className="bi bi-card-text" />
-                Payments
+                Transaction
+              </Link>
+            </li>
+
+            <li className="nav-item">
+              <Link
+                href="/reporting/report-per-riders"
+                className={`nav-link ${
+                  router.asPath.includes("reporting") && "active"
+                }`}
+              >
+                <i className="bi bi-graph-up" />
+                Reports
               </Link>
             </li>
 
             <hr className="border-bottom" />
 
             <li className="nav-item">
+              <Link className="nav-link" href="#">
+                <i className="bi bi-calendar-week" />
+                Campaign <span>coming soon</span>
+              </Link>
+            </li>
+
+            <li className="nav-item">
               <Link
-                href={"/dashboard/settings"}
-                className={`nav-link ${router.asPath.includes("/settings") && "active"}`}
+                href={""}
+                className={`nav-link ${router.asPath.includes("") && "active"}`}
               >
                 <i className="bi bi-gear" />
                 Settings

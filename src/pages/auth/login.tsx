@@ -22,7 +22,7 @@ const Login = () => {
 
     if (res?.status === 200) {
       localStorage.setItem("token", res.data.token);
-      router.push("/product");
+      router.push("/dashboard/overview");
     }
   };
 
