@@ -6,7 +6,7 @@ const Goback = () => {
   const router = useRouter();
   return (
     <div
-      onClick={() => router.push("/product")}
+      onClick={() => router.push("/")}
       className="d-flex align-items-center gap-2"
     >
       <BackArrow />

@@ -44,7 +44,7 @@ export default function Navbar() {
     <div className="dashboard-nav">
       <nav className="navbar navbar-expand-lg bg-light">
         <div className="product-image">
-          <Link className="navbar-brand" href={""}>
+          <Link className="navbar-brand" href="/product">
             <LogoWhite />
           </Link>
         </div>

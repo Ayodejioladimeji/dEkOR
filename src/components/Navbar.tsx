@@ -12,6 +12,7 @@ import Link from "next/link";
 function Header() {
   const router = useRouter();
   const { state } = useContext(DataContext);
+  const token = localStorage.getItem("token") || "";
 
   //
 
@@ -42,9 +43,9 @@ function Header() {
             </Link>
           </li>
           <li className="nav-item">
-            {/* <Link href="/auth/login"> */}
-            <Profile />
-            {/* </Link> */}
+            <Link href={token ? "/dashboard/overview" : "/auth/login"}>
+              <Profile />
+            </Link>
           </li>
         </ul>
 
@@ -115,7 +116,7 @@ function Header() {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link href="/auth/login">
+                <Link href={token ? "/dashboard/overview" : "/auth/login"}>
                   <Profile />
                 </Link>
               </li>
