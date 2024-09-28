@@ -18,3 +18,23 @@ export const GetRequest = async (url: string) => {
     });
   }
 };
+
+export const PostRequest = async (url: string, data?: any, token?: string) => {
+  try {
+    const res = await axios.post(
+      BASE_URL + url,
+      data && data,
+      token && {
+        headers: {
+          Authorization: `${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    return res;
+  } catch (error) {
+    cogoToast.error(error?.response?.data?.err);
+    return error;
+  }
+};

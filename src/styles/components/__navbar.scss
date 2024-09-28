@@ -1,5 +1,5 @@
 /* Navbar Styling */
-.navbar {
+.home-navbar {
   background: $white;
   position: fixed;
   width: 100%;
@@ -53,7 +53,9 @@
       }
     }
 
-    .navbar-nav {
+    .home-navbar-nav {
+      margin: 0;
+
       &.web-nav {
         @media (max-width: 991px) {
           display: none;

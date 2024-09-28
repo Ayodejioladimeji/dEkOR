@@ -16,7 +16,7 @@ function Header() {
   //
 
   return (
-    <Navbar collapseOnSelect expand="lg" className="navbar fixed-top py-4">
+    <Navbar collapseOnSelect expand="lg" className="home-navbar fixed-top py-4">
       <Container className="main-container">
         <div className="toggle-section">
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -49,7 +49,7 @@ function Header() {
         </ul>
 
         <Navbar.Collapse id="responsive-navbar-nav">
-          <ul className="navbar-nav nav-top ms-auto">
+          <ul className="home-navbar-nav nav-top ms-auto">
             <Nav>
               <li className="nav-item">
                 <Link
@@ -97,7 +97,7 @@ function Header() {
             </Nav>
           </ul>
 
-          <ul className="navbar-nav web-nav ms-auto">
+          <ul className="home-navbar-nav web-nav ms-auto">
             <Nav>
               <li className="nav-item">
                 <Search />
@@ -115,9 +115,9 @@ function Header() {
                 </Link>
               </li>
               <li className="nav-item">
-                {/* <Link href="/auth/login"> */}
-                <Profile />
-                {/* </Link> */}
+                <Link href="/auth/login">
+                  <Profile />
+                </Link>
               </li>
             </Nav>
           </ul>

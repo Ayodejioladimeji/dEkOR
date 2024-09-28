@@ -6,11 +6,11 @@ const Goback = () => {
   const router = useRouter();
   return (
     <div
-      onClick={() => router.back()}
+      onClick={() => router.push("/product")}
       className="d-flex align-items-center gap-2"
     >
       <BackArrow />
-      Go back
+      Go Home
     </div>
   );
 };

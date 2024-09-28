@@ -129,3 +129,28 @@
     border-radius: 10px;
   }
 }
+
+@mixin round-image($size) {
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  object-fit: cover;
+  width: $size;
+  height: $size;
+  overflow: hidden;
+
+  img {
+    height: auto;
+    height: 100% !important;
+    object-fit: cover;
+    object-position: top;
+    width: 100% !important;
+  }
+
+  @if $size ==42px {
+    border: 1px solid $border-color;
+  }
+
+  @if $size ==48px {
+    border: 2px solid #e0e2f0;
+  }
+}

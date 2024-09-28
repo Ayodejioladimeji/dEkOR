@@ -5,6 +5,7 @@ import * as EmailValidator from "email-validator";
 // COMPONENTS
 import Link from "next/link";
 import { useRouter } from "next/router";
+import cogoToast from "cogo-toast";
 import Loading from "@/common/loading";
 import Image from "next/image";
 import { PostRequest } from "@/utils/requests";
@@ -13,16 +14,20 @@ import AuthLayout from "./Authlayout";
 
 // VALIDATION REGEX
 
-const Login = () => {
+const Register = () => {
+  // const [loading, setLoading] = useState(false)
   const router = useRouter();
 
   // handle submit
-  const handleSubmit = async (payload: any) => {
-    const res = await PostRequest("/auth/login", payload);
+  const handleSubmit = async (payload: any, setSubmitting: any) => {
+    const res = await PostRequest("/auth/register", payload);
 
-    if (res?.status === 200) {
+    if (res?.status === 200 || res?.status === 201) {
       localStorage.setItem("token", res.data.token);
-      router.push("/product");
+      cogoToast.success(res?.data?.message);
+      router.push("/auth/login");
+    } else {
+      setSubmitting(false);
     }
   };
 
@@ -32,17 +37,23 @@ const Login = () => {
     <AuthLayout>
       <Formik
         initialValues={{
+          name: "",
           email: "",
           password: "",
         }}
-        onSubmit={(values) => {
+        onSubmit={(values, { setSubmitting }) => {
           setTimeout(async () => {
-            handleSubmit(values);
+            handleSubmit(values, setSubmitting);
           }, 500);
         }}
         //   HANDLING VALIDATION MESSAGES
         validate={(values) => {
           let errors: any = {};
+
+          // USERNAME
+          if (!values.name) {
+            errors.name = "Name is Required";
+          }
 
           // EMAIL SECTION
           if (!values.email) {
@@ -175,11 +186,26 @@ const Login = () => {
 
               <div className="auth-right">
                 <div className="auth-form">
-                  <h1>Welcome back!</h1>
+                  <h1>Register an Account</h1>
 
                   <small>Stay trendy, Stay you.</small>
 
                   <form onSubmit={handleSubmit}>
+                    <div className="form-box">
+                      <label htmlFor="email">name</label>
+                      <input
+                        name="name"
+                        type="text"
+                        placeholder="bright@example.com"
+                        value={values.name}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                      />
+                      {errors.name && touched.name && (
+                        <div className="input_feedback">{errors.name}</div>
+                      )}
+                    </div>
+
                     <div className="form-box">
                       <label htmlFor="email">Email</label>
                       <input
@@ -209,13 +235,6 @@ const Login = () => {
                       {errors.password && touched.password && (
                         <div className="input_feedback">{errors.password}</div>
                       )}
-
-                      <Link
-                        href="/auth/forgot-password"
-                        className="password-forgot"
-                      >
-                        forgot password?
-                      </Link>
                     </div>
 
                     <div className="form-box">
@@ -228,14 +247,13 @@ const Login = () => {
                             secondaryColor="#fff"
                           />
                         ) : (
-                          "Login"
+                          "Register"
                         )}
                       </button>
                     </div>
 
                     <small className="text-center">
-                      Not a customer?{" "}
-                      <Link href="/auth/register">Register</Link>
+                      Already a customer? <Link href="/auth/login">Login</Link>
                     </small>
                   </form>
                 </div>
@@ -248,4 +266,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
