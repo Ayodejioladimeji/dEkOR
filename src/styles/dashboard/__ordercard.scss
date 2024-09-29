@@ -1,7 +1,7 @@
 .order-card {
   .order-image {
     height: 200px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     border-radius: 30px;
     overflow: hidden;
     position: relative;
@@ -92,12 +92,9 @@
     text-align: center;
 
     h3 {
-      @include body-text(20px, 500, $text-color);
+      @include body-text(18px, 500, $text-color);
       margin-bottom: 5px;
 
-      @media (max-width: 767px) {
-        font-size: 18px;
-      }
     }
 
     p {

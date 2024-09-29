@@ -1,9 +1,9 @@
-.orders {
+.payments {
   background: $secondary-color;
   width: 100%;
   padding: 50px 20px;
 
-  .order-box {
+  .payment-box {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     column-gap: 30px;
