@@ -76,15 +76,15 @@ body {
   margin-left: 240px;
   transition: $transitions;
   background: $secondary-color;
-  height:100vh;
-  overflow:scroll;
+  height: 100vh;
+  overflow: scroll;
 
   .top-sections {
     padding: 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background:$white;
+    background: $white;
 
     h1 {
       @include heading(24px, 600, $black);

@@ -341,7 +341,8 @@
         cursor: pointer;
 
         &:hover {
-          background: #fdf6e3;
+          background: $hover-color;
+          color:$white;
         }
 
         &.active {
