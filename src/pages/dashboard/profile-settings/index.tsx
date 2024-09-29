@@ -11,11 +11,13 @@ const Settings = () => {
   const [fullname, setFullname] = useState("");
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
 
   useEffect(() => {
-    setEmail("");
+    setFullname(user?.name);
+    setEmail(user?.email);
     setLoading(false);
-  }, []);
+  }, [user?.name, user?.email]);
 
   // Change profile avatar method
   const handleAvatar = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -96,7 +98,7 @@ const Settings = () => {
             <Image
               height={100}
               width={100}
-              src="/images/profile-image.png"
+              src={user?.avatar}
               alt="profile-icon"
             />
           </div>

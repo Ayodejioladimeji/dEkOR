@@ -12,11 +12,11 @@ import { LogoWhite } from "../../../public/assets";
 export default function Navbar() {
   const router = useRouter();
   const { state } = useContext(DataContext);
-  const [profileImage] = useState(null);
   const [notifications] = useState(null);
   const [notify] = useState([]);
   const [notifyLoading] = useState(true);
   const [device, setDevice] = useState(false);
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
 
   // get screen size
   useEffect(() => {
@@ -65,16 +65,6 @@ export default function Navbar() {
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
               <Link
-                href={"/dashboard/overview"}
-                className={`nav-link ${router.asPath.includes("/overview") && "active"}`}
-              >
-                <i className="bi bi-grid" />
-                Dashboard
-              </Link>
-            </li>
-
-            <li className="nav-item">
-              <Link
                 href="/dashboard/orders"
                 className={`nav-link ${
                   router.asPath.includes("/orders") && "active"
@@ -99,11 +89,31 @@ export default function Navbar() {
 
             <li className="nav-item">
               <Link
-                href={"/dashboard/settings"}
-                className={`nav-link ${router.asPath.includes("/settings") && "active"}`}
+                href={"/dashboard/profile-settings"}
+                className={`nav-link ${router.asPath.includes("/profile-settings") && "active"}`}
               >
-                <i className="bi bi-gear" />
-                Settings
+                <i className="bi bi-person-bounding-box"></i>
+                Profile Settings
+              </Link>
+            </li>
+
+            <li className="nav-item">
+              <Link
+                href={"/dashboard/change-password"}
+                className={`nav-link ${router.asPath.includes("/change-password") && "active"}`}
+              >
+                <i className="bi bi-building-lock"></i>
+                Change Password
+              </Link>
+            </li>
+
+            <li className="nav-item">
+              <Link
+                href={"/dashboard/reviews"}
+                className={`nav-link ${router.asPath.includes("/reviews") && "active"}`}
+              >
+                <i className="bi bi-star-half"></i>
+                Ratings & Reviews
               </Link>
             </li>
           </ul>
@@ -114,18 +124,12 @@ export default function Navbar() {
               {/* user profile settings */}
               <div className="col-3 profile-show">
                 <div className="profile-img-container">
-                  {profileImage && (
-                    <Image
-                      src={
-                        profileImage === "null"
-                          ? "/images/profile-image.png"
-                          : profileImage
-                      }
-                      height={100}
-                      width={100}
-                      alt="profile-icon"
-                    />
-                  )}
+                  <Image
+                    src={user?.avatar}
+                    height={100}
+                    width={100}
+                    alt="profile-icon"
+                  />
                 </div>
 
                 {/* profile settings */}

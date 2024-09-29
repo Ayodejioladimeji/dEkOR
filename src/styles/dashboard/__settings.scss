@@ -3,19 +3,18 @@
   width: 100%;
   padding: 50px 20px;
 
-
   .form-box {
-    margin:20px auto 0 auto;
-    width:400px;
+    margin: 20px auto 0 auto;
+    width: 400px;
 
     label {
       display: block;
-      font-size:14px;
+      font-size: 14px;
     }
 
     .input {
       @include input($border-color);
-      width:100%!important;
+      width: 100% !important;
     }
   }
 
@@ -29,7 +28,7 @@
     background: $section-color;
     overflow: hidden;
     cursor: pointer;
-    margin:0 auto;
+    margin: 0 auto;
 
     span {
       position: absolute;
@@ -80,13 +79,13 @@
     padding: 10px 40px;
     transition: $transitions;
     height: 48px;
-    width:100%;
+    width: 100%;
     display: flex;
     justify-content: center;
 
     &:hover {
       background: $primary-color;
-      color:$white;
+      color: $white;
     }
 
     @media (max-width: 768px) {
@@ -99,5 +98,4 @@
     -webkit-appearance: none;
     appearance: none;
   }
-
 }

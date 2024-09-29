@@ -23,7 +23,6 @@ const Register = () => {
     const res = await PostRequest("/auth/register", payload);
 
     if (res?.status === 200 || res?.status === 201) {
-      localStorage.setItem("token", res.data.token);
       cogoToast.success(res?.data?.message);
       router.push("/auth/login");
     } else {
