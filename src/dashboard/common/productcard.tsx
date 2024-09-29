@@ -4,7 +4,7 @@ import cogoToast from "cogo-toast";
 import { useRouter } from "next/router";
 import React, { useContext } from "react";
 import { Image } from "react-bootstrap";
-import { Favourite, ItemCart } from "../../public/assets";
+import { Favourite, ItemCart } from "../../../public/assets";
 import { firstTwoWords, formatMoney } from "@/utils/utils";
 
 //

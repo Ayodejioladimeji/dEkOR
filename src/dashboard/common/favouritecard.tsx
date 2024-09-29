@@ -4,12 +4,13 @@ import cogoToast from "cogo-toast";
 import { useRouter } from "next/router";
 import React, { useContext } from "react";
 import { Image } from "react-bootstrap";
-import { Favourite, ItemCart } from "../../public/assets";
+import { DeleteFavourite, ItemCart } from "../../public/assets";
 import { firstTwoWords, formatMoney } from "@/utils/utils";
+const IMAGE_URL = process.env.NEXT_PUBLIC_IMAGE_URL;
 
 //
 
-const Productcard = (props: any) => {
+const Favouritecard = (props: any) => {
   const { state, dispatch } = useContext<any>(DataContext);
   const router = useRouter();
 
@@ -26,7 +27,6 @@ const Productcard = (props: any) => {
         quantity: 1,
       };
 
-      cogoToast.success("Item added to your cart");
       dispatch({ type: ACTIONS.TOGGLE, payload: true });
       dispatch({ type: ACTIONS.CART, payload: cartData });
     } else {
@@ -34,24 +34,12 @@ const Productcard = (props: any) => {
     }
   };
 
-  const addFavourite = () => {
-    // check if items is already added
-    const check = state?.favourite.every((item) => {
-      return item.id !== props?.id;
-    });
-
-    if (check) {
-      const data = {
-        ...props,
-        quantity: 1,
-      };
-
-      dispatch({ type: ACTIONS.TOGGLE, payload: true });
-      dispatch({ type: ACTIONS.FAVOURITE, payload: data });
-      cogoToast.success("Item added to your favourite");
-    } else {
-      cogoToast.error("Item already added to your favourite");
-    }
+  // remove item from favourites
+  const removeFavourite = () => {
+    const newData = state?.favourite.filter((item) => item.id !== props?.id);
+    dispatch({ type: ACTIONS.TOGGLE, payload: true });
+    dispatch({ type: ACTIONS.DELETEFAVOURITE, payload: newData });
+    cogoToast.success("Item removed successfully");
   };
 
   //
@@ -59,14 +47,14 @@ const Productcard = (props: any) => {
     <div className="product-card">
       <div className="product-image">
         <Image
-          src={props?.images[0]}
+          src={IMAGE_URL + "/images/" + props?.photos[0]?.url}
           alt="product-image"
           width={100}
           height={100}
         />
 
-        <div className="favourite" onClick={addFavourite}>
-          <Favourite />
+        <div className="favourite" onClick={removeFavourite}>
+          <DeleteFavourite />
         </div>
 
         <div className="item-cart" onClick={addToCart}>
@@ -79,8 +67,8 @@ const Productcard = (props: any) => {
       </div>
 
       <div className="product-content">
-        <h3>{firstTwoWords(props?.title)}</h3>
-        <p>${formatMoney(Number(props?.price))}</p>
+        <h3>{firstTwoWords(props?.name)}</h3>
+        <p>${formatMoney(Number(props?.current_price[0]?.USD[0]))}</p>
         <button onClick={() => router.push(`/product/${props?.id}`)}>
           Shop Now
         </button>
@@ -89,4 +77,4 @@ const Productcard = (props: any) => {
   );
 };
 
-export default Productcard;
+export default Favouritecard;

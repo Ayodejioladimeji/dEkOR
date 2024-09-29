@@ -80,7 +80,7 @@ export default function Navbar() {
                   router.asPath.includes("/orders") && "active"
                 }`}
               >
-                <i className="bi bi-geo-alt"></i>
+                <i className="bi bi-box-seam"></i>
                 Orders
               </Link>
             </li>
@@ -90,7 +90,7 @@ export default function Navbar() {
                 href={"/dashboard/payments"}
                 className={`nav-link ${router.asPath.includes("/payments") && "active"}`}
               >
-                <i className="bi bi-card-text" />
+                <i className="bi bi-credit-card-2-back"></i>
                 Payments
               </Link>
             </li>

@@ -43,6 +43,6 @@ export function screenPixels(size, setState) {
 
 // first two words
 export const firstTwoWords = (str) => {
-  const words = str.split(" ");
-  return words.slice(0, 2).join(" ");
+  const words = str?.split(" ");
+  return words?.slice(0, 2).join(" ");
 };

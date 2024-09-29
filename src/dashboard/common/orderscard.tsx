@@ -1,17 +1,16 @@
 import { ACTIONS } from "@/store/Actions";
 import { DataContext } from "@/store/GlobalState";
 import cogoToast from "cogo-toast";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 import React, { useContext } from "react";
 import { Image } from "react-bootstrap";
-import { Favourite, ItemCart } from "../../public/assets";
+import { Favourite, ItemCart } from "../../../public/assets";
 import { firstTwoWords, formatMoney } from "@/utils/utils";
 
 //
 
-const Productcard = (props: any) => {
+const Ordercard = (props: any) => {
   const { state, dispatch } = useContext<any>(DataContext);
-  const router = useRouter();
 
   // add items to cart
   const addToCart = () => {
@@ -56,8 +55,8 @@ const Productcard = (props: any) => {
 
   //
   return (
-    <div className="product-card">
-      <div className="product-image">
+    <div className="order-card">
+      <div className="order-image">
         <Image
           src={props?.images[0]}
           alt="product-image"
@@ -74,19 +73,16 @@ const Productcard = (props: any) => {
         </div>
 
         <button onClick={addToCart} className="add-to-cart">
-          Add to cart
+          Buy Again
         </button>
       </div>
 
-      <div className="product-content">
+      <div className="order-content">
         <h3>{firstTwoWords(props?.title)}</h3>
         <p>${formatMoney(Number(props?.price))}</p>
-        <button onClick={() => router.push(`/product/${props?.id}`)}>
-          Shop Now
-        </button>
       </div>
     </div>
   );
 };
 
-export default Productcard;
+export default Ordercard;
