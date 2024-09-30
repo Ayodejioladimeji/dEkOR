@@ -53,7 +53,11 @@ const ConfirmModal = (props: Props) => {
             Close
           </button>
 
-          <button className="delete" onClick={props?.onSubmit}>
+          <button
+            style={{ background: props?.buttonColor }}
+            className="delete"
+            onClick={props?.onSubmit}
+          >
             {props?.loading ? (
               <Loading
                 height="20px"

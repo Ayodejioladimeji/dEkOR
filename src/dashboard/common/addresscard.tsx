@@ -14,11 +14,18 @@ interface Props {
 
 const AddressCard = (props: Props) => {
   const [confirm, setConfirm] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [deleteloading, setDeleteloading] = useState(false);
 
   const handleSubmit = () => {
     setLoading(true);
     setLoading(false);
+  };
+
+  const handleDelete = () => {
+    setDeleteloading(true);
+    setDeleteloading(false);
   };
 
   //
@@ -38,7 +45,7 @@ const AddressCard = (props: Props) => {
 
         <hr />
         <div className="address-below">
-          <i className="bi bi-trash3"></i>
+          <i className="bi bi-trash3" onClick={() => setDeleteModal(true)}></i>
           <i className="bi bi-pencil-square"></i>
         </div>
       </div>
@@ -53,6 +60,19 @@ const AddressCard = (props: Props) => {
           loading={loading}
           setConfirmModal={setConfirm}
           confirmModal={confirm}
+        />
+      )}
+
+      {deleteModal && (
+        <ConfirmModal
+          title="Remove Address"
+          subtitle="Are you sure you want to remove this address?"
+          buttonTitle="Delete"
+          buttonColor="red"
+          onSubmit={handleDelete}
+          loading={deleteloading}
+          setConfirmModal={setDeleteModal}
+          confirmModal={deleteModal}
         />
       )}
     </>
