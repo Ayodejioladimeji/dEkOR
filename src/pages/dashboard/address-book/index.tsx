@@ -26,7 +26,7 @@ const Overview = () => {
         <div className="addresses">
           <div className="address-box">
             {loading ? (
-              <PaymentSkeleton length={8} />
+              <PaymentSkeleton length={4} />
             ) : (
               <>
                 {addresses?.map((item: any) => {

@@ -29,9 +29,18 @@
       background: $white;
       position: relative;
       transition: $transitions;
+      cursor: pointer;
 
       &:hover {
         transform: scale(0.97);
+      }
+
+      .bi-check-circle-fill {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        color: $primary-color;
+        font-size: 20px;
       }
 
       h3 {
