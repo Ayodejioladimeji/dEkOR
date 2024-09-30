@@ -24,11 +24,11 @@
       border-radius: 15px;
       background: $white;
       position: relative;
-      transition:$transitions;
+      transition: $transitions;
 
       &:hover {
-          transform: scale(0.97);
-        }
+        transform: scale(0.97);
+      }
 
       .bi {
         position: absolute;
