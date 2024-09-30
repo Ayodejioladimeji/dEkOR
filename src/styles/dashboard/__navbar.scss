@@ -365,7 +365,7 @@
   }
 
   @media (max-width: 991px) {
-    .dashboard-navbar {
+    .navbar {
       position: fixed;
       background-color: $black !important;
       box-shadow: inset -1px 0px 0px rgba(0, 0, 0, 0.1);
@@ -376,8 +376,9 @@
       padding: 15px 20px;
       z-index: 991;
       overflow: hidden !important;
+      border-right: 1px solid $border-color;
 
-      .dashboard-navbar-nav {
+      .navbar-nav {
         padding: 0px !important;
         width: 100%;
         padding: 44px 20px 20px 20px;

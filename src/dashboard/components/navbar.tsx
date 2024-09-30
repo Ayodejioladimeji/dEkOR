@@ -107,7 +107,7 @@ export default function Navbar() {
               </Link>
             </li>
 
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <Link
                 href={"/dashboard/reviews"}
                 className={`nav-link ${router.asPath.includes("/reviews") && "active"}`}
@@ -115,7 +115,7 @@ export default function Navbar() {
                 <i className="bi bi-star-half"></i>
                 Ratings & Reviews
               </Link>
-            </li>
+            </li> */}
           </ul>
 
           {/* Footer section */}
