@@ -89,6 +89,26 @@ export default function Navbar() {
 
             <li className="nav-item">
               <Link
+                href={"/dashboard/address-book"}
+                className={`nav-link ${router.asPath.includes("/address-book") && "active"}`}
+              >
+                <i className="bi bi-journal-text"></i>
+                Address Book
+              </Link>
+            </li>
+
+            <li className="nav-item">
+              <Link
+                href={"/dashboard/reviews"}
+                className={`nav-link ${router.asPath.includes("/reviews") && "active"}`}
+              >
+                <i className="bi bi-star-half"></i>
+                Ratings & Reviews
+              </Link>
+            </li>
+
+            <li className="nav-item">
+              <Link
                 href={"/dashboard/profile-settings"}
                 className={`nav-link ${router.asPath.includes("/profile-settings") && "active"}`}
               >
@@ -106,16 +126,6 @@ export default function Navbar() {
                 Change Password
               </Link>
             </li>
-
-            {/* <li className="nav-item">
-              <Link
-                href={"/dashboard/reviews"}
-                className={`nav-link ${router.asPath.includes("/reviews") && "active"}`}
-              >
-                <i className="bi bi-star-half"></i>
-                Ratings & Reviews
-              </Link>
-            </li> */}
           </ul>
 
           {/* Footer section */}

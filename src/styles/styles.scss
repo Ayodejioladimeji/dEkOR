@@ -27,10 +27,11 @@
 @import "./pages/__checkout";
 @import "./pages/__login";
 
-// dashboard
-@import "./dashboard/__navbar";
-@import "./dashboard/__orders";
-@import "./dashboard/__payments";
-@import "./dashboard/__ordercard";
-@import "./dashboard/__paymentcard";
-@import "./dashboard/__settings";
+// dashboard pages
+@import "./dashboard/pages/__orders";
+@import "./dashboard/pages/__payments";
+@import "./dashboard/pages/__settings";
+@import "./dashboard/pages/__addresses";
+
+// dashboard components
+@import "./dashboard/components/__navbar";
