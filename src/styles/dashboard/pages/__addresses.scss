@@ -1,7 +1,15 @@
 .addresses {
   background: $secondary-color;
   width: 100%;
-  padding: 50px 20px;
+  padding: 20px 20px;
+
+  small {
+    display: block;
+    margin-bottom: 20px;
+    text-decoration: underline;
+    color: $primary-color;
+    cursor: pointer;
+  }
 
   .address-box {
     display: grid;

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ConfirmModal from "./confirmmodal";
+import AddressModal from "./addressModal";
 //
 
 interface Props {
@@ -17,6 +18,8 @@ const AddressCard = (props: Props) => {
   const [deleteModal, setDeleteModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [deleteloading, setDeleteloading] = useState(false);
+  const [editModal, setEditModal] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
 
   const handleSubmit = () => {
     setLoading(true);
@@ -46,7 +49,10 @@ const AddressCard = (props: Props) => {
         <hr />
         <div className="address-below">
           <i className="bi bi-trash3" onClick={() => setDeleteModal(true)}></i>
-          <i className="bi bi-pencil-square"></i>
+          <i
+            className="bi bi-pencil-square"
+            onClick={() => setEditModal(true)}
+          ></i>
         </div>
       </div>
 
@@ -73,6 +79,16 @@ const AddressCard = (props: Props) => {
           loading={deleteloading}
           setConfirmModal={setDeleteModal}
           confirmModal={deleteModal}
+        />
+      )}
+
+      {editModal && (
+        <AddressModal
+          editModal={editModal}
+          setEditModal={setEditModal}
+          addresses={props}
+          isEdit={isEdit}
+          setIsEdit={setIsEdit}
         />
       )}
     </>
