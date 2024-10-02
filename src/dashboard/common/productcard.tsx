@@ -1,17 +1,16 @@
 import { ACTIONS } from "@/store/Actions";
 import { DataContext } from "@/store/GlobalState";
 import cogoToast from "cogo-toast";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 import React, { useContext } from "react";
 import { Image } from "react-bootstrap";
-import { Favourite, ItemCart } from "../../../public/assets";
+import { DeleteFavourite } from "../../../public/assets";
 import { firstTwoWords, formatMoney } from "@/utils/utils";
 
 //
 
 const Productcard = (props: any) => {
   const { state, dispatch } = useContext<any>(DataContext);
-  const router = useRouter();
 
   // add items to cart
   const addToCart = () => {
@@ -34,30 +33,10 @@ const Productcard = (props: any) => {
     }
   };
 
-  const addFavourite = () => {
-    // check if items is already added
-    const check = state?.favourite.every((item) => {
-      return item.id !== props?.id;
-    });
-
-    if (check) {
-      const data = {
-        ...props,
-        quantity: 1,
-      };
-
-      dispatch({ type: ACTIONS.TOGGLE, payload: true });
-      dispatch({ type: ACTIONS.FAVOURITE, payload: data });
-      cogoToast.success("Item added to your favourite");
-    } else {
-      cogoToast.error("Item already added to your favourite");
-    }
-  };
-
   //
   return (
-    <div className="product-card">
-      <div className="product-image">
+    <div className="order-card">
+      <div className="order-image">
         <Image
           src={props?.images[0]}
           alt="product-image"
@@ -65,25 +44,18 @@ const Productcard = (props: any) => {
           height={100}
         />
 
-        <div className="favourite" onClick={addFavourite}>
-          <Favourite />
-        </div>
-
         <div className="item-cart" onClick={addToCart}>
-          <ItemCart />
+          <DeleteFavourite />
         </div>
 
         <button onClick={addToCart} className="add-to-cart">
-          Add to cart
+          Edit Product
         </button>
       </div>
 
-      <div className="product-content">
+      <div className="order-content">
         <h3>{firstTwoWords(props?.title)}</h3>
         <p>${formatMoney(Number(props?.price))}</p>
-        <button onClick={() => router.push(`/product/${props?.id}`)}>
-          Shop Now
-        </button>
       </div>
     </div>
   );

@@ -1,10 +1,33 @@
 .orders {
   background: $secondary-color;
   width: 100%;
-  padding: 50px 20px;
+  padding: 30px 20px 100px 20px;
 
   @media (max-width: 600px) {
     padding: 50px 10px;
+  }
+
+  .orders-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 50px;
+
+    input {
+      @include input($border-color);
+      width: 300px;
+      border: 1px solid $border-color;
+      font-size: 13px;
+    }
+
+    button {
+      @include buttons($black);
+      padding: 12px 20px;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      column-gap: 10px;
+    }
   }
 
   .order-box {

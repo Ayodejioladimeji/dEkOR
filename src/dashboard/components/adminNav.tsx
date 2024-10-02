@@ -9,14 +9,14 @@ import { LogoWhite } from "../../../public/assets";
 
 //
 
-export default function Navbar() {
+export default function AdminNavbar() {
   const router = useRouter();
   const { state } = useContext(DataContext);
-  const [profileImage] = useState(null);
   const [notifications] = useState(null);
   const [notify] = useState([]);
   const [notifyLoading] = useState(true);
   const [device, setDevice] = useState(false);
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
 
   // get screen size
   useEffect(() => {
@@ -65,8 +65,8 @@ export default function Navbar() {
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
               <Link
-                href={""}
-                className={`nav-link ${router.asPath.includes("") && "active"}`}
+                href={"/dashboard/overview"}
+                className={`nav-link ${router.asPath.includes("/dashboard/overview") && "active"}`}
               >
                 <i className="bi bi-grid" />
                 Dashboard
@@ -75,78 +75,55 @@ export default function Navbar() {
 
             <li className="nav-item">
               <Link
-                href="/fleet-management"
+                href="/dashboard/products"
                 className={`nav-link ${
-                  router.asPath.includes("fleet-management") && "active"
+                  router.asPath.includes("/dashboard/products") && "active"
                 }`}
               >
-                <i className="bi bi-file-text"></i>
-                Fleet Management
+                <i className="bi bi-box-seam"></i>
+                Products
               </Link>
             </li>
 
             <li className="nav-item">
               <Link
-                href="/riders-management"
-                className={`nav-link ${
-                  router.asPath.includes("riders-management") && "active"
-                }`}
+                href={"/dashboard/payments"}
+                className={`nav-link ${router.asPath.includes("/payments") && "active"}`}
               >
-                <i className="bi bi-people"></i>
-                Riders Management
-              </Link>
-            </li>
-
-            <li className="nav-item">
-              <Link
-                href="/real-time-tracking"
-                className={`nav-link ${
-                  router.asPath.includes("real-time-tracking") && "active"
-                }`}
-              >
-                <i className="bi bi-geo-alt"></i>
-                Real Time Tracking
-              </Link>
-            </li>
-
-            <li className="nav-item">
-              <Link
-                href={""}
-                className={`nav-link ${router.asPath.includes("") && "active"}`}
-              >
-                <i className="bi bi-card-text" />
-                Transaction
-              </Link>
-            </li>
-
-            <li className="nav-item">
-              <Link
-                href="/reporting/report-per-riders"
-                className={`nav-link ${
-                  router.asPath.includes("reporting") && "active"
-                }`}
-              >
-                <i className="bi bi-graph-up" />
-                Reports
+                <i className="bi bi-credit-card-2-back"></i>
+                Transactions
               </Link>
             </li>
 
             <hr className="border-bottom" />
 
             <li className="nav-item">
-              <Link className="nav-link" href="#">
-                <i className="bi bi-calendar-week" />
-                Campaign <span>coming soon</span>
+              <Link
+                href={"/dashboard/address-book"}
+                className={`nav-link ${router.asPath.includes("/address-book") && "active"}`}
+              >
+                <i className="bi bi-journal-text"></i>
+                Address Book
               </Link>
             </li>
 
             <li className="nav-item">
               <Link
-                href={""}
-                className={`nav-link ${router.asPath.includes("") && "active"}`}
+                href={"/dashboard/profile-settings"}
+                className={`nav-link ${router.asPath.includes("/profile-settings") && "active"}`}
               >
-                <i className="bi bi-gear" />
-                Settings
+                <i className="bi bi-person-bounding-box"></i>
+                Profile Settings
+              </Link>
+            </li>
+
+            <li className="nav-item">
+              <Link
+                href={"/dashboard/change-password"}
+                className={`nav-link ${router.asPath.includes("/change-password") && "active"}`}
+              >
+                <i className="bi bi-building-lock"></i>
+                Change Password
               </Link>
             </li>
           </ul>
@@ -157,18 +134,12 @@ export default function Navbar() {
               {/* user profile settings */}
               <div className="col-3 profile-show">
                 <div className="profile-img-container">
-                  {profileImage && (
-                    <Image
-                      src={
-                        profileImage === "null"
-                          ? "/images/profile-image.png"
-                          : profileImage
-                      }
-                      height={100}
-                      width={100}
-                      alt="profile-icon"
-                    />
-                  )}
+                  <Image
+                    src={user?.avatar}
+                    height={100}
+                    width={100}
+                    alt="profile-icon"
+                  />
                 </div>
 
                 {/* profile settings */}
