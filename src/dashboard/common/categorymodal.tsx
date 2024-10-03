@@ -39,6 +39,7 @@ const CategoryModal = ({ createModal, setCreateModal }) => {
 
     const imageURL = URL.createObjectURL(file);
     setSelectedImage(imageURL);
+    setFile(file)
 
     let formData = new FormData();
     formData.append("file", file);
@@ -47,8 +48,8 @@ const CategoryModal = ({ createModal, setCreateModal }) => {
 
   };
 
-  // save address method
-  const saveAddress = async (e) => {
+  // Create category
+  const handleCreate = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem("token")
 
@@ -60,9 +61,10 @@ const CategoryModal = ({ createModal, setCreateModal }) => {
     if(image !== null && image !== undefined){
 
       const payload = {
-        image,
+        image: image?.url,
         name:categoryName
       }
+      console.log(payload)
       const res = await PostRequest("/category", payload, token)
       if(res?.status === 200){
         cogoToast.success(res?.data?.message)
@@ -72,19 +74,6 @@ const CategoryModal = ({ createModal, setCreateModal }) => {
         setButtonloading(false)
       }
     }
-
-
-    // const res = await PostRequest("/user/address", newAddress, token);
-    // if (res.status === 200) {
-    //   dispatch({
-    //     type: ACTIONS.ADDRESSCALLBACK,
-    //     payload: !state.addressCallback,
-    //   });
-    //   cogoToast.success(res.data.message, { hideAfter: 5 });
-    //   setOpenModal(false);
-    // } else {
-    //   setAddressLoading(false);
-    // }
   };
 
   //
@@ -173,7 +162,7 @@ const CategoryModal = ({ createModal, setCreateModal }) => {
                 categoryName === "" || selectedImage === "" ? true : false
               }
               className="btn"
-              onClick={saveAddress}
+              onClick={handleCreate}
             >
               {buttonloading ? (
                 <Loading
