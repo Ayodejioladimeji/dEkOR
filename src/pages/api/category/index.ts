@@ -1,7 +1,5 @@
 import connectDB from "../utils/connectDB";
 import Category from "../models/categoryModel";
-import bcrypt from "bcrypt";
-import valid from "../utils/valid";
 import auth from "../middleware/auth";
 
 connectDB();
@@ -22,15 +20,16 @@ export default async function handler(req, res) {
 
 const createCategory = async (req, res) => {
   try {
-    const { name, image, } = req.body;
+    const { name, image } = req.body;
 
     const category = await Category.findOne({ name });
     if (category)
       return res.status(400).json({ err: "This category already exists." });
 
     // check if its the admin that is creating the category
-    const check = await auth(req, res)
-    if(check?.role === "user") return res.status(401).json({message: "Authentication is not valid"})
+    const check = await auth(req, res);
+    if (check?.role === "user")
+      return res.status(401).json({ message: "Authentication is not valid" });
 
     const newCategory = new Category({
       name,
@@ -45,13 +44,12 @@ const createCategory = async (req, res) => {
 };
 
 const fetchCategory = async (req, res) => {
-  try { 
-   const check = await auth(req, res)
-   console.log(check)
-    const categories = await Category.find().sort("-updatedAt")
-    res.json(categories)
-
+  try {
+    const check = await auth(req, res);
+    console.log(check);
+    const categories = await Category.find().sort("-updatedAt");
+    res.json(categories);
   } catch (error) {
-    return res?.status(500).json({message: error.message})
+    return res?.status(500).json({ message: error.message });
   }
-}
+};

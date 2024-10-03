@@ -13,14 +13,14 @@ export const GetRequest = async (url: string) => {
 
     return res;
   } catch (error) {
-    console.log(error?.response?.data)
+    console.log(error?.response?.data);
     cogoToast.error(error?.response?.data?.message, {
       hideAfter: 5,
     });
   }
 };
 
-export const GetRequests = async (url: string, token:string) => {
+export const GetRequests = async (url: string, token: string) => {
   try {
     const res: AxiosResponse<any> = await axios.get(BASE_URL + url, {
       headers: {
@@ -31,7 +31,7 @@ export const GetRequests = async (url: string, token:string) => {
 
     return res;
   } catch (error) {
-    console.log(error?.response?.data)
+    console.log(error?.response?.data);
     cogoToast.error(error?.response?.data?.message, {
       hideAfter: 5,
     });

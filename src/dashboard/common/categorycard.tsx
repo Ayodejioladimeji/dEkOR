@@ -1,7 +1,7 @@
 // import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { DeleteFavourite } from "../../../public/assets";
-import { firstTwoWords, formatMoney } from "@/utils/utils";
+import { firstTwoWords } from "@/utils/utils";
 import ConfirmModal from "./confirmmodal";
 import { useRouter } from "next/router";
 import Image from "next/image";

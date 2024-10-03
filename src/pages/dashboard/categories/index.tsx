@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import DashboardLayout from "../DashboardLayout";
 import CardSkeleton from "@/common/cardskeleton";
-import { data } from "@/constants/data";
 import Topbar from "@/dashboard/components/topbar";
 // import { useRouter } from "next/router";
 import CategoryModal from "@/dashboard/common/categorymodal";
@@ -15,16 +14,16 @@ const Categories = () => {
   const [categoryModal, setCategoryModal] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem("token") || ""
+    const token = localStorage.getItem("token") || "";
 
-    const fetchCategories = async() => {
-      const res = await GetRequests("/category", token)
-      console.log(res?.data)
-      setCategories(res?.data)
+    const fetchCategories = async () => {
+      const res = await GetRequests("/category", token);
+      console.log(res?.data);
+      setCategories(res?.data);
       setLoading(false);
-    }
+    };
 
-    fetchCategories()
+    fetchCategories();
   }, []);
 
   //

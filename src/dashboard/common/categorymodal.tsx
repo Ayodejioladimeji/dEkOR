@@ -18,7 +18,7 @@ const CategoryModal = ({ createModal, setCreateModal }) => {
   const [imageLoading, setImageLoading] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string>("");
   const [categoryName, setCategoryName] = useState("");
-  const [file, setFile] = useState<any>(null)
+  const [file, setFile] = useState<any>(null);
 
   // handle upload
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,39 +39,36 @@ const CategoryModal = ({ createModal, setCreateModal }) => {
 
     const imageURL = URL.createObjectURL(file);
     setSelectedImage(imageURL);
-    setFile(file)
+    setFile(file);
 
     let formData = new FormData();
     formData.append("file", file);
 
     setImageLoading(false);
-
   };
 
   // Create category
   const handleCreate = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem("token")
+    const token = localStorage.getItem("token");
 
     setButtonloading(true);
 
     // first upload image
-    const image = await singleUpload(file)
+    const image = await singleUpload(file);
 
-    if(image !== null && image !== undefined){
-
+    if (image !== null && image !== undefined) {
       const payload = {
         image: image?.url,
-        name:categoryName
-      }
-      console.log(payload)
-      const res = await PostRequest("/category", payload, token)
-      if(res?.status === 200){
-        cogoToast.success(res?.data?.message)
-        setCreateModal(false)
-      }
-      else{
-        setButtonloading(false)
+        name: categoryName,
+      };
+      console.log(payload);
+      const res = await PostRequest("/category", payload, token);
+      if (res?.status === 200) {
+        cogoToast.success(res?.data?.message);
+        setCreateModal(false);
+      } else {
+        setButtonloading(false);
       }
     }
   };
