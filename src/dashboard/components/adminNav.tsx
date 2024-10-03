@@ -87,6 +87,18 @@ export default function AdminNavbar() {
 
             <li className="nav-item">
               <Link
+                href="/dashboard/categories"
+                className={`nav-link ${
+                  router.asPath.includes("/dashboard/categories") && "active"
+                }`}
+              >
+                <i className="bi bi-box2"></i>
+                Categories
+              </Link>
+            </li>
+
+            <li className="nav-item">
+              <Link
                 href={"/dashboard/payments"}
                 className={`nav-link ${router.asPath.includes("/payments") && "active"}`}
               >
