@@ -4,10 +4,14 @@ import CardSkeleton from "@/common/cardskeleton";
 import { data } from "@/constants/data";
 import Topbar from "@/dashboard/components/topbar";
 import Productcard from "@/dashboard/common/productcard";
+// import { useRouter } from "next/router";
+import AddProductModal from "@/dashboard/common/addproduct";
 
 const Products = () => {
   const [loading, setLoading] = useState(true);
   const [orders, setOrders] = useState<any>([]);
+  // const router = useRouter();
+  const [addProductModal, setAddProductModal] = useState(false);
 
   useEffect(() => {
     setOrders(data);
@@ -28,7 +32,7 @@ const Products = () => {
           <div className="orders-heading">
             <input type="text" placeholder="Search" />
 
-            <button>
+            <button onClick={() => setAddProductModal(true)}>
               <i className="bi bi-plus-circle"></i>
               Add Product
             </button>
@@ -47,6 +51,13 @@ const Products = () => {
           </div>
         </div>
       </section>
+
+      {addProductModal && (
+        <AddProductModal
+          createModal={addProductModal}
+          setCreateModal={setAddProductModal}
+        />
+      )}
     </DashboardLayout>
   );
 };
