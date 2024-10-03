@@ -9,6 +9,7 @@ import { DeleteRequest } from "@/utils/requests";
 import cogoToast from "cogo-toast";
 import { DataContext } from "@/store/GlobalState";
 import { ACTIONS } from "@/store/Actions";
+import EditCategoryModal from "./editcategorymodal";
 
 //
 
@@ -17,6 +18,7 @@ const Categorycard = (props: any) => {
   const [deleteloading, setDeleteloading] = useState(false);
   const router = useRouter();
   const {state, dispatch} = useContext(DataContext)
+  const [editCategoryModal, setEditCategoryModal] = useState(false);
 
   // handle delete
   const handleDelete = async () => {
@@ -53,7 +55,7 @@ const Categorycard = (props: any) => {
 
           <button
             onClick={() =>
-              router.push(`/dashboard/products/edit-product/${props?.id}`)
+              setEditCategoryModal(true)
             }
             className="add-to-cart"
           >
@@ -76,6 +78,15 @@ const Categorycard = (props: any) => {
           loading={deleteloading}
           setConfirmModal={setDeleteModal}
           confirmModal={deleteModal}
+        />
+      )}
+
+      {/* update category modal */}
+      {editCategoryModal && (
+        <EditCategoryModal
+          editModal={editCategoryModal}
+          setEditModal={setEditCategoryModal}
+          data={props}
         />
       )}
     </>

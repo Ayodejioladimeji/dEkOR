@@ -78,3 +78,24 @@ export const DeleteRequest = async (url: string, token?: string) => {
     return error;
   }
 };
+
+// ==========PUT REQUEST=====================
+export const PutRequest = async (url: string, data?: any, token?: string) => {
+  try {
+    const res = await axios.put(BASE_URL + url, data, {
+      headers: {
+        Authorization: token,
+        "Content-Type": "application/json",
+      },
+    });
+
+    return res;
+  } catch (error: any) {
+    cogoToast.error(error?.response?.data?.message);
+    if (error?.response?.status === 401) {
+      localStorage.clear();
+      window.location.href = "/auth/login";
+    }
+    return error;
+  }
+};

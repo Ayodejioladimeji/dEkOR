@@ -7,6 +7,7 @@ import Categorycard from "@/dashboard/common/categorycard";
 import { GetRequests } from "@/utils/requests";
 import { DataContext } from "@/store/GlobalState";
 import { ACTIONS } from "@/store/Actions";
+import EditCategoryModal from "@/dashboard/common/editcategorymodal";
 
 const Categories = () => {
   const [loading, setLoading] = useState(true);
@@ -63,6 +64,7 @@ const Categories = () => {
         </div>
       </section>
 
+{/* create category modal */}
       {categoryModal && (
         <CategoryModal
           createModal={categoryModal}

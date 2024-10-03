@@ -143,6 +143,9 @@
     overflow: hidden;
     cursor: pointer;
     margin: 0 auto;
+    display:flex;
+    align-items: center;
+    justify-content: center;
 
     span {
       position: absolute;
@@ -162,6 +165,11 @@
         color: $white;
         font-size: 20px;
       }
+    }
+
+    .bi{
+      font-size:30px;
+      color:$light-color;
     }
 
     &:hover {

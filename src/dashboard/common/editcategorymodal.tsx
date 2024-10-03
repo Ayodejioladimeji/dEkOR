@@ -1,20 +1,16 @@
-import React, { useContext, useState } from "react";
-// import { DataContext } from "@/store/GlobalState";
-// import { ACTIONS } from "@/store/Actions";
-// import { PostRequest } from "@/utils/requests";
-// import cogoToast from "cogo-toast";
+import React, { useContext, useEffect, useState } from "react";
 import Loading from "@/common/loading";
 import "react-phone-number-input/style.css";
 import { Modal } from "react-bootstrap";
 import Image from "next/image";
 import cogoToast from "cogo-toast";
 import { singleUpload } from "@/pages/api/utils/singleUpload";
-import { PostRequest } from "@/utils/requests";
+import { PostRequest, PutRequest } from "@/utils/requests";
 import { DataContext } from "@/store/GlobalState";
 import { ACTIONS } from "@/store/Actions";
 //
 
-const CategoryModal = ({ createModal, setCreateModal }) => {
+const EditCategoryModal = ({ editModal, setEditModal, data }) => {
   // const { state, dispatch } = useContext(DataContext);
   const [buttonloading, setButtonloading] = useState(false);
   const [imageLoading, setImageLoading] = useState(false);
@@ -22,6 +18,12 @@ const CategoryModal = ({ createModal, setCreateModal }) => {
   const [categoryName, setCategoryName] = useState("");
   const [file, setFile] = useState<any>(null);
   const {state, dispatch} = useContext(DataContext)
+
+  // set default data
+  useEffect(() => {
+    setSelectedImage(data?.image)
+    setCategoryName(data?.name)
+  },[])
 
   // handle upload
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,27 +48,45 @@ const CategoryModal = ({ createModal, setCreateModal }) => {
   };
 
   // Create category
-  const handleCreate = async (e) => {
+  const handleUpdate = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
 
     setButtonloading(true);
 
     // first upload image
-    const image = await singleUpload(file);
-
-    if (image !== null && image !== undefined) {
+    if(file){
+      const image = await singleUpload(file);
+  
+      if (image !== null && image !== undefined) {
+        const payload = {
+          image: image?.url,
+          name: categoryName,
+        };
+  
+        const res = await PutRequest("/category", payload, token);
+        if (res?.status === 200) {
+          dispatch({type:ACTIONS.CALLBACK, payload:!state?.callback})
+          dispatch({type:ACTIONS.LOADING, payload:true})
+          cogoToast.success(res?.data?.message);
+          setEditModal(false);
+        } else {
+          setButtonloading(false);
+        }
+      }
+    }
+    else{
       const payload = {
-        image: image?.url,
+        image: selectedImage,
         name: categoryName,
       };
 
-      const res = await PostRequest("/category", payload, token);
+      const res = await PutRequest(`/category/${data?._id}`, payload, token);
       if (res?.status === 200) {
-        dispatch({type:ACTIONS.CALLBACK, payload:!state?.callback})
-        dispatch({type:ACTIONS.LOADING, payload:true})
+        dispatch({ type: ACTIONS.CALLBACK, payload: !state?.callback })
+        dispatch({ type: ACTIONS.LOADING, payload: true })
         cogoToast.success(res?.data?.message);
-        setCreateModal(false);
+        setEditModal(false);
       } else {
         setButtonloading(false);
       }
@@ -77,15 +97,15 @@ const CategoryModal = ({ createModal, setCreateModal }) => {
 
   return (
     <Modal
-      show={createModal}
-      onHide={() => setCreateModal(false)}
+      show={editModal}
+      onHide={() => setEditModal(false)}
       dialogClassName="address-modal"
     >
       <div className="address">
         <div className="row mb-2">
           <div className="col-9">
             <div className="d-flex align-items-center">
-              <h6>Add New Category</h6>
+              <h6>Edit Category</h6>
             </div>
           </div>
 
@@ -94,7 +114,7 @@ const CategoryModal = ({ createModal, setCreateModal }) => {
               <i
                 className="bi bi-x-circle"
                 onClick={() => {
-                  setCreateModal(false);
+                  setEditModal(false);
                 }}
               />
             </div>
@@ -139,7 +159,7 @@ const CategoryModal = ({ createModal, setCreateModal }) => {
                   />
                 )}
 
-                <i className="bi bi-image"></i>
+                {!selectedImage && <i className="bi bi-image"></i>}
               </div>
             </div>
 
@@ -161,7 +181,7 @@ const CategoryModal = ({ createModal, setCreateModal }) => {
                 categoryName === "" || selectedImage === "" ? true : false
               }
               className="btn"
-              onClick={handleCreate}
+              onClick={handleUpdate}
             >
               {buttonloading ? (
                 <Loading
@@ -171,7 +191,7 @@ const CategoryModal = ({ createModal, setCreateModal }) => {
                   secondaryColor="#fff"
                 />
               ) : (
-                "Save"
+                "Update"
               )}
             </button>
           </div>
@@ -181,4 +201,4 @@ const CategoryModal = ({ createModal, setCreateModal }) => {
   );
 };
 
-export default CategoryModal;
+export default EditCategoryModal;
