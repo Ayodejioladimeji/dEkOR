@@ -13,7 +13,26 @@ export const GetRequest = async (url: string) => {
 
     return res;
   } catch (error) {
-    cogoToast.error("Something went wrong, Please refresh the page", {
+    console.log(error?.response?.data)
+    cogoToast.error(error?.response?.data?.message, {
+      hideAfter: 5,
+    });
+  }
+};
+
+export const GetRequests = async (url: string, token:string) => {
+  try {
+    const res: AxiosResponse<any> = await axios.get(BASE_URL + url, {
+      headers: {
+        Authorization: token,
+        "Content-Type": "application/json",
+      },
+    });
+
+    return res;
+  } catch (error) {
+    console.log(error?.response?.data)
+    cogoToast.error(error?.response?.data?.message, {
       hideAfter: 5,
     });
   }

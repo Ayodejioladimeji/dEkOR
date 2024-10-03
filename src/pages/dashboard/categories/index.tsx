@@ -6,19 +6,25 @@ import Topbar from "@/dashboard/components/topbar";
 // import { useRouter } from "next/router";
 import CategoryModal from "@/dashboard/common/categorymodal";
 import Categorycard from "@/dashboard/common/categorycard";
+import { GetRequests } from "@/utils/requests";
 
 const Categories = () => {
   const [loading, setLoading] = useState(true);
-  const [orders, setOrders] = useState<any>([]);
+  const [categories, setCategories] = useState<any>([]);
   // const router = useRouter();
   const [categoryModal, setCategoryModal] = useState(false);
 
   useEffect(() => {
-    setOrders(data);
+    const token = localStorage.getItem("token") || ""
 
-    setTimeout(() => {
+    const fetchCategories = async() => {
+      const res = await GetRequests("/category", token)
+      console.log(res?.data)
+      setCategories(res?.data)
       setLoading(false);
-    }, 500);
+    }
+
+    fetchCategories()
   }, []);
 
   //
@@ -43,7 +49,7 @@ const Categories = () => {
               <CardSkeleton length={12} />
             ) : (
               <>
-                {orders?.map((item: any) => {
+                {categories?.map((item: any) => {
                   return <Categorycard {...item} key={item.id} />;
                 })}
               </>

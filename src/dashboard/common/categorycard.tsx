@@ -1,10 +1,10 @@
 // import { useRouter } from "next/router";
 import React, { useState } from "react";
-import { Image } from "react-bootstrap";
 import { DeleteFavourite } from "../../../public/assets";
 import { firstTwoWords, formatMoney } from "@/utils/utils";
 import ConfirmModal from "./confirmmodal";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 //
 
@@ -25,10 +25,11 @@ const Categorycard = (props: any) => {
       <div className="order-card">
         <div className="order-image">
           <Image
-            src={props?.images[0]}
+            src={props?.image}
             alt="product-image"
             width={100}
             height={100}
+            unoptimized
           />
 
           <div className="item-cart" onClick={() => setDeleteModal(true)}>
@@ -46,7 +47,7 @@ const Categorycard = (props: any) => {
         </div>
 
         <div className="order-content">
-          <h3>{firstTwoWords(props?.title)}</h3>
+          <h3>{firstTwoWords(props?.name)}</h3>
         </div>
       </div>
 
