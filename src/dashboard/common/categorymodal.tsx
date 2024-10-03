@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 // import { DataContext } from "@/store/GlobalState";
 // import { ACTIONS } from "@/store/Actions";
 // import { PostRequest } from "@/utils/requests";
@@ -10,6 +10,8 @@ import Image from "next/image";
 import cogoToast from "cogo-toast";
 import { singleUpload } from "@/pages/api/utils/singleUpload";
 import { PostRequest } from "@/utils/requests";
+import { DataContext } from "@/store/GlobalState";
+import { ACTIONS } from "@/store/Actions";
 //
 
 const CategoryModal = ({ createModal, setCreateModal }) => {
@@ -19,6 +21,7 @@ const CategoryModal = ({ createModal, setCreateModal }) => {
   const [selectedImage, setSelectedImage] = useState<string>("");
   const [categoryName, setCategoryName] = useState("");
   const [file, setFile] = useState<any>(null);
+  const {state, dispatch} = useContext(DataContext)
 
   // handle upload
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,11 +30,6 @@ const CategoryModal = ({ createModal, setCreateModal }) => {
     // acceptable image size 1mb
     if (file?.size > 1024 * 1024) {
       cogoToast.error("Image should not be greater than 1mb");
-      return;
-    }
-
-    if (file.type !== "image/jpeg" && file.type !== "image/png") {
-      cogoToast.error("Image format not acceptable");
       return;
     }
 
@@ -62,9 +60,11 @@ const CategoryModal = ({ createModal, setCreateModal }) => {
         image: image?.url,
         name: categoryName,
       };
-      console.log(payload);
+
       const res = await PostRequest("/category", payload, token);
       if (res?.status === 200) {
+        dispatch({type:ACTIONS.CALLBACK, payload:!state?.callback})
+        dispatch({type:ACTIONS.LOADING, payload:true})
         cogoToast.success(res?.data?.message);
         setCreateModal(false);
       } else {

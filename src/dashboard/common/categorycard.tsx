@@ -1,10 +1,14 @@
 // import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { DeleteFavourite } from "../../../public/assets";
 import { firstTwoWords } from "@/utils/utils";
 import ConfirmModal from "./confirmmodal";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import { DeleteRequest } from "@/utils/requests";
+import cogoToast from "cogo-toast";
+import { DataContext } from "@/store/GlobalState";
+import { ACTIONS } from "@/store/Actions";
 
 //
 
@@ -12,14 +16,25 @@ const Categorycard = (props: any) => {
   const [deleteModal, setDeleteModal] = useState(false);
   const [deleteloading, setDeleteloading] = useState(false);
   const router = useRouter();
+  const {state, dispatch} = useContext(DataContext)
 
   // handle delete
-  const handleDelete = () => {
-    console.log("submitted");
-    setDeleteloading(false);
+  const handleDelete = async () => {
+    const token = localStorage.getItem("token") || ""
+
+    setDeleteloading(true)
+
+    const res = await DeleteRequest(`/category/${props?._id}`, token)
+    if(res?.status === 200){
+      dispatch({type:ACTIONS.CALLBACK, payload:!state?.callback})
+      cogoToast.success(res?.data?.message)
+      setDeleteloading(false);
+      setDeleteModal(false)
+    }
   };
 
   //
+  
   return (
     <>
       <div className="order-card">

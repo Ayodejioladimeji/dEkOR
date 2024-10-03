@@ -1,30 +1,32 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import DashboardLayout from "../DashboardLayout";
 import CardSkeleton from "@/common/cardskeleton";
 import Topbar from "@/dashboard/components/topbar";
-// import { useRouter } from "next/router";
 import CategoryModal from "@/dashboard/common/categorymodal";
 import Categorycard from "@/dashboard/common/categorycard";
 import { GetRequests } from "@/utils/requests";
+import { DataContext } from "@/store/GlobalState";
+import { ACTIONS } from "@/store/Actions";
 
 const Categories = () => {
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState<any>([]);
-  // const router = useRouter();
   const [categoryModal, setCategoryModal] = useState(false);
+  const {state, dispatch} = useContext(DataContext)
 
   useEffect(() => {
     const token = localStorage.getItem("token") || "";
 
     const fetchCategories = async () => {
       const res = await GetRequests("/category", token);
-      console.log(res?.data);
+
       setCategories(res?.data);
+      dispatch({type:ACTIONS.LOADING, payload:false})
       setLoading(false);
     };
 
     fetchCategories();
-  }, []);
+  }, [state?.callback]);
 
   //
 
@@ -44,16 +46,20 @@ const Categories = () => {
           </div>
 
           <div className="order-box">
-            {loading ? (
+            {loading || state?.loading ? (
               <CardSkeleton length={12} />
             ) : (
               <>
                 {categories?.map((item: any) => {
                   return <Categorycard {...item} key={item.id} />;
                 })}
+
               </>
             )}
           </div>
+
+            {!loading && categories?.length === 0 && <div className="d-flex justify-content-center text-center mt-5 w-100">No categories available</div>}
+        
         </div>
       </section>
 

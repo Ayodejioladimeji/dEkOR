@@ -6,11 +6,11 @@ connectDB();
 
 export default async function handler(req, res) {
   switch (req.method) {
-    case "POST":
-      await createCategory(req, res);
+    case "PUT":
+      await updateCategory(req, res);
       break;
-    case "GET":
-      await fetchCategory(req, res);
+    case "DELETE":
+      await deleteCategory(req, res);
       break;
     default:
       res.status(405).json({ err: "Method Not Allowed" });
@@ -18,37 +18,38 @@ export default async function handler(req, res) {
   }
 }
 
-const createCategory = async (req, res) => {
+const updateCategory = async (req, res) => {
   try {
-    const { name, image } = req.body;
-
-    const category = await Category.findOne({ name });
-    if (category)
-      return res.status(400).json({ err: "This category already exists." });
-
-    // check if its the admin that is creating the category
+     // check if its the admin that is creating the category
     const check = await auth(req, res);
     if (check?.role === "user")
       return res.status(401).json({ message: "Authentication is not valid" });
 
-    const newCategory = new Category({
-      name,
-      image,
-    });
+    const { name, image } = req.body;
+    const {id} = req.query
 
-    await newCategory.save();
-    res.json({ message: "Category created successfully!" });
+    await Category.findOneAndUpdate({_id: id}, {
+        name,
+        image
+    })
+   
+    res.json({ message: "Category updated successfully!" });
   } catch (err) {
     return res.status(500).json({ message: err.message });
   }
 };
 
-const fetchCategory = async (req, res) => {
+const deleteCategory = async (req, res) => {
   try {
+        // check if its the admin that is creating the category
     const check = await auth(req, res);
-    console.log(check);
-    const categories = await Category.find().sort("-updatedAt");
-    res.json(categories);
+    if (check?.role === "user")
+      return res.status(401).json({ message: "Authentication is not valid" });
+
+      const {id} = req.query
+
+    await Category.findByIdAndDelete(id)
+    res.json({ message: "Category deleted successfully!" });
   } catch (error) {
     return res?.status(500).json({ message: error.message });
   }
