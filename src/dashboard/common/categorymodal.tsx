@@ -9,14 +9,16 @@ import { Modal } from "react-bootstrap";
 import Image from "next/image";
 import cogoToast from "cogo-toast";
 import { singleUpload } from "@/pages/api/utils/singleUpload";
+import { PostRequest } from "@/utils/requests";
 //
 
 const CategoryModal = ({ createModal, setCreateModal }) => {
   // const { state, dispatch } = useContext(DataContext);
-  const [addressLoading, setAddressLoading] = useState(false);
+  const [buttonloading, setButtonloading] = useState(false);
   const [imageLoading, setImageLoading] = useState(false);
-  const [selectedImage, setSelectedImage] = useState<any>(null);
+  const [selectedImage, setSelectedImage] = useState<string>("");
   const [categoryName, setCategoryName] = useState("");
+  const [file, setFile] = useState<any>(null)
 
   // handle upload
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,11 +37,11 @@ const CategoryModal = ({ createModal, setCreateModal }) => {
 
     setImageLoading(true);
 
-    // const imageURL = URL.createObjectURL(file);
-    
+    const imageURL = URL.createObjectURL(file);
+    setSelectedImage(imageURL);
 
-   const image = await singleUpload(file)
-    setSelectedImage(image);
+    let formData = new FormData();
+    formData.append("file", file);
 
     setImageLoading(false);
 
@@ -48,18 +50,29 @@ const CategoryModal = ({ createModal, setCreateModal }) => {
   // save address method
   const saveAddress = async (e) => {
     e.preventDefault();
-    setAddressLoading(true);
+    const token = localStorage.getItem("token")
 
-    // const newAddress = {
-    //   recipientName: data.recipientName,
-    //   city: cityChange?.value,
-    //   state: data.state,
-    //   street: data.street,
-    //   landmark: data.landmark,
-    //   houseNumber: data.houseNumber,
-    //   additionalInformation: data.additionalInformation,
-    //   recipientPhone: data.recipientPhone,
-    // };
+    setButtonloading(true);
+
+    // first upload image
+    const image = await singleUpload(file)
+
+    if(image !== null && image !== undefined){
+
+      const payload = {
+        image,
+        name:categoryName
+      }
+      const res = await PostRequest("/category", payload, token)
+      if(res?.status === 200){
+        cogoToast.success(res?.data?.message)
+        setCreateModal(false)
+      }
+      else{
+        setButtonloading(false)
+      }
+    }
+
 
     // const res = await PostRequest("/user/address", newAddress, token);
     // if (res.status === 200) {
@@ -135,9 +148,8 @@ const CategoryModal = ({ createModal, setCreateModal }) => {
                   <Image
                     height={100}
                     width={100}
-                    src={selectedImage?.url}
+                    src={selectedImage}
                     alt="profile-icon"
-                    unoptimized
                   />
                 )}
               </div>
@@ -163,7 +175,7 @@ const CategoryModal = ({ createModal, setCreateModal }) => {
               className="btn"
               onClick={saveAddress}
             >
-              {addressLoading ? (
+              {buttonloading ? (
                 <Loading
                   height="20px"
                   width="20px"
