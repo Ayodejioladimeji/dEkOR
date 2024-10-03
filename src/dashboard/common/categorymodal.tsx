@@ -8,13 +8,14 @@ import "react-phone-number-input/style.css";
 import { Modal } from "react-bootstrap";
 import Image from "next/image";
 import cogoToast from "cogo-toast";
+import { singleUpload } from "@/pages/api/utils/singleUpload";
 //
 
 const CategoryModal = ({ createModal, setCreateModal }) => {
   // const { state, dispatch } = useContext(DataContext);
   const [addressLoading, setAddressLoading] = useState(false);
   const [imageLoading, setImageLoading] = useState(false);
-  const [selectedImage, setSelectedImage] = useState<string>("");
+  const [selectedImage, setSelectedImage] = useState<any>(null);
   const [categoryName, setCategoryName] = useState("");
 
   // handle upload
@@ -34,29 +35,14 @@ const CategoryModal = ({ createModal, setCreateModal }) => {
 
     setImageLoading(true);
 
-    const imageURL = URL.createObjectURL(file);
-    setSelectedImage(imageURL);
+    // const imageURL = URL.createObjectURL(file);
+    
 
-    let formData = new FormData();
-    formData.append("file", file);
-
-    // const newData = {
-    //   file: file,
-    // };
+   const image = await singleUpload(file)
+    setSelectedImage(image);
 
     setImageLoading(false);
 
-    // try {
-    //   const res = await patchDataImages("/user/image-upload", newData, token);
-    //   localStorage.setItem("profile-image", res.data.data);
-    //   cogoToast.success(res.data.message);
-    //   dispatch({ type: ACTIONS.IMAGECALLBACK, payload: !state.imageCallback });
-    //   setImageLoading(false);
-    // } catch (error) {
-    //   console.log(error.response.data);
-    //   cogoToast.error(error?.response?.data?.message);
-    //   setImageLoading(false);
-    // }
   };
 
   // save address method
@@ -149,8 +135,9 @@ const CategoryModal = ({ createModal, setCreateModal }) => {
                   <Image
                     height={100}
                     width={100}
-                    src={selectedImage}
+                    src={selectedImage?.url}
                     alt="profile-icon"
+                    unoptimized
                   />
                 )}
               </div>
