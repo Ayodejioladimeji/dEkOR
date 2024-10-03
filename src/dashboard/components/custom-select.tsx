@@ -25,7 +25,7 @@ const CustomSelect = ({
           return {
             ...baseStyles,
             border: "none",
-            padding: "10px 8px",
+            padding: "px",
             borderRadius: "5px",
             boxShadow: state.isFocused
               ? "0px 0px 0px 1px rgba(255, 198, 25, 1)"
@@ -40,9 +40,9 @@ const CustomSelect = ({
         borderRadius: 0,
         colors: {
           ...theme.colors,
-          primary25: "#ffd34d6c",
-          primary50: "#ffd34d6c",
-          primary: "#ffd34d",
+          primary25: "#27493e",
+          primary50: "#27493e",
+          primary: "#27493e",
         },
       })}
     />

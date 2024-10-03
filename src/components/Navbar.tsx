@@ -3,7 +3,7 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { Cart, Heart, Logo, Profile, Search } from "../../public/assets";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { DataContext } from "@/store/GlobalState";
 import Link from "next/link";
 
@@ -12,7 +12,14 @@ import Link from "next/link";
 function Header() {
   const router = useRouter();
   const { state } = useContext(DataContext);
-  const token = localStorage.getItem("token") || "";
+  const [token, setToken] = useState("");
+
+  //
+
+  useEffect(() => {
+    const token = localStorage.getItem("token") || "";
+    setToken(token);
+  }, []);
 
   //
 

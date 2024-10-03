@@ -5,7 +5,6 @@ import { useState, useEffect } from "react";
 // import cogoToast from "cogo-toast";
 import Loading from "@/common/loading";
 import statesData from "@/constants/statesdata";
-import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import CustomSelect from "../components/custom-select";
 import { Modal } from "react-bootstrap";
@@ -52,14 +51,6 @@ const AddProductModal = ({ createModal, setCreateModal }) => {
   const handleAddressChange = (e) => {
     const { name, value } = e.target;
     setData({ ...data, [name]: value });
-  };
-
-  // handle change for phone number
-  const changePhoneNumber = (e) => {
-    setData((prevState) => ({
-      ...prevState,
-      recipientPhone: e,
-    }));
   };
 
   // save address method
@@ -124,7 +115,7 @@ const AddProductModal = ({ createModal, setCreateModal }) => {
         <div className="form-box mt-5">
           <div className="row">
             <div className="col-12">
-              <label className="mb-2">{`Recipient's Name`}</label>
+              <label className="mb-2">Title</label>
 
               <input
                 type="text"
@@ -136,24 +127,8 @@ const AddProductModal = ({ createModal, setCreateModal }) => {
               />
             </div>
 
-            <div className="col-12">
-              <label className="mb-2">Phone number</label>
-              <div className="inputs">
-                <PhoneInput
-                  name="recipientPhone"
-                  defaultCountry="NG"
-                  value={data.recipientPhone}
-                  onChange={changePhoneNumber}
-                  className="phoneinput"
-                  placeholder="e.g 080 XXXXXXXX"
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="row">
-            <div className="col-12">
-              <label className="mb-2">Street Name</label>
+            <div className="col-6">
+              <label className="mb-2">Buying Price</label>
               <input
                 autoComplete="off"
                 type="text"
@@ -162,35 +137,25 @@ const AddProductModal = ({ createModal, setCreateModal }) => {
                 value={data?.street}
                 name="street"
                 onChange={handleAddressChange}
-                placeholder="Folorunsho street, Agelekale, Abule Egba"
+                placeholder="#5000"
               />
             </div>
-          </div>
-
-          <div className="row">
-            <div className="col-12 col-md-6">
-              <label className="mb-2">State</label>
-
-              <select
-                className="form-select"
-                id="inputState"
-                value={data?.state}
-                name="state"
+            <div className="col-6">
+              <label className="mb-2">Selling Price</label>
+              <input
+                autoComplete="off"
+                type="text"
+                className="input form-control"
+                aria-label="street"
+                value={data?.street}
+                name="street"
                 onChange={handleAddressChange}
-              >
-                <option defaultValue="Select state">Select state</option>
-                {statesData.map((item, index) => {
-                  return (
-                    <option key={index} value={item.value}>
-                      {item.label}
-                    </option>
-                  );
-                })}
-              </select>
+                placeholder="#6000"
+              />
             </div>
 
-            <div className="col-12 col-md-6">
-              <label className="mb-2">Area</label>
+            <div className="col-12">
+              <label className="mb-2">Category</label>
 
               {!selectloading && (
                 <CustomSelect
@@ -201,6 +166,12 @@ const AddProductModal = ({ createModal, setCreateModal }) => {
                   isDisabled={false}
                 />
               )}
+            </div>
+
+            <div className="col-12">
+              <label className="mb-2">Product Description</label>
+
+              <textarea placeholder="Product description"></textarea>
             </div>
           </div>
 
