@@ -139,7 +139,7 @@ const CategoryModal = ({ createModal, setCreateModal }) => {
                   />
                 )}
 
-                <i className="bi bi-image"></i>
+               {!selectedImage && <i className="bi bi-image"></i>}
               </div>
             </div>
 

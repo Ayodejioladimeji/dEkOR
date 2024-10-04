@@ -64,7 +64,7 @@ const EditCategoryModal = ({ editModal, setEditModal, data }) => {
           name: categoryName,
         };
   
-        const res = await PutRequest("/category", payload, token);
+        const res = await PutRequest(`/category/${data?._id}`, payload, token);
         if (res?.status === 200) {
           dispatch({type:ACTIONS.CALLBACK, payload:!state?.callback})
           dispatch({type:ACTIONS.LOADING, payload:true})

@@ -6,19 +6,27 @@ import Topbar from "@/dashboard/components/topbar";
 import Productcard from "@/dashboard/common/productcard";
 // import { useRouter } from "next/router";
 import AddProductModal from "@/dashboard/common/addproduct";
+import { GetRequest } from "@/utils/requests";
 
 const Products = () => {
   const [loading, setLoading] = useState(true);
-  const [orders, setOrders] = useState<any>([]);
-  // const router = useRouter();
+  const [products, setProducts] = useState<any>([]);
   const [addProductModal, setAddProductModal] = useState(false);
 
   useEffect(() => {
-    setOrders(data);
+    const getProducts = async () => {
+      const res = await GetRequest("/product")
+      if(res?.status === 200){
+        setProducts(res?.data)
+        setLoading(false);
+      }
+      else{
+        setLoading(false)
+      }
+    }
 
-    setTimeout(() => {
-      setLoading(false);
-    }, 500);
+    getProducts()
+
   }, []);
 
   //
@@ -43,12 +51,15 @@ const Products = () => {
               <CardSkeleton length={12} />
             ) : (
               <>
-                {orders?.map((item: any) => {
+                {products?.map((item: any) => {
                   return <Productcard {...item} key={item.id} />;
                 })}
               </>
             )}
           </div>
+
+          {!loading && products?.length === 0 && <div className="d-flex justify-content-center text-center mt-5 w-100">No product available</div>}
+
         </div>
       </section>
 

@@ -28,7 +28,7 @@ const CustomSelect = ({
             padding: "px",
             borderRadius: "5px",
             boxShadow: state.isFocused
-              ? "0px 0px 0px 1px rgba(255, 198, 25, 1)"
+              ? "0px 0px 0px 1px rgba(39, 73, 62, 1)"
               : "none",
             cursor: "pointer",
             // fontSize: "16px",
@@ -40,8 +40,8 @@ const CustomSelect = ({
         borderRadius: 0,
         colors: {
           ...theme.colors,
-          primary25: "#27493e",
-          primary50: "#27493e",
+          primary25: "#1010107c",
+          primary50: "#1010107c",
           primary: "#27493e",
         },
       })}

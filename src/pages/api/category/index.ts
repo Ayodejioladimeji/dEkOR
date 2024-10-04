@@ -45,8 +45,6 @@ const createCategory = async (req, res) => {
 
 const fetchCategory = async (req, res) => {
   try {
-    const check = await auth(req, res);
-    console.log(check);
     const categories = await Category.find().sort("-updatedAt");
     res.json(categories);
   } catch (error) {

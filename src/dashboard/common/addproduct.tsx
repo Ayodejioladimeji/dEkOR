@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 // import { DataContext } from "@/store/GlobalState";
 // import { ACTIONS } from "@/store/Actions";
 // import { PostRequest } from "@/utils/requests";
@@ -8,79 +8,77 @@ import statesData from "@/constants/statesdata";
 import "react-phone-number-input/style.css";
 import CustomSelect from "../components/custom-select";
 import { Modal } from "react-bootstrap";
+import { GetRequest, PostRequest } from "@/utils/requests";
+import cogoToast from "cogo-toast";
+import { ACTIONS } from "@/store/Actions";
+import { DataContext } from "@/store/GlobalState";
 
 const initialState = {
-  recipientName: "",
-  state: "",
-  street: "",
-  recipientPhone: "",
+  title:"",
+  buyingPrice:"",
+  sellingPrice:"",
+  category:"",
+  description:""
 };
 
 //
 
 const AddProductModal = ({ createModal, setCreateModal }) => {
   // const { state, dispatch } = useContext(DataContext);
-  const [data, setData] = useState(initialState);
+  const [values, setValues] = useState(initialState);
   const [addressLoading, setAddressLoading] = useState(false);
-  const [cities, setCities] = useState(null);
-  const [cityChange, setCityChange] = useState(null);
+  const [categories, setCategories] = useState(null);
+  const [categoryChange, setCategoryChange] = useState(null);
   const [selectloading, setSelectloading] = useState(true);
-
-  //   get user Address with id
-  // useEffect(() => {
-  //   if (isEdit) {
-  //     const res = addresses.find((item) => item.id === addressId);
-  //     setData(res);
-  //     setCityChange({ label: res.city, value: res.city });
-  //     setSelectloading(false);
-  //   }
-  // }, [isEdit, addressId, addresses]);
-
-  // get cities
+  const {state, dispatch} = useContext(DataContext)
+  
+  // fetch categories
   useEffect(() => {
-    const res = statesData.find((item) => item.value === data?.state);
-    const response = res?.lgas?.map((item) => ({
-      label: item.label,
-      value: item.value,
-    }));
-    setCities(response);
-    setSelectloading(false);
-  }, [data?.state]);
+    const getCategories = async() => {
+      const res = await GetRequest("/category")
+      if(res?.status === 200){
+        const result = res?.data?.map(item => ({
+          label: item?.name,
+          value:item?._id
+        }))
+        setCategories(result)
+        setSelectloading(false)
+      }
+    }
+    getCategories()
+  },[])
+
 
   // handlechange for address method
-  const handleAddressChange = (e) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
-    setData({ ...data, [name]: value });
+    setValues({ ...values, [name]: value });
   };
 
-  // save address method
-  const saveAddress = async (e) => {
-    e.preventDefault();
-    setAddressLoading(true);
 
-    // const newAddress = {
-    //   recipientName: data.recipientName,
-    //   city: cityChange?.value,
-    //   state: data.state,
-    //   street: data.street,
-    //   landmark: data.landmark,
-    //   houseNumber: data.houseNumber,
-    //   additionalInformation: data.additionalInformation,
-    //   recipientPhone: data.recipientPhone,
-    // };
+// add product
+const handleProduct = async () => {
+  const token = localStorage.getItem("token") || ""
 
-    // const res = await PostRequest("/user/address", newAddress, token);
-    // if (res.status === 200) {
-    //   dispatch({
-    //     type: ACTIONS.ADDRESSCALLBACK,
-    //     payload: !state.addressCallback,
-    //   });
-    //   cogoToast.success(res.data.message, { hideAfter: 5 });
-    //   setOpenModal(false);
-    // } else {
-    //   setAddressLoading(false);
-    // }
-  };
+  const payload = {
+    title:values.title, 
+    buyingPrice:values.buyingPrice,
+    sellingPrice:values.sellingPrice,
+    category:categoryChange?.value,
+    description:values.description
+  }
+
+  const res = await PostRequest("/product", payload, token)
+  if(res?.status === 200 || res?.status === 201){
+    dispatch({ type: ACTIONS.CALLBACK, payload: !state?.callback })
+    dispatch({ type: ACTIONS.LOADING, payload: true })
+
+    cogoToast.success(res?.data?.message)
+    setCreateModal(false)
+  }
+
+}
+
 
   //
 
@@ -95,7 +93,6 @@ const AddProductModal = ({ createModal, setCreateModal }) => {
           <div className="col-9">
             <div className="d-flex align-items-center">
               <h6>Add New Product</h6>
-              {/* <div className="btn home-sign">Home</div> */}
             </div>
           </div>
 
@@ -119,9 +116,9 @@ const AddProductModal = ({ createModal, setCreateModal }) => {
 
               <input
                 type="text"
-                value={data?.recipientName}
-                name="recipientName"
-                onChange={handleAddressChange}
+                value={values.title}
+                name="title"
+                onChange={handleChange}
                 className="input form-control"
                 placeholder="Enter recipient name"
               />
@@ -134,12 +131,13 @@ const AddProductModal = ({ createModal, setCreateModal }) => {
                 type="text"
                 className="input form-control"
                 aria-label="street"
-                value={data?.street}
-                name="street"
-                onChange={handleAddressChange}
+                value={values.buyingPrice}
+                name="buyingPrice"
+                onChange={handleChange}
                 placeholder="#5000"
               />
             </div>
+
             <div className="col-6">
               <label className="mb-2">Selling Price</label>
               <input
@@ -147,9 +145,9 @@ const AddProductModal = ({ createModal, setCreateModal }) => {
                 type="text"
                 className="input form-control"
                 aria-label="street"
-                value={data?.street}
-                name="street"
-                onChange={handleAddressChange}
+                value={values.sellingPrice}
+                name="sellingPrice"
+                onChange={handleChange}
                 placeholder="#6000"
               />
             </div>
@@ -159,10 +157,10 @@ const AddProductModal = ({ createModal, setCreateModal }) => {
 
               {!selectloading && (
                 <CustomSelect
-                  options={cities}
+                  options={categories}
                   placeholder="Select an option..."
-                  onChange={setCityChange}
-                  defaultValue={cityChange}
+                  onChange={setCategoryChange}
+                  defaultValue={categoryChange}
                   isDisabled={false}
                 />
               )}
@@ -171,22 +169,15 @@ const AddProductModal = ({ createModal, setCreateModal }) => {
             <div className="col-12">
               <label className="mb-2">Product Description</label>
 
-              <textarea placeholder="Product description"></textarea>
+              <textarea placeholder="Product description" onChange={handleChange} value={values.description} name="description"></textarea>
             </div>
           </div>
 
           <div className="profile-btn">
             <button
-              disabled={
-                !cityChange?.value ||
-                cityChange?.value === "" ||
-                !data?.state ||
-                !data?.street
-                  ? true
-                  : false
-              }
+              disabled={values.buyingPrice === "" || values.sellingPrice === "" || values.title === "" || !categoryChange || values.description === "" ? true : false}
               className="btn"
-              onClick={saveAddress}
+              onClick={handleProduct}
             >
               {addressLoading ? (
                 <Loading

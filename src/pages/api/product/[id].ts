@@ -1,6 +1,5 @@
 import connectDB from "../utils/connectDB";
 import Category from "../models/categoryModel";
-import Product from "../models/productModel";
 import auth from "../middleware/auth";
 
 connectDB();
@@ -47,11 +46,7 @@ const deleteCategory = async (req, res) => {
     if (check?.role === "user")
       return res.status(401).json({ message: "Authentication is not valid" });
 
-    const {id} = req.query
-
-    const products = await Product.findOne({category:id})
-    if(products) return res?.status(400).json({message: "Please delete all products with this category"})
-
+      const {id} = req.query
 
     await Category.findByIdAndDelete(id)
     res.json({ message: "Category deleted successfully!" });
