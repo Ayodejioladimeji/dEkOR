@@ -1,10 +1,10 @@
 // import { useRouter } from "next/router";
 import React, { useState } from "react";
-import { Image } from "react-bootstrap";
 import { DeleteFavourite } from "../../../public/assets";
 import { firstTwoWords, formatMoney } from "@/utils/utils";
 import ConfirmModal from "./confirmmodal";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 //
 
@@ -19,16 +19,19 @@ const Productcard = (props: any) => {
     setDeleteloading(false);
   };
 
+  console.log(props)
+
   //
   return (
     <>
       <div className="order-card">
         <div className="order-image">
           <Image
-            src={props?.images[0]}
+            src={props?.images?.length === 0 ? "/images/placehoder.jpg" : props?.images[0]}
             alt="product-image"
             width={100}
             height={100}
+            unoptimized
           />
 
           <div className="item-cart" onClick={() => setDeleteModal(true)}>
@@ -47,7 +50,7 @@ const Productcard = (props: any) => {
 
         <div className="order-content">
           <h3>{firstTwoWords(props?.title)}</h3>
-          <p>${formatMoney(Number(props?.price))}</p>
+          <p>₦{formatMoney(Number(props?.sellingPrice))}</p>
         </div>
       </div>
 

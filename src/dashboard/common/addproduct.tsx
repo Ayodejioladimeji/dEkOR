@@ -155,15 +155,13 @@ const handleProduct = async () => {
             <div className="col-12">
               <label className="mb-2">Category</label>
 
-              {!selectloading && (
                 <CustomSelect
                   options={categories}
                   placeholder="Select an option..."
                   onChange={setCategoryChange}
                   defaultValue={categoryChange}
-                  isDisabled={false}
+                  isDisabled={selectloading ? true : false}
                 />
-              )}
             </div>
 
             <div className="col-12">

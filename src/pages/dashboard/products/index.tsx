@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import DashboardLayout from "../DashboardLayout";
 import CardSkeleton from "@/common/cardskeleton";
 import { data } from "@/constants/data";
@@ -7,17 +7,21 @@ import Productcard from "@/dashboard/common/productcard";
 // import { useRouter } from "next/router";
 import AddProductModal from "@/dashboard/common/addproduct";
 import { GetRequest } from "@/utils/requests";
+import { DataContext } from "@/store/GlobalState";
+import { ACTIONS } from "@/store/Actions";
 
 const Products = () => {
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState<any>([]);
   const [addProductModal, setAddProductModal] = useState(false);
+  const {state, dispatch} = useContext(DataContext)
 
   useEffect(() => {
     const getProducts = async () => {
       const res = await GetRequest("/product")
       if(res?.status === 200){
         setProducts(res?.data)
+        dispatch({type:ACTIONS.LOADING, payload:false})
         setLoading(false);
       }
       else{
@@ -27,7 +31,7 @@ const Products = () => {
 
     getProducts()
 
-  }, []);
+  }, [state?.callback]);
 
   //
 
@@ -47,7 +51,7 @@ const Products = () => {
           </div>
 
           <div className="order-box">
-            {loading ? (
+            {loading || state?.loading ? (
               <CardSkeleton length={12} />
             ) : (
               <>
