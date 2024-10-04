@@ -17,12 +17,27 @@
       }
 
       input,
-      textarea {
+      textarea{
         @include input($border-color);
         padding: 10px;
         margin-bottom: 20px;
         width: 100%;
         border: 1px solid $border-color;
+        font-size:14px;
+        color:$light-color;
+
+        &:focus {
+          border: 1px solid $primary-color;
+        }
+      }
+
+      select{
+        padding: 10px;
+        margin-bottom: 20px;
+        width: 100%;
+        border: 1px solid $border-color;
+        font-size:14px;
+        color:$light-color;
 
         &:focus {
           border: 1px solid $primary-color;

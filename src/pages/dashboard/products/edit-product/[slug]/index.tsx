@@ -7,35 +7,64 @@ import { GetRequest } from "@/utils/requests";
 import { useRouter } from "next/router";
 import { DataContext } from "@/store/GlobalState";
 
+
 const EditProduct = () => {
   const [loading, setLoading] = useState(true);
   const [product, setProduct] = useState<any>([]);
   const router = useRouter()
   const {slug} = router.query
   const {state} = useContext(DataContext)
+  const [title, setTitle] = useState("")
+  const [buyingPrice, setBuyingPrice] = useState("")
+  const [sellingPrice, setSellingPrice] = useState("")
+  const [category, setCategory] = useState("")
+  const [description, setDescription] = useState("")
+  const [categories, setCategories] = useState<any>([])
+  const [selectloading, setSelectloading] = useState(true)
 
+  // 
+
+  // fetch categories
   useEffect(() => {
-    const getProducts = async () => {
-      const res = await GetRequest(`/product/${slug}`)
+    const getCategories = async () => {
+      const res = await GetRequest("/category")
       if (res?.status === 200) {
-        setProduct(res?.data)
-        setLoading(false);
-      }
-      else {
-        setLoading(false)
+        setCategories(res?.data)
+        setSelectloading(false)
       }
     }
+    getCategories()
+  }, [])
 
-    getProducts()
+  useEffect(() => {
+    if(slug){
+      const getProducts = async () => {
+        const res = await GetRequest(`/product/${slug}`)
+        if (res?.status === 200) {
+          setProduct(res?.data)
+          setTitle(res?.data?.title)
+          setBuyingPrice(res?.data?.buyingPrice)
+          setSellingPrice(res?.data?.sellingPrice)
+          setCategory(res?.data?.category)
+          setDescription(res?.data?.description)
+          setLoading(false);
+        }
+        else {
+          setLoading(false)
+        }
+      }
 
-  }, [state?.callback]);
+      getProducts()
+    }
+
+  }, [state?.callback, slug]);
 
   //
 
   return (
     <DashboardLayout>
       <section className="sections">
-        <Topbar title="Add Product" subtitle="Add new product here" />
+        <Topbar title="Edit Product" subtitle="Edit single product here" />
 
         <div className="add-product">
           <div className="information-section">
@@ -43,40 +72,44 @@ const EditProduct = () => {
               <div className="col-6">
                 <div className="form-div">
                   <label>Title</label>
-                  <input type="text" placeholder="" />
+                  <input type="text" placeholder="" value={title} onChange={(e) => setTitle(e.target.value)}/>
                 </div>
               </div>
 
               <div className="col-6">
                 <div className="form-div">
                   <label>Buying Price</label>
-                  <input type="text" placeholder="" />
+                  <input type="text" placeholder="" value={buyingPrice} onChange={(e) => setBuyingPrice(e.target.value)}/>
                 </div>
               </div>
 
               <div className="col-6">
                 <div className="form-div">
                   <label>Selling Price</label>
-                  <input type="text" placeholder="" />
+                  <input type="text" placeholder="" value={sellingPrice} onChange={(e) => setSellingPrice(e.target.value)}/>
                 </div>
               </div>
 
               <div className="col-6">
                 <div className="form-div">
                   <label>Category</label>
-                  <input type="text" placeholder="" />
+                  <select className="form-select" value={category} onChange={(e) => setCategory(e.target.value)}>
+                    {categories?.map((item:any, index:number) => (
+                      <option key={index} value={item?._id}>{item?.name}</option>
+                    ))}
+                  </select>
                 </div>
               </div>
 
               <div className="col">
                 <div className="form-div">
                   <label>Product Description</label>
-                  <textarea placeholder="Product description" />
+                  <textarea placeholder="Product description" value={description} onChange={(e) => setDescription(e.target.value)}/>
                 </div>
               </div>
             </div>
 
-            <button className="create-button">Create product</button>
+            <button className="create-button">Update product</button>
           </div>
 
           <div className="image-section">
