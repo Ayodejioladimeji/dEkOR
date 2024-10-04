@@ -1,20 +1,34 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import DashboardLayout from "../../../DashboardLayout";
 import { data } from "@/constants/data";
 import Topbar from "@/dashboard/components/topbar";
 import Image from "next/image";
+import { GetRequest } from "@/utils/requests";
+import { useRouter } from "next/router";
+import { DataContext } from "@/store/GlobalState";
 
 const EditProduct = () => {
   const [loading, setLoading] = useState(true);
-  const [orders, setOrders] = useState<any>([]);
+  const [product, setProduct] = useState<any>([]);
+  const router = useRouter()
+  const {slug} = router.query
+  const {state} = useContext(DataContext)
 
   useEffect(() => {
-    setOrders(data);
+    const getProducts = async () => {
+      const res = await GetRequest(`/product/${slug}`)
+      if (res?.status === 200) {
+        setProduct(res?.data)
+        setLoading(false);
+      }
+      else {
+        setLoading(false)
+      }
+    }
 
-    setTimeout(() => {
-      setLoading(false);
-    }, 500);
-  }, []);
+    getProducts()
+
+  }, [state?.callback]);
 
   //
 
@@ -72,7 +86,7 @@ const EditProduct = () => {
                 className="carousel slide"
                 data-bs-ride="true"
               >
-                <div className="carousel-inner">
+                {/* <div className="carousel-inner">
                   {orders?.slice(0, 5)?.map((item: any, index: number) => (
                     <div
                       className={`carousel-item ${index === 0 ? "active" : ""}`}
@@ -87,7 +101,7 @@ const EditProduct = () => {
                       />
                     </div>
                   ))}
-                </div>
+                </div> */}
 
                 <button
                   className="carousel-control-prev"
@@ -115,15 +129,15 @@ const EditProduct = () => {
                 </button>
               </div>
 
-              <button
+              {/* <button
                 className={!loading && orders?.length === 0 ? "py-5" : ""}
               >
                 <i className="bi bi-upload"></i>
                 Add image for product
-              </button>
+              </button> */}
             </div>
 
-            <div className="image-bottom">
+            {/* <div className="image-bottom">
               {!loading && orders?.length === 0 ? (
                 <div className="empty-images py-5">
                   <i className="bi bi-images"></i>Uploaded images will show here
@@ -149,7 +163,7 @@ const EditProduct = () => {
                   </div>
                 </>
               )}
-            </div>
+            </div> */}
           </div>
         </div>
       </section>

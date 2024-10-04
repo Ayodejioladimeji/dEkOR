@@ -1,6 +1,8 @@
 import connectDB from "../utils/connectDB";
 import Category from "../models/categoryModel";
+import Product from "../models/productModel";
 import auth from "../middleware/auth";
+import { NextApiRequest, NextApiResponse } from "next";
 
 connectDB();
 
@@ -8,6 +10,9 @@ export default async function handler(req, res) {
   switch (req.method) {
     case "PUT":
       await updateCategory(req, res);
+      break;
+    case "GET":
+      await getSingleProduct(req, res);
       break;
     case "DELETE":
       await deleteCategory(req, res);
@@ -18,7 +23,7 @@ export default async function handler(req, res) {
   }
 }
 
-const updateCategory = async (req, res) => {
+const updateCategory = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
      // check if its the admin that is creating the category
     const check = await auth(req, res);
@@ -39,7 +44,24 @@ const updateCategory = async (req, res) => {
   }
 };
 
-const deleteCategory = async (req, res) => {
+const getSingleProduct = async (req: NextApiRequest, res: NextApiResponse) => {
+  try {
+    const {id} = req.query
+
+    // Find product by ID
+    const product = await Product.findById(id);
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    res.json(product);
+  } catch (error) {
+    return res?.status(500).json({ message: error.message });
+  }
+};
+
+
+const deleteCategory = async (req:NextApiRequest, res:NextApiResponse) => {
   try {
         // check if its the admin that is creating the category
     const check = await auth(req, res);
