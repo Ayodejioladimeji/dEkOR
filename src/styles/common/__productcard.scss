@@ -1,15 +1,15 @@
-.product-card {
+.main-product-card {
   .product-image {
-    height: 390px;
+    height: 250px !important;
     margin-bottom: 20px;
     border-radius: 30px;
     overflow: hidden;
     position: relative;
     background: $light-color;
     border: 1px solid $border-color;
+    // display:none;
 
     @media (max-width: 767px) {
-      height: 300px;
       border-radius: 8px;
     }
 
@@ -97,7 +97,7 @@
     text-align: center;
 
     h3 {
-      @include body-text(28px, 500, $text-color);
+      @include body-text(25px, 500, $text-color);
       margin-bottom: 5px;
 
       @media (max-width: 767px) {
@@ -110,7 +110,7 @@
     }
 
     p {
-      @include body-text(24px, 700, $text-color);
+      @include body-text(22px, 700, $text-color);
       margin-bottom: 16px;
 
       @media (max-width: 767px) {

@@ -84,18 +84,23 @@ const AllProducts = () => {
             )}
           </div>
 
-          <div
-            style={{
-              height: "50vh",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              flexDirection: "column",
-            }}
-          >
-            <i className="bi bi-box-seam-fill" style={{ fontSize: "45px" }}></i>
-            No Products Available
-          </div>
+          {!loading && products?.length === 0 && (
+            <div
+              style={{
+                height: "50vh",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                flexDirection: "column",
+              }}
+            >
+              <i
+                className="bi bi-box-seam-fill"
+                style={{ fontSize: "45px" }}
+              ></i>
+              No Products Available
+            </div>
+          )}
 
           {/* pagination */}
           {/* {!loading && products?.length !== 0 && totalCount > PageSize && (

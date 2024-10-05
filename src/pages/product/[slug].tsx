@@ -11,10 +11,6 @@ import SimilarProduct from "@/components/SimilarProduct";
 import cogoToast from "cogo-toast";
 import { GetRequest } from "@/utils/requests";
 import { formatMoney } from "@/utils/utils";
-const ORGANISATION_ID = process.env.NEXT_PUBLIC_ORGANISATION_ID;
-const APP_ID = process.env.NEXT_PUBLIC_APP_ID;
-const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
-const IMAGE_URL = process.env.NEXT_PUBLIC_IMAGE_URL;
 
 const colors = ["#BCA287", "#101010", "#A2A1A1"];
 
@@ -35,24 +31,16 @@ const Product = () => {
   useEffect(() => {
     if (slug) {
       const getProduct = async () => {
-        const res: any = await GetRequest(
-          `/products?organization_id=${ORGANISATION_ID}&reverse_sort=false&page=1&size=40&Appid=${APP_ID}&Apikey=${API_KEY}`
-          // `/products/${slug}?organization_id=${ORGANISATION_ID}&reverse_sort=false&page=1&size=40&Appid=${APP_ID}&Apikey=${API_KEY}`
-        );
+        const res: any = await GetRequest(`/product/${slug}`);
 
         if (res?.status === 200) {
-          // get single item
-          const foundProduct = res?.data?.items?.find(
-            (item: any) => item.id === slug
-          );
-
-          setProduct(foundProduct);
+          setProduct(res?.data);
           // Check if the product already exists in the cart
           const existingCartItem = state.cart.find(
-            (item) => item.id === foundProduct?.id
+            (item: any) => item.id === res?.data?._id
           );
           if (existingCartItem) {
-            setQuantity(existingCartItem.quantity); // Set quantity from cart
+            setQuantity(existingCartItem.quantity);
           }
 
           setLoading(false);
@@ -137,8 +125,6 @@ const Product = () => {
     );
   }
 
-  const firstCategory = product?.categories?.find((_, index) => index === 0);
-
   //
 
   return (
@@ -146,7 +132,7 @@ const Product = () => {
       <div className="product-details">
         <div className="container">
           <div className="heading-section">
-            <Breadcumb title={product?.name} />
+            <Breadcumb title={product?.title} />
           </div>
 
           <div className="content">
@@ -157,9 +143,9 @@ const Product = () => {
                     <div className="detail-image">
                       <Image
                         src={
-                          IMAGE_URL +
-                          "/images/" +
-                          product?.photos[imageIndex]?.url
+                          product?.images?.length >= 1
+                            ? product?.images[imageIndex]
+                            : "/images/placehoder.jpg"
                         }
                         alt="product-image"
                         width={100}
@@ -171,7 +157,7 @@ const Product = () => {
 
                   <div className="col-12 col-sm-3">
                     <div className="thumb">
-                      {product?.photos?.map((img, index) => (
+                      {product?.images?.map((img: any, index: number) => (
                         <div
                           className={`image-box ${
                             imageIndex === index ? "image-active" : ""
@@ -179,7 +165,11 @@ const Product = () => {
                           key={index}
                         >
                           <Image
-                            src={IMAGE_URL + "/images/" + img?.url}
+                            src={
+                              product?.images?.length >= 1
+                                ? img
+                                : "/images/placehoder.jpg"
+                            }
                             alt=""
                             onClick={() => setImageIndex(index)}
                             width={100}
@@ -195,14 +185,12 @@ const Product = () => {
 
               <div className="col-12 col-lg-6 content-details">
                 <div className="title">
-                  <h1>{product?.name}</h1>
+                  <h1>{product?.title}</h1>
                   <Ratings />
                 </div>
                 <p>{product?.description}</p>
 
-                <h3>
-                  ${formatMoney(Number(product?.current_price[0]?.USD[0]))}
-                </h3>
+                <h3>${formatMoney(Number(product?.sellingPrice))}</h3>
 
                 <div className="color-div">
                   {colors?.map((color: any, index: number) => (
@@ -306,7 +294,7 @@ const Product = () => {
           </div>
 
           {/* similar products - render if a product category is found */}
-          <SimilarProduct id={firstCategory?.id} />
+          <SimilarProduct id={product?.category} />
         </div>
       </div>
     </Layout>

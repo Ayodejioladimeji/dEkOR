@@ -56,10 +56,14 @@ const Productcard = (props: any) => {
 
   //
   return (
-    <div className="product-card">
+    <div className="main-product-card">
       <div className="product-image">
         <Image
-          src={props?.images[0]}
+          src={
+            props?.images?.length === 0
+              ? "/images/placehoder.jpg"
+              : props?.images[0]
+          }
           alt="product-image"
           width={100}
           height={100}
@@ -80,8 +84,8 @@ const Productcard = (props: any) => {
 
       <div className="product-content">
         <h3>{firstTwoWords(props?.title)}</h3>
-        <p>${formatMoney(Number(props?.price))}</p>
-        <button onClick={() => router.push(`/product/${props?.id}`)}>
+        <p>${formatMoney(Number(props?.sellingPrice))}</p>
+        <button onClick={() => router.push(`/product/${props?._id}`)}>
           Shop Now
         </button>
       </div>
