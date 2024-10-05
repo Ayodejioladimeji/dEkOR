@@ -17,7 +17,7 @@ const Productcard = (props: any) => {
   const addToCart = () => {
     // check if items is already added
     const check = state?.cart.every((item) => {
-      return item.id !== props?.id;
+      return item._id !== props?._id;
     });
 
     if (check) {
@@ -36,8 +36,8 @@ const Productcard = (props: any) => {
 
   const addFavourite = () => {
     // check if items is already added
-    const check = state?.favourite.every((item) => {
-      return item.id !== props?.id;
+    const check = state?.favourite.every((item: any) => {
+      return item._id !== props?._id;
     });
 
     if (check) {
@@ -56,7 +56,7 @@ const Productcard = (props: any) => {
 
   //
   return (
-    <div className="main-product-card">
+    <div className="product-card">
       <div className="product-image">
         <Image
           src={
@@ -84,7 +84,7 @@ const Productcard = (props: any) => {
 
       <div className="product-content">
         <h3>{firstTwoWords(props?.title)}</h3>
-        <p>${formatMoney(Number(props?.sellingPrice))}</p>
+        <p>₦{formatMoney(Number(props?.sellingPrice))}</p>
         <button onClick={() => router.push(`/product/${props?._id}`)}>
           Shop Now
         </button>

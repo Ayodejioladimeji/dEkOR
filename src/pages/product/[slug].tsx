@@ -49,7 +49,7 @@ const Product = () => {
 
   // Add item to cart
   const addToCart = () => {
-    const check = state.cart.every((item) => item.id !== product.id);
+    const check = state.cart.every((item) => item._id !== product._id);
     if (check) {
       const cartData = {
         ...product,

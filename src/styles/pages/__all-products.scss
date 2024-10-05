@@ -46,56 +46,7 @@
     }
 
     .product-loading {
-      background: orange;
       height: 900px;
-    }
-
-    .product-image {
-      height: 280px;
-      background: $border-color;
-
-      @media (max-width: 767px) {
-        height: 300px;
-        border-radius: 8px;
-      }
-
-      @media (max-width: 565px) {
-        height: 200px;
-      }
-
-      @media (max-width: 365px) {
-        height: 140px;
-      }
-    }
-
-    .product-content {
-      @media (min-width: 768px) {
-        h3 {
-          font-size: 18px;
-        }
-
-        p {
-          font-size: 16px;
-        }
-
-        button {
-          font-size: 14px;
-        }
-      }
-
-      @media (min-width: 1000px) {
-        h3 {
-          font-size: 24px;
-        }
-
-        p {
-          font-size: 20px;
-        }
-
-        button {
-          font-size: 16px;
-        }
-      }
     }
   }
 
