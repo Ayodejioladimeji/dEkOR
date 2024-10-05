@@ -4,9 +4,6 @@ import React, { useEffect, useState } from "react";
 import Heading from "./Heading";
 import { useRouter } from "next/router";
 import { GetRequest } from "@/utils/requests";
-const ORGANISATION_ID = process.env.NEXT_PUBLIC_ORGANISATION_ID;
-const APP_ID = process.env.NEXT_PUBLIC_APP_ID;
-const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 
 const Products = () => {
   const [products, setProducts] = useState<any>(null);
@@ -17,17 +14,17 @@ const Products = () => {
 
   useEffect(() => {
     const getProducts = async () => {
-      const res: any = await GetRequest(
-        `/products?organization_id=${ORGANISATION_ID}&reverse_sort=false&page=1&size=9&Appid=${APP_ID}&Apikey=${API_KEY}`
-      );
+      const res: any = await GetRequest(`/product`);
 
       if (res?.status === 200) {
-        setProducts(res?.data.items);
+        setProducts(res?.data);
       }
       setLoading(false);
     };
     getProducts();
   }, []);
+
+  if (!loading && products?.length <= 1) return null;
 
   //
   return (
@@ -41,7 +38,7 @@ const Products = () => {
           ) : (
             <>
               {products?.map((item: any) => {
-                return <Productcard {...item} key={item.id} />;
+                return <Productcard {...item} key={item._id} />;
               })}
             </>
           )}
