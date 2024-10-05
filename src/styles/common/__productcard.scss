@@ -1,5 +1,4 @@
 .product-card {
-
   .product-image {
     height: 200px !important;
     margin-bottom: 10px;
@@ -113,7 +112,6 @@
     p {
       @include body-text(18px, 700, $text-color);
       margin-bottom: 5px;
-
 
       @media (max-width: 565px) {
         font-size: 14px;
