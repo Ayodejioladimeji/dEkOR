@@ -48,6 +48,61 @@
       textarea {
         height: 100px;
       }
+
+    }
+
+    .main-color-input {
+      display:flex;
+      align-items:center;
+      column-gap:10px;
+
+      input {
+        height: 40px;
+        cursor: pointer;
+        width: 50%;
+        margin:0;
+      }
+
+      .bi{
+        font-size:30px;
+        cursor: pointer;
+        color:$primary-color;
+      }
+
+      button{
+        padding:10px;
+        margin:0;
+      }
+    }
+
+    .product-colors {
+      display: flex;
+      align-items: center;
+      margin: 10px 0 20px 0;
+      width: 100%;
+      flex-wrap: wrap;
+    }
+
+    .product-colors-box {
+      height: 40px;
+      width: 40px;
+      margin-right: 15px;
+      position: relative;
+      margin-bottom: 20px;
+      border: 1px solid $border-color;
+
+      .bi {
+        position: absolute;
+        right: 2px;
+        top: 1px;
+        font-size: 10px;
+        cursor: pointer;
+        color: $white;
+      }
+    }
+
+    .productcolors-btn {
+      border: 1px solid $border-color !important;
     }
 
     button {

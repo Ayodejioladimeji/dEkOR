@@ -19,6 +19,8 @@ const EditProduct = () => {
   const [sellingPrice, setSellingPrice] = useState("");
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
+  const [colors, setColors] = useState<any>(null);
+  const [product_colors, setProduct_colors] = useState<any>([]);
   const [categories, setCategories] = useState<any>([]);
   const [buttonloading, setButtonloading] = useState(false);
   const [imageloading, setImageloading] = useState(false);
@@ -134,6 +136,23 @@ const EditProduct = () => {
     );
   };
 
+  // handleChoose color for choosing preferred colors
+  const handleChooseColor = (e) => {
+    e.preventDefault();
+    if (product_colors.includes(colors) || product_colors.length >= 6) {
+      return;
+    }
+
+    setProduct_colors([colors, ...product_colors]);
+  };
+
+  // Remove color method
+  const handleRemoveColor = (id) => {
+    const newColors = product_colors.filter((item, index) => index !== id);
+
+    setProduct_colors(newColors);
+  };
+
   //
 
   return (
@@ -220,6 +239,44 @@ const EditProduct = () => {
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                       />
+                    </div>
+                  </div>
+
+                  <div className="col-12">
+                    <div className="form-div">
+                      <label className="mb-2">Choose Product Colors</label>
+
+                      <div className="main-color-input">
+                        <input
+                          type="color"
+                          id="favcolor"
+                          name="colors"
+                          value={colors}
+                          className="color-input"
+                          onChange={(e) => setColors(e.target.value)}
+                          required
+                        />
+
+                        <i
+                          className="bi bi-check-circle-fill"
+                          onClick={handleChooseColor}
+                        ></i>
+                      </div>
+                    </div>
+
+                    <div className="product-colors">
+                      {product_colors?.map((color: any, index: number) => (
+                        <div
+                          key={index}
+                          style={{ background: color }}
+                          className="product-colors-box"
+                        >
+                          <i
+                            className="bi bi-dash-circle-fill"
+                            onClick={() => handleRemoveColor(index)}
+                          ></i>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>
