@@ -22,12 +22,9 @@ const Product = () => {
   const [loading, setLoading] = useState(true);
   const [productColor, setProductColor] = useState("");
   const [imageIndex, setImageIndex] = useState(0);
-  const [quantity, setQuantity] = useState(1); // Initialize quantity to 1
-  const [count, setCount] = useState(4);
+  const [quantity, setQuantity] = useState(1);
+  const [count, setCount] = useState(1);
 
-  // -----------PLEASE READ THIS----------------------------
-  // The get single product endpoint is returning the current_price as null,
-  // so i have to use the main endpoint to implement it
   useEffect(() => {
     if (slug) {
       const getProduct = async () => {
@@ -156,29 +153,39 @@ const Product = () => {
                   </div>
 
                   <div className="col-12 col-sm-3">
-                    <div className="thumb">
-                      {product?.images?.map((img: any, index: number) => (
-                        <div
-                          className={`image-box ${
-                            imageIndex === index ? "image-active" : ""
-                          }`}
-                          key={index}
-                        >
+                    {product?.images?.length === 0 ? (
+                      <div className="thumb">
+                        <div className="image-box">
                           <Image
-                            src={
-                              product?.images?.length >= 1
-                                ? img
-                                : "/images/placehoder.jpg"
-                            }
+                            src="/images/placehoder.jpg"
                             alt=""
-                            onClick={() => setImageIndex(index)}
                             width={100}
                             height={100}
                             unoptimized
                           />
                         </div>
-                      ))}
-                    </div>
+                      </div>
+                    ) : (
+                      <div className="thumb">
+                        {product?.images?.map((img: any, index: number) => (
+                          <div
+                            className={`image-box ${
+                              imageIndex === index ? "image-active" : ""
+                            }`}
+                            key={index}
+                          >
+                            <Image
+                              src={img}
+                              alt=""
+                              onClick={() => setImageIndex(index)}
+                              width={100}
+                              height={100}
+                              unoptimized
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -258,7 +265,7 @@ const Product = () => {
             <div className="bottom">
               {count === 1 && (
                 <div className="description">
-                  <p> Item Description</p>
+                  <p>{product?.description}</p>
                 </div>
               )}
               {count === 2 && (

@@ -258,7 +258,7 @@
     .bottom {
       margin-top: 24px;
 
-      .policy {
+      .policy, .description {
         h4 {
           @include heading(20px, 600, $text-color);
           margin-bottom: 16px;
