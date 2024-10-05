@@ -138,3 +138,15 @@ textarea {
     }
   }
 }
+
+
+.custom-swiper-navigation .swiper-button-next,
+.custom-swiper-navigation .swiper-button-prev {
+  color: green;
+}
+
+.custom-swiper-navigation .swiper-button-next:hover,
+.custom-swiper-navigation .swiper-button-prev:hover {
+  color: darkgreen;
+}
+

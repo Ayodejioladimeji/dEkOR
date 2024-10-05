@@ -20,6 +20,8 @@ const MoreProduct = () => {
   }, []);
   //
 
+  if (!loading && products?.length === 0) return null;
+
   return (
     <div className="similar-product">
       <h1>You Can Check Out Similar Products</h1>
