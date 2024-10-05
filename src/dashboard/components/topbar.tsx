@@ -7,22 +7,25 @@ import { useRouter } from "next/router";
 type Props = {
   title: string;
   subtitle: string;
-  goback?:boolean
+  goback?: boolean;
 };
 
 const Topbar = (props: Props) => {
   const { state } = useContext(DataContext);
-  const router = useRouter()
+  const router = useRouter();
   //
 
   return (
     <div className="top-sections">
       <div className="d-flex gap-2">
-        <i className="bi bi-arrow-left cursor-pointer" onClick={() => router.back()}></i>
+        <i
+          className="bi bi-arrow-left cursor-pointer"
+          onClick={() => router.back()}
+        ></i>
         <div>
-        <h1>{props?.title}</h1>
-        <p>{props?.subtitle}</p>
-          </div>
+          <h1>{props?.title}</h1>
+          <p>{props?.subtitle}</p>
+        </div>
       </div>
 
       <div>

@@ -22,10 +22,10 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    images:{
-      type:Array,
-      default:[]
-    }
+    images: {
+      type: Array,
+      default: [],
+    },
   },
   {
     timestamps: true,

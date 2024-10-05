@@ -45,9 +45,11 @@ body {
   }
 }
 
-input, select, textarea{
-  &:focus{
-    border:1px solid $primary-color!important;
+input,
+select,
+textarea {
+  &:focus {
+    border: 1px solid $primary-color !important;
   }
 }
 

@@ -24,16 +24,20 @@ export default async function handler(req, res) {
 
 const updateProduct = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-     // check if its the admin that is creating the category
+    // check if its the admin that is creating the category
     const check = await auth(req, res);
     if (check?.role === "user")
       return res.status(401).json({ message: "Authentication is not valid" });
 
-    const { title, buyingPrice, sellingPrice, category, description } = req.body;
-    const {id} = req.query
+    const { title, buyingPrice, sellingPrice, category, description } =
+      req.body;
+    const { id } = req.query;
 
-    await Product.findOneAndUpdate({ _id: id }, { title, buyingPrice, sellingPrice, category, description })
-   
+    await Product.findOneAndUpdate(
+      { _id: id },
+      { title, buyingPrice, sellingPrice, category, description }
+    );
+
     res.json({ message: "Product updated successfully!" });
   } catch (err) {
     return res.status(500).json({ message: err.message });
@@ -42,7 +46,7 @@ const updateProduct = async (req: NextApiRequest, res: NextApiResponse) => {
 
 const getSingleProduct = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const {id} = req.query
+    const { id } = req.query;
 
     // Find product by ID
     const product = await Product.findById(id);
@@ -56,17 +60,16 @@ const getSingleProduct = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
-
-const deleteProduct = async (req:NextApiRequest, res:NextApiResponse) => {
+const deleteProduct = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-        // check if its the admin that is creating the category
+    // check if its the admin that is creating the category
     const check = await auth(req, res);
     if (check?.role === "user")
       return res.status(401).json({ message: "Authentication is not valid" });
 
-      const {id} = req.query
+    const { id } = req.query;
 
-    await Product.findByIdAndDelete(id)
+    await Product.findByIdAndDelete(id);
     res.json({ message: "Product deleted successfully!" });
   } catch (error) {
     return res?.status(500).json({ message: error.message });

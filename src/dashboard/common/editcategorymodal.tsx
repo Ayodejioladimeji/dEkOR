@@ -5,7 +5,7 @@ import { Modal } from "react-bootstrap";
 import Image from "next/image";
 import cogoToast from "cogo-toast";
 import { singleUpload } from "@/pages/api/utils/singleUpload";
-import { PostRequest, PutRequest } from "@/utils/requests";
+import { PutRequest } from "@/utils/requests";
 import { DataContext } from "@/store/GlobalState";
 import { ACTIONS } from "@/store/Actions";
 //
@@ -17,13 +17,13 @@ const EditCategoryModal = ({ editModal, setEditModal, data }) => {
   const [selectedImage, setSelectedImage] = useState<string>("");
   const [categoryName, setCategoryName] = useState("");
   const [file, setFile] = useState<any>(null);
-  const {state, dispatch} = useContext(DataContext)
+  const { state, dispatch } = useContext(DataContext);
 
   // set default data
   useEffect(() => {
-    setSelectedImage(data?.image)
-    setCategoryName(data?.name)
-  },[])
+    setSelectedImage(data?.image);
+    setCategoryName(data?.name);
+  }, [data?.image, data?.name]);
 
   // handle upload
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -55,27 +55,26 @@ const EditCategoryModal = ({ editModal, setEditModal, data }) => {
     setButtonloading(true);
 
     // first upload image
-    if(file){
+    if (file) {
       const image = await singleUpload(file);
-  
+
       if (image !== null && image !== undefined) {
         const payload = {
           image: image?.url,
           name: categoryName,
         };
-  
+
         const res = await PutRequest(`/category/${data?._id}`, payload, token);
         if (res?.status === 200) {
-          dispatch({type:ACTIONS.CALLBACK, payload:!state?.callback})
-          dispatch({type:ACTIONS.LOADING, payload:true})
+          dispatch({ type: ACTIONS.CALLBACK, payload: !state?.callback });
+          dispatch({ type: ACTIONS.LOADING, payload: true });
           cogoToast.success(res?.data?.message);
           setEditModal(false);
         } else {
           setButtonloading(false);
         }
       }
-    }
-    else{
+    } else {
       const payload = {
         image: selectedImage,
         name: categoryName,
@@ -83,8 +82,8 @@ const EditCategoryModal = ({ editModal, setEditModal, data }) => {
 
       const res = await PutRequest(`/category/${data?._id}`, payload, token);
       if (res?.status === 200) {
-        dispatch({ type: ACTIONS.CALLBACK, payload: !state?.callback })
-        dispatch({ type: ACTIONS.LOADING, payload: true })
+        dispatch({ type: ACTIONS.CALLBACK, payload: !state?.callback });
+        dispatch({ type: ACTIONS.LOADING, payload: true });
         cogoToast.success(res?.data?.message);
         setEditModal(false);
       } else {

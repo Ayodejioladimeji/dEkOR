@@ -10,7 +10,7 @@ export const DataProvider = ({ children }) => {
     cart: [],
     favourite: [],
     loading: true,
-    callback:false
+    callback: false,
   };
 
   const [state, dispatch] = useReducer(reducers, initialState);

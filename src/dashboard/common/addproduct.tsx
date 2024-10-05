@@ -1,10 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-// import { DataContext } from "@/store/GlobalState";
-// import { ACTIONS } from "@/store/Actions";
-// import { PostRequest } from "@/utils/requests";
-// import cogoToast from "cogo-toast";
 import Loading from "@/common/loading";
-import statesData from "@/constants/statesdata";
 import "react-phone-number-input/style.css";
 import CustomSelect from "../components/custom-select";
 import { Modal } from "react-bootstrap";
@@ -14,40 +9,38 @@ import { ACTIONS } from "@/store/Actions";
 import { DataContext } from "@/store/GlobalState";
 
 const initialState = {
-  title:"",
-  buyingPrice:"",
-  sellingPrice:"",
-  category:"",
-  description:""
+  title: "",
+  buyingPrice: "",
+  sellingPrice: "",
+  category: "",
+  description: "",
 };
 
 //
 
 const AddProductModal = ({ createModal, setCreateModal }) => {
-  // const { state, dispatch } = useContext(DataContext);
   const [values, setValues] = useState(initialState);
-  const [addressLoading, setAddressLoading] = useState(false);
   const [categories, setCategories] = useState(null);
   const [categoryChange, setCategoryChange] = useState(null);
   const [selectloading, setSelectloading] = useState(true);
-  const {state, dispatch} = useContext(DataContext)
-  
+  const { state, dispatch } = useContext(DataContext);
+  const [buttonloading, setButtonloading] = useState(false);
+
   // fetch categories
   useEffect(() => {
-    const getCategories = async() => {
-      const res = await GetRequest("/category")
-      if(res?.status === 200){
-        const result = res?.data?.map(item => ({
+    const getCategories = async () => {
+      const res = await GetRequest("/category");
+      if (res?.status === 200) {
+        const result = res?.data?.map((item) => ({
           label: item?.name,
-          value:item?._id
-        }))
-        setCategories(result)
-        setSelectloading(false)
+          value: item?._id,
+        }));
+        setCategories(result);
+        setSelectloading(false);
       }
-    }
-    getCategories()
-  },[])
-
+    };
+    getCategories();
+  }, []);
 
   // handlechange for address method
   const handleChange = (e) => {
@@ -55,30 +48,32 @@ const AddProductModal = ({ createModal, setCreateModal }) => {
     setValues({ ...values, [name]: value });
   };
 
+  // add product
+  const handleProduct = async () => {
+    const token = localStorage.getItem("token") || "";
 
-// add product
-const handleProduct = async () => {
-  const token = localStorage.getItem("token") || ""
+    setButtonloading(true);
 
-  const payload = {
-    title:values.title, 
-    buyingPrice:values.buyingPrice,
-    sellingPrice:values.sellingPrice,
-    category:categoryChange?.value,
-    description:values.description
-  }
+    const payload = {
+      title: values.title,
+      buyingPrice: values.buyingPrice,
+      sellingPrice: values.sellingPrice,
+      category: categoryChange?.value,
+      description: values.description,
+    };
 
-  const res = await PostRequest("/product", payload, token)
-  if(res?.status === 200 || res?.status === 201){
-    dispatch({ type: ACTIONS.CALLBACK, payload: !state?.callback })
-    dispatch({ type: ACTIONS.LOADING, payload: true })
+    const res = await PostRequest("/product", payload, token);
+    if (res?.status === 200 || res?.status === 201) {
+      dispatch({ type: ACTIONS.CALLBACK, payload: !state?.callback });
+      dispatch({ type: ACTIONS.LOADING, payload: true });
 
-    cogoToast.success(res?.data?.message)
-    setCreateModal(false)
-  }
-
-}
-
+      cogoToast.success(res?.data?.message);
+      setCreateModal(false);
+      setButtonloading(false);
+    } else {
+      setButtonloading(false);
+    }
+  };
 
   //
 
@@ -155,29 +150,42 @@ const handleProduct = async () => {
             <div className="col-12">
               <label className="mb-2">Category</label>
 
-                <CustomSelect
-                  options={categories}
-                  placeholder="Select an option..."
-                  onChange={setCategoryChange}
-                  defaultValue={categoryChange}
-                  isDisabled={selectloading ? true : false}
-                />
+              <CustomSelect
+                options={categories}
+                placeholder="Select an option..."
+                onChange={setCategoryChange}
+                defaultValue={categoryChange}
+                isDisabled={selectloading ? true : false}
+              />
             </div>
 
             <div className="col-12">
               <label className="mb-2">Product Description</label>
 
-              <textarea placeholder="Product description" onChange={handleChange} value={values.description} name="description"></textarea>
+              <textarea
+                placeholder="Product description"
+                onChange={handleChange}
+                value={values.description}
+                name="description"
+              ></textarea>
             </div>
           </div>
 
           <div className="profile-btn">
             <button
-              disabled={values.buyingPrice === "" || values.sellingPrice === "" || values.title === "" || !categoryChange || values.description === "" ? true : false}
+              disabled={
+                values.buyingPrice === "" ||
+                values.sellingPrice === "" ||
+                values.title === "" ||
+                !categoryChange ||
+                values.description === ""
+                  ? true
+                  : false
+              }
               className="btn"
               onClick={handleProduct}
             >
-              {addressLoading ? (
+              {buttonloading ? (
                 <Loading
                   height="20px"
                   width="20px"

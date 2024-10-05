@@ -21,19 +21,22 @@ export default async function handler(req, res) {
 
 const updateCategory = async (req, res) => {
   try {
-     // check if its the admin that is creating the category
+    // check if its the admin that is creating the category
     const check = await auth(req, res);
     if (check?.role === "user")
       return res.status(401).json({ message: "Authentication is not valid" });
 
     const { name, image } = req.body;
-    const {id} = req.query
+    const { id } = req.query;
 
-    await Category.findOneAndUpdate({_id: id}, {
+    await Category.findOneAndUpdate(
+      { _id: id },
+      {
         name,
-        image
-    })
-   
+        image,
+      }
+    );
+
     res.json({ message: "Category updated successfully!" });
   } catch (err) {
     return res.status(500).json({ message: err.message });
@@ -42,18 +45,20 @@ const updateCategory = async (req, res) => {
 
 const deleteCategory = async (req, res) => {
   try {
-        // check if its the admin that is creating the category
+    // check if its the admin that is creating the category
     const check = await auth(req, res);
     if (check?.role === "user")
       return res.status(401).json({ message: "Authentication is not valid" });
 
-    const {id} = req.query
+    const { id } = req.query;
 
-    const products = await Product.findOne({category:id})
-    if(products) return res?.status(400).json({message: "Please delete all products with this category"})
+    const products = await Product.findOne({ category: id });
+    if (products)
+      return res
+        ?.status(400)
+        .json({ message: "Please delete all products with this category" });
 
-
-    await Category.findByIdAndDelete(id)
+    await Category.findByIdAndDelete(id);
     res.json({ message: "Category deleted successfully!" });
   } catch (error) {
     return res?.status(500).json({ message: error.message });

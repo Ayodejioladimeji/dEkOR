@@ -23,18 +23,24 @@ export default async function handler(req, res) {
 
 const createProduct = async (req, res) => {
   try {
-
     // check if its the admin that is creating the category
     const check = await auth(req, res);
     if (check?.role === "user")
       return res.status(401).json({ message: "Authentication is not valid" });
-    const { title, buyingPrice, sellingPrice, category, description } = req.body;
+    const { title, buyingPrice, sellingPrice, category, description } =
+      req.body;
 
     const product = await Product.findOne({ title });
     if (product)
       return res.status(400).json({ err: "This product already exists." });
 
-    const newProduct = new Product({ title, buyingPrice, category, sellingPrice, description });
+    const newProduct = new Product({
+      title,
+      buyingPrice,
+      category,
+      sellingPrice,
+      description,
+    });
 
     await newProduct.save();
     res.json({ message: "Product added successfully!" });
@@ -52,7 +58,6 @@ const fetchProduct = async (req, res) => {
   }
 };
 
-
 // New endpoint to handle adding images to a product
 const addProductImages = async (req, res) => {
   try {
@@ -69,8 +74,7 @@ const addProductImages = async (req, res) => {
 
     // Find the product and update its images by replacing existing ones
     const product = await Product.findById(productId);
-    if (!product)
-      return res.status(404).json({ message: "Product not found" });
+    if (!product) return res.status(404).json({ message: "Product not found" });
 
     // Replace the existing images with the new array of images
     product.images = images;

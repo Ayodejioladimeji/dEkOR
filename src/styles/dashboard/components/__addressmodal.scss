@@ -32,8 +32,8 @@
     .input {
       @include input($border-color);
       margin-bottom: 10px;
-      font-size:14px;
-      padding:8px;
+      font-size: 14px;
+      padding: 8px;
 
       &::-webkit-input-placeholder {
         color: $light-color;
@@ -44,8 +44,8 @@
       @include select("transparent", $border-color);
       color: $black;
       margin-bottom: 10px;
-      font-size:14px;
-      padding:8px;
+      font-size: 14px;
+      padding: 8px;
 
       option:first-of-type {
         color: $light-color !important;
@@ -68,16 +68,16 @@
           border: none !important;
           outline: none !important;
           padding: 8px;
-          font-size:14px;
+          font-size: 14px;
         }
       }
     }
 
-    textarea{
-      width:100%;
-      height:100px;
-      padding:10px;
-      font-size:14px;
+    textarea {
+      width: 100%;
+      height: 100px;
+      padding: 10px;
+      font-size: 14px;
     }
 
     .exclamations {
@@ -121,12 +121,12 @@
       cursor: pointer;
     }
 
-    select{
-      background:orange!important;
-      border:none;
+    select {
+      background: orange !important;
+      border: none;
 
-      option:first-of-type{
-        color:$light-color!important;
+      option:first-of-type {
+        color: $light-color !important;
       }
     }
 
@@ -136,17 +136,17 @@
       border-radius: 5px;
       margin-bottom: 10px;
 
-      input{
-        border:none!important;
+      input {
+        border: none !important;
       }
 
-      &:focus { 
+      &:focus {
         border: 1px solid $primary-color !important;
       }
     }
   }
 
-    .upload-image {
+  .upload-image {
     height: 150px;
     width: 100%;
     border-radius: 4px;
@@ -156,7 +156,7 @@
     overflow: hidden;
     cursor: pointer;
     margin: 0 auto;
-    display:flex;
+    display: flex;
     align-items: center;
     justify-content: center;
 
@@ -180,9 +180,9 @@
       }
     }
 
-    .bi{
-      font-size:30px;
-      color:$light-color;
+    .bi {
+      font-size: 30px;
+      color: $light-color;
     }
 
     &:hover {

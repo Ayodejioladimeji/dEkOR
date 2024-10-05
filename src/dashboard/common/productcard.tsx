@@ -14,22 +14,20 @@ const Productcard = (props: any) => {
   const [deleteModal, setDeleteModal] = useState(false);
   const [deleteloading, setDeleteloading] = useState(false);
   const router = useRouter();
-  const {state, dispatch} = useContext(DataContext)
+  const { state, dispatch } = useContext(DataContext);
 
   // handle delete
-  const handleDelete = async() => {
-    setDeleteloading(true)
+  const handleDelete = async () => {
+    setDeleteloading(true);
 
-    const token = localStorage.getItem("token") || ""
+    const token = localStorage.getItem("token") || "";
 
-    const res = await DeleteRequest(`/product/${props?._id}`, token)
-    if(res?.status === 200){
-      dispatch({type:ACTIONS.CALLBACK, payload:!state?.callback})
-      setDeleteModal(false)
+    const res = await DeleteRequest(`/product/${props?._id}`, token);
+    if (res?.status === 200) {
+      dispatch({ type: ACTIONS.CALLBACK, payload: !state?.callback });
+      setDeleteModal(false);
       setDeleteloading(false);
-
-    }
-    else{
+    } else {
       setDeleteloading(false);
     }
   };
@@ -40,7 +38,11 @@ const Productcard = (props: any) => {
       <div className="order-card">
         <div className="order-image">
           <Image
-            src={props?.images?.length === 0 ? "/images/placehoder.jpg" : props?.images[0]}
+            src={
+              props?.images?.length === 0
+                ? "/images/placehoder.jpg"
+                : props?.images[0]
+            }
             alt="product-image"
             width={100}
             height={100}

@@ -21,7 +21,7 @@ const CategoryModal = ({ createModal, setCreateModal }) => {
   const [selectedImage, setSelectedImage] = useState<string>("");
   const [categoryName, setCategoryName] = useState("");
   const [file, setFile] = useState<any>(null);
-  const {state, dispatch} = useContext(DataContext)
+  const { state, dispatch } = useContext(DataContext);
 
   // handle upload
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,8 +63,8 @@ const CategoryModal = ({ createModal, setCreateModal }) => {
 
       const res = await PostRequest("/category", payload, token);
       if (res?.status === 200) {
-        dispatch({type:ACTIONS.CALLBACK, payload:!state?.callback})
-        dispatch({type:ACTIONS.LOADING, payload:true})
+        dispatch({ type: ACTIONS.CALLBACK, payload: !state?.callback });
+        dispatch({ type: ACTIONS.LOADING, payload: true });
         cogoToast.success(res?.data?.message);
         setCreateModal(false);
       } else {
@@ -139,7 +139,7 @@ const CategoryModal = ({ createModal, setCreateModal }) => {
                   />
                 )}
 
-               {!selectedImage && <i className="bi bi-image"></i>}
+                {!selectedImage && <i className="bi bi-image"></i>}
               </div>
             </div>
 

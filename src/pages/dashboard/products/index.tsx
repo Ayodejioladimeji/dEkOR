@@ -1,10 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import DashboardLayout from "../DashboardLayout";
 import CardSkeleton from "@/common/cardskeleton";
-import { data } from "@/constants/data";
 import Topbar from "@/dashboard/components/topbar";
 import Productcard from "@/dashboard/common/productcard";
-// import { useRouter } from "next/router";
 import AddProductModal from "@/dashboard/common/addproduct";
 import { GetRequest } from "@/utils/requests";
 import { DataContext } from "@/store/GlobalState";
@@ -14,24 +12,22 @@ const Products = () => {
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState<any>([]);
   const [addProductModal, setAddProductModal] = useState(false);
-  const {state, dispatch} = useContext(DataContext)
+  const { state, dispatch } = useContext(DataContext);
 
   useEffect(() => {
     const getProducts = async () => {
-      const res = await GetRequest("/product")
-      if(res?.status === 200){
-        setProducts(res?.data)
-        dispatch({type:ACTIONS.LOADING, payload:false})
+      const res = await GetRequest("/product");
+      if (res?.status === 200) {
+        setProducts(res?.data);
+        dispatch({ type: ACTIONS.LOADING, payload: false });
+        setLoading(false);
+      } else {
         setLoading(false);
       }
-      else{
-        setLoading(false)
-      }
-    }
+    };
 
-    getProducts()
-
-  }, [state?.callback]);
+    getProducts();
+  }, [dispatch, state?.callback]);
 
   //
 
@@ -62,8 +58,11 @@ const Products = () => {
             )}
           </div>
 
-          {!loading && products?.length === 0 && <div className="d-flex justify-content-center text-center mt-5 w-100">No product available</div>}
-
+          {!loading && products?.length === 0 && (
+            <div className="d-flex justify-content-center text-center mt-5 w-100">
+              No product available
+            </div>
+          )}
         </div>
       </section>
 

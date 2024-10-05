@@ -3,7 +3,6 @@ import React, { useContext, useState } from "react";
 import { DeleteFavourite } from "../../../public/assets";
 import { firstTwoWords } from "@/utils/utils";
 import ConfirmModal from "./confirmmodal";
-import { useRouter } from "next/router";
 import Image from "next/image";
 import { DeleteRequest } from "@/utils/requests";
 import cogoToast from "cogo-toast";
@@ -16,27 +15,26 @@ import EditCategoryModal from "./editcategorymodal";
 const Categorycard = (props: any) => {
   const [deleteModal, setDeleteModal] = useState(false);
   const [deleteloading, setDeleteloading] = useState(false);
-  const router = useRouter();
-  const {state, dispatch} = useContext(DataContext)
+  const { state, dispatch } = useContext(DataContext);
   const [editCategoryModal, setEditCategoryModal] = useState(false);
 
   // handle delete
   const handleDelete = async () => {
-    const token = localStorage.getItem("token") || ""
+    const token = localStorage.getItem("token") || "";
 
-    setDeleteloading(true)
+    setDeleteloading(true);
 
-    const res = await DeleteRequest(`/category/${props?._id}`, token)
-    if(res?.status === 200){
-      dispatch({type:ACTIONS.CALLBACK, payload:!state?.callback})
-      cogoToast.success(res?.data?.message)
+    const res = await DeleteRequest(`/category/${props?._id}`, token);
+    if (res?.status === 200) {
+      dispatch({ type: ACTIONS.CALLBACK, payload: !state?.callback });
+      cogoToast.success(res?.data?.message);
       setDeleteloading(false);
-      setDeleteModal(false)
+      setDeleteModal(false);
     }
   };
 
   //
-  
+
   return (
     <>
       <div className="order-card">
@@ -54,9 +52,7 @@ const Categorycard = (props: any) => {
           </div>
 
           <button
-            onClick={() =>
-              setEditCategoryModal(true)
-            }
+            onClick={() => setEditCategoryModal(true)}
             className="add-to-cart"
           >
             Edit Category
