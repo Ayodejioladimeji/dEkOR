@@ -35,9 +35,9 @@ const Checkout = () => {
   const handleShipping = (item: string) => {
     setShippingType(item);
     if (item === "standard") {
-      setAmount(80);
+      setAmount(1000);
     } else {
-      setAmount(100);
+      setAmount(4000);
     }
   };
 
@@ -188,7 +188,7 @@ const Checkout = () => {
                       )}
                       <p>Standard Shipping</p>
                     </div>
-                    <p>$80</p>
+                    <p>₦1000</p>
                   </div>
 
                   <div
@@ -203,22 +203,22 @@ const Checkout = () => {
                       )}
                       <p>Express Shipping</p>
                     </div>
-                    <p>$100</p>
+                    <p>₦4000</p>
                   </div>
                 </div>
 
                 <h4>Order Summary</h4>
                 <div className="order-items">
                   <h5>Subtotal</h5>
-                  <h5>${formatMoney(calculateTotal(state?.cart))}</h5>
+                  <h5>₦{formatMoney(calculateTotal(state?.cart))}</h5>
                 </div>
                 <div className="order-items">
                   <h5>Total</h5>
-                  <h5>${formatMoney(calculateTotal(state?.cart) + amount)}</h5>
+                  <h5>₦{formatMoney(calculateTotal(state?.cart) + amount)}</h5>
                 </div>
 
                 <button onClick={handleCheckout}>
-                  Checkout Payment ($
+                  Checkout Payment (₦
                   {formatMoney(calculateTotal(state?.cart) + amount)})
                 </button>
               </div>
