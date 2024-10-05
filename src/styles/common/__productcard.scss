@@ -1,6 +1,6 @@
 .product-card {
   .product-image {
-    height: 200px !important;
+    height: 230px !important;
     margin-bottom: 10px;
     border-radius: 30px;
     overflow: hidden;
@@ -97,7 +97,7 @@
     text-align: center;
 
     h3 {
-      @include body-text(20px, 500, $text-color);
+      @include body-text(23px, 500, $text-color);
       margin-bottom: 5px;
 
       @media (max-width: 767px) {
