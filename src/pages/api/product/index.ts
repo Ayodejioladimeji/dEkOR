@@ -67,15 +67,16 @@ const addProductImages = async (req, res) => {
     if (!Array.isArray(images) || images.length === 0)
       return res.status(400).json({ message: "Images array is required" });
 
-    // Find the product and update its images
+    // Find the product and update its images by replacing existing ones
     const product = await Product.findById(productId);
     if (!product)
       return res.status(404).json({ message: "Product not found" });
 
-    product.images = [...product.images, ...images];
+    // Replace the existing images with the new array of images
+    product.images = images;
     await product.save();
 
-    res.json({ message: "Images added successfully!", product });
+    res.json({ message: "Images updated successfully!", product });
   } catch (err) {
     return res.status(500).json({ message: err.message });
   }
