@@ -13,6 +13,9 @@ export default async function handler(
     case "PUT":
       await updateAddress(req, res);
       break;
+    case "PATCH":
+      await updateDefault(req, res);
+      break;
     case "DELETE":
       await deleteAddress(req, res);
       break;
@@ -24,10 +27,8 @@ export default async function handler(
 
 const updateAddress = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    // check if its the admin that is creating the category
-    const check = await auth(req, res);
-    if (check?.role === "user")
-      return res.status(401).json({ message: "Authentication is not valid" });
+    // add auth
+    await auth(req, res);
 
     const { name, address, region, city, phone } = req.body;
 
@@ -50,12 +51,29 @@ const updateAddress = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
+const updateDefault = async (req: NextApiRequest, res: NextApiResponse) => {
+  try {
+    const user = await auth(req, res);
+
+    const { id } = req.query;
+
+    await Address.updateMany({ user: user._id }, { isDefault: false });
+
+    await Address.findOneAndUpdate(
+      { _id: id, user: user._id },
+      { isDefault: true }
+    );
+
+    res.json({ message: "Default address updated successfully!" });
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+};
+
 const deleteAddress = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    // check if its the admin that is creating the category
-    const check = await auth(req, res);
-    if (check?.role === "user")
-      return res.status(401).json({ message: "Authentication is not valid" });
+    // add auth
+    await auth(req, res);
 
     const { id } = req.query;
 

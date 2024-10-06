@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import ConfirmModal from "./confirmmodal";
 import AddressModal from "./addressModal";
-import { DeleteRequest } from "@/utils/requests";
+import { DeleteRequest, PatchRequest } from "@/utils/requests";
 import cogoToast from "cogo-toast";
 import { DataContext } from "@/store/GlobalState";
 import { ACTIONS } from "@/store/Actions";
@@ -25,9 +25,22 @@ const AddressCard = (props: Props) => {
   const [editModal, setEditModal] = useState(false);
   const { state, dispatch } = useContext(DataContext);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    const token = localStorage.getItem("token") || "";
+
     setLoading(true);
-    setLoading(false);
+    const res = await PatchRequest(`/address-book/${props?._id}`, "", token);
+    if (res?.status === 200 || res?.status === 201) {
+      dispatch({
+        type: ACTIONS.CALLBACK,
+        payload: !state.callback,
+      });
+      cogoToast.success(res?.data?.message);
+      setConfirm(false);
+      setLoading(false);
+    } else {
+      setLoading(false);
+    }
   };
 
   const handleDelete = async () => {
