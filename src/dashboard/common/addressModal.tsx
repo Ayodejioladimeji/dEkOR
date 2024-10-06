@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 // import { DataContext } from "@/store/GlobalState";
 // import { ACTIONS } from "@/store/Actions";
 // import { PostRequest } from "@/utils/requests";
@@ -9,56 +9,47 @@ import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import CustomSelect from "../components/custom-select";
 import { Modal } from "react-bootstrap";
+import { PutRequest } from "@/utils/requests";
+import { DataContext } from "@/store/GlobalState";
+import { ACTIONS } from "@/store/Actions";
+import cogoToast from "cogo-toast";
 
 const initialState = {
-  recipientName: "",
-  state: "",
-  street: "",
-  recipientPhone: "",
+  name: "",
+  address: "",
+  region: "",
+  phone: "",
 };
-
 //
 
-const AddressModal = ({
-  editModal,
-  setEditModal,
-  addresses,
-  isEdit,
-  setIsEdit,
-}) => {
+const AddressModal = ({ editModal, setEditModal, addressData }) => {
   // const { state, dispatch } = useContext(DataContext);
   const [data, setData] = useState(initialState);
   const [addressLoading, setAddressLoading] = useState(false);
   const [cities, setCities] = useState(null);
   const [cityChange, setCityChange] = useState(null);
   const [selectloading, setSelectloading] = useState(true);
+  const { state, dispatch } = useContext(DataContext);
 
-  //   get user Address with id
-  // useEffect(() => {
-  //   if (isEdit) {
-  //     const res = addresses.find((item) => item.id === addressId);
-  //     setData(res);
-  //     setCityChange({ label: res.city, value: res.city });
-  //     setSelectloading(false);
-  //   }
-  // }, [isEdit, addressId, addresses]);
+  //
+  useEffect(() => {
+    setData(addressData);
+    setCityChange(addressData?.city);
+  }, [addressData]);
 
   // get cities
   useEffect(() => {
-    const res = statesData.find((item) => item.value === data?.state);
+    const res = statesData.find((item) => item.value === data?.region);
     const response = res?.lgas?.map((item) => ({
       label: item.label,
       value: item.value,
     }));
     setCities(response);
     setSelectloading(false);
-  }, [data?.state]);
-
-  console.log(addresses);
-  console.log(setIsEdit);
+  }, [data?.region]);
 
   // handlechange for address method
-  const handleAddressChange = (e) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setData({ ...data, [name]: value });
   };
@@ -72,68 +63,37 @@ const AddressModal = ({
   };
 
   // save address method
-  const saveAddress = async (e) => {
+  const handleUpdate = async (e) => {
     e.preventDefault();
     setAddressLoading(true);
 
-    // const newAddress = {
-    //   recipientName: data.recipientName,
-    //   city: cityChange?.value,
-    //   state: data.state,
-    //   street: data.street,
-    //   landmark: data.landmark,
-    //   houseNumber: data.houseNumber,
-    //   additionalInformation: data.additionalInformation,
-    //   recipientPhone: data.recipientPhone,
-    // };
+    const token = localStorage.getItem("token") || "";
 
-    // const res = await PostRequest("/user/address", newAddress, token);
-    // if (res.status === 200) {
-    //   dispatch({
-    //     type: ACTIONS.ADDRESSCALLBACK,
-    //     payload: !state.addressCallback,
-    //   });
-    //   cogoToast.success(res.data.message, { hideAfter: 5 });
-    //   setOpenModal(false);
-    // } else {
-    //   setAddressLoading(false);
-    // }
-  };
+    const payload = {
+      name: data?.name,
+      address: data?.address,
+      region: data?.region,
+      city: cityChange,
+      phone: data?.phone,
+    };
 
-  // update address method
-  const updateAddress = async (e) => {
-    e.preventDefault();
-    setAddressLoading(true);
+    const res = await PutRequest(
+      `/address-book/${addressData?._id}`,
+      payload,
+      token
+    );
 
-    // const newAddress = {
-    //   recipientName: data.recipientName,
-    //   city: cityChange?.value,
-    //   state: data.state,
-    //   street: data.street,
-    //   landmark: data.landmark,
-    //   houseNumber: data.houseNumber,
-    //   additionalInformation: data.additionalInformation,
-    //   recipientPhone: data.recipientPhone,
-    // };
-
-    // const res = await PatchRequest(
-    //   `/user/edit-address/${addressId}`,
-    //   newAddress,
-    //   token
-    // );
-    // if (res.status === 200) {
-    //   dispatch({
-    //     type: ACTIONS.ADDRESSCALLBACK,
-    //     payload: !state.addressCallback,
-    //   });
-    //   cogoToast.success("Your address has been updated", { hideAfter: 5 });
-    //   setOpenModal(false);
-
-    //   setIsEdit(false);
-    //   setData(initialState);
-    // } else {
-    //   setAddressLoading(false);
-    // }
+    if (res.status === 200) {
+      dispatch({
+        type: ACTIONS.CALLBACK,
+        payload: !state.callback,
+      });
+      cogoToast.success(res.data.message, { hideAfter: 5 });
+      setEditModal(false);
+      setAddressLoading(false);
+    } else {
+      setAddressLoading(false);
+    }
   };
 
   //
@@ -149,7 +109,6 @@ const AddressModal = ({
           <div className="col-9">
             <div className="d-flex align-items-center">
               <h6>Update Address</h6>
-              {/* <div className="btn home-sign">Home</div> */}
             </div>
           </div>
 
@@ -173,9 +132,9 @@ const AddressModal = ({
 
               <input
                 type="text"
-                value={data?.recipientName}
-                name="recipientName"
-                onChange={handleAddressChange}
+                value={data?.name}
+                name="name"
+                onChange={handleChange}
                 className="input form-control"
                 placeholder="Enter recipient name"
               />
@@ -185,9 +144,9 @@ const AddressModal = ({
               <label className="mb-2">Phone number</label>
               <div className="inputs">
                 <PhoneInput
-                  name="recipientPhone"
+                  name="phone"
                   defaultCountry="NG"
-                  value={data.recipientPhone}
+                  value={data.phone}
                   onChange={changePhoneNumber}
                   className="phoneinput"
                   placeholder="e.g 080 XXXXXXXX"
@@ -204,9 +163,9 @@ const AddressModal = ({
                 type="text"
                 className="input form-control"
                 aria-label="street"
-                value={data?.street}
-                name="street"
-                onChange={handleAddressChange}
+                value={data?.address}
+                name="address"
+                onChange={handleChange}
                 placeholder="Folorunsho street, Agelekale, Abule Egba"
               />
             </div>
@@ -219,9 +178,9 @@ const AddressModal = ({
               <select
                 className="form-select"
                 id="inputState"
-                value={data?.state}
-                name="state"
-                onChange={handleAddressChange}
+                value={data?.region}
+                name="region"
+                onChange={handleChange}
               >
                 <option defaultValue="Select state">Select state</option>
                 {statesData.map((item, index) => {
@@ -249,48 +208,32 @@ const AddressModal = ({
             </div>
           </div>
 
-          {isEdit ? (
-            <div className="profile-btn">
-              <button className="btn" onClick={updateAddress}>
-                {addressLoading ? (
-                  <Loading
-                    height="20px"
-                    width="20px"
-                    primaryColor="#fff"
-                    secondaryColor="#fff"
-                  />
-                ) : (
-                  "Update"
-                )}
-              </button>
-            </div>
-          ) : (
-            <div className="profile-btn">
-              <button
-                disabled={
-                  !cityChange?.value ||
-                  cityChange?.value === "" ||
-                  !data?.state ||
-                  !data?.street
-                    ? true
-                    : false
-                }
-                className="btn"
-                onClick={saveAddress}
-              >
-                {addressLoading ? (
-                  <Loading
-                    height="20px"
-                    width="20px"
-                    primaryColor="#fff"
-                    secondaryColor="#fff"
-                  />
-                ) : (
-                  "Save"
-                )}
-              </button>
-            </div>
-          )}
+          <div className="profile-btn">
+            <button
+              disabled={
+                !cityChange?.value ||
+                cityChange?.value === "" ||
+                !data?.region ||
+                !data?.address ||
+                !data?.phone
+                  ? true
+                  : false
+              }
+              className="btn"
+              onClick={handleUpdate}
+            >
+              {addressLoading ? (
+                <Loading
+                  height="20px"
+                  width="20px"
+                  primaryColor="#fff"
+                  secondaryColor="#fff"
+                />
+              ) : (
+                "Save"
+              )}
+            </button>
+          </div>
         </div>
       </div>
     </Modal>

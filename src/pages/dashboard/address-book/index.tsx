@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import DashboardLayout from "../DashboardLayout";
 import Topbar from "@/dashboard/components/topbar";
 import PaymentSkeleton from "@/common/paymentskeleton";
 import AddressCard from "@/dashboard/common/addresscard";
 import CreateAddressModal from "@/dashboard/common/createAddress";
 import { GetRequests } from "@/utils/requests";
+import { DataContext } from "@/store/GlobalState";
 
-const Overview = () => {
+const AddressBook = () => {
   const [addresses, setAddresses] = useState<any>([]);
   const [loading, setLoading] = useState(true);
   const [createModal, setCreateModal] = useState(false);
+  const { state } = useContext(DataContext);
 
   //
   useEffect(() => {
@@ -24,8 +26,10 @@ const Overview = () => {
         setLoading(false);
       }
     };
+
     getAddress();
-  }, []);
+  }, [state?.callback]);
+
   //
 
   return (
@@ -34,9 +38,14 @@ const Overview = () => {
         <Topbar title="Address Book" subtitle="Manage your addresses here" />
 
         <div className="addresses">
-          <small onClick={() => setCreateModal(true)}>
-            Click here to add new address
-          </small>
+          {!loading && addresses?.length !== 0 && (
+            <div className="d-flex justify-content-end mb-5">
+              <button className="add-new" onClick={() => setCreateModal(true)}>
+                <i className="bi bi-plus-lg"></i>
+                Add new
+              </button>
+            </div>
+          )}
 
           <div className="address-box">
             {loading ? (
@@ -44,11 +53,29 @@ const Overview = () => {
             ) : (
               <>
                 {addresses?.map((item: any) => {
-                  return <AddressCard {...item} key={item.id} />;
+                  return <AddressCard {...item} key={item._id} />;
                 })}
               </>
             )}
           </div>
+
+          {!loading && addresses?.length === 0 && (
+            <div
+              style={{
+                height: "50vh",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                flexDirection: "column",
+              }}
+            >
+              <i className="bi bi-map" style={{ fontSize: "45px" }}></i>
+              No Address Available
+              <small className="mt-3" onClick={() => setCreateModal(true)}>
+                Click here to add new address
+              </small>
+            </div>
+          )}
         </div>
 
         {createModal && (
@@ -62,4 +89,4 @@ const Overview = () => {
   );
 };
 
-export default Overview;
+export default AddressBook;

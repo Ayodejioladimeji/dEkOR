@@ -31,12 +31,16 @@ const createAddress = async (req: NextApiRequest, res: NextApiResponse) => {
 
     const { name, address, region, city, phone } = req.body;
 
+    // check if the user already created an address
+    const prevAddress = await Address.find().sort("-updatedAt");
+
     const newAddress = new Address({
       name,
       address,
       region,
       city,
       phone,
+      isDefault: prevAddress?.length === 0 ? true : false,
     });
 
     await newAddress.save();

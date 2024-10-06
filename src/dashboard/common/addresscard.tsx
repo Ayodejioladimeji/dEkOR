@@ -1,14 +1,18 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import ConfirmModal from "./confirmmodal";
 import AddressModal from "./addressModal";
+import { DeleteRequest } from "@/utils/requests";
+import cogoToast from "cogo-toast";
+import { DataContext } from "@/store/GlobalState";
+import { ACTIONS } from "@/store/Actions";
 //
 
 interface Props {
-  id: string;
+  _id: string;
   name: string;
   address: string;
   region: string;
-  city: string;
+  city: any;
   phone: string;
   isDefault: boolean;
 }
@@ -19,16 +23,30 @@ const AddressCard = (props: Props) => {
   const [loading, setLoading] = useState(false);
   const [deleteloading, setDeleteloading] = useState(false);
   const [editModal, setEditModal] = useState(false);
-  const [isEdit, setIsEdit] = useState(false);
+  const { state, dispatch } = useContext(DataContext);
 
   const handleSubmit = () => {
     setLoading(true);
     setLoading(false);
   };
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
+    const token = localStorage.getItem("token") || "";
+
     setDeleteloading(true);
-    setDeleteloading(false);
+
+    const res = await DeleteRequest(`/address-book/${props?._id}`, token);
+    if (res?.status === 200 || res?.status === 201) {
+      dispatch({
+        type: ACTIONS.CALLBACK,
+        payload: !state.callback,
+      });
+      cogoToast.success(res?.data?.message);
+      setDeleteloading(false);
+      setDeleteModal(false);
+    } else {
+      setDeleteloading(false);
+    }
   };
 
   //
@@ -40,7 +58,7 @@ const AddressCard = (props: Props) => {
           <h3>{props?.name}</h3>
           <p>{props?.address}</p>
           <p>{props?.region}</p>
-          <p>{props?.city}</p>
+          <p>{props?.city?.value}</p>
           <p>{props?.phone}</p>
 
           {props?.isDefault && <i className="bi bi-check-circle-fill"></i>}
@@ -86,9 +104,7 @@ const AddressCard = (props: Props) => {
         <AddressModal
           editModal={editModal}
           setEditModal={setEditModal}
-          addresses={props}
-          isEdit={isEdit}
-          setIsEdit={setIsEdit}
+          addressData={props}
         />
       )}
     </>

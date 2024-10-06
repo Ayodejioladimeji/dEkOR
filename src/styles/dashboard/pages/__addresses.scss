@@ -11,15 +11,25 @@
     cursor: pointer;
   }
 
+  .add-new {
+    @include buttons($black);
+    display: flex;
+    align-items: center;
+    column-gap: 5px;
+    font-size: 14px;
+    padding: 10px 20px;
+
+    .bi {
+      font-size: 20px;
+      font-weight: bold;
+    }
+  }
+
   .address-box {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     column-gap: 30px;
     row-gap: 30px;
-
-    @media (min-width: 1440px) {
-      grid-template-columns: repeat(5, 1fr);
-    }
 
     @media (max-width: 991px) {
       grid-template-columns: repeat(2, 1fr);

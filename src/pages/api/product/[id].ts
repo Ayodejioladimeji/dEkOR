@@ -5,7 +5,10 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 connectDB();
 
-export default async function handler(req, res) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   switch (req.method) {
     case "PUT":
       await updateProduct(req, res);

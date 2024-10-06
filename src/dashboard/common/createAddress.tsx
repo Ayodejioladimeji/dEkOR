@@ -63,11 +63,12 @@ const CreateAddressModal = ({ createModal, setCreateModal }) => {
       name: data?.name,
       address: data?.address,
       region: data?.region,
-      city: cityChange?.value,
+      city: cityChange,
       phone: data?.phone,
     };
 
     const res = await PostRequest("/address-book", payload, token);
+
     if (res.status === 200) {
       dispatch({
         type: ACTIONS.CALLBACK,
