@@ -2,7 +2,7 @@ import Breadcumb from "@/common/breadcumb";
 import Layout from "@/components/Layout";
 import React, { useContext, useState } from "react";
 import { CheckIcon, CircleIcon } from "../../../public/assets";
-import { calculateTotal, formatMoney } from "@/utils/utils";
+import { calculateTotal, EmptyImagesCheck, formatMoney } from "@/utils/utils";
 import { DataContext } from "@/store/GlobalState";
 import SuccessModal from "@/common/modals/success";
 import cogoToast from "cogo-toast";
@@ -43,7 +43,12 @@ const Checkout = () => {
 
   // handle submit
   const handleCheckout = () => {
-    console.log(values);
+    // check if the product has images
+    const checkImage = EmptyImagesCheck(state?.cart);
+    if (!checkImage) {
+      return cogoToast.error("Product has no images, You can't proceed");
+    }
+
     if (
       !values?.fullname ||
       !values?.email ||

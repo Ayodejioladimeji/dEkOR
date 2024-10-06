@@ -46,3 +46,11 @@ export const firstTwoWords = (str) => {
   const words = str?.split(" ");
   return words?.slice(0, 2).join(" ");
 };
+
+// check if product has empty images
+export const EmptyImagesCheck = (products: any) => {
+  const hasEmptyImages = products.some(
+    (product) => product.images.length === 0
+  );
+  return !hasEmptyImages;
+};
