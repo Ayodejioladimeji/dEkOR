@@ -46,10 +46,11 @@
       margin-bottom: 10px;
       font-size: 14px;
       padding: 8px;
+      border:1px solid $border-color!important;
 
-      option:first-of-type {
-        color: $light-color !important;
-      }
+      // option:first-of-type {
+      //   color: $light-color !important;
+      // }
     }
 
     .inputs {

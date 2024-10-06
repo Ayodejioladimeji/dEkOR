@@ -59,7 +59,7 @@ const AddressCard = (props: Props) => {
       {confirm && (
         <ConfirmModal
           title="Default Address"
-          subtitle="Are you sure you want to set this address to your default address?"
+          subtitle="Are you sure you want to set this address as your default address?"
           buttonTitle="Save"
           buttonColor="#27493e"
           onSubmit={handleSubmit}

@@ -3,8 +3,8 @@ import DashboardLayout from "../DashboardLayout";
 import Topbar from "@/dashboard/components/topbar";
 import PaymentSkeleton from "@/common/paymentskeleton";
 import AddressCard from "@/dashboard/common/addresscard";
-import { address } from "@/constants/address";
 import CreateAddressModal from "@/dashboard/common/createAddress";
+import { GetRequests } from "@/utils/requests";
 
 const Overview = () => {
   const [addresses, setAddresses] = useState<any>([]);
@@ -12,13 +12,19 @@ const Overview = () => {
   const [createModal, setCreateModal] = useState(false);
 
   //
-
   useEffect(() => {
-    setAddresses(address);
+    const token = localStorage.getItem("token") || "";
 
-    setTimeout(() => {
-      setLoading(false);
-    }, 500);
+    const getAddress = async () => {
+      const res = await GetRequests("/address-book", token);
+      if (res?.status === 200 || res?.status === 201) {
+        setAddresses(res?.data);
+        setLoading(false);
+      } else {
+        setLoading(false);
+      }
+    };
+    getAddress();
   }, []);
   //
 
