@@ -16,18 +16,12 @@ const SimilarProduct = (props: Props) => {
 
     if (props?.id) {
       const getProducts = async () => {
-        const res: any = await GetRequest(`/product`);
+        const res: any = await GetRequest(`/product?categoryId=${props?.id}`);
 
         if (res?.status === 200) {
-          const filtered = res?.data?.filter(
-            (item: any) => item?.category === props?.id
-          );
-
-          if (props?.id) {
-            setProducts(filtered);
-          } else {
-            setProducts(res?.data);
-          }
+          setProducts(res?.data);
+          setLoading(false);
+        } else {
           setLoading(false);
         }
       };

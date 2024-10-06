@@ -19,6 +19,7 @@ const Topbar = (props: Props) => {
     <div className="top-sections">
       <div className="d-flex gap-2">
         <i
+          style={{ cursor: "pointer" }}
           className="bi bi-arrow-left cursor-pointer"
           onClick={() => router.back()}
         ></i>

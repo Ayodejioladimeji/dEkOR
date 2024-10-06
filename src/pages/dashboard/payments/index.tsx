@@ -21,7 +21,7 @@ const Payments = () => {
   return (
     <DashboardLayout>
       <section className="sections">
-        <Topbar title="Payments you made" subtitle="View your payments here" />
+        <Topbar title="Payments made" subtitle="View your payments here" />
 
         <div className="payments">
           <div className="payment-box">
