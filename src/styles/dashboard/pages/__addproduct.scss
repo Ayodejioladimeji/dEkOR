@@ -48,30 +48,29 @@
       textarea {
         height: 100px;
       }
-
     }
 
     .main-color-input {
-      display:flex;
-      align-items:center;
-      column-gap:10px;
+      display: flex;
+      align-items: center;
+      column-gap: 10px;
 
       input {
         height: 40px;
         cursor: pointer;
         width: 50%;
-        margin:0;
+        margin: 0;
       }
 
-      .bi{
-        font-size:30px;
+      .bi {
+        font-size: 30px;
         cursor: pointer;
-        color:$primary-color;
+        color: $primary-color;
       }
 
-      button{
-        padding:10px;
-        margin:0;
+      button {
+        padding: 10px;
+        margin: 0;
       }
     }
 

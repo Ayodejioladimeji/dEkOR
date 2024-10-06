@@ -19,15 +19,14 @@ const EditProduct = () => {
   const [sellingPrice, setSellingPrice] = useState("");
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
-  const [colors, setColors] = useState<any>(null);
-  const [product_colors, setProduct_colors] = useState<any>([]);
+  const [colors, setColors] = useState<string>("");
+  const [product_colors, setProduct_colors] = useState<string[]>([]);
   const [categories, setCategories] = useState<any>([]);
   const [buttonloading, setButtonloading] = useState(false);
   const [imageloading, setImageloading] = useState(false);
+  const [selectedImages, setSelectedImages] = useState<any[]>([]);
 
-  //
-
-  // fetch categories
+  // Fetch categories
   useEffect(() => {
     const getCategories = async () => {
       const res = await GetRequest("/category");
@@ -38,31 +37,30 @@ const EditProduct = () => {
     getCategories();
   }, []);
 
+  // Fetch product data by slug
   useEffect(() => {
     if (slug) {
       const getProducts = async () => {
         const res = await GetRequest(`/product/${slug}`);
         if (res?.status === 200) {
-          setTitle(res?.data?.title);
-          setBuyingPrice(res?.data?.buyingPrice);
-          setSellingPrice(res?.data?.sellingPrice);
-          setCategory(res?.data?.category);
-          setDescription(res?.data?.description);
-          setSelectedImages(res?.data?.images);
-          setLoading(false);
-        } else {
-          setLoading(false);
+          const data = res?.data;
+          setTitle(data?.title);
+          setBuyingPrice(data?.buyingPrice);
+          setSellingPrice(data?.sellingPrice);
+          setCategory(data?.category);
+          setDescription(data?.description);
+          setSelectedImages(data?.images);
+          setProduct_colors(data?.productColors || []);
         }
+        setLoading(false);
       };
-
       getProducts();
     }
-  }, [state?.callback, slug]);
+  }, [slug, state?.callback]);
 
-  // update product
+  // Update product
   const handleUpdate = async () => {
     const token = localStorage.getItem("token") || "";
-
     setButtonloading(true);
 
     const payload = {
@@ -71,18 +69,15 @@ const EditProduct = () => {
       sellingPrice,
       category,
       description,
+      productColors: product_colors,
     };
 
     const res = await PutRequest(`/product/${slug}`, payload, token);
     if (res?.status === 200 || res?.status === 201) {
       cogoToast.success(res?.data?.message);
-      setButtonloading(false);
-    } else {
-      setButtonloading(false);
     }
+    setButtonloading(false);
   };
-
-  const [selectedImages, setSelectedImages] = useState<any>([]);
 
   // Handle image selection
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -99,57 +94,49 @@ const EditProduct = () => {
         };
         reader.readAsDataURL(files[i]);
       }
+      e.target.value = ""; // Reset input value to allow selecting the same file again
     }
   };
 
-  // handle submit images
+  // Handle submitting images
   const handleAddImages = async () => {
     const token = localStorage.getItem("token") || "";
-
     setImageloading(true);
 
-    // first upload images
     const imgs = await imageUpload(selectedImages);
 
-    if (imgs !== null && imgs !== undefined) {
+    if (imgs) {
       const payload = {
         productId: slug,
         images: imgs?.map((item) => item.url),
       };
 
-      console.log(payload);
-
       const res = await PatchRequest(`/product`, payload, token);
       if (res?.status === 200 || res?.status === 201) {
         cogoToast.success(res?.data?.message);
-        setImageloading(false);
-      } else {
-        setImageloading(false);
       }
     }
+    setImageloading(false);
   };
 
-  // Function to remove image from the selected images array
+  // Remove image
   const handleRemoveImage = (indexToRemove: number) => {
     setSelectedImages((prevImages) =>
       prevImages.filter((_, index) => index !== indexToRemove)
     );
   };
 
-  // handleChoose color for choosing preferred colors
-  const handleChooseColor = (e) => {
+  // Add a new color
+  const handleChooseColor = (e: React.MouseEvent) => {
     e.preventDefault();
-    if (product_colors.includes(colors) || product_colors.length >= 6) {
-      return;
+    if (colors && !product_colors.includes(colors)) {
+      setProduct_colors((prevColors) => [colors, ...prevColors]);
     }
-
-    setProduct_colors([colors, ...product_colors]);
   };
 
-  // Remove color method
-  const handleRemoveColor = (id) => {
-    const newColors = product_colors.filter((item, index) => index !== id);
-
+  // Remove a color
+  const handleRemoveColor = (id: number) => {
+    const newColors = product_colors.filter((_, index) => index !== id);
     setProduct_colors(newColors);
   };
 
@@ -250,17 +237,18 @@ const EditProduct = () => {
                         <input
                           type="color"
                           id="favcolor"
-                          name="colors"
                           value={colors}
                           className="color-input"
                           onChange={(e) => setColors(e.target.value)}
                           required
                         />
 
-                        <i
-                          className="bi bi-check-circle-fill"
-                          onClick={handleChooseColor}
-                        ></i>
+                        {colors && (
+                          <i
+                            className="bi bi-check-circle-fill"
+                            onClick={handleChooseColor}
+                          ></i>
+                        )}
                       </div>
                     </div>
 

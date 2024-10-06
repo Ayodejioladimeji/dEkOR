@@ -29,13 +29,19 @@ const updateProduct = async (req: NextApiRequest, res: NextApiResponse) => {
     if (check?.role === "user")
       return res.status(401).json({ message: "Authentication is not valid" });
 
-    const { title, buyingPrice, sellingPrice, category, description } =
-      req.body;
+    const {
+      title,
+      buyingPrice,
+      sellingPrice,
+      category,
+      description,
+      productColors,
+    } = req.body;
     const { id } = req.query;
 
     await Product.findOneAndUpdate(
       { _id: id },
-      { title, buyingPrice, sellingPrice, category, description }
+      { title, buyingPrice, sellingPrice, category, description, productColors }
     );
 
     res.json({ message: "Product updated successfully!" });

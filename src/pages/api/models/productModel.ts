@@ -26,6 +26,10 @@ const productSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
+    productColors: {
+      type: Array,
+      default: [],
+    },
   },
   {
     timestamps: true,

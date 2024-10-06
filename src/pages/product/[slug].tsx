@@ -12,8 +12,6 @@ import cogoToast from "cogo-toast";
 import { GetRequest } from "@/utils/requests";
 import { formatMoney } from "@/utils/utils";
 
-const colors = ["#BCA287", "#101010", "#A2A1A1"];
-
 const Product = () => {
   const router = useRouter();
   const { slug } = router.query;
@@ -129,7 +127,7 @@ const Product = () => {
       <div className="product-details">
         <div className="container">
           <div className="heading-section">
-            <Breadcumb title={product?.title} />
+            <Breadcumb title={product?.title} route="product" />
           </div>
 
           <div className="content">
@@ -200,7 +198,7 @@ const Product = () => {
                 <h3>${formatMoney(Number(product?.sellingPrice))}</h3>
 
                 <div className="color-div">
-                  {colors?.map((color: any, index: number) => (
+                  {product?.productColors?.map((color: any, index: number) => (
                     <div
                       key={index}
                       onClick={() => setProductColor(color)}
