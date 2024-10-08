@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import DashboardLayout from "../DashboardLayout";
 import Loading from "@/common/loading";
 import Topbar from "@/dashboard/components/topbar";
+import { PutRequest } from "@/utils/requests";
+import cogoToast from "cogo-toast";
 
 const Overview = () => {
   const [oldpassword, setOldPassword] = useState("");
@@ -10,14 +12,24 @@ const Overview = () => {
 
   // handle update
   const handleUpdate = async () => {
+    const token = localStorage.getItem("token") || "";
+
+    const payload = {
+      currentPassword: oldpassword,
+      newPassword: newpassword,
+    };
+
     setLoading(true);
 
-    // const payload = {
-    //   oldPassword: oldpassword,
-    //   newPassword:newpassword
-    // }
-
-    setLoading(false);
+    const res = await PutRequest("/user/password", payload, token);
+    if (res?.status === 200 || res?.status === 201) {
+      cogoToast.success(res?.data?.message);
+      setLoading(false);
+      setOldPassword("");
+      setNewPassword("");
+    } else {
+      setLoading(false);
+    }
   };
 
   //
@@ -32,7 +44,7 @@ const Overview = () => {
           <div className="form-box">
             <div className="row mb-2 mb-md-4">
               <div className="col-12">
-                <label className="mb-1">Old Password</label>
+                <label className="mb-1">Current Password</label>
                 <input
                   autoComplete="off"
                   type="password"
@@ -46,7 +58,7 @@ const Overview = () => {
 
             <div className="row mb-2 mb-md-4">
               <div className="col-12">
-                <label className="mb-1">New Password</label>
+                <label className="mb-1">Enter New Password</label>
                 <input
                   autoComplete="off"
                   type="password"
