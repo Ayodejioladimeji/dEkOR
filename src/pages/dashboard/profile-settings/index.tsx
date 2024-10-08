@@ -4,20 +4,35 @@ import Image from "next/image";
 import Topbar from "@/dashboard/components/topbar";
 import cogoToast from "cogo-toast";
 import Loading from "@/common/loading";
+import { GetRequests, PatchRequest, PutRequest } from "@/utils/requests";
+import { singleUpload } from "@/pages/api/utils/singleUpload";
+//
 
 const Settings = () => {
-  // const [profileImage, setProfileImage] = useState(null);
   const [imageLoading, setImageLoading] = useState(false);
   const [fullname, setFullname] = useState("");
   const [email, setEmail] = useState("");
-  const [loading, setLoading] = useState(false);
-  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<any>(null);
+  const [buttonloading, setButtonloading] = useState(false);
+  const [selectedImage, setSelectedImage] = useState("");
 
   useEffect(() => {
-    setFullname(user?.name);
-    setEmail(user?.email);
-    setLoading(false);
-  }, [user?.name, user?.email]);
+    const token = localStorage.getItem("token") || "";
+
+    const getUser = async () => {
+      const res = await GetRequests("/user", token);
+      if (res?.status === 200 || res?.status === 201) {
+        setUser(res?.data);
+        setFullname(res?.data?.name);
+        setEmail(res?.data?.email);
+        setLoading(false);
+      } else {
+        setLoading(false);
+      }
+    };
+    getUser();
+  }, []);
 
   // Change profile avatar method
   const handleAvatar = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,32 +49,51 @@ const Settings = () => {
       return;
     }
 
+    const token = localStorage.getItem("token") || "";
+
     setImageLoading(true);
 
-    let formData = new FormData();
-    formData.append("file", file);
+    const imageURL = URL.createObjectURL(file);
+    setSelectedImage(imageURL);
 
-    // const newData = {
-    //   file: file,
-    // };
+    const image = await singleUpload(file);
 
-    setImageLoading(false);
+    if (image !== null && image !== undefined) {
+      const payload = {
+        avatar: image?.url,
+      };
+      const res = await PatchRequest("/user", payload, token);
+      if (res?.status === 200 || res?.status === 201) {
+        // setCallback(!callback)
+        cogoToast.success(res?.data?.message);
+        setImageLoading(false);
+      } else {
+        setImageLoading(false);
+      }
+    }
 
-    // try {
-    //   const res = await patchDataImages("/user/image-upload", newData, token);
-    //   localStorage.setItem("profile-image", res.data.data);
-    //   cogoToast.success(res.data.message);
-    //   dispatch({ type: ACTIONS.IMAGECALLBACK, payload: !state.imageCallback });
-    //   setImageLoading(false);
-    // } catch (error) {
-    //   console.log(error.response.data);
-    //   cogoToast.error(error?.response?.data?.message);
-    //   setImageLoading(false);
-    // }
+    // let formData = new FormData();
+    // formData.append("file", file);
   };
 
   // handle update
-  const handleUpdate = () => {};
+  const handleUpdate = async () => {
+    const token = localStorage.getItem("token") || "";
+
+    setButtonloading(true);
+
+    const payload = {
+      name: fullname,
+    };
+
+    const res = await PutRequest("/user", payload, token);
+    if (res?.status === 200 || res?.status === 201) {
+      cogoToast.success(res?.data?.message);
+      setButtonloading(false);
+    } else {
+      setButtonloading(false);
+    }
+  };
 
   //
 
@@ -71,87 +105,107 @@ const Settings = () => {
           subtitle="Update your profile information"
         />
 
-        <div className="settings">
-          <div className="profile-image my-3">
-            <span>
-              {imageLoading ? (
-                <Loading
-                  height="25px"
-                  width="25px"
-                  primaryColor="#fff"
-                  secondaryColor="#fff"
-                />
-              ) : (
-                <i className="bi bi-camera"></i>
-              )}
-
-              <input
-                autoComplete="off"
-                type="file"
-                id="Image"
-                className="file-up"
-                accept="image/*"
-                onChange={handleAvatar}
-              />
-            </span>
-
-            <Image
-              height={100}
-              width={100}
-              src={user?.avatar}
-              alt="profile-icon"
+        {loading ? (
+          <div
+            style={{
+              height: "60vh",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexDirection: "column",
+            }}
+          >
+            <Loading
+              primaryColor="#000"
+              secondaryColor="#000"
+              width="50px"
+              height="50px"
             />
+            Loading Profile
           </div>
-
-          {/* Profile input section  */}
-          <div className="form-box">
-            <div className="row mb-2 mb-md-4">
-              <div className="col-12">
-                <label className="mb-1">FullName</label>
-                <input
-                  autoComplete="off"
-                  type="text"
-                  className="input form-control"
-                  placeholder="Enter fullname"
-                  aria-label="First name"
-                  value={fullname}
-                  onChange={(e) => setFullname(e.target.value)}
-                />
-              </div>
-            </div>
-
-            <div className="row mb-2 mb-md-4">
-              <div className="col-12">
-                <label className="mb-1">Email Address</label>
-                <input
-                  autoComplete="off"
-                  type="text"
-                  className="input form-control"
-                  placeholder=""
-                  aria-label="email"
-                  value={email}
-                  name="email"
-                  disabled
-                />
-              </div>
-            </div>
-
-            <div className="profile-btn">
-              <button className="btn" onClick={handleUpdate}>
-                {loading ? (
+        ) : (
+          <div className="settings">
+            <div className="profile-image my-3">
+              <span>
+                {imageLoading ? (
                   <Loading
-                    height="20px"
-                    width="20px"
+                    height="25px"
+                    width="25px"
                     primaryColor="#fff"
                     secondaryColor="#fff"
                   />
                 ) : (
-                  "Save"
+                  <i className="bi bi-camera"></i>
                 )}
-              </button>
+
+                <input
+                  autoComplete="off"
+                  type="file"
+                  id="Image"
+                  className="file-up"
+                  accept="image/*"
+                  onChange={handleAvatar}
+                />
+              </span>
+
+              <Image
+                height={100}
+                width={100}
+                src={selectedImage ? selectedImage : user?.avatar}
+                alt="profile-icon"
+              />
+            </div>
+
+            {/* Profile input section  */}
+            <div className="form-box">
+              <div className="row mb-2 mb-md-4">
+                <div className="col-12">
+                  <label className="mb-1">FullName</label>
+                  <input
+                    autoComplete="off"
+                    type="text"
+                    className="input form-control"
+                    placeholder="Enter fullname"
+                    aria-label="First name"
+                    value={fullname}
+                    onChange={(e) => setFullname(e.target.value)}
+                  />
+                </div>
+              </div>
+
+              <div className="row mb-2 mb-md-4">
+                <div className="col-12">
+                  <label className="mb-1">Email Address</label>
+                  <input
+                    autoComplete="off"
+                    type="text"
+                    className="input form-control"
+                    placeholder=""
+                    aria-label="email"
+                    value={email}
+                    name="email"
+                    disabled
+                  />
+                </div>
+              </div>
+
+              <div className="profile-btn">
+                <button className="btn" onClick={handleUpdate}>
+                  {buttonloading ? (
+                    <Loading
+                      height="20px"
+                      width="20px"
+                      primaryColor="#fff"
+                      secondaryColor="#fff"
+                    />
+                  ) : (
+                    "Save"
+                  )}
+                </button>
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </section>
     </DashboardLayout>
   );
