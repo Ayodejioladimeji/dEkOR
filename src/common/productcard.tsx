@@ -6,6 +6,7 @@ import React, { useContext } from "react";
 import { Image } from "react-bootstrap";
 import { Favourite, ItemCart } from "../../public/assets";
 import { firstTwoWords, formatMoney } from "@/utils/utils";
+import { PatchRequest } from "@/utils/requests";
 
 //
 
@@ -14,7 +15,43 @@ const Productcard = (props: any) => {
   const router = useRouter();
 
   // add items to cart
-  const addToCart = () => {
+  // const addToCart = async () => {
+  //   // check if items is already added
+  //   const check = state?.cart.every((item) => {
+  //     return item._id !== props?._id;
+  //   });
+
+  //   if (check) {
+  //     const cartData = {
+  //       ...props,
+  //       quantity: 1,
+  //     };
+
+  //     dispatch({ type: ACTIONS.TOGGLE, payload: true });
+  //     dispatch({ type: ACTIONS.CART, payload: cartData });
+  //     cogoToast.success("Item added to your cart");
+  //     console.log(state?.cart)
+
+  //     // save the cart items to the database
+  //     const token = localStorage.getItem("token") || ""
+  //     setTimeout(async() => {
+  //       if (token) {
+  //         const payload = {
+  //           cartItems: state?.cart
+  //         }
+
+  //         console.log(payload)
+
+  //         await PatchRequest("/user/cart", payload, token)
+
+  //       }
+  //     }, 3000)
+  //   } else {
+  //     cogoToast.error("Item already added to your cart");
+  //   }
+  // };
+
+  const addToCart = async () => {
     // check if items is already added
     const check = state?.cart.every((item) => {
       return item._id !== props?._id;
@@ -26,9 +63,25 @@ const Productcard = (props: any) => {
         quantity: 1,
       };
 
+      // Combine the current cart with the new item
+
+      // Update the state
       cogoToast.success("Item added to your cart");
       dispatch({ type: ACTIONS.TOGGLE, payload: true });
       dispatch({ type: ACTIONS.CART, payload: cartData });
+
+      // Save the updated cart items to the database
+      const updatedCart = [...(state?.cart || []), cartData];
+      const token = localStorage.getItem("token") || "";
+      if (token) {
+        const payload = {
+          cartItems: updatedCart,
+        };
+
+        console.log(payload);
+
+        await PatchRequest("/user/cart", payload, token);
+      }
     } else {
       cogoToast.error("Item already added to your cart");
     }

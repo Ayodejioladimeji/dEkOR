@@ -10,13 +10,14 @@ import cogoToast from "cogo-toast";
 import { calculateTotal, formatMoney } from "@/utils/utils";
 import MoreProduct from "../../components/MoreProducts";
 import Loading from "@/common/loading";
+import { PatchRequest, PostRequest } from "@/utils/requests";
 
 const Cart = () => {
   const { state, dispatch } = useContext(DataContext);
   const router = useRouter();
 
   // increase cart item
-  const increment = (data: any) => {
+  const increment = async (data: any) => {
     state?.cart.forEach((item: any) => {
       if (item._id === data?._id) {
         item.quantity += 1;
@@ -31,10 +32,20 @@ const Cart = () => {
     };
     dispatch({ type: ACTIONS.TOGGLE, payload: true });
     dispatch({ type: ACTIONS.UPDATECART, payload: cartData });
+
+    // save the cart items to the database
+    const token = localStorage.getItem("token") || "";
+    if (token) {
+      const payload = {
+        cartItems: state?.cart,
+      };
+
+      await PatchRequest("/user/cart", payload, token);
+    }
   };
 
   // // decrease cart items
-  const decrement = (data: any) => {
+  const decrement = async (data: any) => {
     state?.cart.forEach((item: any) => {
       if (item._id === data?._id) {
         if (item.quantity === 1) return;
@@ -50,21 +61,51 @@ const Cart = () => {
     };
     dispatch({ type: ACTIONS.TOGGLE, payload: true });
     dispatch({ type: ACTIONS.UPDATECART, payload: cartData });
+
+    // save the cart items to the database
+    const token = localStorage.getItem("token") || "";
+    if (token) {
+      const payload = {
+        cartItems: state?.cart,
+      };
+
+      await PatchRequest("/user/cart", payload, token);
+    }
   };
 
   // remove item from cart
-  const removeCartItem = (id) => {
+  const removeCartItem = async (id) => {
     const newData = state?.cart.filter((item) => item._id !== id);
     dispatch({ type: ACTIONS.TOGGLE, payload: true });
     dispatch({ type: ACTIONS.DELETECART, payload: newData });
     cogoToast.success("Item removed successfully");
+
+    // save the cart items to the database
+    const token = localStorage.getItem("token") || "";
+    if (token) {
+      const payload = {
+        productId: id,
+      };
+
+      await PostRequest("/user/cart", payload, token);
+    }
   };
 
   // clear user cart
-  const clearCart = () => {
+  const clearCart = async () => {
     dispatch({ type: ACTIONS.TOGGLE, payload: true });
     dispatch({ type: ACTIONS.DELETECART, payload: [] });
     cogoToast.success("Cart cleared successfully");
+
+    // save the cart items to the database
+    const token = localStorage.getItem("token") || "";
+    if (token) {
+      const payload = {
+        cartItems: [],
+      };
+
+      await PatchRequest("/user/cart", payload, token);
+    }
   };
 
   //

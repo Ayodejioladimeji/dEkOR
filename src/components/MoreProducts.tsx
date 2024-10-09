@@ -32,7 +32,7 @@ const MoreProduct = () => {
         ) : (
           <>
             {products?.map((item: any) => {
-              return <Productcard {...item} key={item.id} />;
+              return <Productcard {...item} key={item._id} />;
             })}
           </>
         )}

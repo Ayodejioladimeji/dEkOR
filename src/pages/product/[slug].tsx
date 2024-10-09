@@ -9,7 +9,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Ratings } from "../../../public/assets";
 import SimilarProduct from "@/components/SimilarProduct";
 import cogoToast from "cogo-toast";
-import { GetRequest } from "@/utils/requests";
+import { GetRequest, PatchRequest } from "@/utils/requests";
 import { formatMoney } from "@/utils/utils";
 
 const Product = () => {
@@ -46,7 +46,7 @@ const Product = () => {
   }, [slug, state?.cart]);
 
   // Add item to cart
-  const addToCart = () => {
+  const addToCart = async () => {
     const check = state.cart.every((item) => item._id !== product._id);
     if (check) {
       const cartData = {
@@ -57,13 +57,23 @@ const Product = () => {
       dispatch({ type: ACTIONS.CART, payload: cartData });
       setProduct(cartData);
       cogoToast.success("Item added to your cart");
+
+      // save the cart items to the database
+      const token = localStorage.getItem("token") || "";
+      if (token) {
+        const payload = {
+          cartItems: state?.cart,
+        };
+
+        await PatchRequest("/user/cart", payload, token);
+      }
     } else {
       cogoToast.error("Item already added to your cart");
     }
   };
 
   // Increment item quantity
-  const increment = () => {
+  const increment = async () => {
     const check = state.cart.every((item) => item.id !== product.id);
     if (check) {
       return cogoToast.error("Please add item to you cart to continue");
@@ -75,10 +85,20 @@ const Product = () => {
         item.quantity += 1;
       }
     });
+
+    // save the cart items to the database
+    const token = localStorage.getItem("token") || "";
+    if (token) {
+      const payload = {
+        cartItems: state?.cart,
+      };
+
+      await PatchRequest("/user/cart", payload, token);
+    }
   };
 
   // Decrement item quantity
-  const decrement = () => {
+  const decrement = async () => {
     const check = state.cart.every((item) => item.id !== product.id);
     if (check) {
       return cogoToast.error("Please add item to you cart to continue");
@@ -93,6 +113,16 @@ const Product = () => {
           item.quantity -= 1;
         }
       });
+    }
+
+    // save the cart items to the database
+    const token = localStorage.getItem("token") || "";
+    if (token) {
+      const payload = {
+        cartItems: state?.cart,
+      };
+
+      await PatchRequest("/user/cart", payload, token);
     }
   };
 
