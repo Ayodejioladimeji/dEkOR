@@ -61,10 +61,11 @@ const createProduct = async (req: NextApiRequest, res: NextApiResponse) => {
 
 const fetchProduct = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const products = await Product.find().sort("-updatedAt");
+    // Fetch only products where isActive is true
+    const products = await Product.find({ isActive: true }).sort("-updatedAt");
     res.json(products);
   } catch (error) {
-    return res?.status(500).json({ message: error.message });
+    return res.status(500).json({ message: error.message });
   }
 };
 

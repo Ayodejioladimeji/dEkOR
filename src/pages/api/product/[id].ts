@@ -13,6 +13,9 @@ export default async function handler(
     case "PUT":
       await updateProduct(req, res);
       break;
+    case "PATCH":
+      await activateProduct(req, res);
+      break;
     case "GET":
       await getSingleProduct(req, res);
       break;
@@ -45,6 +48,28 @@ const updateProduct = async (req: NextApiRequest, res: NextApiResponse) => {
     await Product.findOneAndUpdate(
       { _id: id },
       { title, buyingPrice, sellingPrice, category, description, productColors }
+    );
+
+    res.json({ message: "Product updated successfully!" });
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+};
+
+const activateProduct = async (req: NextApiRequest, res: NextApiResponse) => {
+  try {
+    // check if its the admin that is creating the category
+    const check = await auth(req, res);
+    if (check?.role === "user")
+      return res.status(401).json({ message: "Authentication is not valid" });
+
+    const { id } = req.query;
+
+    const product = await Product.findById(id);
+
+    await Product.findOneAndUpdate(
+      { _id: id },
+      { isActive: product?.isActive ? false : true }
     );
 
     res.json({ message: "Product updated successfully!" });

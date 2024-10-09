@@ -30,6 +30,10 @@ const productSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
+    isActive: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,
