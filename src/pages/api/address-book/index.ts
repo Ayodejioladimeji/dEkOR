@@ -1,6 +1,7 @@
 import connectDB from "../utils/connectDB";
 import Address from "../models/addressModel";
 import auth from "../middleware/auth";
+import User from "../models/userModel";
 import { NextApiRequest, NextApiResponse } from "next";
 
 connectDB();
@@ -24,27 +25,35 @@ export default async function handler(
 
 const createAddress = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    // Check if the user is authenticated and has an admin role
-    const check = await auth(req, res);
-    if (check?.role !== "admin")
+    // Authenticate user
+    const userAuth = await auth(req, res);
+
+    const user = await User.findById(userAuth.id);
+
+    if (!user) {
       return res.status(401).json({ message: "Authentication is not valid" });
+    }
 
     const { name, address, region, city, phone } = req.body;
 
-    // check if the user already created an address
-    const prevAddress = await Address.find().sort("-updatedAt");
+    // Check if the user already has an address
+    const prevAddresses = await Address.find({ user: user._id }).sort(
+      "-updatedAt"
+    );
 
+    // Create new address and set isDefault to true if it's the first address
     const newAddress = new Address({
+      user: user._id,
       name,
       address,
       region,
       city,
       phone,
-      isDefault: prevAddress?.length === 0 ? true : false,
+      isDefault: prevAddresses.length === 0 ? true : false,
     });
 
     await newAddress.save();
-    res.json({ message: "Address added successfully!" });
+    res.json({ message: "Address added successfully!", address: newAddress });
   } catch (err) {
     return res.status(500).json({ message: err.message });
   }
@@ -52,9 +61,21 @@ const createAddress = async (req: NextApiRequest, res: NextApiResponse) => {
 
 const fetchAddress = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const address = await Address.find().sort("-updatedAt");
-    res.json(address);
+    // Authenticate the user
+    const userAuth = await auth(req, res);
+
+    const user = await User.findById(userAuth.id);
+
+    if (!user) {
+      return res.status(401).json({ message: "Authentication is not valid" });
+    }
+
+    // Fetch addresses specific to the logged-in user
+    const addresses = await Address.find({ user: user._id }).sort("-updatedAt");
+
+    // Return the user's addresses
+    res.json(addresses);
   } catch (error) {
-    return res?.status(500).json({ message: error.message });
+    return res.status(500).json({ message: error.message });
   }
 };
