@@ -1,29 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
 import { Formik } from "formik";
 import * as EmailValidator from "email-validator";
 
 // COMPONENTS
 import Link from "next/link";
-import { useRouter } from "next/router";
 import Loading from "@/common/loading";
 import Image from "next/image";
-import { PostRequest } from "@/utils/requests";
+import { PatchRequest, PostRequest } from "@/utils/requests";
 import Goback from "@/common/Goback";
 import AuthLayout from "./Authlayout";
+import { mergeCarts } from "@/utils/utils";
 
 // VALIDATION REGEX
 
 const Login = () => {
-  const router = useRouter();
+  const [buttonloading, setButtonloading] = useState(false);
 
   // handle submit
   const handleSubmit = async (payload: any) => {
+    setButtonloading(true);
+
     const res = await PostRequest("/auth/login", payload);
 
     if (res?.status === 200) {
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res?.data?.user));
-      router.push("/dashboard/overview");
+      const localCartItems = JSON.parse(localStorage.getItem("cart")) || [];
+      //
+      const mergedCart = mergeCarts(res?.data?.user?.cart, localCartItems);
+      localStorage.setItem("cart", JSON.stringify(mergedCart));
+      window.location.href = "/dashboard/overview";
+
+      // save the cart items to the database
+      const token = localStorage.getItem("token") || "";
+      if (token) {
+        const payload = {
+          cartItems: mergedCart,
+        };
+
+        await PatchRequest("/user/cart", payload, res?.data?.token);
+      }
+    } else {
+      setButtonloading(false);
     }
   };
 
@@ -65,7 +83,6 @@ const Login = () => {
             values,
             touched,
             errors,
-            isSubmitting,
             handleChange,
             handleBlur,
             handleSubmit,
@@ -220,8 +237,8 @@ const Login = () => {
                     </div>
 
                     <div className="form-box">
-                      <button type="submit" disabled={isSubmitting}>
-                        {isSubmitting ? (
+                      <button type="submit" disabled={buttonloading}>
+                        {buttonloading ? (
                           <Loading
                             width="25px"
                             height="25px"

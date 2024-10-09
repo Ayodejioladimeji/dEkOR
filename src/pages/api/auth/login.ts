@@ -55,6 +55,7 @@ const login = async (req, res) => {
         role: user.role,
         avatar: user.avatar,
         root: user.root,
+        cart: user.cart,
       },
     });
   } catch (err) {

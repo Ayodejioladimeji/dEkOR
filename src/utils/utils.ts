@@ -54,3 +54,21 @@ export const EmptyImagesCheck = (products: any) => {
   );
   return !hasEmptyImages;
 };
+
+export const mergeCarts = (dbCart, localCart) => {
+  const combinedCart = [...dbCart];
+
+  localCart.forEach((localItem) => {
+    const existingItem = combinedCart.find(
+      (dbItem) => dbItem._id === localItem._id
+    );
+    if (!existingItem) {
+      combinedCart.push(localItem);
+    } else {
+      // update the quantity if the item already exists in both carts
+      existingItem.quantity += localItem.quantity;
+    }
+  });
+
+  return combinedCart;
+};
