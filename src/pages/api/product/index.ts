@@ -106,14 +106,13 @@ const fetchSimilarProduct = async (
       return res.status(400).json({ message: "Category ID is required" });
     }
 
-    const products = await Product.find({ category: categoryId }).sort(
-      "-updatedAt"
-    );
+    const products = await Product.find({
+      category: categoryId,
+      isActive: true,
+    }).sort("-updatedAt");
 
     if (products.length === 0) {
-      return res
-        .status(404)
-        .json({ message: "No products found for this category" });
+      return res.json([]);
     }
 
     res.json(products);

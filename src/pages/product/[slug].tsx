@@ -39,6 +39,8 @@ const Product = () => {
           }
 
           setLoading(false);
+        } else {
+          setLoading(false);
         }
       };
       getProduct();
@@ -150,6 +152,24 @@ const Product = () => {
     );
   }
 
+  if (!loading && Object.keys(product).length === 0) {
+    return (
+      <Layout>
+        <div
+          style={{
+            height: "80vh",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            flexDirection: "column",
+          }}
+        >
+          <i className="bi bi-box-seam-fill" style={{ fontSize: "45px" }}></i>
+          Product not available
+        </div>
+      </Layout>
+    );
+  }
   //
 
   return (

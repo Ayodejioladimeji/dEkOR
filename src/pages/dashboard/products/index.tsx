@@ -4,7 +4,7 @@ import CardSkeleton from "@/common/cardskeleton";
 import Topbar from "@/dashboard/components/topbar";
 import Productcard from "@/dashboard/common/productcard";
 import AddProductModal from "@/dashboard/common/addproduct";
-import { GetRequest } from "@/utils/requests";
+import { GetRequests } from "@/utils/requests";
 import { DataContext } from "@/store/GlobalState";
 import { ACTIONS } from "@/store/Actions";
 
@@ -15,8 +15,10 @@ const Products = () => {
   const { state, dispatch } = useContext(DataContext);
 
   useEffect(() => {
+    const token = localStorage.getItem("token") || "";
+
     const getProducts = async () => {
-      const res = await GetRequest("/product");
+      const res = await GetRequests("/product/admin-products", token);
       if (res?.status === 200) {
         setProducts(res?.data);
         dispatch({ type: ACTIONS.LOADING, payload: false });

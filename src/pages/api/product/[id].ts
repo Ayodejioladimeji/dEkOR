@@ -83,9 +83,9 @@ const getSingleProduct = async (req: NextApiRequest, res: NextApiResponse) => {
     const { id } = req.query;
 
     // Find product by ID
-    const product = await Product.findById(id);
+    const product = await Product.findOne({ _id: id, isActive: true });
     if (!product) {
-      return res.status(404).json({ message: "Product not found" });
+      return res.json({});
     }
 
     res.json(product);
