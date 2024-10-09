@@ -1,7 +1,6 @@
 import connectDB from "../utils/connectDB";
 import Address from "../models/addressModel";
 import auth from "../middleware/auth";
-import User from "../models/userModel";
 import { NextApiRequest, NextApiResponse } from "next";
 
 connectDB();
@@ -26,9 +25,7 @@ export default async function handler(
 const createAddress = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     // Authenticate user
-    const userAuth = await auth(req, res);
-
-    const user = await User.findById(userAuth.id);
+    const user = await auth(req, res);
 
     if (!user) {
       return res.status(401).json({ message: "Authentication is not valid" });
@@ -37,13 +34,13 @@ const createAddress = async (req: NextApiRequest, res: NextApiResponse) => {
     const { name, address, region, city, phone } = req.body;
 
     // Check if the user already has an address
-    const prevAddresses = await Address.find({ user: user._id }).sort(
+    const prevAddresses = await Address.find({ user: user.id }).sort(
       "-updatedAt"
     );
 
     // Create new address and set isDefault to true if it's the first address
     const newAddress = new Address({
-      user: user._id,
+      user: user.id,
       name,
       address,
       region,
@@ -62,16 +59,14 @@ const createAddress = async (req: NextApiRequest, res: NextApiResponse) => {
 const fetchAddress = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     // Authenticate the user
-    const userAuth = await auth(req, res);
-
-    const user = await User.findById(userAuth.id);
+    const user = await auth(req, res);
 
     if (!user) {
       return res.status(401).json({ message: "Authentication is not valid" });
     }
 
     // Fetch addresses specific to the logged-in user
-    const addresses = await Address.find({ user: user._id }).sort("-updatedAt");
+    const addresses = await Address.find({ user: user.id }).sort("-updatedAt");
 
     // Return the user's addresses
     res.json(addresses);

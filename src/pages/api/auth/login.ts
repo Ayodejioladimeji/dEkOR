@@ -56,6 +56,7 @@ const login = async (req, res) => {
         avatar: user.avatar,
         root: user.root,
         cart: user.cart,
+        favourite: user.favourite,
       },
     });
   } catch (err) {

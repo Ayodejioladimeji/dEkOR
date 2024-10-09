@@ -23,22 +23,43 @@ const Login = () => {
     const res = await PostRequest("/auth/login", payload);
 
     if (res?.status === 200) {
-      localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res?.data?.user));
+
       const localCartItems = JSON.parse(localStorage.getItem("cart")) || [];
-      //
-      const mergedCart = mergeCarts(res?.data?.user?.cart, localCartItems);
+      const localFavItems = JSON.parse(localStorage.getItem("favourite")) || [];
+
+      // Ensure the cart and favourite items are arrays before merging
+      const dbCartItems = Array.isArray(res?.data?.user?.cart)
+        ? res?.data?.user?.cart
+        : [];
+      const dbFavItems = Array.isArray(res?.data?.user?.favourite)
+        ? res?.data?.user?.favourite
+        : [];
+
+      // Merge the database cart with the local cart
+      const mergedCart = mergeCarts(dbCartItems, localCartItems);
+      const mergedFav = mergeCarts(dbFavItems, localFavItems);
+
+      // Save merged data to local storage
       localStorage.setItem("cart", JSON.stringify(mergedCart));
+      localStorage.setItem("favourite", JSON.stringify(mergedFav));
+
+      localStorage.setItem("token", res.data.token);
+
       window.location.href = "/dashboard/overview";
 
-      // save the cart items to the database
+      // Save the cart items to the database
       const token = localStorage.getItem("token") || "";
       if (token) {
         const payload = {
           cartItems: mergedCart,
         };
+        const favpayload = {
+          favItems: mergedFav,
+        };
 
         await PatchRequest("/user/cart", payload, res?.data?.token);
+        await PatchRequest("/user/favourite", favpayload, res?.data?.token);
       }
     } else {
       setButtonloading(false);

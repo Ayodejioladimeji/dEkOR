@@ -15,42 +15,6 @@ const Productcard = (props: any) => {
   const router = useRouter();
 
   // add items to cart
-  // const addToCart = async () => {
-  //   // check if items is already added
-  //   const check = state?.cart.every((item) => {
-  //     return item._id !== props?._id;
-  //   });
-
-  //   if (check) {
-  //     const cartData = {
-  //       ...props,
-  //       quantity: 1,
-  //     };
-
-  //     dispatch({ type: ACTIONS.TOGGLE, payload: true });
-  //     dispatch({ type: ACTIONS.CART, payload: cartData });
-  //     cogoToast.success("Item added to your cart");
-  //     console.log(state?.cart)
-
-  //     // save the cart items to the database
-  //     const token = localStorage.getItem("token") || ""
-  //     setTimeout(async() => {
-  //       if (token) {
-  //         const payload = {
-  //           cartItems: state?.cart
-  //         }
-
-  //         console.log(payload)
-
-  //         await PatchRequest("/user/cart", payload, token)
-
-  //       }
-  //     }, 3000)
-  //   } else {
-  //     cogoToast.error("Item already added to your cart");
-  //   }
-  // };
-
   const addToCart = async () => {
     // check if items is already added
     const check = state?.cart.every((item) => {
@@ -87,7 +51,7 @@ const Productcard = (props: any) => {
     }
   };
 
-  const addFavourite = () => {
+  const addFavourite = async () => {
     // check if items is already added
     const check = state?.favourite.every((item: any) => {
       return item._id !== props?._id;
@@ -102,6 +66,17 @@ const Productcard = (props: any) => {
       dispatch({ type: ACTIONS.TOGGLE, payload: true });
       dispatch({ type: ACTIONS.FAVOURITE, payload: data });
       cogoToast.success("Item added to your favourite");
+
+      // Save the updated favourite items to the database
+      const updatedFavourite = [...(state?.favourite || []), data];
+      const token = localStorage.getItem("token") || "";
+      if (token) {
+        const payload = {
+          favItems: updatedFavourite,
+        };
+
+        await PatchRequest("/user/favourite", payload, token);
+      }
     } else {
       cogoToast.error("Item already added to your favourite");
     }

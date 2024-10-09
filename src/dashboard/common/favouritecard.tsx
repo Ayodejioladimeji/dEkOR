@@ -4,8 +4,9 @@ import cogoToast from "cogo-toast";
 import { useRouter } from "next/router";
 import React, { useContext } from "react";
 import { Image } from "react-bootstrap";
-import { DeleteFavourite, ItemCart } from "../../public/assets";
 import { firstTwoWords, formatMoney } from "@/utils/utils";
+import { DeleteFavourite, ItemCart } from "../../../public/assets";
+import { PostRequest } from "@/utils/requests";
 const IMAGE_URL = process.env.NEXT_PUBLIC_IMAGE_URL;
 
 //
@@ -35,11 +36,21 @@ const Favouritecard = (props: any) => {
   };
 
   // remove item from favourites
-  const removeFavourite = () => {
+  const removeFavourite = async () => {
     const newData = state?.favourite.filter((item) => item.id !== props?.id);
     dispatch({ type: ACTIONS.TOGGLE, payload: true });
     dispatch({ type: ACTIONS.DELETEFAVOURITE, payload: newData });
     cogoToast.success("Item removed successfully");
+
+    // save the cart items to the database
+    const token = localStorage.getItem("token") || "";
+    if (token) {
+      const payload = {
+        productId: props?.id,
+      };
+
+      await PostRequest("/user/favourite", payload, token);
+    }
   };
 
   //
