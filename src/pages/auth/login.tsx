@@ -27,6 +27,7 @@ const Login = () => {
 
       const localCartItems = JSON.parse(localStorage.getItem("cart")) || [];
       const localFavItems = JSON.parse(localStorage.getItem("favourite")) || [];
+      const pathname = localStorage.getItem("pathname");
 
       // Ensure the cart and favourite items are arrays before merging
       const dbCartItems = Array.isArray(res?.data?.user?.cart)
@@ -46,7 +47,11 @@ const Login = () => {
 
       localStorage.setItem("token", res.data.token);
 
-      window.location.href = "/dashboard/overview";
+      if (pathname) {
+        window.location.href = pathname;
+      } else {
+        window.location.href = "/product";
+      }
 
       // Save the cart items to the database
       const token = localStorage.getItem("token") || "";

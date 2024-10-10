@@ -108,6 +108,18 @@ const Cart = () => {
     }
   };
 
+  // handle route
+  const handleRoute = () => {
+    const token = localStorage.getItem("token") || "";
+
+    if (token) {
+      router.push("/checkout");
+    } else {
+      localStorage.setItem("pathname", router?.pathname);
+      router.push("/auth/login");
+    }
+  };
+
   //
   if (state?.loading) {
     return (
@@ -256,7 +268,7 @@ const Cart = () => {
                       <h5>${formatMoney(calculateTotal(state?.cart))}</h5>
                     </div>
 
-                    <button onClick={() => router.push("/checkout")}>
+                    <button onClick={handleRoute}>
                       Checkout ({state?.cart?.length})
                     </button>
                   </div>

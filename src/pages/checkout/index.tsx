@@ -98,162 +98,163 @@ const Checkout = () => {
             <Breadcumb title="Checkout" route="cart" />
           </div>
 
-          <h2>Delivery Information</h2>
+          <div className="row">
+            <div className="col-12 col-12 col-lg-8">
+              <h2>Delivery Information</h2>
 
-          <div className="information">
-            <div className="top">
-              <button
-                onClick={() => setCount(1)}
-                className={count === 1 ? "active" : ""}
-              >
-                New Address
-              </button>
+              <div className="information">
+                <div className="top">
+                  <button
+                    onClick={() => setCount(1)}
+                    className={count === 1 ? "active" : ""}
+                  >
+                    New Address
+                  </button>
 
-              <button
-                onClick={() => setCount(2)}
-                className={count === 2 ? "active" : ""}
-              >
-                Default address
-              </button>
-            </div>
+                  <button
+                    onClick={() => setCount(2)}
+                    className={count === 2 ? "active" : ""}
+                  >
+                    Default address
+                  </button>
+                </div>
 
-            <div className="bottom">
-              <div className="row">
-                {count === 1 && (
-                  <div className="col-12 col-12 col-lg-8">
-                    <div className="form-box">
-                      <label>Full Name</label>
-                      <input
-                        type="text"
-                        placeholder="Enter your fullname"
-                        value={values.fullname}
-                        name="fullname"
-                        onChange={handleChange}
-                      />
-                    </div>
-
-                    <div className="form-box">
-                      <label>Phone Number</label>
-                      <input
-                        type="text"
-                        placeholder="Enter your phone number"
-                        value={values.phone}
-                        name="phone"
-                        onChange={handleChange}
-                      />
-                    </div>
-
-                    <div className="form-box">
-                      <label>Address</label>
-                      <input
-                        type="text"
-                        placeholder="Enter your address"
-                        value={values.address}
-                        name="address"
-                        onChange={handleChange}
-                      />
-                    </div>
-
-                    <div className="row">
-                      <div className="col-12 col-sm-6 col-md-6">
+                <div className="bottom">
+                  <div className="row">
+                    {count === 1 && (
+                      <div className="">
                         <div className="form-box">
-                          <label>Region</label>
+                          <label>Full Name</label>
                           <input
                             type="text"
-                            placeholder="Enter your state"
-                            value={values.state}
-                            name="state"
+                            placeholder="Enter your fullname"
+                            value={values.fullname}
+                            name="fullname"
                             onChange={handleChange}
                           />
                         </div>
-                      </div>
 
-                      <div className="col-12 col-sm-6 col-md-6">
                         <div className="form-box">
-                          <label>City</label>
+                          <label>Phone Number</label>
                           <input
                             type="text"
-                            placeholder="Enter your city"
-                            value={values.city}
-                            name="city"
+                            placeholder="Enter your phone number"
+                            value={values.phone}
+                            name="phone"
                             onChange={handleChange}
                           />
                         </div>
-                      </div>
-                    </div>
-                  </div>
-                )}
 
-                {count === 2 && (
-                  <div className="col-12 col-12 col-lg-8">
-                    {loading ? (
-                      <PaymentSkeleton length={4} />
-                    ) : (
-                      <>
-                        {addresses?.map((item: any) => {
-                          return (
-                            <CheckoutAddressCard {...item} key={item._id} />
-                          );
-                        })}
-                      </>
+                        <div className="form-box">
+                          <label>Address</label>
+                          <input
+                            type="text"
+                            placeholder="Enter your address"
+                            value={values.address}
+                            name="address"
+                            onChange={handleChange}
+                          />
+                        </div>
+
+                        <div className="row">
+                          <div className="col-12 col-sm-6 col-md-6">
+                            <div className="form-box">
+                              <label>Region</label>
+                              <input
+                                type="text"
+                                placeholder="Enter your state"
+                                value={values.state}
+                                name="state"
+                                onChange={handleChange}
+                              />
+                            </div>
+                          </div>
+
+                          <div className="col-12 col-sm-6 col-md-6">
+                            <div className="form-box">
+                              <label>City</label>
+                              <input
+                                type="text"
+                                placeholder="Enter your city"
+                                value={values.city}
+                                name="city"
+                                onChange={handleChange}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {count === 2 && (
+                      <div className="">
+                        {loading ? (
+                          <PaymentSkeleton length={4} />
+                        ) : (
+                          <>
+                            {addresses?.map((item: any) => {
+                              return (
+                                <CheckoutAddressCard {...item} key={item._id} />
+                              );
+                            })}
+                          </>
+                        )}
+                      </div>
                     )}
                   </div>
-                )}
+                </div>
+              </div>
+            </div>
+            <div className="col-12 col-12 col-lg-4">
+              <div className="order-summary">
+                <h4>Shipping Type</h4>
 
-                <div className="col-12 col-12 col-lg-4">
-                  <div className="order-summary">
-                    <h4>Shipping Type</h4>
-
-                    <div className="order-box">
-                      <div
-                        className="order-items"
-                        onClick={() => handleShipping("standard")}
-                      >
-                        <div className="d-flex align-items-center gap-2">
-                          {shippingType === "standard" ? (
-                            <CheckIcon />
-                          ) : (
-                            <CircleIcon />
-                          )}
-                          <p>Standard Shipping</p>
-                        </div>
-                        <p>₦1000</p>
-                      </div>
-
-                      <div
-                        className="order-items"
-                        onClick={() => handleShipping("express")}
-                      >
-                        <div className="d-flex align-items-center gap-2">
-                          {shippingType === "express" ? (
-                            <CheckIcon />
-                          ) : (
-                            <CircleIcon />
-                          )}
-                          <p>Express Shipping</p>
-                        </div>
-                        <p>₦4000</p>
-                      </div>
+                <div className="order-box">
+                  <div
+                    className="order-items"
+                    onClick={() => handleShipping("standard")}
+                  >
+                    <div className="d-flex align-items-center gap-2">
+                      {shippingType === "standard" ? (
+                        <CheckIcon />
+                      ) : (
+                        <CircleIcon />
+                      )}
+                      <p>Standard Shipping</p>
                     </div>
+                    <p>₦1000</p>
+                  </div>
 
-                    <h4>Order Summary</h4>
-                    <div className="order-items">
-                      <h5>Subtotal</h5>
-                      <h5>₦{formatMoney(calculateTotal(state?.cart))}</h5>
+                  <div
+                    className="order-items"
+                    onClick={() => handleShipping("express")}
+                  >
+                    <div className="d-flex align-items-center gap-2">
+                      {shippingType === "express" ? (
+                        <CheckIcon />
+                      ) : (
+                        <CircleIcon />
+                      )}
+                      <p>Express Shipping</p>
                     </div>
-                    <div className="order-items">
-                      <h5>Total</h5>
-                      <h5>
-                        ₦{formatMoney(calculateTotal(state?.cart) + amount)}
-                      </h5>
-                    </div>
-
-                    <button onClick={handleCheckout}>
-                      Checkout Payment (₦
-                      {formatMoney(calculateTotal(state?.cart) + amount)})
-                    </button>
+                    <p>₦4000</p>
                   </div>
                 </div>
+
+                <h4>Order Summary</h4>
+                <div className="order-items">
+                  <h5>Subtotal</h5>
+                  <h5>₦{formatMoney(calculateTotal(state?.cart))}</h5>
+                </div>
+                <div className="order-items">
+                  <h5>Total</h5>
+                  <h5>₦{formatMoney(calculateTotal(state?.cart) + amount)}</h5>
+                </div>
+
+                <button onClick={handleCheckout}>
+                  Checkout Payment (₦
+                  {formatMoney(calculateTotal(state?.cart) + amount)})
+                </button>
               </div>
             </div>
           </div>
