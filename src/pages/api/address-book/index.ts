@@ -66,7 +66,7 @@ const fetchAddress = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     // Fetch addresses specific to the logged-in user
-    const addresses = await Address.find({ user: user.id }).sort("-updatedAt");
+    const addresses = await Address.find({ user: user.id }).sort("-createdAt");
 
     // Return the user's addresses
     res.json(addresses);

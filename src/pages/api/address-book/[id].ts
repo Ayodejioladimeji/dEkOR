@@ -57,12 +57,10 @@ const updateDefault = async (req: NextApiRequest, res: NextApiResponse) => {
 
     const { id } = req.query;
 
-    await Address.updateMany({ user: user._id }, { isDefault: false });
+    await Address.updateMany({ user: user.id }, { isDefault: false });
 
-    await Address.findOneAndUpdate(
-      { _id: id, user: user._id },
-      { isDefault: true }
-    );
+    // Then, set the selected address to `isDefault: true`
+    await Address.findOneAndUpdate({ _id: id }, { isDefault: true });
 
     res.json({ message: "Default address updated successfully!" });
   } catch (err) {
