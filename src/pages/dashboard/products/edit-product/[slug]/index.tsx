@@ -41,8 +41,8 @@ const EditProduct = () => {
   useEffect(() => {
     if (slug) {
       const getProducts = async () => {
-        const res = await GetRequest(`/product/${slug}`);
-        if (res?.status === 200) {
+        const res = await GetRequest(`/product/admin/${slug}`);
+        if (res?.status === 200 || res?.status === 201) {
           const data = res?.data;
           setTitle(data?.title);
           setBuyingPrice(data?.buyingPrice);

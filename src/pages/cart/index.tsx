@@ -170,7 +170,7 @@ const Cart = () => {
               <div className="row">
                 <div className="col-12 col-lg-8">
                   {state?.cart?.map((item: any) => {
-                    const img = item?.iamges?.find((_, index) => index === 0);
+                    const img = item?.images?.find((_, index) => index === 0);
 
                     return (
                       <div className="cart-items" key={item._id}>

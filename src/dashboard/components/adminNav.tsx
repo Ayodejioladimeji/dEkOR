@@ -80,8 +80,20 @@ export default function AdminNavbar() {
                   router.asPath.includes("/dashboard/products") && "active"
                 }`}
               >
-                <i className="bi bi-box-seam"></i>
+                <i className="bi bi-boxes"></i>
                 Products
+              </Link>
+            </li>
+
+            <li className="nav-item">
+              <Link
+                href="/dashboard/orders"
+                className={`nav-link ${
+                  router.asPath.includes("/orders") && "active"
+                }`}
+              >
+                <i className="bi bi-box-seam"></i>
+                Orders
               </Link>
             </li>
 
