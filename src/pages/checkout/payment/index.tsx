@@ -28,7 +28,6 @@ const InitializePayment = () => {
           setStatus(200);
           setLoading(false);
         } else {
-          localStorage.removeItem("orderId");
           setStatus(400);
         }
       };

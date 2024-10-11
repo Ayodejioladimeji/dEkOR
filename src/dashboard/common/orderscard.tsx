@@ -3,7 +3,7 @@ import { DataContext } from "@/store/GlobalState";
 import cogoToast from "cogo-toast";
 import React, { useContext } from "react";
 import { Image } from "react-bootstrap";
-import { Favourite, ItemCart } from "../../../public/assets";
+import { ItemCart } from "../../../public/assets";
 import { firstTwoWords, formatMoney } from "@/utils/utils";
 
 //
@@ -32,26 +32,6 @@ const Ordercard = (props: any) => {
     }
   };
 
-  const addFavourite = () => {
-    // check if items is already added
-    const check = state?.favourite.every((item) => {
-      return item.id !== props?.id;
-    });
-
-    if (check) {
-      const data = {
-        ...props,
-        quantity: 1,
-      };
-
-      dispatch({ type: ACTIONS.TOGGLE, payload: true });
-      dispatch({ type: ACTIONS.FAVOURITE, payload: data });
-      cogoToast.success("Item added to your favourite");
-    } else {
-      cogoToast.error("Item already added to your favourite");
-    }
-  };
-
   //
   return (
     <>
@@ -65,10 +45,6 @@ const Ordercard = (props: any) => {
                 width={100}
                 height={100}
               />
-
-              <div className="favourite" onClick={addFavourite}>
-                <Favourite />
-              </div>
 
               <div className="item-cart" onClick={addToCart}>
                 <ItemCart />

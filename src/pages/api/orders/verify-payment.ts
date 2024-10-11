@@ -1,5 +1,6 @@
 import connectDB from "../utils/connectDB";
 import Order from "../models/orderModel";
+import Transaction from "../models/transactionModel";
 import auth from "../middleware/auth";
 import { NextApiRequest, NextApiResponse } from "next";
 import axios from "axios";
@@ -40,6 +41,26 @@ const verifyPayment = async (req: NextApiRequest, res: NextApiResponse) => {
     if (response.data.data.status === "success") {
       // Find the order and update payment status
       const order = await Order.findOne({ paymentReference: reference });
+      const transact = await Transaction.findOne({ reference: reference });
+
+      if (transact?.status === "success") {
+        return res
+          .status(400)
+          .json({ message: "Payment has already been processed." });
+      }
+
+      // save transactions
+      const newTransaction = new Transaction({
+        user: user.id,
+        amount: response?.data?.data?.amount / 100,
+        status: response?.data?.data?.status,
+        reference: response?.data?.data?.reference,
+        channel: response?.data?.data?.channel,
+        authorization: response?.data?.data?.authorization,
+        paidAt: response?.data?.data?.paidAt,
+      });
+
+      newTransaction.save();
 
       if (order) {
         order.paymentStatus = "paid";
