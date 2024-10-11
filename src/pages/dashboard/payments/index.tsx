@@ -2,19 +2,27 @@ import React, { useEffect, useState } from "react";
 import DashboardLayout from "../DashboardLayout";
 import Topbar from "@/dashboard/components/topbar";
 import Paymentcard from "@/dashboard/common/paymentcard";
-import { paymentdata } from "@/constants/paymentdata";
 import PaymentSkeleton from "@/common/paymentskeleton";
+import { GetRequests } from "@/utils/requests";
 
 const Payments = () => {
   const [loading, setLoading] = useState(true);
   const [payments, setPayments] = useState<any>([]);
 
   useEffect(() => {
-    setPayments(paymentdata);
+    const token = localStorage.getItem("token") || "";
 
-    setTimeout(() => {
-      setLoading(false);
-    }, 500);
+    const getPayments = async () => {
+      const res = await GetRequests("/transactions", token);
+      if (res?.status === 200) {
+        setPayments(res?.data);
+        setLoading(false);
+      } else {
+        setLoading(false);
+      }
+    };
+
+    getPayments();
   }, []);
   //
 
@@ -35,6 +43,24 @@ const Payments = () => {
               </>
             )}
           </div>
+
+          {!loading && payments?.length === 0 && (
+            <div
+              style={{
+                height: "50vh",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                flexDirection: "column",
+              }}
+            >
+              <i
+                className="bi bi-credit-card-2-back"
+                style={{ fontSize: "45px" }}
+              ></i>
+              You have no payments available
+            </div>
+          )}
         </div>
       </section>
     </DashboardLayout>

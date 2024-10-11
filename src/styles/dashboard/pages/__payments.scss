@@ -5,7 +5,7 @@
 
   .payment-box {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     column-gap: 30px;
     row-gap: 30px;
 
@@ -19,12 +19,13 @@
     }
 
     .payment-card {
-      padding: 20px 0px;
-      border: 1px solid $primary-color;
+      padding: 15px 0px;
+      border: 1px solid $border-color;
       border-radius: 15px;
       background: $white;
       position: relative;
       transition: $transitions;
+      box-shadow: inset;
 
       &:hover {
         transform: scale(0.97);
@@ -38,23 +39,29 @@
       }
 
       h3 {
-        @include body-text(14px, 500, $text-color);
-        margin-bottom: 10px;
+        @include body-text(18px, 500, $text-color);
+        margin-bottom: 20px;
         padding: 0 10px;
       }
 
-      h2 {
-        @include body-text(15px, 700, $primary-color);
+      .card-details {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 15px;
         margin-bottom: 10px;
-        padding: 0 10px;
-      }
 
-      p {
-        @include body-text(13px, 500, $light-color);
-        text-align: center;
+        h2 {
+          @include body-text(18px, 500, $text-color);
+          padding: 0 10px;
+        }
 
-        @media (max-width: 565px) {
-          margin-bottom: 10px;
+        p {
+          @include body-text(14px, 500, $light-color);
+
+          @media (max-width: 565px) {
+            margin-bottom: 10px;
+          }
         }
       }
     }

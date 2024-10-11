@@ -1,24 +1,51 @@
 import React from "react";
+import { CheckIcon } from "../../../public/assets";
+import moment from "moment";
+import { formatMoney } from "@/utils/utils";
 //
 
-interface Props {
-  id: string;
-  name: string;
-  order: string;
-  amount: string;
-  createdAt: string;
-}
-
-const Paymentcard = (props: Props) => {
+const Paymentcard = (props: any) => {
   //
   return (
     <div className="payment-card">
-      <h3>{props?.name}</h3>
-      <h3>{props?.order}</h3>
-      <h2>₦{props?.amount}</h2>
-      <i className="bi bi-credit-card-2-back-fill"></i>
+      <h3>Payment Details</h3>
+
       <hr />
-      <p>{props?.createdAt}</p>
+
+      <div className="card-details">
+        <p>Bank Name</p>
+        <p>{props?.authorization?.bank}</p>
+      </div>
+
+      <div className="card-details">
+        <p>Ref Number</p>
+        <p>{props?.reference}</p>
+      </div>
+
+      <div className="card-details">
+        <p>Payment Status</p>
+        <p style={{ color: "green" }}>
+          <CheckIcon />
+          {props?.status}
+        </p>
+      </div>
+
+      <div className="card-details">
+        <p>Payment Time</p>
+        <p>{moment(props?.paidAt).format("lll")}</p>
+      </div>
+
+      <div className="card-details">
+        <p>Payment Method</p>
+        <p>{props?.channel}</p>
+      </div>
+
+      <hr />
+
+      <div className="card-details">
+        <h2>Amount Paid</h2>
+        <h2>{formatMoney(props?.amount)}</h2>
+      </div>
     </div>
   );
 };

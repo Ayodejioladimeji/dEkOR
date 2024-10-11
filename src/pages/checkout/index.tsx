@@ -89,6 +89,15 @@ const Checkout = () => {
       );
     }
 
+    if (
+      !defaultAddress &&
+      Object.values(values).some((value) => value === "")
+    ) {
+      return cogoToast.error(
+        "Please set a default address to proceed with the order"
+      );
+    }
+
     const token = localStorage.getItem("token") || "";
     setButtonloading(true);
 
@@ -103,10 +112,10 @@ const Checkout = () => {
 
     const newDefaults = {
       name: defaultAddress?.fullname,
-      address: defaultAddress.address,
-      region: defaultAddress.region,
-      city: defaultAddress.city?.value,
-      phone: defaultAddress.phone,
+      address: defaultAddress?.address,
+      region: defaultAddress?.region,
+      city: defaultAddress?.city?.value,
+      phone: defaultAddress?.phone,
     };
 
     const orderPayload = {
@@ -204,7 +213,7 @@ const Checkout = () => {
                                 type="text"
                                 placeholder="Enter your state"
                                 value={values.region}
-                                name="state"
+                                name="region"
                                 onChange={handleChange}
                               />
                             </div>

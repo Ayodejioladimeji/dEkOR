@@ -29,13 +29,14 @@ const InitializePayment = () => {
           setLoading(false);
         } else {
           setStatus(400);
+          setLoading(false);
         }
       };
       verifyTransaction();
     }
   }, [router, reference]);
 
-  if (loading || !status || status === 400) {
+  if (loading) {
     return (
       <div
         style={{
@@ -63,33 +64,51 @@ const InitializePayment = () => {
 
       <div className="container-fluid">
         <div className="activate payment">
-          <div className="payment-success">
-            <svg
-              width="60"
-              height="60"
-              viewBox="0 0 60 60"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <circle cx="30" cy="30" r="30" fill="#12B76A" />
-              <path
-                d="M26.1538 38.1686L18.2319 30.814C17.756 30.3722 17.756 29.6558 18.2319 29.2139L19.9555 27.6137C20.4314 27.1718 21.2031 27.1718 21.6791 27.6137L27.0156 32.5681L38.4459 21.9564C38.9219 21.5145 39.6936 21.5145 40.1695 21.9564L41.8931 23.5565C42.369 23.9984 42.369 24.7148 41.8931 25.1567L27.8774 38.1686C27.4014 38.6105 26.6298 38.6105 26.1538 38.1686Z"
-                fill="#FDFDFE"
-              />
-            </svg>
+          {status === 200 ? (
+            <div className="payment-success">
+              <svg
+                width="60"
+                height="60"
+                viewBox="0 0 60 60"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <circle cx="30" cy="30" r="30" fill="#12B76A" />
+                <path
+                  d="M26.1538 38.1686L18.2319 30.814C17.756 30.3722 17.756 29.6558 18.2319 29.2139L19.9555 27.6137C20.4314 27.1718 21.2031 27.1718 21.6791 27.6137L27.0156 32.5681L38.4459 21.9564C38.9219 21.5145 39.6936 21.5145 40.1695 21.9564L41.8931 23.5565C42.369 23.9984 42.369 24.7148 41.8931 25.1567L27.8774 38.1686C27.4014 38.6105 26.6298 38.6105 26.1538 38.1686Z"
+                  fill="#FDFDFE"
+                />
+              </svg>
 
-            <h3>Congratulations 🎉</h3>
-            <p>
-              Your payment was successful proceed to your dashboard to view your
-              order
-            </p>
+              <h3>Congratulations 🎉</h3>
+              <p>
+                Your payment was successful proceed to your dashboard to view
+                your order
+              </p>
 
-            <div className="button-container">
-              <button onClick={() => router.push("/dashboard/orders")}>
-                Go to dashboard
-              </button>
+              <div className="button-container">
+                <button onClick={() => router.push("/dashboard/orders")}>
+                  Go to dashboard
+                </button>
+              </div>
             </div>
-          </div>
+          ) : (
+            <div className="payment-success">
+              <i className="bi bi-x-circle-fill"></i>
+
+              <h3>Transaction Error</h3>
+              <p>
+                Your payment has already been processed, proceed to your
+                dashboard to view your order
+              </p>
+
+              <div className="button-container">
+                <button onClick={() => router.push("/dashboard/orders")}>
+                  Go to dashboard
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </>

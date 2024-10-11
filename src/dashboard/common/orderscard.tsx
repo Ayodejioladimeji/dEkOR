@@ -52,13 +52,11 @@ const Ordercard = (props: any) => {
 
               <button
                 onClick={addToCart}
-                className={`add-to-cart ${item?.orderStatus === "pending-payment" ? "red" : item?.orderStatus === "pending-delivery" ? "orange" : "green"}`}
+                className={`add-to-cart ${props?.paymentStatus === "pending" ? "orange" : "green"}`}
               >
-                {item?.orderStatus === "pending-payment"
+                {props?.paymentStatus === "pending"
                   ? "Pending Payment"
-                  : item?.orderStatus === "pending-delivery"
-                    ? "Pending Delivery"
-                    : "Delivered"}
+                  : "Payment Successful"}
               </button>
             </div>
 
