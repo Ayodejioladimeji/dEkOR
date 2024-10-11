@@ -18,7 +18,7 @@ const Products = () => {
     const token = localStorage.getItem("token") || "";
 
     const getProducts = async () => {
-      const res = await GetRequests("/product/admin-products", token);
+      const res = await GetRequests("/product/admin", token);
       if (res?.status === 200) {
         setProducts(res?.data);
         dispatch({ type: ACTIONS.LOADING, payload: false });

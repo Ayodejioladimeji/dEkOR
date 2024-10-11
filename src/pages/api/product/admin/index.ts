@@ -1,6 +1,6 @@
-import connectDB from "../utils/connectDB";
-import Product from "../models/productModel";
-import auth from "../middleware/auth";
+import connectDB from "../../utils/connectDB";
+import Product from "../../models/productModel";
+import auth from "../../middleware/auth";
 import { NextApiRequest, NextApiResponse } from "next";
 
 connectDB();

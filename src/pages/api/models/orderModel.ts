@@ -9,24 +9,11 @@ const orderSchema = new mongoose.Schema(
     },
     products: [
       {
-        productId: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "product",
-          required: true,
-        },
         quantity: {
           type: Number,
           required: true,
         },
-        price: {
-          type: Number,
-          required: true,
-        },
         title: {
-          type: String,
-          required: true,
-        },
-        buyingPrice: {
           type: String,
           required: true,
         },
@@ -45,6 +32,10 @@ const orderSchema = new mongoose.Schema(
         images: {
           type: Array,
           default: [],
+        },
+        orderStatus: {
+          type: String,
+          default: "pending-delivery",
         },
       },
     ],

@@ -1,7 +1,6 @@
 import { ACTIONS } from "@/store/Actions";
 import { DataContext } from "@/store/GlobalState";
 import cogoToast from "cogo-toast";
-// import { useRouter } from "next/router";
 import React, { useContext } from "react";
 import { Image } from "react-bootstrap";
 import { Favourite, ItemCart } from "../../../public/assets";
@@ -55,33 +54,46 @@ const Ordercard = (props: any) => {
 
   //
   return (
-    <div className="order-card">
-      <div className="order-image">
-        <Image
-          src={props?.images[0]}
-          alt="product-image"
-          width={100}
-          height={100}
-        />
+    <>
+      {props?.products?.map((item: any, index: number) => {
+        return (
+          <div className="order-card" key={index}>
+            <div className="order-image">
+              <Image
+                src={item?.images[0]}
+                alt="product-image"
+                width={100}
+                height={100}
+              />
 
-        <div className="favourite" onClick={addFavourite}>
-          <Favourite />
-        </div>
+              <div className="favourite" onClick={addFavourite}>
+                <Favourite />
+              </div>
 
-        <div className="item-cart" onClick={addToCart}>
-          <ItemCart />
-        </div>
+              <div className="item-cart" onClick={addToCart}>
+                <ItemCart />
+              </div>
 
-        <button onClick={addToCart} className="add-to-cart">
-          Buy Again
-        </button>
-      </div>
+              <button
+                onClick={addToCart}
+                className={`add-to-cart ${item?.orderStatus === "pending-payment" ? "red" : item?.orderStatus === "pending-delivery" ? "orange" : "green"}`}
+              >
+                {item?.orderStatus === "pending-payment"
+                  ? "Pending Payment"
+                  : item?.orderStatus === "pending-delivery"
+                    ? "Pending Delivery"
+                    : "Delivered"}
+              </button>
+            </div>
 
-      <div className="order-content">
-        <h3>{firstTwoWords(props?.title)}</h3>
-        <p>${formatMoney(Number(props?.price))}</p>
-      </div>
-    </div>
+            <div className="order-content">
+              <h3>{firstTwoWords(item?.title)}</h3>
+              <p>₦{formatMoney(Number(item?.sellingPrice))}</p>
+            </div>
+          </div>
+        );
+      })}
+    </>
   );
 };
 

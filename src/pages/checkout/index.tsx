@@ -6,19 +6,17 @@ import { calculateTotal, EmptyImagesCheck, formatMoney } from "@/utils/utils";
 import { DataContext } from "@/store/GlobalState";
 import SuccessModal from "@/common/modals/success";
 import cogoToast from "cogo-toast";
-import { GetRequests } from "@/utils/requests";
+import { GetRequests, PostRequest } from "@/utils/requests";
 import PaymentSkeleton from "@/common/paymentskeleton";
 import CheckoutAddressCard from "@/common/checkoutaddresscard";
+import Loading from "@/common/loading";
 
 const initialValues = {
   fullname: "",
-  email: "",
   phone: "",
   address: "",
-  country: "",
-  state: "",
+  region: "",
   city: "",
-  postalCode: "",
 };
 
 const Checkout = () => {
@@ -30,6 +28,9 @@ const Checkout = () => {
   const [count, setCount] = useState(1);
   const [addresses, setAddresses] = useState<any>([]);
   const [loading, setLoading] = useState(true);
+  const [addressStatus, setAddressStatus] = useState("new");
+  const [defaultAddress, setDefaultAddress] = useState<any>(null);
+  const [buttonloading, setButtonloading] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token") || "";
@@ -39,6 +40,10 @@ const Checkout = () => {
       if (res?.status === 200 || res?.status === 201) {
         setAddresses(res?.data);
         setLoading(false);
+
+        // get default address
+        const defaults = res?.data?.find((item) => item.isDefault === true);
+        setDefaultAddress(defaults);
       } else {
         setLoading(false);
       }
@@ -64,7 +69,7 @@ const Checkout = () => {
   };
 
   // handle submit
-  const handleCheckout = () => {
+  const handleCheckout = async () => {
     // check if the product has images
     const checkImage = EmptyImagesCheck(state?.cart);
     if (!checkImage) {
@@ -72,21 +77,52 @@ const Checkout = () => {
     }
 
     if (
-      !values?.fullname ||
-      !values?.email ||
-      !values?.phone ||
-      !values.address ||
-      !values.country ||
-      !values.state ||
-      !values.city ||
-      !values.postalCode ||
-      values.country === "---"
+      addressStatus === "new" &&
+      (!values?.fullname ||
+        !values?.phone ||
+        !values.address ||
+        !values.region ||
+        !values.city)
     ) {
       return cogoToast.error(
         "Please provide all your shipping information in details"
       );
     }
-    setShowmodal(true);
+
+    const token = localStorage.getItem("token") || "";
+    setButtonloading(true);
+
+    // for new address
+    const addressObj = {
+      name: values?.fullname,
+      address: values.address,
+      region: values.region,
+      city: values.city,
+      phone: values.phone,
+    };
+
+    const newDefaults = {
+      name: defaultAddress?.fullname,
+      address: defaultAddress.address,
+      region: defaultAddress.region,
+      city: defaultAddress.city?.value,
+      phone: defaultAddress.phone,
+    };
+
+    const orderPayload = {
+      products: state?.cart,
+      totalAmount: calculateTotal(state?.cart) + amount,
+      shippingAddress: addressStatus === "new" ? addressObj : newDefaults,
+    };
+
+    const res = await PostRequest("/orders", orderPayload, token);
+    if (res?.status === 200 || res?.status === 201) {
+      window.location.href = res.data.paymentUrl;
+    } else {
+      setButtonloading(false);
+    }
+
+    // setShowmodal(true);
   };
 
   //
@@ -105,14 +141,18 @@ const Checkout = () => {
               <div className="information">
                 <div className="top">
                   <button
-                    onClick={() => setCount(1)}
+                    onClick={() => {
+                      setCount(1), setAddressStatus("new");
+                    }}
                     className={count === 1 ? "active" : ""}
                   >
                     New Address
                   </button>
 
                   <button
-                    onClick={() => setCount(2)}
+                    onClick={() => {
+                      setCount(2), setAddressStatus("default");
+                    }}
                     className={count === 2 ? "active" : ""}
                   >
                     Default address
@@ -163,7 +203,7 @@ const Checkout = () => {
                               <input
                                 type="text"
                                 placeholder="Enter your state"
-                                value={values.state}
+                                value={values.region}
                                 name="state"
                                 onChange={handleChange}
                               />
@@ -198,6 +238,12 @@ const Checkout = () => {
                               );
                             })}
                           </>
+                        )}
+
+                        {!loading && addresses?.length === 0 && (
+                          <p className="text-gray-300 text-xs">
+                            You have no addresses
+                          </p>
                         )}
                       </div>
                     )}
@@ -252,8 +298,17 @@ const Checkout = () => {
                 </div>
 
                 <button onClick={handleCheckout}>
-                  Checkout Payment (₦
-                  {formatMoney(calculateTotal(state?.cart) + amount)})
+                  {buttonloading ? (
+                    <Loading
+                      height="30px"
+                      width="30px"
+                      primaryColor="#fff"
+                      secondaryColor="#fff"
+                    />
+                  ) : (
+                    ` Checkout Payment (₦
+                  ${formatMoney(calculateTotal(state?.cart) + amount)})`
+                  )}
                 </button>
               </div>
             </div>

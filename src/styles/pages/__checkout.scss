@@ -57,7 +57,7 @@
       }
 
       p {
-        @include body-text(20px, 400, $text-color);
+        @include body-text(16px, 400, $text-color);
         margin-bottom: 16px;
       }
 
@@ -70,7 +70,7 @@
         transition: $transitions;
         cursor: pointer;
         width: 350px;
-        margin-top:20px;
+        margin-top: 20px;
 
         &:hover {
           transform: scale(0.99);

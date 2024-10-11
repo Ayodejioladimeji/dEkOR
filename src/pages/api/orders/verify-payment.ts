@@ -22,7 +22,7 @@ export default async function handler(
 
 const verifyPayment = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const user = await auth(req, res); // authenticate user
+    const user = await auth(req, res);
     if (!user) return res.status(401).json({ message: "Unauthorized" });
 
     const { reference } = req.query;
@@ -32,7 +32,7 @@ const verifyPayment = async (req: NextApiRequest, res: NextApiResponse) => {
       `${process.env.NEXT_PUBLIC_PAYSTACK_VERIFY_URL}/${reference}`,
       {
         headers: {
-          Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}`,
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_PAYSTACK_SECRET_KEY}`,
         },
       }
     );
@@ -55,3 +55,47 @@ const verifyPayment = async (req: NextApiRequest, res: NextApiResponse) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+// const verifyPayment = async (req: NextApiRequest, res: NextApiResponse) => {
+//   try {
+//     const { reference } = req.query;
+
+//     if (!reference) {
+//       return res.status(400).json({ message: "Transaction reference is required" });
+//     }
+
+//     // Log the reference and Paystack URL for debugging
+//     console.log("Transaction reference:", reference);
+//     console.log("Paystack Verify URL:", `${process.env.NEXT_PUBLIC_PAYSTACK_VERIFY_URL}/${reference}`);
+
+//     // Verify payment with Paystack
+//     const response = await axios.get(
+//       `https://api.paystack.co/transaction/verify/${reference}`, // Directly using the correct Paystack URL
+//       {
+//         headers: {
+//           Authorization: `Bearer ${process.env.NEXT_PUBLIC_PAYSTACK_SECRET_KEY}`, // Ensure this secret key is correct
+//         },
+//       }
+//     );
+
+//     console.log("Paystack Response:", response.data); // Log the full response for debugging
+
+//     if (response.data?.data?.status === "success") {
+//       // Find the order and update payment status
+//       const order = await Order.findOne({ paymentReference: reference });
+
+//       if (order) {
+//         order.paymentStatus = "paid";
+//         await order.save();
+//         return res.status(200).json({ message: "Payment verified successfully" });
+//       } else {
+//         return res.status(404).json({ message: "Order not found" });
+//       }
+//     } else {
+//       return res.status(400).json({ message: "Payment verification failed" });
+//     }
+//   } catch (error) {
+//     console.error("Error during payment verification:", error.message);
+//     return res.status(500).json({ message: error.message });
+//   }
+// };
