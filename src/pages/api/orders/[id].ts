@@ -1,5 +1,5 @@
 import connectDB from "../utils/connectDB";
-import Product from "../models/productModel";
+import Order from "../models/orderModel";
 import { NextApiRequest, NextApiResponse } from "next";
 
 connectDB();
@@ -20,15 +20,34 @@ export default async function handler(
 
 const getSingleOrder = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const { id } = req.query;
+    const { id, productId } = req.query;
 
-    // Find product by ID
-    const product = await Product.findOne({ _id: id, isActive: true });
-    if (!product) {
+    // Find order by ID
+    const order = await Order.findOne({ _id: id });
+
+    if (!order) {
       return res.json({});
     }
 
-    res.json(product);
+    const product = order.products.find((p) => p._id.toString() === productId);
+
+    if (!product) {
+      return res
+        .status(404)
+        .json({ message: "Product not found in the order" });
+    }
+
+    const data = {
+      product,
+      shippingAddress: order?.shippingAddress,
+      totalAmount: order?.totalAmount,
+      paymentStatus: order?.paymentStatus,
+      paymentMethod: order?.paymentMethod,
+      paymentReference: order?.paymentReference,
+      orderDate: order?.createdAt,
+    };
+
+    return res.json(data);
   } catch (error) {
     return res?.status(500).json({ message: error.message });
   }

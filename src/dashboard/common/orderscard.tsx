@@ -5,11 +5,13 @@ import React, { useContext } from "react";
 import { Image } from "react-bootstrap";
 import { ItemCart } from "../../../public/assets";
 import { firstTwoWords, formatMoney } from "@/utils/utils";
+import { useRouter } from "next/router";
 
 //
 
 const Ordercard = (props: any) => {
   const { state, dispatch } = useContext<any>(DataContext);
+  const router = useRouter();
 
   // add items to cart
   const addToCart = () => {
@@ -51,7 +53,11 @@ const Ordercard = (props: any) => {
               </div>
 
               <button
-                onClick={addToCart}
+                onClick={() =>
+                  router.push(
+                    `/dashboard/orders/${props._id}?productId=${item._id}`
+                  )
+                }
                 className={`add-to-cart ${props?.paymentStatus === "pending" ? "orange" : "green"}`}
               >
                 {props?.paymentStatus === "pending"

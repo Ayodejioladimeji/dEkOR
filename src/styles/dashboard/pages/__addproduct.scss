@@ -10,6 +10,12 @@
     padding: 20px;
     width: 60%;
 
+    h2{
+      @include heading(18px, 600, $black);
+      margin-bottom:20px;
+      padding-left:10px;
+    }
+
     .form-div {
       label {
         display: block;
@@ -48,6 +54,12 @@
       textarea {
         height: 100px;
       }
+    }
+
+    .order-details{
+      display:flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
     .main-color-input {

@@ -34,7 +34,7 @@ const Payments = () => {
         <div className="payments">
           <div className="payment-box">
             {loading ? (
-              <PaymentSkeleton length={8} />
+              <PaymentSkeleton length={4} />
             ) : (
               <>
                 {payments?.map((item: any) => {

@@ -1,5 +1,4 @@
 import React from "react";
-import { CheckIcon } from "../../../public/assets";
 import moment from "moment";
 import { formatMoney } from "@/utils/utils";
 //
@@ -14,37 +13,37 @@ const Paymentcard = (props: any) => {
 
       <div className="card-details">
         <p>Bank Name</p>
-        <p>{props?.authorization?.bank}</p>
+        <p className="response"> {props?.authorization?.bank}</p>
       </div>
 
       <div className="card-details">
         <p>Ref Number</p>
-        <p>{props?.reference}</p>
+        <p className="response">{props?.reference}</p>
       </div>
 
       <div className="card-details">
         <p>Payment Status</p>
-        <p style={{ color: "green" }}>
-          <CheckIcon />
+        <p className="response" style={{ color: "green" }}>
+          {/* <CheckIcon /> */}
           {props?.status}
         </p>
       </div>
 
       <div className="card-details">
         <p>Payment Time</p>
-        <p>{moment(props?.paidAt).format("lll")}</p>
+        <p className="response">{moment(props?.paidAt).format("lll")}</p>
       </div>
 
       <div className="card-details">
         <p>Payment Method</p>
-        <p>{props?.channel}</p>
+        <p className="response">{props?.channel}</p>
       </div>
 
       <hr />
 
       <div className="card-details">
-        <h2>Amount Paid</h2>
-        <h2>{formatMoney(props?.amount)}</h2>
+        <h2 className="p-0">Amount Paid</h2>
+        <h2 className="p-0">{formatMoney(props?.amount)}</h2>
       </div>
     </div>
   );

@@ -53,6 +53,14 @@ textarea {
   }
 }
 
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="password"],
+textarea {
+  font-size: 16px !important;
+}
+
 // styles. for product skeleton
 .skeletal-image {
   border-radius: 20px !important;
