@@ -58,8 +58,8 @@
 
         p {
           @include body-text(14px, 500, $light-color);
-          
-          &.response{
+
+          &.response {
             text-transform: uppercase;
           }
 

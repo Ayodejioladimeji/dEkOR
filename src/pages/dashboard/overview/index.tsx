@@ -1,61 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import DashboardLayout from "../DashboardLayout";
-import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useRouter } from "next/router";
 import Topbar from "@/dashboard/components/topbar";
+import { GetRequests } from "@/utils/requests";
+import Loading from "@/common/loading";
 
 const Overview = () => {
   const router = useRouter();
+  const [metrics, setMetrics] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  // responsive slider on smaller devices
-  let settings = {
-    // dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 5,
-    slidesToScroll: 5,
-    initialSlide: 0,
-    arrows: false,
-    responsive: [
-      {
-        breakpoint: 1233,
-        settings: {
-          slidesToShow: 4,
-          slidesToScroll: 3,
-          infinite: true,
-          dots: true,
-        },
-      },
-      {
-        breakpoint: 1053,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 1,
-          infinite: false,
-          dots: true,
-        },
-      },
-      {
-        breakpoint: 650,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-          infinite: false,
-          dots: true,
-        },
-      },
-      {
-        breakpoint: 430,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          dots: true,
-        },
-      },
-    ],
-  };
+  useEffect(() => {
+    const token = localStorage.getItem("token") || "";
+
+    const getOrders = async () => {
+      const res = await GetRequests("/metrics", token);
+      if (res?.status === 200) {
+        setMetrics(res?.data);
+        setLoading(false);
+      } else {
+        setLoading(false);
+      }
+    };
+
+    getOrders();
+  }, []);
 
   //
 
@@ -67,64 +38,83 @@ const Overview = () => {
         <div className="overview">
           <div className="summary">
             <div className="row p-2">
-              <Slider {...settings}>
-                <div className="col columns">
-                  <div className="card" onClick={() => router.push("/orders")}>
-                    <p>Total Orders</p>
-                    <div className="d-flex align-items-end justify-content-between">
-                      <h4 className="mb-0">{0}</h4>
-                    </div>
+              <div className="col-12 col-md-6 col-lg-4 mb-4 columns">
+                <div className="card" onClick={() => router.push("/orders")}>
+                  <p>Total Orders</p>
+                  <div className="">
+                    {loading ? (
+                      <Loading
+                        height="30px"
+                        width="30px"
+                        primaryColor="#ffc619"
+                        secondaryColor="#ffc619"
+                      />
+                    ) : (
+                      <h4 className="mb-0">{metrics?.totalOrders}</h4>
+                    )}
                   </div>
                 </div>
+              </div>
 
-                <div className="col columns">
-                  <div
-                    className="card"
-                    onClick={() => router.push(`/order/delivered-orders`)}
-                  >
-                    <p>Delivered Orders</p>
-                    <div className="d-flex align-items-end justify-content-between">
-                      <h4 className="mb-0">{0}</h4>
-                    </div>
+              <div className="col-12 col-md-6 col-lg-4 mb-4 columns">
+                <div
+                  className="card"
+                  onClick={() => router.push(`/order/delivered-orders`)}
+                >
+                  <p>Delivered Orders</p>
+                  <div className="card-count">
+                    <h4 className="mb-0">{metrics?.deliveredOrders}</h4>
                   </div>
                 </div>
+              </div>
 
-                <div className="col columns">
-                  <div
-                    className="card"
-                    onClick={() => router.push(`/order/ongoing-orders`)}
-                  >
-                    <p>Pending Orders</p>
-                    <div className="d-flex align-items-end justify-content-between">
-                      <h4 className="mb-0">{0}</h4>
-                    </div>
+              <div className="col-12 col-md-6 col-lg-4 mb-4 columns">
+                <div
+                  className="card"
+                  onClick={() => router.push(`/order/ongoing-orders`)}
+                >
+                  <p>Pending Delivery Orders</p>
+                  <div className="card-count">
+                    <h4 className="mb-0">{metrics?.pendingOrders}</h4>
                   </div>
                 </div>
+              </div>
 
-                <div className="col columns">
-                  <div
-                    className="card"
-                    onClick={() => router.push(`/order/processing-orders`)}
-                  >
-                    <p>Transactions</p>
-                    <div className="d-flex align-items-end justify-content-between">
-                      <h4 className="mb-0"> {0}</h4>
-                    </div>
+              <div className="col-12 col-md-6 col-lg-4 mb-4 columns">
+                <div
+                  className="card"
+                  onClick={() => router.push(`/order/processing-orders`)}
+                >
+                  <p>Successful Payments</p>
+                  <div className="card-count">
+                    <h4 className="mb-0"> {metrics?.transactions}</h4>
                   </div>
                 </div>
+              </div>
 
-                <div className="col columns last-column">
-                  <div
-                    className="card"
-                    onClick={() => router.push(`/order/scheduled-orders`)}
-                  >
-                    <p>Addresses</p>
-                    <div className="d-flex align-items-end justify-content-between">
-                      <h4 className="mb-0"> {0}</h4>
-                    </div>
+              <div className="col-12 col-md-6 col-lg-4 mb-4 columns">
+                <div
+                  className="card"
+                  onClick={() => router.push(`/order/processing-orders`)}
+                >
+                  <p>Pending Payments</p>
+                  <div className="card-count">
+                    <h4 className="mb-0"> {metrics?.pendingPayment}</h4>
                   </div>
                 </div>
-              </Slider>
+              </div>
+
+              <div className="col-12 col-md-6 col-lg-4 mb-4 columns">
+                <div
+                  className="card"
+                  onClick={() => router.push(`/order/scheduled-orders`)}
+                >
+                  <p>Addresses</p>
+                  <div className="card-count">
+                    <h4 className="mb-0"> {metrics?.userAddress}</h4>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
