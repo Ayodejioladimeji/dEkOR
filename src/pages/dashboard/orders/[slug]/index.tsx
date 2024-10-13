@@ -195,83 +195,85 @@ const OrderDetails = () => {
                   </div>
                 </div>
 
-                <hr />
-
                 {data?.paymentStatus === "paid" && (
-                  <div className="row">
-                    <h2>Shipping Address</h2>
+                  <>
+                    <hr />
 
-                    <div className="col-6">
-                      <div className="form-div">
-                        <label>Name</label>
-                        <input
-                          type="text"
-                          placeholder=""
-                          value={data?.shippingAddress?.name}
-                          disabled
-                        />
-                      </div>
-                    </div>
+                    <div className="row">
+                      <h2>Shipping Address</h2>
 
-                    <div className="col-6">
-                      <div className="form-div">
-                        <label>Phone</label>
-                        <input
-                          type="text"
-                          placeholder=""
-                          value={data?.shippingAddress?.phone}
-                          disabled
-                        />
+                      <div className="col-6">
+                        <div className="form-div">
+                          <label>Name</label>
+                          <input
+                            type="text"
+                            placeholder=""
+                            value={data?.shippingAddress?.name}
+                            disabled
+                          />
+                        </div>
                       </div>
-                    </div>
 
-                    <div className="col-12">
-                      <div className="form-div">
-                        <label>Address</label>
-                        <input
-                          type="text"
-                          placeholder=""
-                          value={data?.shippingAddress?.address}
-                          disabled
-                        />
+                      <div className="col-6">
+                        <div className="form-div">
+                          <label>Phone</label>
+                          <input
+                            type="text"
+                            placeholder=""
+                            value={data?.shippingAddress?.phone}
+                            disabled
+                          />
+                        </div>
                       </div>
-                    </div>
 
-                    <div className="col-6">
-                      <div className="form-div">
-                        <label>City</label>
-                        <input
-                          type="text"
-                          placeholder=""
-                          value={data?.shippingAddress?.city}
-                          disabled
-                        />
+                      <div className="col-12">
+                        <div className="form-div">
+                          <label>Address</label>
+                          <input
+                            type="text"
+                            placeholder=""
+                            value={data?.shippingAddress?.address}
+                            disabled
+                          />
+                        </div>
                       </div>
-                    </div>
-                    <div className="col-6">
-                      <div className="form-div">
-                        <label>Region</label>
-                        <input
-                          type="text"
-                          placeholder=""
-                          value={data?.shippingAddress?.region}
-                          disabled
-                        />
-                      </div>
-                    </div>
 
-                    <div className="col-12">
-                      <div className="product-colors">
-                        {product_colors?.map((color: any, index: number) => (
-                          <div
-                            key={index}
-                            style={{ background: color }}
-                            className="product-colors-box"
-                          ></div>
-                        ))}
+                      <div className="col-6">
+                        <div className="form-div">
+                          <label>City</label>
+                          <input
+                            type="text"
+                            placeholder=""
+                            value={data?.shippingAddress?.city}
+                            disabled
+                          />
+                        </div>
+                      </div>
+                      <div className="col-6">
+                        <div className="form-div">
+                          <label>Region</label>
+                          <input
+                            type="text"
+                            placeholder=""
+                            value={data?.shippingAddress?.region}
+                            disabled
+                          />
+                        </div>
+                      </div>
+
+                      <div className="col-12">
+                        <div className="product-colors">
+                          {product_colors?.map((color: any, index: number) => (
+                            <div
+                              key={index}
+                              style={{ background: color }}
+                              className="product-colors-box"
+                            ></div>
+                          ))}
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </>
                 )}
               </>
             )}

@@ -43,7 +43,7 @@ const Paymentcard = (props: any) => {
 
       <div className="card-details">
         <h2 className="p-0">Amount Paid</h2>
-        <h2 className="p-0">{formatMoney(props?.amount)}</h2>
+        <h2 className="p-0">₦{formatMoney(props?.amount)}</h2>
       </div>
     </div>
   );

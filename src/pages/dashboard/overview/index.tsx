@@ -41,7 +41,7 @@ const Overview = () => {
               <div className="col-12 col-md-6 col-lg-4 mb-4 columns">
                 <div className="card" onClick={() => router.push("/orders")}>
                   <p>Total Orders</p>
-                  <div className="">
+                  <div className="card-count">
                     {loading ? (
                       <Loading
                         height="30px"
@@ -63,7 +63,16 @@ const Overview = () => {
                 >
                   <p>Delivered Orders</p>
                   <div className="card-count">
-                    <h4 className="mb-0">{metrics?.deliveredOrders}</h4>
+                    {loading ? (
+                      <Loading
+                        height="30px"
+                        width="30px"
+                        primaryColor="#ffc619"
+                        secondaryColor="#ffc619"
+                      />
+                    ) : (
+                      <h4 className="mb-0">{metrics?.deliveredOrders}</h4>
+                    )}
                   </div>
                 </div>
               </div>
@@ -75,7 +84,16 @@ const Overview = () => {
                 >
                   <p>Pending Delivery Orders</p>
                   <div className="card-count">
-                    <h4 className="mb-0">{metrics?.pendingOrders}</h4>
+                    {loading ? (
+                      <Loading
+                        height="30px"
+                        width="30px"
+                        primaryColor="#ffc619"
+                        secondaryColor="#ffc619"
+                      />
+                    ) : (
+                      <h4 className="mb-0">{metrics?.pendingOrders}</h4>
+                    )}
                   </div>
                 </div>
               </div>
@@ -87,7 +105,16 @@ const Overview = () => {
                 >
                   <p>Successful Payments</p>
                   <div className="card-count">
-                    <h4 className="mb-0"> {metrics?.transactions}</h4>
+                    {loading ? (
+                      <Loading
+                        height="30px"
+                        width="30px"
+                        primaryColor="#ffc619"
+                        secondaryColor="#ffc619"
+                      />
+                    ) : (
+                      <h4 className="mb-0"> {metrics?.transactions}</h4>
+                    )}
                   </div>
                 </div>
               </div>
@@ -99,7 +126,16 @@ const Overview = () => {
                 >
                   <p>Pending Payments</p>
                   <div className="card-count">
-                    <h4 className="mb-0"> {metrics?.pendingPayment}</h4>
+                    {loading ? (
+                      <Loading
+                        height="30px"
+                        width="30px"
+                        primaryColor="#ffc619"
+                        secondaryColor="#ffc619"
+                      />
+                    ) : (
+                      <h4 className="mb-0"> {metrics?.pendingPayment}</h4>
+                    )}
                   </div>
                 </div>
               </div>
@@ -111,7 +147,16 @@ const Overview = () => {
                 >
                   <p>Addresses</p>
                   <div className="card-count">
-                    <h4 className="mb-0"> {metrics?.userAddress}</h4>
+                    {loading ? (
+                      <Loading
+                        height="30px"
+                        width="30px"
+                        primaryColor="#ffc619"
+                        secondaryColor="#ffc619"
+                      />
+                    ) : (
+                      <h4 className="mb-0"> {metrics?.userAddress}</h4>
+                    )}
                   </div>
                 </div>
               </div>
