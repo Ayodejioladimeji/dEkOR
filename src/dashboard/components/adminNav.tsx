@@ -65,8 +65,8 @@ export default function AdminNavbar() {
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
               <Link
-                href={"/dashboard/overview"}
-                className={`nav-link ${router.asPath.includes("/dashboard/overview") && "active"}`}
+                href={"/dashboard/admin/overview"}
+                className={`nav-link ${router.asPath.includes("/dashboard/admin/overview") && "active"}`}
               >
                 <i className="bi bi-grid" />
                 Dashboard
@@ -75,9 +75,10 @@ export default function AdminNavbar() {
 
             <li className="nav-item">
               <Link
-                href="/dashboard/products"
+                href="/dashboard/admin/products"
                 className={`nav-link ${
-                  router.asPath.includes("/dashboard/products") && "active"
+                  router.asPath.includes("/dashboard/admin/products") &&
+                  "active"
                 }`}
               >
                 <i className="bi bi-boxes"></i>
@@ -87,7 +88,7 @@ export default function AdminNavbar() {
 
             <li className="nav-item">
               <Link
-                href="/dashboard/orders"
+                href="/dashboard/admin/orders"
                 className={`nav-link ${
                   router.asPath.includes("/orders") && "active"
                 }`}
@@ -99,9 +100,10 @@ export default function AdminNavbar() {
 
             <li className="nav-item">
               <Link
-                href="/dashboard/categories"
+                href="/dashboard/admin/categories"
                 className={`nav-link ${
-                  router.asPath.includes("/dashboard/categories") && "active"
+                  router.asPath.includes("/dashboard/admin/categories") &&
+                  "active"
                 }`}
               >
                 <i className="bi bi-box2"></i>
@@ -112,7 +114,7 @@ export default function AdminNavbar() {
             <li className="nav-item">
               <Link
                 href={"/dashboard/payments"}
-                className={`nav-link ${router.asPath.includes("/payments") && "active"}`}
+                className={`nav-link ${router.asPath.includes("/dashboard/admin/payments") && "active"}`}
               >
                 <i className="bi bi-credit-card-2-back"></i>
                 Transactions
@@ -124,7 +126,7 @@ export default function AdminNavbar() {
             <li className="nav-item">
               <Link
                 href={"/dashboard/address-book"}
-                className={`nav-link ${router.asPath.includes("/address-book") && "active"}`}
+                className={`nav-link ${router.asPath.includes("/dashboard/admin/address-book") && "active"}`}
               >
                 <i className="bi bi-journal-text"></i>
                 Address Book
@@ -134,7 +136,7 @@ export default function AdminNavbar() {
             <li className="nav-item">
               <Link
                 href={"/dashboard/profile-settings"}
-                className={`nav-link ${router.asPath.includes("/profile-settings") && "active"}`}
+                className={`nav-link ${router.asPath.includes("/dashboard/admin/profile-settings") && "active"}`}
               >
                 <i className="bi bi-person-bounding-box"></i>
                 Profile Settings
@@ -144,7 +146,7 @@ export default function AdminNavbar() {
             <li className="nav-item">
               <Link
                 href={"/dashboard/change-password"}
-                className={`nav-link ${router.asPath.includes("/change-password") && "active"}`}
+                className={`nav-link ${router.asPath.includes("/dashboard/admn/change-password") && "active"}`}
               >
                 <i className="bi bi-building-lock"></i>
                 Change Password
@@ -172,7 +174,9 @@ export default function AdminNavbar() {
                     <Link
                       href="/settings"
                       className={`profile-link ${
-                        router.asPath.includes("/settings") ? "active" : ""
+                        router.asPath.includes("/dashboard/admin/settings")
+                          ? "active"
+                          : ""
                       }`}
                     >
                       My profile

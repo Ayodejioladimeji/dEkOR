@@ -44,13 +44,12 @@
         margin-bottom: 6px;
       }
 
-      .card-count{
+      .card-count {
         padding: 20px;
       }
 
       h4 {
         @include heading(35px, 700, $black);
-       
       }
 
       span {

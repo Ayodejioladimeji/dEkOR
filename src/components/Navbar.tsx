@@ -13,11 +13,14 @@ function Header() {
   const router = useRouter();
   const { state } = useContext(DataContext);
   const [token, setToken] = useState("");
+  const [user, setUser] = useState<any>(null);
 
   //
 
   useEffect(() => {
     const token = localStorage.getItem("token") || "";
+    const user = JSON.parse(localStorage.getItem("user")) || "{}";
+    setUser(user);
     setToken(token);
   }, []);
 
@@ -123,9 +126,17 @@ function Header() {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link href={token ? "/dashboard/overview" : "/auth/login"}>
-                  <Profile />
-                </Link>
+                {user?.role === "user" ? (
+                  <Link href={token ? "/dashboard/overview" : "/auth/login"}>
+                    <Profile />
+                  </Link>
+                ) : (
+                  <Link
+                    href={token ? "/dashboard/admin/overview" : "/auth/login"}
+                  >
+                    <Profile />
+                  </Link>
+                )}
               </li>
             </Nav>
           </ul>
