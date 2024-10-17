@@ -46,8 +46,8 @@ const Overview = () => {
                       <Loading
                         height="30px"
                         width="30px"
-                        primaryColor="#ffc619"
-                        secondaryColor="#ffc619"
+                        primaryColor="#27493e"
+                        secondaryColor="#27493e"
                       />
                     ) : (
                       <h4 className="mb-0">{metrics?.totalOrders}</h4>

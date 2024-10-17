@@ -34,7 +34,7 @@ const Products = () => {
 
         <div className="product-box">
           {loading ? (
-            <CardSkeleton length={9} />
+            <CardSkeleton length={8} />
           ) : (
             <>
               {products?.map((item: any) => {
