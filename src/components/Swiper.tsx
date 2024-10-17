@@ -14,10 +14,10 @@ const SwiperComponent = () => {
   return (
     <Swiper
       modules={[Navigation, Pagination, Scrollbar, A11y]}
-      spaceBetween={0}
+      spaceBetween={40}
       slidesPerView={1}
       navigation
-      pagination={{ clickable: true }}
+      // pagination={{ clickable: true }}
       onSlideChange={(item) => console.log(item.realIndex)}
       className="custom-swiper-navigation"
       breakpoints={{
@@ -31,7 +31,7 @@ const SwiperComponent = () => {
           slidesPerView: 3,
         },
         1440: {
-          slidesPerView: 4,
+          slidesPerView: 3,
         },
       }}
     >

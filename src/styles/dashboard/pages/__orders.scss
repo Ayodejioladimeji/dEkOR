@@ -51,7 +51,7 @@
     }
 
     .order-card {
-      border:1px solid $border-color;
+      border: 1px solid $border-color;
 
       .order-image {
         height: 200px;
@@ -196,31 +196,30 @@
         }
       }
 
-      .delivery-status{
-        background:green;
-        padding:0px;
-        text-align:center;
-        color:$white;
-        font-size:12px;
-        margin:0 auto;
-        margin-bottom:10px;
-        width:120px;
-        border-radius:4px;
-        text-transform:capitalize;
-
+      .delivery-status {
+        background: green;
+        padding: 0px;
+        text-align: center;
+        color: $white;
+        font-size: 12px;
+        margin: 0 auto;
+        margin-bottom: 10px;
+        width: 120px;
+        border-radius: 2px;
+        text-transform: capitalize;
       }
 
-      .pending-status{
-        background:orange;
+      .pending-status {
+        background: orange;
         padding: 0px;
-          text-align: center;
-          color: $white;
-          font-size: 12px;
-          margin: 0 auto;
-          margin-bottom: 10px;
-          width: 120px;
-          border-radius: 4px;
-          text-transform:capitalize;
+        text-align: center;
+        color: $white;
+        font-size: 12px;
+        margin: 0 auto;
+        margin-bottom: 10px;
+        width: 120px;
+        border-radius: 4px;
+        text-transform: capitalize;
       }
     }
   }

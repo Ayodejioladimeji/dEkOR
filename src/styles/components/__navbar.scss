@@ -76,6 +76,9 @@
         margin-right: 25px;
         cursor: pointer;
         position: relative;
+        display:flex;
+        align-items: center;
+        justify-content: center;
 
         &:last-child {
           margin-right: 0;
@@ -111,7 +114,7 @@
           background: $primary-color;
           color: $white;
           position: absolute;
-          top: -10px;
+          top: -5px;
           right: -10px;
           display: flex;
           align-items: center;
@@ -140,6 +143,15 @@
 
       @media (max-width: 500px) {
         font-size: 16px;
+      }
+    }
+
+    .usercard{
+      img{
+        height:35px;
+        width:35px;
+        border-radius: 50%;
+        cursor: pointer;
       }
     }
   }

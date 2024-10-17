@@ -2,27 +2,17 @@ import { useRouter } from "next/router";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import { Cart, Heart, Logo, Profile, Search } from "../../public/assets";
-import { useContext, useEffect, useState } from "react";
+import { Cart, Heart, Logo, Search } from "../../public/assets";
+import { useContext } from "react";
 import { DataContext } from "@/store/GlobalState";
 import Link from "next/link";
+import Usercard from "@/common/usercard";
 
 //
 
 function Header() {
   const router = useRouter();
   const { state } = useContext(DataContext);
-  const [token, setToken] = useState("");
-  const [user, setUser] = useState<any>(null);
-
-  //
-
-  useEffect(() => {
-    const token = localStorage.getItem("token") || "";
-    const user = JSON.parse(localStorage.getItem("user")) || "{}";
-    setUser(user);
-    setToken(token);
-  }, []);
 
   //
 
@@ -53,9 +43,7 @@ function Header() {
             </Link>
           </li>
           <li className="nav-item">
-            <Link href={token ? "/dashboard/overview" : "/auth/login"}>
-              <Profile />
-            </Link>
+            <Usercard />
           </li>
         </ul>
 
@@ -126,17 +114,7 @@ function Header() {
                 </Link>
               </li>
               <li className="nav-item">
-                {user?.role === "user" ? (
-                  <Link href={token ? "/dashboard/overview" : "/auth/login"}>
-                    <Profile />
-                  </Link>
-                ) : (
-                  <Link
-                    href={token ? "/dashboard/admin/overview" : "/auth/login"}
-                  >
-                    <Profile />
-                  </Link>
-                )}
+                <Usercard />
               </li>
             </Nav>
           </ul>

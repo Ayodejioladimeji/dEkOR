@@ -147,9 +147,20 @@ textarea {
   }
 }
 
-.custom-swiper-navigation .swiper-button-next,
+.custom-swiper-navigation .swiper-button-next {
+  color: green;
+  top: 30px;
+  width: 30px;
+  height: 30px;
+  right: 0px;
+}
+
 .custom-swiper-navigation .swiper-button-prev {
   color: green;
+  top: 30px;
+  width: 30px;
+  height: 30px;
+  left: 0px !important;
 }
 
 .custom-swiper-navigation .swiper-button-next:hover,
