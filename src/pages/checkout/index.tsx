@@ -6,7 +6,7 @@ import { calculateTotal, EmptyImagesCheck, formatMoney } from "@/utils/utils";
 import { DataContext } from "@/store/GlobalState";
 import SuccessModal from "@/common/modals/success";
 import cogoToast from "cogo-toast";
-import { GetRequests, PostRequest } from "@/utils/requests";
+import { GetRequests, PatchRequest, PostRequest } from "@/utils/requests";
 import PaymentSkeleton from "@/common/paymentskeleton";
 import CheckoutAddressCard from "@/common/checkoutaddresscard";
 import Loading from "@/common/loading";
@@ -127,6 +127,13 @@ const Checkout = () => {
     const res = await PostRequest("/orders", orderPayload, token);
     if (res?.status === 200 || res?.status === 201) {
       window.location.href = res.data.paymentUrl;
+
+      // clear the user cart
+      const payload = {
+        cartItems: [],
+      };
+      localStorage.removeItem("cart");
+      await PatchRequest("/user/cart", payload, token);
     } else {
       setButtonloading(false);
     }
