@@ -2,17 +2,20 @@ import React, { useContext, useEffect, useState } from "react";
 import DashboardLayout from "../../../DashboardLayout";
 import Topbar from "@/dashboard/components/topbar";
 import Image from "next/image";
-import { GetRequest } from "@/utils/requests";
+import { GetRequest, GetRequests, PatchRequest } from "@/utils/requests";
 import { useRouter } from "next/router";
 import { DataContext } from "@/store/GlobalState";
 import Loading from "@/common/loading";
 import { formatMoney } from "@/utils/utils";
+import ConfirmModal from "@/dashboard/common/confirmmodal";
+import cogoToast from "cogo-toast";
+import { ACTIONS } from "@/store/Actions";
 
 const OrderDetails = () => {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const { slug, productId } = router.query;
-  const { state } = useContext(DataContext);
+  const { state, dispatch } = useContext(DataContext);
   const [title, setTitle] = useState("");
   const [sellingPrice, setSellingPrice] = useState("");
   const [category, setCategory] = useState("");
@@ -20,12 +23,19 @@ const OrderDetails = () => {
   const [product_colors, setProduct_colors] = useState<string[]>([]);
   const [selectedImages, setSelectedImages] = useState<any[]>([]);
   const [data, setData] = useState(null);
+  const [confirm, setConfirm] = useState(false);
+  const [deliverloading, setDeliverloading] = useState(false);
 
   // Fetch product data by slug
   useEffect(() => {
     if (slug) {
+      const token = localStorage.getItem("token") || "";
+
       const getProduct = async () => {
-        const res = await GetRequest(`/orders/${slug}?productId=${productId}`);
+        const res = await GetRequests(
+          `/orders/admin/${slug}?productId=${productId}`,
+          token
+        );
         const response = await GetRequest("/category");
 
         if (res?.status === 200 || res?.status === 201) {
@@ -41,6 +51,7 @@ const OrderDetails = () => {
             const result = response?.data?.find(
               (item: any) => item._id === data?.product?.category
             );
+
             setCategory(result?.name);
           }
         }
@@ -49,6 +60,25 @@ const OrderDetails = () => {
       getProduct();
     }
   }, [productId, slug, state?.callback]);
+
+  // handle deliver
+  const handleDeliver = async () => {
+    const token = localStorage.getItem("token") || "";
+
+    setDeliverloading(true);
+
+    const res = await PatchRequest(
+      `/orders/admin/${slug}?productId=${productId}`,
+      "",
+      token
+    );
+    if (res?.status === 200 || res?.status === 201) {
+      dispatch({ type: ACTIONS.CALLBACK, payload: !state?.callback });
+      cogoToast.success(res?.data?.message);
+      setConfirm(false);
+      setDeliverloading(false);
+    }
+  };
 
   //
 
@@ -280,6 +310,12 @@ const OrderDetails = () => {
           </div>
 
           <div className="image-section">
+            {data?.paymentStatus === "paid" && (
+              <div className="deliver-section">
+                <button onClick={() => setConfirm(true)}>Deliver Order</button>
+              </div>
+            )}
+
             <div className="image-top">
               {loading ? (
                 <div className="d-flex justify-content-center my-5">
@@ -342,6 +378,19 @@ const OrderDetails = () => {
             </div>
           </div>
         </div>
+
+        {confirm && (
+          <ConfirmModal
+            title="Deliver Order"
+            subtitle="Are you sure you want to mark this order as delivered?"
+            buttonTitle="Deliver"
+            buttonColor="black"
+            onSubmit={handleDeliver}
+            loading={deliverloading}
+            setConfirmModal={setConfirm}
+            confirmModal={confirm}
+          />
+        )}
       </section>
     </DashboardLayout>
   );

@@ -13,7 +13,7 @@ const Payments = () => {
     const token = localStorage.getItem("token") || "";
 
     const getPayments = async () => {
-      const res = await GetRequests("/transactions", token);
+      const res = await GetRequests("/transactions/admin", token);
       if (res?.status === 200) {
         setPayments(res?.data);
         setLoading(false);

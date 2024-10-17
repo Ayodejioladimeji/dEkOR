@@ -1,7 +1,7 @@
 import connectDB from "../../utils/connectDB";
-import Product from "../../models/productModel";
-import auth from "../../middleware/auth";
+import Order from "../../models/orderModel";
 import { NextApiRequest, NextApiResponse } from "next";
+import auth from "../../middleware/auth";
 
 connectDB();
 
@@ -10,17 +10,11 @@ export default async function handler(
   res: NextApiResponse
 ) {
   switch (req.method) {
-    case "PUT":
-      await updateProduct(req, res);
-      break;
     case "PATCH":
-      await activateProduct(req, res);
+      await deliverOrder(req, res);
       break;
     case "GET":
-      await getSingleProduct(req, res);
-      break;
-    case "DELETE":
-      await deleteProduct(req, res);
+      await getSingleOrder(req, res);
       break;
     default:
       res.status(405).json({ err: "Method Not Allowed" });
@@ -28,87 +22,81 @@ export default async function handler(
   }
 }
 
-const updateProduct = async (req: NextApiRequest, res: NextApiResponse) => {
+const deliverOrder = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    // check if its the admin that is creating the category
+    // Check if the admin is making the request
     const check = await auth(req, res);
-    if (check?.role === "user")
+    if (check?.role !== "admin") {
       return res.status(401).json({ message: "Authentication is not valid" });
+    }
 
-    const {
-      title,
-      buyingPrice,
-      sellingPrice,
-      category,
-      description,
-      productColors,
-    } = req.body;
-    const { id } = req.query;
+    const { id, productId } = req.query;
 
-    await Product.findOneAndUpdate(
-      { _id: id },
-      { title, buyingPrice, sellingPrice, category, description, productColors }
+    // Find the order and the product
+    const order = await Order.findOne({ _id: id });
+
+    if (!order) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+
+    // Find the product in the order
+    const productIndex = order.products.findIndex(
+      (product) => product._id.toString() === productId
     );
 
-    res.json({ message: "Product updated successfully!" });
+    if (productIndex === -1) {
+      return res
+        .status(404)
+        .json({ message: "Product not found in the order" });
+    }
+
+    // Update the orderStatus of the found product to 'delivered'
+    order.products[productIndex].orderStatus = "delivered";
+
+    // Save the updated order
+    await order.save();
+
+    res.json({ message: "Order product delivered successfully!" });
   } catch (err) {
     return res.status(500).json({ message: err.message });
   }
 };
 
-const activateProduct = async (req: NextApiRequest, res: NextApiResponse) => {
+const getSingleOrder = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    // check if its the admin that is creating the category
-    const check = await auth(req, res);
-    if (check?.role === "user")
+    const user = await auth(req, res);
+    if (user?.role !== "admin") {
       return res.status(401).json({ message: "Authentication is not valid" });
+    }
 
-    const { id } = req.query;
+    const { id, productId } = req.query;
 
-    const product = await Product.findById(id);
+    // Find order by ID
+    const order = await Order.findOne({ _id: id });
 
-    await Product.findOneAndUpdate(
-      { _id: id },
-      { isActive: product?.isActive ? false : true }
-    );
-
-    res.json({ message: "Product updated successfully!" });
-  } catch (err) {
-    return res.status(500).json({ message: err.message });
-  }
-};
-
-const getSingleProduct = async (req: NextApiRequest, res: NextApiResponse) => {
-  try {
-    const check = await auth(req, res);
-    if (check?.role === "user")
-      return res.status(401).json({ message: "Authentication is not valid" });
-
-    const { id } = req.query;
-
-    // Find product by ID
-    const product = await Product.findOne({ _id: id, isActive: true });
-    if (!product) {
+    if (!order) {
       return res.json({});
     }
 
-    res.json(product);
-  } catch (error) {
-    return res?.status(500).json({ message: error.message });
-  }
-};
+    const product = order.products.find((p) => p._id.toString() === productId);
 
-const deleteProduct = async (req: NextApiRequest, res: NextApiResponse) => {
-  try {
-    // check if its the admin that is creating the category
-    const check = await auth(req, res);
-    if (check?.role === "user")
-      return res.status(401).json({ message: "Authentication is not valid" });
+    if (!product) {
+      return res
+        .status(404)
+        .json({ message: "Product not found in the order" });
+    }
 
-    const { id } = req.query;
+    const data = {
+      product,
+      shippingAddress: order?.shippingAddress,
+      totalAmount: order?.totalAmount,
+      paymentStatus: order?.paymentStatus,
+      paymentMethod: order?.paymentMethod,
+      paymentReference: order?.paymentReference,
+      orderDate: order?.createdAt,
+    };
 
-    await Product.findByIdAndDelete(id);
-    res.json({ message: "Product deleted successfully!" });
+    return res.json(data);
   } catch (error) {
     return res?.status(500).json({ message: error.message });
   }

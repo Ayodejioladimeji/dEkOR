@@ -34,6 +34,16 @@ const Ordercard = (props: any) => {
     }
   };
 
+  const handleRoute = (item: any) => {
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
+
+    if (user?.role === "user") {
+      router.push(`/dashboard/orders/${props._id}?productId=${item._id}`);
+    } else {
+      router.push(`/dashboard/admin/orders/${props._id}?productId=${item._id}`);
+    }
+  };
+
   //
   return (
     <>
@@ -53,11 +63,7 @@ const Ordercard = (props: any) => {
               </div>
 
               <button
-                onClick={() =>
-                  router.push(
-                    `/dashboard/orders/${props._id}?productId=${item._id}`
-                  )
-                }
+                onClick={() => handleRoute(item)}
                 className={`add-to-cart ${props?.paymentStatus === "pending" ? "orange" : "green"}`}
               >
                 {props?.paymentStatus === "pending"
@@ -69,6 +75,12 @@ const Ordercard = (props: any) => {
             <div className="order-content">
               <h3>{firstTwoWords(item?.title)}</h3>
               <p>₦{formatMoney(Number(item?.sellingPrice))}</p>
+            </div>
+
+            <div
+              className={`${item?.orderStatus === "delivered" ? "delivery-status" : "pending-status"}`}
+            >
+              {item?.orderStatus}
             </div>
           </div>
         );

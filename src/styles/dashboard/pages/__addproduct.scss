@@ -127,6 +127,21 @@
     // height: 100%;
     overflow: auto;
 
+    .deliver-section{
+      background: $white;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom:30px;
+        display:flex;
+        justify-content: flex-end;
+
+        button{
+          @include buttons(black);
+          padding:8px 20px;
+          font-size:14px;
+        }
+    }
+
     .image-top {
       background: $white;
       border-radius: 8px;

@@ -113,7 +113,7 @@ export default function AdminNavbar() {
 
             <li className="nav-item">
               <Link
-                href={"/dashboard/payments"}
+                href={"/dashboard/admin/payments"}
                 className={`nav-link ${router.asPath.includes("/dashboard/admin/payments") && "active"}`}
               >
                 <i className="bi bi-credit-card-2-back"></i>
