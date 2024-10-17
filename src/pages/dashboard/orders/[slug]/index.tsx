@@ -2,11 +2,10 @@ import React, { useContext, useEffect, useState } from "react";
 import DashboardLayout from "../../DashboardLayout";
 import Topbar from "@/dashboard/components/topbar";
 import Image from "next/image";
-import { GetRequest } from "@/utils/requests";
+import { GetRequest, PatchRequest } from "@/utils/requests";
 import { useRouter } from "next/router";
 import { DataContext } from "@/store/GlobalState";
 import Loading from "@/common/loading";
-import { formatMoney } from "@/utils/utils";
 
 const OrderDetails = () => {
   const [loading, setLoading] = useState(true);
@@ -20,6 +19,7 @@ const OrderDetails = () => {
   const [product_colors, setProduct_colors] = useState<string[]>([]);
   const [selectedImages, setSelectedImages] = useState<any[]>([]);
   const [data, setData] = useState(null);
+  const [paymentloading, setPaymentloading] = useState(false);
 
   // Fetch product data by slug
   useEffect(() => {
@@ -50,6 +50,23 @@ const OrderDetails = () => {
     }
   }, [productId, slug, state?.callback]);
 
+  // handle pay
+  const handlePay = async () => {
+    const token = localStorage.getItem("token") || "";
+    setPaymentloading(true);
+
+    const orderPayload = {
+      orderId: slug,
+    };
+
+    const res = await PatchRequest("/orders", orderPayload, token);
+    if (res?.status === 200 || res?.status === 201) {
+      window.location.href = res.data.paymentUrl;
+    } else {
+      setPaymentloading(false);
+    }
+  };
+
   //
 
   return (
@@ -63,7 +80,7 @@ const OrderDetails = () => {
 
         <div className="add-product">
           <div className="information-section">
-            {loading ? (
+            {loading || !data ? (
               <div
                 className="d-flex justify-content-center my-5"
                 style={{ height: "50vh" }}
@@ -121,7 +138,7 @@ const OrderDetails = () => {
                   <div className="order-details">
                     <p>Amount Paid</p>
                     <p className="response fw-bold">
-                      ₦{formatMoney(data?.totalAmount)}
+                      {/* ₦{formatMoney(data?.totalAmount)} */}
                     </p>
                   </div>
                 </div>
@@ -195,91 +212,105 @@ const OrderDetails = () => {
                   </div>
                 </div>
 
-                {data?.paymentStatus === "paid" && (
-                  <>
-                    <hr />
+                <hr />
 
-                    <div className="row">
-                      <h2>Shipping Address</h2>
+                <div className="row">
+                  <h2>Shipping Address</h2>
 
-                      <div className="col-6">
-                        <div className="form-div">
-                          <label>Name</label>
-                          <input
-                            type="text"
-                            placeholder=""
-                            value={data?.shippingAddress?.name}
-                            disabled
-                          />
-                        </div>
-                      </div>
-
-                      <div className="col-6">
-                        <div className="form-div">
-                          <label>Phone</label>
-                          <input
-                            type="text"
-                            placeholder=""
-                            value={data?.shippingAddress?.phone}
-                            disabled
-                          />
-                        </div>
-                      </div>
-
-                      <div className="col-12">
-                        <div className="form-div">
-                          <label>Address</label>
-                          <input
-                            type="text"
-                            placeholder=""
-                            value={data?.shippingAddress?.address}
-                            disabled
-                          />
-                        </div>
-                      </div>
-
-                      <div className="col-6">
-                        <div className="form-div">
-                          <label>City</label>
-                          <input
-                            type="text"
-                            placeholder=""
-                            value={data?.shippingAddress?.city}
-                            disabled
-                          />
-                        </div>
-                      </div>
-                      <div className="col-6">
-                        <div className="form-div">
-                          <label>Region</label>
-                          <input
-                            type="text"
-                            placeholder=""
-                            value={data?.shippingAddress?.region}
-                            disabled
-                          />
-                        </div>
-                      </div>
-
-                      <div className="col-12">
-                        <div className="product-colors">
-                          {product_colors?.map((color: any, index: number) => (
-                            <div
-                              key={index}
-                              style={{ background: color }}
-                              className="product-colors-box"
-                            ></div>
-                          ))}
-                        </div>
-                      </div>
+                  <div className="col-6">
+                    <div className="form-div">
+                      <label>Name</label>
+                      <input
+                        type="text"
+                        placeholder=""
+                        value={data?.shippingAddress?.name}
+                        disabled
+                      />
                     </div>
-                  </>
-                )}
+                  </div>
+
+                  <div className="col-6">
+                    <div className="form-div">
+                      <label>Phone</label>
+                      <input
+                        type="text"
+                        placeholder=""
+                        value={data?.shippingAddress?.phone}
+                        disabled
+                      />
+                    </div>
+                  </div>
+
+                  <div className="col-12">
+                    <div className="form-div">
+                      <label>Address</label>
+                      <input
+                        type="text"
+                        placeholder=""
+                        value={data?.shippingAddress?.address}
+                        disabled
+                      />
+                    </div>
+                  </div>
+
+                  <div className="col-6">
+                    <div className="form-div">
+                      <label>City</label>
+                      <input
+                        type="text"
+                        placeholder=""
+                        value={data?.shippingAddress?.city}
+                        disabled
+                      />
+                    </div>
+                  </div>
+
+                  <div className="col-6">
+                    <div className="form-div">
+                      <label>Region</label>
+                      <input
+                        type="text"
+                        placeholder=""
+                        value={data?.shippingAddress?.region}
+                        disabled
+                      />
+                    </div>
+                  </div>
+
+                  <div className="col-12">
+                    <div className="product-colors">
+                      {product_colors?.map((color: any, index: number) => (
+                        <div
+                          key={index}
+                          style={{ background: color }}
+                          className="product-colors-box"
+                        ></div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
               </>
             )}
           </div>
 
           <div className="image-section">
+            {!loading && data?.paymentStatus !== "paid" && (
+              <div className="deliver-section">
+                <button onClick={handlePay}>
+                  {paymentloading ? (
+                    <Loading
+                      height="20px"
+                      width="20px"
+                      primaryColor="#fff"
+                      secondaryColor="#fff"
+                    />
+                  ) : (
+                    "Pay now"
+                  )}
+                </button>
+              </div>
+            )}
+
             <div className="image-top">
               {loading ? (
                 <div className="d-flex justify-content-center my-5">

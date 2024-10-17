@@ -17,8 +17,8 @@ export const formatMoney = (amount) => {
 };
 
 export const calculateTotal = (data) => {
-  const subtotal = data.reduce((prev, item) => {
-    return prev + Number(item.sellingPrice) * item.quantity;
+  const subtotal = data?.reduce((prev, item) => {
+    return prev + Number(item?.sellingPrice) * item?.quantity;
   }, 0);
   return subtotal;
 };

@@ -3,7 +3,6 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import { DataContext } from "@/store/GlobalState";
-import Loading from "@/common/loading";
 import { screenPixels } from "@/utils/screenpx";
 import { LogoWhite } from "../../../public/assets";
 
@@ -12,7 +11,6 @@ import { LogoWhite } from "../../../public/assets";
 export default function Navbar() {
   const router = useRouter();
   const { state } = useContext(DataContext);
-  const [notifications] = useState(null);
   const [notify] = useState([]);
   const [notifyLoading] = useState(true);
   const [device, setDevice] = useState(false);
@@ -179,106 +177,6 @@ export default function Navbar() {
                       <div className="bell-active"></div>
                     )}
                   <i className="bi bi-bell float-end">&nbsp;</i>
-
-                  {/* Sidebar notification popup */}
-                  {notifyLoading ? (
-                    <div className="sidebar-notification">
-                      <div
-                        style={{ height: "100px" }}
-                        className="empty-content d-flex align-items-center justify-content-center"
-                      >
-                        <Loading
-                          height="30px"
-                          width="30px"
-                          primaryColor="#ffc619"
-                          secondaryColor="#ffc619"
-                        />
-                      </div>
-                    </div>
-                  ) : (
-                    <>
-                      {notifications?.length === 0 || !notifications ? (
-                        <div className="sidebar-notification ">
-                          <div
-                            style={{ height: "100px" }}
-                            className="empty-content d-flex align-items-center justify-content-center"
-                          >
-                            <div className="text-center">
-                              <p className="mb-2">
-                                You have no notifications yet
-                              </p>
-                              <Link href="/settings/notifications">
-                                All notifications
-                              </Link>
-                            </div>
-                          </div>
-                        </div>
-                      ) : (
-                        <div className="sidebar-notification">
-                          {notifications?.slice(0, 2).map((item) => {
-                            return (
-                              <div
-                                key={item.id}
-                                className="row notification-box"
-                                // onClick={() => {
-                                //   router.push("/settings/notifications"),
-                                //     dispatch({
-                                //       type: ACTIONS.NOTIFICATIONS,
-                                //       payload: null,
-                                //     });
-                                // }}
-                              >
-                                <div className="col-1">
-                                  {item.status === "ACTIVE" ? (
-                                    <div
-                                      className="status"
-                                      style={{
-                                        background: "#FFC619",
-                                        border: "none",
-                                      }}
-                                    ></div>
-                                  ) : (
-                                    <div
-                                      className="status"
-                                      style={{
-                                        background: "#FFF",
-                                        border: "2px solid #333333 ",
-                                      }}
-                                    ></div>
-                                  )}
-                                </div>
-
-                                <div className="col-8">
-                                  <div className="heading">{item.title}</div>
-                                  <p>{item.body}</p>
-                                </div>
-
-                                <div className="col-3">
-                                  <p className="time-ago">
-                                    {/* {format(convertDate(item.createdAt))} */}
-                                  </p>
-                                </div>
-                              </div>
-                            );
-                          })}
-
-                          <div className="manage-notification">
-                            <p
-                            // onClick={() => {
-                            //   router.push("/settings/notifications"),
-                            //     dispatch({
-                            //       type: ACTIONS.NOTIFICATIONS,
-                            //       payload: null,
-                            //     });
-                            // }}
-                            >
-                              All notifications
-                            </p>
-                          </div>
-                        </div>
-                      )}
-                    </>
-                  )}
                 </div>
               </div>
             </div>

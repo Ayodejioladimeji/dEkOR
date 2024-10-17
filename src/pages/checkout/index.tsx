@@ -111,7 +111,7 @@ const Checkout = () => {
     };
 
     const newDefaults = {
-      name: defaultAddress?.fullname,
+      name: defaultAddress?.name,
       address: defaultAddress?.address,
       region: defaultAddress?.region,
       city: defaultAddress?.city?.value,

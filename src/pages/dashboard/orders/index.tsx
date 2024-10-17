@@ -38,7 +38,7 @@ const Orders = () => {
         <div className="orders">
           <div className="order-box">
             {loading ? (
-              <CardSkeleton length={12} />
+              <CardSkeleton length={8} />
             ) : (
               <>
                 {orders?.map((item: any) => {

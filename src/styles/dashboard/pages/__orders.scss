@@ -161,6 +161,7 @@
 
       .order-content {
         text-align: center;
+        cursor: pointer;
 
         h3 {
           @include body-text(18px, 500, $text-color);

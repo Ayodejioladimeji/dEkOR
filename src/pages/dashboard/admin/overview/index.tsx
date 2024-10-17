@@ -46,8 +46,8 @@ const Overview = () => {
                       <Loading
                         height="30px"
                         width="30px"
-                        primaryColor="#ffc619"
-                        secondaryColor="#ffc619"
+                        primaryColor="#27493e"
+                        secondaryColor="#27493e"
                       />
                     ) : (
                       <h4 className="mb-0">{metrics?.totalOrders}</h4>
@@ -67,8 +67,8 @@ const Overview = () => {
                       <Loading
                         height="30px"
                         width="30px"
-                        primaryColor="#ffc619"
-                        secondaryColor="#ffc619"
+                        primaryColor="#27493e"
+                        secondaryColor="#27493e"
                       />
                     ) : (
                       <h4 className="mb-0">{metrics?.deliveredOrders}</h4>
@@ -88,8 +88,8 @@ const Overview = () => {
                       <Loading
                         height="30px"
                         width="30px"
-                        primaryColor="#ffc619"
-                        secondaryColor="#ffc619"
+                        primaryColor="#27493e"
+                        secondaryColor="#27493e"
                       />
                     ) : (
                       <h4 className="mb-0">{metrics?.pendingOrders}</h4>
@@ -109,8 +109,8 @@ const Overview = () => {
                       <Loading
                         height="30px"
                         width="30px"
-                        primaryColor="#ffc619"
-                        secondaryColor="#ffc619"
+                        primaryColor="#27493e"
+                        secondaryColor="#27493e"
                       />
                     ) : (
                       <h4 className="mb-0"> {metrics?.transactions}</h4>
@@ -130,8 +130,8 @@ const Overview = () => {
                       <Loading
                         height="30px"
                         width="30px"
-                        primaryColor="#ffc619"
-                        secondaryColor="#ffc619"
+                        primaryColor="#27493e"
+                        secondaryColor="#27493e"
                       />
                     ) : (
                       <h4 className="mb-0"> {metrics?.pendingPayment}</h4>
@@ -151,8 +151,8 @@ const Overview = () => {
                       <Loading
                         height="30px"
                         width="30px"
-                        primaryColor="#ffc619"
-                        secondaryColor="#ffc619"
+                        primaryColor="#27493e"
+                        secondaryColor="#27493e"
                       />
                     ) : (
                       <h4 className="mb-0"> {metrics?.userAddress}</h4>

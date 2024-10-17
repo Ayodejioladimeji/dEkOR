@@ -15,6 +15,9 @@ export default async function handler(
     case "POST":
       await createOrder(req, res);
       break;
+    case "PATCH":
+      await completeOrder(req, res);
+      break;
     case "GET":
       await fetchOrders(req, res);
       break;
@@ -37,10 +40,8 @@ const createOrder = async (req: NextApiRequest, res: NextApiResponse) => {
       return res.status(400).json({ message: "No products in order" });
     }
 
-    if (!totalAmount || !shippingAddress) {
-      return res
-        .status(400)
-        .json({ message: "Total amount or shipping address is missing" });
+    if (!totalAmount) {
+      return res.status(400).json({ message: "Total amount is missing" });
     }
 
     //Initiate Paystack Payment
@@ -98,5 +99,71 @@ const fetchOrders = async (req: NextApiRequest, res: NextApiResponse) => {
     res.json(orders);
   } catch (error) {
     return res.status(500).json({ message: error.message });
+  }
+};
+
+const completeOrder = async (req: NextApiRequest, res: NextApiResponse) => {
+  try {
+    const userAuth = await auth(req, res);
+
+    const user = await User.findById(userAuth.id);
+
+    const { orderId } = req.body;
+
+    // Validate orderId
+    if (!orderId) {
+      return res.status(400).json({ message: "Order ID is required" });
+    }
+
+    // Find the order by ID
+    const existingOrder = await Order.findById(orderId);
+
+    // Check if order exists
+    if (!existingOrder) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+
+    // Check if the payment status is pending
+    if (existingOrder.paymentStatus !== "pending") {
+      return res
+        .status(400)
+        .json({ message: "Order has already been completed or canceled" });
+    }
+
+    const paymentData = {
+      email: user.email,
+      amount: existingOrder.totalAmount * 100,
+      callback_url: `${process.env.NEXT_PUBLIC_REDIRECTION_URL}/checkout/payment`,
+    };
+
+    const paystackResponse = await axios.post(
+      process.env.NEXT_PUBLIC_PAYSTACK_INITIALIZE_URL,
+      paymentData,
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_PAYSTACK_SECRET_KEY}`,
+        },
+      }
+    );
+
+    if (paystackResponse.data.status !== true) {
+      return res.status(400).json({ message: "Payment initialization failed" });
+    }
+
+    // Extract reference to use in payment verification
+    const { reference, authorization_url } = paystackResponse.data.data;
+
+    // Update the existing order with the new payment reference
+    existingOrder.paymentReference = reference;
+    await existingOrder.save();
+
+    // Return Paystack authorization URL to the frontend
+    res.status(200).json({
+      message: "Payment re-initialized successfully",
+      paymentUrl: authorization_url,
+      orderId: existingOrder._id,
+    });
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
   }
 };

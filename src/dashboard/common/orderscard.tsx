@@ -72,7 +72,7 @@ const Ordercard = (props: any) => {
               </button>
             </div>
 
-            <div className="order-content">
+            <div className="order-content" onClick={() => handleRoute(item)}>
               <h3>{firstTwoWords(item?.title)}</h3>
               <p>₦{formatMoney(Number(item?.sellingPrice))}</p>
             </div>
