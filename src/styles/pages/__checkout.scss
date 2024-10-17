@@ -14,6 +14,91 @@
     }
   }
 
+  h2 {
+    color: $primary-color;
+    font-size: 28px;
+  }
+
+  .information {
+    margin-top: 30px;
+    // overflow: auto;
+
+    .top {
+      display: flex;
+      align-items: center;
+      column-gap: 30px;
+      border-radius: 4px;
+      margin-bottom: 40px;
+
+      @media (max-width: 500px) {
+        width: 500px;
+      }
+
+      button {
+        @include body-text(18px, 400, $text-color);
+        background: transparent;
+        border: none;
+        padding-bottom: 10px;
+        border-bottom: 4px solid transparent;
+        transition: $transitions;
+
+        &.active {
+          border-bottom: 4px solid $primary-color;
+        }
+      }
+    }
+
+    .bottom {
+      margin-top: 24px;
+
+      h4 {
+        @include heading(20px, 600, $text-color);
+        margin-bottom: 16px;
+      }
+
+      p {
+        @include body-text(16px, 400, $text-color);
+        margin-bottom: 16px;
+      }
+
+      .checkout-address-card {
+        padding: 20px 0px;
+        border: 1px solid $primary-color;
+        border-radius: 5px;
+        background: $white;
+        position: relative;
+        transition: $transitions;
+        cursor: pointer;
+        width: 350px;
+        margin-top: 20px;
+
+        &:hover {
+          transform: scale(0.99);
+        }
+
+        .bi-check-circle-fill {
+          position: absolute;
+          right: 10px;
+          top: 10px;
+          color: $primary-color;
+          font-size: 20px;
+        }
+
+        h3 {
+          @include body-text(16px, 500, $text-color);
+          margin-bottom: 10px;
+          padding: 0 10px;
+        }
+
+        p {
+          @include body-text(14px, 500, $light-color);
+          padding: 0 10px;
+          margin-bottom: 5px;
+        }
+      }
+    }
+  }
+
   .form-box {
     margin-bottom: 29px;
     padding-right: 50px;
@@ -100,14 +185,10 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 20px;
+      font-size: 16px;
       font-weight: 600;
       margin-top: 40px;
       border-radius: 10px;
-
-      @media (max-width: 600px) {
-        font-size: 16px;
-      }
     }
   }
 }

@@ -14,7 +14,7 @@
 @import "./components/__categories";
 @import "./components/__top-deals";
 @import "./components/__similar-product";
-@import "./components/__paginate";
+@import "./components/__testimonial";
 
 // common
 @import "./common/__productcard";
@@ -26,3 +26,17 @@
 @import "./pages/__all-products";
 @import "./pages/__checkout";
 @import "./pages/__login";
+@import "./pages/__activate";
+
+// dashboard pages
+@import "./dashboard/pages/__orders";
+@import "./dashboard/pages/__payments";
+@import "./dashboard/pages/__settings";
+@import "./dashboard/pages/__addresses";
+@import "./dashboard/pages/__addproduct";
+@import "./dashboard/pages/__overview";
+
+// dashboard components
+@import "./dashboard/components/__navbar";
+@import "./dashboard/components/__confirmmodal";
+@import "./dashboard/components/__addressmodal";

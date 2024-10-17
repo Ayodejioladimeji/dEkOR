@@ -13,9 +13,6 @@
       position: relative;
 
       .back {
-        position: absolute;
-        left: 20px;
-        top: 20px;
         border: 1px solid $white;
         border-radius: 4px;
         height: 40px;
@@ -28,6 +25,7 @@
         cursor: pointer;
         transition: $transitions;
         z-index: 100;
+        margin: 30px auto 0 auto;
 
         .bi {
           color: $white;
@@ -159,7 +157,7 @@
 
       .form-box {
         position: relative;
-        margin-bottom: 20px !important;
+        margin-bottom: 10px !important;
 
         label {
           @include body-text(16px, 600, $light-color);

@@ -17,8 +17,8 @@ export const formatMoney = (amount) => {
 };
 
 export const calculateTotal = (data) => {
-  const subtotal = data.reduce((prev, item) => {
-    return prev + Number(item.current_price[0]?.USD[0]) * item.quantity;
+  const subtotal = data?.reduce((prev, item) => {
+    return prev + Number(item?.sellingPrice) * item?.quantity;
   }, 0);
   return subtotal;
 };
@@ -43,6 +43,32 @@ export function screenPixels(size, setState) {
 
 // first two words
 export const firstTwoWords = (str) => {
-  const words = str.split(" ");
-  return words.slice(0, 2).join(" ");
+  const words = str?.split(" ");
+  return words?.slice(0, 2).join(" ");
+};
+
+// check if product has empty images
+export const EmptyImagesCheck = (products: any) => {
+  const hasEmptyImages = products.some(
+    (product) => product.images.length === 0
+  );
+  return !hasEmptyImages;
+};
+
+export const mergeCarts = (dbCart, localCart) => {
+  const combinedCart = [...dbCart];
+
+  localCart.forEach((localItem) => {
+    const existingItem = combinedCart.find(
+      (dbItem) => dbItem._id === localItem._id
+    );
+    if (!existingItem) {
+      combinedCart.push(localItem);
+    } else {
+      // update the quantity if the item already exists in both carts
+      existingItem.quantity += localItem.quantity;
+    }
+  });
+
+  return combinedCart;
 };

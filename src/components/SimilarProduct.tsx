@@ -2,9 +2,6 @@ import React, { useEffect, useState } from "react";
 import Productcard from "@/common/productcard";
 import { GetRequest } from "@/utils/requests";
 import CardSkeleton from "@/common/cardskeleton";
-const ORGANISATION_ID = process.env.NEXT_PUBLIC_ORGANISATION_ID;
-const APP_ID = process.env.NEXT_PUBLIC_APP_ID;
-const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 
 interface Props {
   id?: string;
@@ -19,20 +16,12 @@ const SimilarProduct = (props: Props) => {
 
     if (props?.id) {
       const getProducts = async () => {
-        const res: any = await GetRequest(
-          `/products?organization_id=${ORGANISATION_ID}&reverse_sort=false&page=1&size=40&Appid=${APP_ID}&Apikey=${API_KEY}`
-        );
+        const res: any = await GetRequest(`/product?categoryId=${props?.id}`);
 
         if (res?.status === 200) {
-          const filtered = res?.data?.items?.filter(
-            (item: any) => item?.categories[0]?.id === props?.id
-          );
-
-          if (props?.id) {
-            setProducts(filtered);
-          } else {
-            setProducts(res?.data?.items);
-          }
+          setProducts(res?.data);
+          setLoading(false);
+        } else {
           setLoading(false);
         }
       };
@@ -40,6 +29,8 @@ const SimilarProduct = (props: Props) => {
     }
   }, [props?.id]);
   //
+
+  if (!loading && products?.length === 0) return null;
 
   return (
     <div className="similar-product">

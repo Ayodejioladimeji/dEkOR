@@ -9,14 +9,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { Ratings } from "../../../public/assets";
 import SimilarProduct from "@/components/SimilarProduct";
 import cogoToast from "cogo-toast";
-import { GetRequest } from "@/utils/requests";
+import { GetRequest, PatchRequest } from "@/utils/requests";
 import { formatMoney } from "@/utils/utils";
-const ORGANISATION_ID = process.env.NEXT_PUBLIC_ORGANISATION_ID;
-const APP_ID = process.env.NEXT_PUBLIC_APP_ID;
-const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
-const IMAGE_URL = process.env.NEXT_PUBLIC_IMAGE_URL;
-
-const colors = ["#BCA287", "#101010", "#A2A1A1"];
 
 const Product = () => {
   const router = useRouter();
@@ -26,35 +20,26 @@ const Product = () => {
   const [loading, setLoading] = useState(true);
   const [productColor, setProductColor] = useState("");
   const [imageIndex, setImageIndex] = useState(0);
-  const [quantity, setQuantity] = useState(1); // Initialize quantity to 1
-  const [count, setCount] = useState(4);
+  const [quantity, setQuantity] = useState(1);
+  const [count, setCount] = useState(1);
 
-  // -----------PLEASE READ THIS----------------------------
-  // The get single product endpoint is returning the current_price as null,
-  // so i have to use the main endpoint to implement it
   useEffect(() => {
     if (slug) {
       const getProduct = async () => {
-        const res: any = await GetRequest(
-          `/products?organization_id=${ORGANISATION_ID}&reverse_sort=false&page=1&size=40&Appid=${APP_ID}&Apikey=${API_KEY}`
-          // `/products/${slug}?organization_id=${ORGANISATION_ID}&reverse_sort=false&page=1&size=40&Appid=${APP_ID}&Apikey=${API_KEY}`
-        );
+        const res: any = await GetRequest(`/product/${slug}`);
 
         if (res?.status === 200) {
-          // get single item
-          const foundProduct = res?.data?.items?.find(
-            (item: any) => item.id === slug
-          );
-
-          setProduct(foundProduct);
+          setProduct(res?.data);
           // Check if the product already exists in the cart
           const existingCartItem = state.cart.find(
-            (item) => item.id === foundProduct?.id
+            (item: any) => item.id === res?.data?._id
           );
           if (existingCartItem) {
-            setQuantity(existingCartItem.quantity); // Set quantity from cart
+            setQuantity(existingCartItem.quantity);
           }
 
+          setLoading(false);
+        } else {
           setLoading(false);
         }
       };
@@ -63,8 +48,8 @@ const Product = () => {
   }, [slug, state?.cart]);
 
   // Add item to cart
-  const addToCart = () => {
-    const check = state.cart.every((item) => item.id !== product.id);
+  const addToCart = async () => {
+    const check = state.cart.every((item) => item._id !== product._id);
     if (check) {
       const cartData = {
         ...product,
@@ -74,13 +59,23 @@ const Product = () => {
       dispatch({ type: ACTIONS.CART, payload: cartData });
       setProduct(cartData);
       cogoToast.success("Item added to your cart");
+
+      // save the cart items to the database
+      const token = localStorage.getItem("token") || "";
+      if (token) {
+        const payload = {
+          cartItems: state?.cart,
+        };
+
+        await PatchRequest("/user/cart", payload, token);
+      }
     } else {
       cogoToast.error("Item already added to your cart");
     }
   };
 
   // Increment item quantity
-  const increment = () => {
+  const increment = async () => {
     const check = state.cart.every((item) => item.id !== product.id);
     if (check) {
       return cogoToast.error("Please add item to you cart to continue");
@@ -92,10 +87,20 @@ const Product = () => {
         item.quantity += 1;
       }
     });
+
+    // save the cart items to the database
+    const token = localStorage.getItem("token") || "";
+    if (token) {
+      const payload = {
+        cartItems: state?.cart,
+      };
+
+      await PatchRequest("/user/cart", payload, token);
+    }
   };
 
   // Decrement item quantity
-  const decrement = () => {
+  const decrement = async () => {
     const check = state.cart.every((item) => item.id !== product.id);
     if (check) {
       return cogoToast.error("Please add item to you cart to continue");
@@ -110,6 +115,16 @@ const Product = () => {
           item.quantity -= 1;
         }
       });
+    }
+
+    // save the cart items to the database
+    const token = localStorage.getItem("token") || "";
+    if (token) {
+      const payload = {
+        cartItems: state?.cart,
+      };
+
+      await PatchRequest("/user/cart", payload, token);
     }
   };
 
@@ -137,8 +152,24 @@ const Product = () => {
     );
   }
 
-  const firstCategory = product?.categories?.find((_, index) => index === 0);
-
+  if (!loading && Object.keys(product).length === 0) {
+    return (
+      <Layout>
+        <div
+          style={{
+            height: "80vh",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            flexDirection: "column",
+          }}
+        >
+          <i className="bi bi-box-seam-fill" style={{ fontSize: "45px" }}></i>
+          Product not available
+        </div>
+      </Layout>
+    );
+  }
   //
 
   return (
@@ -146,7 +177,7 @@ const Product = () => {
       <div className="product-details">
         <div className="container">
           <div className="heading-section">
-            <Breadcumb title={product?.name} />
+            <Breadcumb title={product?.title} route="product" />
           </div>
 
           <div className="content">
@@ -157,9 +188,9 @@ const Product = () => {
                     <div className="detail-image">
                       <Image
                         src={
-                          IMAGE_URL +
-                          "/images/" +
-                          product?.photos[imageIndex]?.url
+                          product?.images?.length >= 1
+                            ? product?.images[imageIndex]
+                            : "/images/placehoder.jpg"
                         }
                         alt="product-image"
                         width={100}
@@ -170,42 +201,54 @@ const Product = () => {
                   </div>
 
                   <div className="col-12 col-sm-3">
-                    <div className="thumb">
-                      {product?.photos?.map((img, index) => (
-                        <div
-                          className={`image-box ${
-                            imageIndex === index ? "image-active" : ""
-                          }`}
-                          key={index}
-                        >
+                    {product?.images?.length === 0 ? (
+                      <div className="thumb">
+                        <div className="image-box">
                           <Image
-                            src={IMAGE_URL + "/images/" + img?.url}
+                            src="/images/placehoder.jpg"
                             alt=""
-                            onClick={() => setImageIndex(index)}
                             width={100}
                             height={100}
                             unoptimized
                           />
                         </div>
-                      ))}
-                    </div>
+                      </div>
+                    ) : (
+                      <div className="thumb">
+                        {product?.images?.map((img: any, index: number) => (
+                          <div
+                            className={`image-box ${
+                              imageIndex === index ? "image-active" : ""
+                            }`}
+                            key={index}
+                          >
+                            <Image
+                              src={img}
+                              alt=""
+                              onClick={() => setImageIndex(index)}
+                              width={100}
+                              height={100}
+                              unoptimized
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
 
               <div className="col-12 col-lg-6 content-details">
                 <div className="title">
-                  <h1>{product?.name}</h1>
+                  <h1>{product?.title}</h1>
                   <Ratings />
                 </div>
                 <p>{product?.description}</p>
 
-                <h3>
-                  ${formatMoney(Number(product?.current_price[0]?.USD[0]))}
-                </h3>
+                <h3>${formatMoney(Number(product?.sellingPrice))}</h3>
 
                 <div className="color-div">
-                  {colors?.map((color: any, index: number) => (
+                  {product?.productColors?.map((color: any, index: number) => (
                     <div
                       key={index}
                       onClick={() => setProductColor(color)}
@@ -270,7 +313,7 @@ const Product = () => {
             <div className="bottom">
               {count === 1 && (
                 <div className="description">
-                  <p> Item Description</p>
+                  <p>{product?.description}</p>
                 </div>
               )}
               {count === 2 && (
@@ -306,7 +349,7 @@ const Product = () => {
           </div>
 
           {/* similar products - render if a product category is found */}
-          <SimilarProduct id={firstCategory?.id} />
+          <SimilarProduct id={product?.category} />
         </div>
       </div>
     </Layout>

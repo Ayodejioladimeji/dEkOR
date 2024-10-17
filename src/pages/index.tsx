@@ -2,8 +2,8 @@ import Layout from "@/components/Layout";
 import Hero from "@/components/Hero";
 import Products from "@/components/Products";
 import Categories from "@/components/categories";
-import TopDeals from "@/components/TopDeals";
 import Marquee from "@/components/Marquee";
+import Testimonial from "@/components/Testimonial";
 
 export default function Home() {
   return (
@@ -12,7 +12,7 @@ export default function Home() {
       <Marquee />
       <Categories />
       <Products />
-      <TopDeals />
+      <Testimonial />
     </Layout>
   );
 }

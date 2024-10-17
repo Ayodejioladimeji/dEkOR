@@ -10,21 +10,21 @@ import cogoToast from "cogo-toast";
 import { calculateTotal, formatMoney } from "@/utils/utils";
 import MoreProduct from "../../components/MoreProducts";
 import Loading from "@/common/loading";
-const IMAGE_URL = process.env.NEXT_PUBLIC_IMAGE_URL;
+import { PatchRequest, PostRequest } from "@/utils/requests";
 
 const Cart = () => {
   const { state, dispatch } = useContext(DataContext);
   const router = useRouter();
 
   // increase cart item
-  const increment = (data: any) => {
+  const increment = async (data: any) => {
     state?.cart.forEach((item: any) => {
-      if (item.id === data?.id) {
+      if (item._id === data?._id) {
         item.quantity += 1;
       }
     });
 
-    const carting = state?.cart.find((item) => item.id === data?.id);
+    const carting = state?.cart.find((item) => item._id === data?._id);
 
     const cartData = {
       ...data,
@@ -32,18 +32,28 @@ const Cart = () => {
     };
     dispatch({ type: ACTIONS.TOGGLE, payload: true });
     dispatch({ type: ACTIONS.UPDATECART, payload: cartData });
+
+    // save the cart items to the database
+    const token = localStorage.getItem("token") || "";
+    if (token) {
+      const payload = {
+        cartItems: state?.cart,
+      };
+
+      await PatchRequest("/user/cart", payload, token);
+    }
   };
 
   // // decrease cart items
-  const decrement = (data: any) => {
+  const decrement = async (data: any) => {
     state?.cart.forEach((item: any) => {
-      if (item.id === data?.id) {
+      if (item._id === data?._id) {
         if (item.quantity === 1) return;
         item.quantity -= 1;
       }
     });
 
-    const carting = state?.cart.find((item) => item.id === data.id);
+    const carting = state?.cart.find((item) => item._id === data._id);
 
     const cartData = {
       ...data,
@@ -51,21 +61,63 @@ const Cart = () => {
     };
     dispatch({ type: ACTIONS.TOGGLE, payload: true });
     dispatch({ type: ACTIONS.UPDATECART, payload: cartData });
+
+    // save the cart items to the database
+    const token = localStorage.getItem("token") || "";
+    if (token) {
+      const payload = {
+        cartItems: state?.cart,
+      };
+
+      await PatchRequest("/user/cart", payload, token);
+    }
   };
 
   // remove item from cart
-  const removeCartItem = (id) => {
-    const newData = state?.cart.filter((item) => item.id !== id);
+  const removeCartItem = async (id) => {
+    const newData = state?.cart.filter((item) => item._id !== id);
     dispatch({ type: ACTIONS.TOGGLE, payload: true });
     dispatch({ type: ACTIONS.DELETECART, payload: newData });
     cogoToast.success("Item removed successfully");
+
+    // save the cart items to the database
+    const token = localStorage.getItem("token") || "";
+    if (token) {
+      const payload = {
+        productId: id,
+      };
+
+      await PostRequest("/user/cart", payload, token);
+    }
   };
 
   // clear user cart
-  const clearCart = () => {
+  const clearCart = async () => {
     dispatch({ type: ACTIONS.TOGGLE, payload: true });
     dispatch({ type: ACTIONS.DELETECART, payload: [] });
     cogoToast.success("Cart cleared successfully");
+
+    // save the cart items to the database
+    const token = localStorage.getItem("token") || "";
+    if (token) {
+      const payload = {
+        cartItems: [],
+      };
+
+      await PatchRequest("/user/cart", payload, token);
+    }
+  };
+
+  // handle route
+  const handleRoute = () => {
+    const token = localStorage.getItem("token") || "";
+
+    if (token) {
+      router.push("/checkout");
+    } else {
+      localStorage.setItem("pathname", router?.pathname);
+      router.push("/auth/login");
+    }
   };
 
   //
@@ -130,17 +182,17 @@ const Cart = () => {
               <div className="row">
                 <div className="col-12 col-lg-8">
                   {state?.cart?.map((item: any) => {
-                    const img = item?.photos?.find((_, index) => index === 0);
+                    const img = item?.images?.find((_, index) => index === 0);
 
                     return (
-                      <div className="cart-items" key={item.id}>
+                      <div className="cart-items" key={item._id}>
                         <div className="cart-div">
                           <div
                             className="cart-image"
-                            onClick={() => router.push(`/product/${item?.id}`)}
+                            onClick={() => router.push(`/product/${item?._id}`)}
                           >
                             <Image
-                              src={IMAGE_URL + "/images/" + img?.url}
+                              src={!img ? "/images/placehoder.jpg" : img}
                               alt="cart-image"
                               width={100}
                               height={100}
@@ -149,12 +201,12 @@ const Cart = () => {
                           </div>
 
                           <div className="cart-content">
-                            <h4>{item?.name}</h4>
+                            <h4>{item?.title}</h4>
                             <h3>
-                              $
+                              ₦
                               {formatMoney(
-                                Number(item.current_price[0]?.USD[0]) *
-                                  item.quantity
+                                Number(item.sellingPrice) *
+                                  Number(item.quantity)
                               )}
                             </h3>
 
@@ -176,7 +228,7 @@ const Cart = () => {
 
                         <div
                           className="delete"
-                          onClick={() => removeCartItem(item.id)}
+                          onClick={() => removeCartItem(item._id)}
                         >
                           <DeleteIcon />
                         </div>
@@ -196,11 +248,11 @@ const Cart = () => {
                     <div className="order-box">
                       {state?.cart?.map((item: any) => {
                         return (
-                          <div className="order-items" key={item.id}>
+                          <div className="order-items" key={item._id}>
                             <div className="d-flex align-items-center gap-2">
                               <CheckIcon />
                               <p>
-                                {item?.name} ({item.quantity})
+                                {item?.title} ({item.quantity})
                               </p>
                             </div>
                             {/* <p>${item?.current_price[0]?.USD[0]}</p> */}
@@ -216,7 +268,7 @@ const Cart = () => {
                       <h5>${formatMoney(calculateTotal(state?.cart))}</h5>
                     </div>
 
-                    <button onClick={() => router.push("/checkout")}>
+                    <button onClick={handleRoute}>
                       Checkout ({state?.cart?.length})
                     </button>
                   </div>

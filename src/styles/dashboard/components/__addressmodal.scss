@@ -1,0 +1,210 @@
+.address-modal {
+  margin-top: 80px;
+  width: 100%;
+
+  @media (max-width: 600px) {
+    width: 90vw !important;
+    max-width: 90vw !important;
+    margin: 80px auto;
+  }
+
+  //   @media (max-width: 400px) {
+  //       width: 90vw !important;
+  //       max-width: 90vw !important;
+  //   }
+
+  .address {
+    background: $white;
+    border-radius: 10px;
+    padding: 30px 20px;
+    width: 100% !important;
+
+    h6 {
+      @include heading(20px, 600, $black);
+    }
+
+    label {
+      @include body-text(13px, 400, rgba(51, 51, 51, 0.5));
+      display: block;
+      margin-bottom: 0;
+    }
+
+    .input {
+      @include input($border-color);
+      margin-bottom: 10px;
+      font-size: 14px;
+      padding: 8px;
+
+      &::-webkit-input-placeholder {
+        color: $light-color;
+      }
+    }
+
+    select {
+      @include select("transparent", $border-color);
+      color: $black;
+      margin-bottom: 10px;
+      font-size: 14px;
+      padding: 8px;
+      border: 1px solid $border-color !important;
+
+      // option:first-of-type {
+      //   color: $light-color !important;
+      // }
+    }
+
+    .inputs {
+      @include input($border-color);
+      margin-bottom: 10px;
+      padding: 6px 16px !important;
+
+      &::-webkit-input-placeholder {
+        color: $light-color;
+      }
+
+      .phoneinput {
+        input {
+          width: 100%;
+          background: transparent;
+          border: none !important;
+          outline: none !important;
+          padding: 8px;
+          font-size: 14px;
+        }
+      }
+    }
+
+    textarea {
+      width: 100%;
+      height: 100px;
+      padding: 10px;
+      font-size: 14px;
+    }
+
+    .exclamations {
+      margin-left: 10px;
+      cursor: pointer;
+      font-size: 14px;
+      color: $light-color;
+      margin-top: -2px;
+      // position: initial !important;
+    }
+
+    .profile-btn {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-top: 22px;
+    }
+
+    button {
+      background: $black;
+      color: $white;
+      padding: 10px 40px;
+      transition: $transitions;
+      height: 48px;
+
+      &:hover {
+        background: $primary-color;
+      }
+    }
+
+    .home-sign {
+      background: $section-color;
+      padding: 10px 20px;
+      margin-left: 20px;
+      font-size: 12px;
+      font-weight: 400;
+      color: $light-color;
+    }
+
+    .address-cancel {
+      cursor: pointer;
+    }
+
+    select {
+      border: none;
+
+      option:first-of-type {
+        color: $light-color !important;
+      }
+    }
+
+    .basic-select {
+      font-size: 14px !important;
+      border: 1px solid $border-color;
+      border-radius: 5px;
+      margin-bottom: 10px;
+
+      input {
+        border: none !important;
+      }
+
+      &:focus {
+        border: 1px solid $primary-color !important;
+      }
+    }
+  }
+
+  .upload-image {
+    height: 150px;
+    width: 100%;
+    border-radius: 4px;
+    position: relative;
+    border: 1px solid $border-color;
+    background: $section-color;
+    overflow: hidden;
+    cursor: pointer;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    span {
+      position: absolute;
+      bottom: -100%;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: $transitions;
+      background: $black;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(52, 50, 50, 0.387);
+
+      .bi-camera {
+        color: $white;
+        font-size: 20px;
+      }
+    }
+
+    .bi {
+      font-size: 30px;
+      color: $light-color;
+    }
+
+    &:hover {
+      span {
+        bottom: 0%;
+      }
+    }
+
+    .file-up {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+      opacity: 0 !important;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+}

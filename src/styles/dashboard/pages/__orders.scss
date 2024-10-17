@@ -1,0 +1,250 @@
+.orders {
+  background: $secondary-color;
+  width: 100%;
+  padding: 30px 20px 100px 20px;
+
+  @media (max-width: 600px) {
+    padding: 50px 10px;
+  }
+
+  .orders-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 50px;
+
+    input {
+      @include input($border-color);
+      width: 300px;
+      border: 1px solid $border-color;
+      font-size: 13px;
+    }
+
+    button {
+      @include buttons($black);
+      padding: 12px 20px;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      column-gap: 10px;
+    }
+  }
+
+  .order-box {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    column-gap: 30px;
+    row-gap: 30px;
+
+    @media (min-width: 1440px) {
+      grid-template-columns: repeat(5, 1fr);
+    }
+
+    @media (max-width: 991px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media (max-width: 600px) {
+      grid-template-columns: repeat(2, 1fr);
+      column-gap: 20px;
+      row-gap: 20px;
+    }
+
+    .order-card {
+      border: 1px solid $border-color;
+
+      .order-image {
+        height: 200px;
+        margin-bottom: 10px;
+        overflow: hidden;
+        position: relative;
+        background: $light-color;
+        border: 1px solid $border-color;
+
+        @media (max-width: 767px) {
+          border-radius: 8px;
+        }
+
+        @media (max-width: 365px) {
+          height: 140px;
+        }
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+
+        .favourite {
+          position: absolute;
+          top: 20px;
+          cursor: pointer;
+          transform: translateX(-100%);
+          transition: $transitions;
+
+          @media (max-width: 500px) {
+            top: 10px;
+          }
+        }
+
+        .active-eye {
+          position: absolute;
+          top: 20px;
+          cursor: pointer;
+          left: 20px;
+          height: 30px;
+          width: 30px;
+          border-radius: 8px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: rgba(0, 0, 0, 0.705);
+          padding: 4px;
+
+          svg {
+            color: $white;
+          }
+        }
+
+        .item-cart {
+          position: absolute;
+          top: 20px;
+          right: 20px;
+          cursor: pointer;
+
+          @media (max-width: 500px) {
+            top: 10px;
+            right: 10px;
+          }
+        }
+
+        .add-to-cart {
+          background: $light-color;
+          border: none;
+          width: 100%;
+          height: 30px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: absolute;
+          bottom: 0;
+          transition: $transitions;
+          font-size: 12px;
+          color: $white;
+          transform: translateY(0);
+          cursor: pointer;
+
+          @media (max-width: 767px) {
+            font-size: 16px;
+          }
+
+          @media (max-width: 500px) {
+            height: 50px;
+            font-size: 14px;
+          }
+
+          &:hover {
+            text-decoration: underline;
+          }
+
+          &.red {
+            background: red;
+          }
+          &.orange {
+            background: orange;
+          }
+          &.green {
+            background: green;
+          }
+        }
+      }
+
+      .order-content {
+        text-align: center;
+        cursor: pointer;
+
+        h3 {
+          @include body-text(18px, 500, $text-color);
+          margin-bottom: 5px;
+        }
+
+        p {
+          @include body-text(15px, 700, $text-color);
+          margin-bottom: 10px;
+
+          @media (max-width: 565px) {
+            font-size: 13px;
+            margin-bottom: 10px;
+          }
+        }
+
+        button {
+          @include body-text(16px, 600, $text-color);
+          background: none;
+          border: none;
+
+          @media (max-width: 767px) {
+            font-size: 16px;
+          }
+
+          @media (max-width: 565px) {
+            font-size: 14px;
+          }
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+
+      .delivery-status {
+        background: green;
+        padding: 0px;
+        text-align: center;
+        color: $white;
+        font-size: 12px;
+        margin: 0 auto;
+        margin-bottom: 10px;
+        width: 120px;
+        border-radius: 2px;
+        text-transform: capitalize;
+      }
+
+      .pending-status {
+        background: orange;
+        padding: 0px;
+        text-align: center;
+        color: $white;
+        font-size: 12px;
+        margin: 0 auto;
+        margin-bottom: 10px;
+        width: 120px;
+        border-radius: 4px;
+        text-transform: capitalize;
+      }
+    }
+  }
+
+  .view-all {
+    @include buttons($primary-color);
+    margin: 80px auto 0 auto;
+    padding: 15px 30px;
+    width: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $white;
+    font-size: 20px;
+    font-weight: 600;
+    border-radius: 20px;
+
+    @media (max-width: 767px) {
+      font-size: 18px;
+      padding: 15px 30px;
+    }
+
+    @media (max-width: 350px) {
+      width: 100%;
+    }
+  }
+}

@@ -1,0 +1,67 @@
+.activate {
+  padding: 80px 100px;
+  width: 100%;
+
+  &.payment {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @media (max-width: 768px) {
+    padding: 30px 10px;
+  }
+
+  // payment success section
+
+  .payment-success {
+    text-align: center;
+    width: 600px;
+    border-radius: 8px;
+
+    h3 {
+      @include heading(24px, 600, $black);
+      font-family: $secondary-font;
+      margin-bottom: 24px;
+      margin-top: 16px;
+    }
+
+    p {
+      @include body-text(17px, 500, $text-color);
+      margin-bottom: 15px;
+    }
+
+    .bi {
+      color: red;
+      font-size: 50px;
+    }
+
+    .button-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 20px;
+
+      button {
+        @include buttons(black);
+        width: 200px;
+        font-size: 16px;
+        font-weight: 700;
+        height: 58px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:hover {
+          background: $primary-color;
+          color: $white;
+        }
+
+        @media (max-width: 400px) {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
