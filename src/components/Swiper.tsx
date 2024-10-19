@@ -17,7 +17,6 @@ const SwiperComponent = () => {
       spaceBetween={40}
       slidesPerView={1}
       navigation
-      // pagination={{ clickable: true }}
       onSlideChange={(item) => console.log(item.realIndex)}
       className="custom-swiper-navigation"
       breakpoints={{

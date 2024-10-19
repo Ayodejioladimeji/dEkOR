@@ -1,6 +1,6 @@
 .product-card {
   .product-image {
-    height: 230px !important;
+    height: 230px;
     margin-bottom: 10px;
     border-radius: 30px;
     overflow: hidden;
@@ -14,7 +14,7 @@
     }
 
     @media (max-width: 565px) {
-      height: 200px;
+      height: 150px;
     }
 
     @media (max-width: 365px) {
@@ -69,10 +69,10 @@
 
       @media (max-width: 767px) {
         font-size: 16px;
+        height: 40px;
       }
 
       @media (max-width: 500px) {
-        height: 50px;
         font-size: 14px;
       }
     }

@@ -147,9 +147,20 @@ textarea {
   }
 }
 
+.custom-swiper-navigation {
+  position: relative;
+}
+
+.custom-swiper-navigation .swiper-button-next,
+.custom-swiper-navigation .swiper-button-prev {
+  position: absolute!important;
+  top: 80%!important;
+  z-index: 90!important;
+  padding-bottom:10px;
+}
+
 .custom-swiper-navigation .swiper-button-next {
   color: green;
-  top: 30px;
   width: 30px;
   height: 30px;
   right: 0px;
@@ -157,7 +168,6 @@ textarea {
 
 .custom-swiper-navigation .swiper-button-prev {
   color: green;
-  top: 30px;
   width: 30px;
   height: 30px;
   left: 0px !important;

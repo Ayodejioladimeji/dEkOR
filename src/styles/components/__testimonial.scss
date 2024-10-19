@@ -2,6 +2,10 @@
   background: $secondary-color;
   padding: 120px 20px;
 
+  @media (max-width:767px){
+    padding:120px 0px;
+  }
+
   .testimonial-card {
     text-align: center;
     opacity: 0.9;
@@ -18,16 +22,29 @@
     border-bottom: 4px solid $primary-color;
     margin-top: 60px;
 
+    @media (max-width:1199px){
+      height:350px;
+      padding: 30px 10px;
+    }
+
     h3 {
       font-size: 32px;
       margin-bottom: 20ppx;
       font-weight: 600;
+
+      @media (max-width:991px){
+        font-size:25px;
+      }
     }
 
     p {
       font-size: 18px;
       margin-bottom: 30px;
       color: $text-color;
+
+      @media (max-width:991px){
+        font-size:16px;
+      }
     }
   }
 }

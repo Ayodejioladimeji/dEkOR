@@ -85,6 +85,18 @@ export default function Navbar() {
 
             <li className="nav-item">
               <Link
+                href="/product"
+                className={`nav-link ${
+                  router.asPath.includes("/product") && "active"
+                }`}
+              >
+                <i className="bi bi-boxes"></i>
+                Products
+              </Link>
+            </li>
+
+            <li className="nav-item">
+              <Link
                 href={"/dashboard/payments"}
                 className={`nav-link ${router.asPath.includes("/payments") && "active"}`}
               >

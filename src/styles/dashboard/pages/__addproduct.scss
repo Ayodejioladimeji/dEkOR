@@ -121,80 +121,78 @@
       padding: 10px 20px;
     }
 
-         .top {
-           display: flex;
-           align-items: center;
-           column-gap: 30px;
-           border-radius: 4px;
-           margin-bottom: 40px;
-    
-           @media (max-width: 500px) {
-             width: 500px;
-           }
-    
-           button {
-             @include body-text(14px, 400, $text-color);
-             background: transparent;
-             border: none;
-             padding-bottom: 5px;
-             border-bottom: 4px solid transparent;
-             transition: $transitions;
-             border-radius:0;
+    .top {
+      display: flex;
+      align-items: center;
+      column-gap: 30px;
+      border-radius: 4px;
+      margin-bottom: 40px;
 
-    
-             &.active {
-               border-bottom: 4px solid $primary-color;
-             }
-           }
-         }
-    
-         .bottom {
-    
-           h4 {
-             @include heading(20px, 600, $text-color);
-             margin-bottom: 16px;
-           }
-    
-           p {
-             @include body-text(16px, 400, $text-color);
-             margin-bottom: 16px;
-           }
-    
-           .checkout-address-card {
-             padding: 20px 0px;
-             border: 1px solid $primary-color;
-             border-radius: 5px;
-             background: $white;
-             position: relative;
-             transition: $transitions;
-             cursor: pointer;
-             width: 350px;
-    
-             &:hover {
-               transform: scale(0.99);
-             }
-    
-             .bi-check-circle-fill {
-               position: absolute;
-               right: 10px;
-               top: 10px;
-               color: $primary-color;
-               font-size: 20px;
-             }
-    
-             h3 {
-               @include body-text(16px, 500, $text-color);
-               margin-bottom: 10px;
-               padding: 0 10px;
-             }
-    
-             p {
-               @include body-text(14px, 500, $light-color);
-               padding: 0 10px;
-               margin-bottom: 5px;
-             }
-           }
-         }
+      @media (max-width: 500px) {
+        width: 500px;
+      }
+
+      button {
+        @include body-text(14px, 400, $text-color);
+        background: transparent;
+        border: none;
+        padding-bottom: 5px;
+        border-bottom: 4px solid transparent;
+        transition: $transitions;
+        border-radius: 0;
+
+        &.active {
+          border-bottom: 4px solid $primary-color;
+        }
+      }
+    }
+
+    .bottom {
+      h4 {
+        @include heading(20px, 600, $text-color);
+        margin-bottom: 16px;
+      }
+
+      p {
+        @include body-text(16px, 400, $text-color);
+        margin-bottom: 16px;
+      }
+
+      .checkout-address-card {
+        padding: 20px 0px;
+        border: 1px solid $primary-color;
+        border-radius: 5px;
+        background: $white;
+        position: relative;
+        transition: $transitions;
+        cursor: pointer;
+        width: 350px;
+
+        &:hover {
+          transform: scale(0.99);
+        }
+
+        .bi-check-circle-fill {
+          position: absolute;
+          right: 10px;
+          top: 10px;
+          color: $primary-color;
+          font-size: 20px;
+        }
+
+        h3 {
+          @include body-text(16px, 500, $text-color);
+          margin-bottom: 10px;
+          padding: 0 10px;
+        }
+
+        p {
+          @include body-text(14px, 500, $light-color);
+          padding: 0 10px;
+          margin-bottom: 5px;
+        }
+      }
+    }
   }
 
   .image-section {
