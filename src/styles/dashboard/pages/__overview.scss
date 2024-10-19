@@ -42,6 +42,10 @@
         padding: 10px;
         border-radius: 10px 10px 0 0;
         margin-bottom: 6px;
+
+          @media (max-width: 767px) {
+              font-size:16px;
+            }
       }
 
       .card-count {
@@ -50,6 +54,10 @@
 
       h4 {
         @include heading(35px, 700, $black);
+
+        @media (max-width:767px){
+          font-size:28px;
+        }
       }
 
       span {

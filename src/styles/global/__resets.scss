@@ -111,22 +111,22 @@ textarea {
       padding: 20px 10px;
     }
 
-    @media (max-width: 425px) {
-      flex-direction: column-reverse;
+    @media (max-width: 325px) {
+      flex-direction: column;
       align-items: flex-start;
     }
 
     h1 {
       @include heading(24px, 600, $black);
       margin-bottom: 5px;
-
-      @media (max-width: 425px) {
-        margin-top: 10px;
-      }
     }
 
     p {
       @include body-text(14px, 500, $text-color);
+
+        @media (max-width: 325px) {
+            margin-bottom: 20px;
+          }
     }
 
     .badge {

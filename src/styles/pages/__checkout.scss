@@ -112,8 +112,8 @@
       display: block;
       margin-bottom: 10px;
 
-      @media (max-width:767px){
-        font-size:16px;
+      @media (max-width: 767px) {
+        font-size: 16px;
       }
     }
 
@@ -154,17 +154,17 @@
     position: sticky;
     top: 100px;
 
-    @media (max-width:767px) {
-        padding: 40px 10px;
-      }
+    @media (max-width: 767px) {
+      padding: 40px 10px;
+    }
 
     h4 {
       @include heading(20px, 500, $text-color);
       margin-bottom: 20px;
 
-      @media (max-width:500px) {
-          font-size: 18px;
-        }
+      @media (max-width: 500px) {
+        font-size: 18px;
+      }
     }
 
     .order-box {
@@ -182,8 +182,8 @@
       p {
         @include body-text(16px, 400, $text-color);
 
-        @media (max-width:500px){
-          font-size:14px;
+        @media (max-width: 500px) {
+          font-size: 14px;
         }
       }
     }
@@ -191,8 +191,8 @@
     h5 {
       @include heading(16px, 600, $text-color);
 
-      @media (max-width:500px){
-        font-size:14px;
+      @media (max-width: 500px) {
+        font-size: 14px;
       }
     }
 
