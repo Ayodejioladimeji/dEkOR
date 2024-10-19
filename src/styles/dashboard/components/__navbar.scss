@@ -35,14 +35,14 @@
         }
       }
 
-      // .product-image {
-      //   height: 10vh;
-      //   width: 100%;
-      //   display: flex;
-      //   align-items: center;
-      //   // justify-content: center;
-      //   padding-left: 20px;
-      // }
+      .product-image {
+        height: 10vh;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        // justify-content: center;
+        padding-left: 20px;
+      }
 
       .navbar-collapse {
         width: 100%;
@@ -393,7 +393,7 @@
 
       .navbar-toggler {
         border: none !important;
-        color: $white;
+        color: $black;
         background: $white !important;
       }
 
