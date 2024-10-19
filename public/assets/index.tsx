@@ -344,8 +344,8 @@ export const LogoWhite = () => {
 export const ItemCart = () => {
   return (
     <svg
-      width="40"
-      height="40"
+      width="30"
+      height="30"
       viewBox="0 0 40 40"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -418,7 +418,7 @@ export const SuccessCheckMark = () => {
 
 export const Favourite = () => {
   return (
-    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="30" height="30" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect width="40" height="40" rx="10" fill="#191919" fillOpacity="0.9" />
       <path d="M20.62 28.81C20.28 28.93 19.72 28.93 19.38 28.81C16.48 27.82 10 23.69 10 16.69C10 13.6 12.49 11.1 15.56 11.1C17.38 11.1 18.99 11.98 20 13.34C21.01 11.98 22.63 11.1 24.44 11.1C27.51 11.1 30 13.6 30 16.69C30 23.69 23.52 27.82 20.62 28.81Z" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     </svg>

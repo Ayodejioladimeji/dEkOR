@@ -2,8 +2,8 @@
   padding-top: 120px;
   padding-bottom: 80px;
 
-  @media (max-width:278px){
-    padding-top:140px;
+  @media (max-width: 278px) {
+    padding-top: 140px;
   }
 
   .heading-section {
@@ -49,7 +49,7 @@
       row-gap: 20px;
     }
 
-    @media (max-width:250px){
+    @media (max-width: 250px) {
       grid-template-columns: 1fr;
     }
 

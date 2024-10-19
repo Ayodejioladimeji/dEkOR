@@ -2,8 +2,8 @@
   background: $secondary-color;
   padding: 120px 20px;
 
-  @media (max-width:767px){
-    padding:120px 0px;
+  @media (max-width: 767px) {
+    padding: 120px 0px;
   }
 
   .testimonial-card {
@@ -22,8 +22,8 @@
     border-bottom: 4px solid $primary-color;
     margin-top: 60px;
 
-    @media (max-width:1199px){
-      height:350px;
+    @media (max-width: 1199px) {
+      height: 350px;
       padding: 30px 10px;
     }
 
@@ -32,8 +32,8 @@
       margin-bottom: 20ppx;
       font-weight: 600;
 
-      @media (max-width:991px){
-        font-size:25px;
+      @media (max-width: 991px) {
+        font-size: 25px;
       }
     }
 
@@ -42,8 +42,8 @@
       margin-bottom: 30px;
       color: $text-color;
 
-      @media (max-width:991px){
-        font-size:16px;
+      @media (max-width: 991px) {
+        font-size: 16px;
       }
     }
   }

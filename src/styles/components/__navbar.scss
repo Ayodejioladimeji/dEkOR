@@ -30,21 +30,21 @@
       @media (max-width: 991px) {
         display: flex;
         column-gap: 15px;
-        padding-left:0px;
+        padding-left: 0px;
       }
 
-      @media (max-width:278px){
-        margin-top:10px;
+      @media (max-width: 278px) {
+        margin-top: 10px;
       }
 
       .nav-item {
         cursor: pointer;
         position: relative;
 
-        svg{
-          font-size:5px;
-          height:20px;
-          width:20px;
+        svg {
+          font-size: 5px;
+          height: 20px;
+          width: 20px;
         }
 
         .badge {
@@ -88,11 +88,11 @@
         margin-right: 25px;
         cursor: pointer;
         position: relative;
-        
-        @media (min-width:992px){
+
+        @media (min-width: 992px) {
           display: flex;
-            align-items: center;
-            justify-content: center;
+          align-items: center;
+          justify-content: center;
         }
 
         &:last-child {
@@ -169,9 +169,9 @@
         border-radius: 50%;
         cursor: pointer;
 
-        @media (max-width:350px){
-          height:30px;
-          width:30px;
+        @media (max-width: 350px) {
+          height: 30px;
+          width: 30px;
         }
       }
     }

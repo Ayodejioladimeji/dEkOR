@@ -30,10 +30,6 @@
       border-radius: 4px;
       margin-bottom: 40px;
 
-      @media (max-width: 500px) {
-        width: 500px;
-      }
-
       button {
         @include body-text(18px, 400, $text-color);
         background: transparent;
@@ -41,6 +37,10 @@
         padding-bottom: 10px;
         border-bottom: 4px solid transparent;
         transition: $transitions;
+
+        // @media (max-width: 500px) {
+        //     font-size:14px;
+        //   }
 
         &.active {
           border-bottom: 4px solid $primary-color;
@@ -108,16 +108,20 @@
     }
 
     label {
-      @include body-text(20px, 500, $text-color);
+      @include body-text(18px, 500, $text-color);
       display: block;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
+
+      @media (max-width:767px){
+        font-size:16px;
+      }
     }
 
     input {
       @include input($border-color);
       width: 100%;
-      border-radius: 10px;
-      height: 64px;
+      border-radius: 4px;
+      height: 50px;
       font-size: 16px;
       color: $text-color;
       background: #fafafa;
@@ -129,8 +133,8 @@
 
     .form-select {
       width: 100%;
-      border-radius: 10px;
-      height: 64px;
+      border-radius: 4px;
+      height: 50px;
       font-size: 16px;
       color: $text-color;
       background: #fafafa;
@@ -150,9 +154,17 @@
     position: sticky;
     top: 100px;
 
+    @media (max-width:767px) {
+        padding: 40px 10px;
+      }
+
     h4 {
       @include heading(20px, 500, $text-color);
       margin-bottom: 20px;
+
+      @media (max-width:500px) {
+          font-size: 18px;
+        }
     }
 
     .order-box {
@@ -169,11 +181,19 @@
 
       p {
         @include body-text(16px, 400, $text-color);
+
+        @media (max-width:500px){
+          font-size:14px;
+        }
       }
     }
 
     h5 {
       @include heading(16px, 600, $text-color);
+
+      @media (max-width:500px){
+        font-size:14px;
+      }
     }
 
     button {
