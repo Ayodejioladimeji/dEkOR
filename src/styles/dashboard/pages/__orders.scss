@@ -50,6 +50,10 @@
       row-gap: 20px;
     }
 
+    @media (max-width:325px){
+      grid-template-columns: 1fr;
+    }
+
     .order-card {
       border: 1px solid $border-color;
 
@@ -122,7 +126,7 @@
           background: $light-color;
           border: none;
           width: 100%;
-          height: 30px;
+          height: 40px;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -134,13 +138,8 @@
           transform: translateY(0);
           cursor: pointer;
 
-          @media (max-width: 767px) {
+          @media (min-width: 767px) {
             font-size: 16px;
-          }
-
-          @media (max-width: 500px) {
-            height: 50px;
-            font-size: 14px;
           }
 
           &:hover {
