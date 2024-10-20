@@ -1,20 +1,25 @@
 import Image from "next/image";
 import Link from "next/link";
-import React, { useLayoutEffect, useState } from "react";
+import React, { useContext, useLayoutEffect, useState } from "react";
 import { Profile } from "../../public/assets";
+import { DataContext } from "@/store/GlobalState";
 
 const Usercard = () => {
   const [user, setUser] = useState<any>(null);
   const [token, setToken] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [avatar, setAvatar] = useState("");
+  const { state } = useContext(DataContext);
 
   useLayoutEffect(() => {
     const user = JSON.parse(localStorage.getItem("user") || "{}");
     const token = localStorage.getItem("token") || "";
+    const avatar = localStorage.getItem("avatar") || "";
     setUser(user);
     setToken(token);
+    setAvatar(avatar);
     setLoading(false);
-  }, []);
+  }, [state?.callback]);
 
   if (loading) return undefined;
   //
@@ -33,7 +38,13 @@ const Usercard = () => {
               : "/dashboard/overview"
           }
         >
-          <Image src={user?.avatar} alt="" width={100} height={100} />
+          <Image
+            src={avatar || user?.avatar}
+            alt=""
+            width={100}
+            height={100}
+            style={{ borderRadius: "50%", border: "1px solid #27493e" }}
+          />
         </Link>
       )}
     </div>

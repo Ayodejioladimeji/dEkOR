@@ -9,8 +9,8 @@
   .auth-left {
     width: 50%;
 
-    @media (max-width:768px){
-      display:none;
+    @media (max-width: 768px) {
+      display: none;
     }
 
     .carousel {
@@ -104,9 +104,9 @@
           p {
             @include body-text(18px, 400, $white);
             line-height: 25px;
-            padding:0 10px;
+            padding: 0 10px;
 
-            @media (min-width: 1000px){
+            @media (min-width: 1000px) {
               padding: 0 50px;
             }
 
@@ -137,26 +137,26 @@
   .auth-right {
     width: 50%;
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
     justify-content: center;
 
-    @media (max-width:768px){
-      width:100%;
+    @media (max-width: 768px) {
+      width: 100%;
     }
 
     .auth-form {
       width: 60%;
       margin: 0 auto;
 
-      @media (max-width:600px){
-        width:100%;
-        padding-left:20px;
-        padding-right:20px;
+      @media (max-width: 600px) {
+        width: 100%;
+        padding-left: 20px;
+        padding-right: 20px;
       }
 
-      @media (max-width:375px){
+      @media (max-width: 375px) {
         padding-left: 10px;
-          padding-right: 10px;
+        padding-right: 10px;
       }
 
       h1 {

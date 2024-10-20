@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import DashboardLayout from "../DashboardLayout";
 import Image from "next/image";
 import Topbar from "@/dashboard/components/topbar";
@@ -6,6 +6,8 @@ import cogoToast from "cogo-toast";
 import Loading from "@/common/loading";
 import { GetRequests, PatchRequest, PutRequest } from "@/utils/requests";
 import { singleUpload } from "@/pages/api/utils/singleUpload";
+import { DataContext } from "@/store/GlobalState";
+import { ACTIONS } from "@/store/Actions";
 //
 
 const Settings = () => {
@@ -16,6 +18,7 @@ const Settings = () => {
   const [user, setUser] = useState<any>(null);
   const [buttonloading, setButtonloading] = useState(false);
   const [selectedImage, setSelectedImage] = useState("");
+  const { state, dispatch } = useContext(DataContext);
 
   useEffect(() => {
     const token = localStorage.getItem("token") || "";
@@ -62,10 +65,12 @@ const Settings = () => {
       const payload = {
         avatar: image?.url,
       };
+
       const res = await PatchRequest("/user", payload, token);
       if (res?.status === 200 || res?.status === 201) {
-        // setCallback(!callback)
+        dispatch({ type: ACTIONS.CALLBACK, payload: !state?.callback });
         cogoToast.success(res?.data?.message);
+        localStorage.setItem("avatar", res?.data?.data?.avatar);
         setImageLoading(false);
       } else {
         setImageLoading(false);
@@ -90,6 +95,7 @@ const Settings = () => {
     if (res?.status === 200 || res?.status === 201) {
       cogoToast.success(res?.data?.message);
       setButtonloading(false);
+      console.log(res?.data);
     } else {
       setButtonloading(false);
     }

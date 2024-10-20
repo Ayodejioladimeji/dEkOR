@@ -124,9 +124,9 @@ textarea {
     p {
       @include body-text(14px, 500, $text-color);
 
-        @media (max-width: 325px) {
-            margin-bottom: 20px;
-          }
+      @media (max-width: 325px) {
+        margin-bottom: 20px;
+      }
     }
 
     .badge {
