@@ -10,6 +10,7 @@ import { formatMoney } from "@/utils/utils";
 import ConfirmModal from "@/dashboard/common/confirmmodal";
 import cogoToast from "cogo-toast";
 import { ACTIONS } from "@/store/Actions";
+import moment from "moment";
 
 const OrderDetails = () => {
   const [loading, setLoading] = useState(true);
@@ -146,6 +147,12 @@ const OrderDetails = () => {
                       style={{ textTransform: "uppercase" }}
                     >
                       {data?.paymentReference}
+                    </p>
+                  </div>
+                  <div className="order-details">
+                    <p>Order Date</p>
+                    <p className="response">
+                      {moment(data?.orderDate).format("lll")}
                     </p>
                   </div>
                   <div className="order-details">

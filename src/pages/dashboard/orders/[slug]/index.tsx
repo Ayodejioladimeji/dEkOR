@@ -6,6 +6,7 @@ import { GetRequest, PatchRequest } from "@/utils/requests";
 import { useRouter } from "next/router";
 import { DataContext } from "@/store/GlobalState";
 import Loading from "@/common/loading";
+import moment from "moment";
 
 const OrderDetails = () => {
   const [loading, setLoading] = useState(true);
@@ -133,6 +134,15 @@ const OrderDetails = () => {
                       style={{ textTransform: "uppercase" }}
                     >
                       {data?.paymentReference}
+                    </p>
+                  </div>
+                  <div className="order-details">
+                    <p>Order Date</p>
+                    <p
+                      className="response"
+                      style={{ textTransform: "uppercase" }}
+                    >
+                      {moment(data?.orderDate).format("lll")}
                     </p>
                   </div>
                   <div className="order-details">
