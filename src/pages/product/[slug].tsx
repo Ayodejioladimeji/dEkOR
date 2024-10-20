@@ -18,7 +18,6 @@ const Product = () => {
   const { state, dispatch } = useContext(DataContext);
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [productColor, setProductColor] = useState("");
   const [imageIndex, setImageIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [count, setCount] = useState(1);
@@ -55,6 +54,7 @@ const Product = () => {
         ...product,
         quantity: quantity,
       };
+
       dispatch({ type: ACTIONS.TOGGLE, payload: true });
       dispatch({ type: ACTIONS.CART, payload: cartData });
       setProduct(cartData);
@@ -246,23 +246,6 @@ const Product = () => {
                 <p>{product?.description}</p>
 
                 <h3>${formatMoney(Number(product?.sellingPrice))}</h3>
-
-                <div className="color-div">
-                  {product?.productColors?.map((color: any, index: number) => (
-                    <div
-                      key={index}
-                      onClick={() => setProductColor(color)}
-                      className={
-                        productColor === color ? "active-color" : "main-color"
-                      }
-                    >
-                      <div
-                        className="actual-color"
-                        style={{ background: color }}
-                      ></div>
-                    </div>
-                  ))}
-                </div>
 
                 <h4>Quantity</h4>
                 <div className="quantities">

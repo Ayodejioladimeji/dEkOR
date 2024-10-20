@@ -107,6 +107,31 @@
             font-weight: 700;
           }
         }
+
+        .color-div {
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          column-gap: 5px;
+          padding: 0;
+          margin-top: 12px;
+
+          .actual-color {
+            height: 22px;
+            width: 22px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 3px solid $border-color;
+          }
+
+          .active-color {
+            border: 3px solid $primary-color;
+            border-radius: 50%;
+            height: 22px;
+            width: 22px;
+            transition: var(--transition);
+          }
+        }
       }
     }
 

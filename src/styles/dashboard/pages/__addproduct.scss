@@ -4,15 +4,13 @@
   column-gap: 20px;
   overflow: auto;
 
-  @media (max-width:991px) {
+  @media (max-width: 991px) {
     padding: 20px 10px;
   }
 
-  @media (max-width:767px) {
+  @media (max-width: 767px) {
     flex-direction: column-reverse;
   }
-
-
 
   .information-section {
     background: $white;
@@ -20,11 +18,11 @@
     padding: 20px;
     width: 60%;
 
-    @media (max-width:991px) {
+    @media (max-width: 991px) {
       padding: 20px 10px;
     }
 
-    @media (max-width:767px) {
+    @media (max-width: 767px) {
       width: 100%;
     }
 
@@ -79,11 +77,11 @@
       align-items: center;
       justify-content: space-between;
 
-      p{
-        font-size:16px;
+      p {
+        font-size: 16px;
 
-        @media (max-width:500px){
-          font-size:14px;
+        @media (max-width: 500px) {
+          font-size: 14px;
         }
       }
     }
@@ -226,7 +224,7 @@
     // height: 100%;
     overflow: auto;
 
-    @media (max-width:767px) {
+    @media (max-width: 767px) {
       width: 100%;
     }
 
@@ -238,9 +236,9 @@
       display: flex;
       justify-content: flex-end;
 
-        @media (max-width:991px) {
-            padding: 20px 10px;
-          }
+      @media (max-width: 991px) {
+        padding: 20px 10px;
+      }
 
       button {
         @include buttons(black);
@@ -256,9 +254,9 @@
       text-align: center;
       position: relative;
 
-        @media (max-width:991px) {
-            padding: 20px 10px;
-          }
+      @media (max-width: 991px) {
+        padding: 20px 10px;
+      }
 
       button {
         background: transparent;
