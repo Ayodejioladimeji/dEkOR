@@ -4,7 +4,6 @@ import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import { DataContext } from "@/store/GlobalState";
 import { screenPixels } from "@/utils/screenpx";
-import { LogoWhite } from "../../../public/assets";
 
 //
 
@@ -41,24 +40,9 @@ export default function Navbar() {
   return (
     <div className="dashboard-nav">
       <nav className="navbar navbar-expand-lg bg-light">
-        <div className="product-image">
-          <Link className="navbar-brand" href="/product">
-            <LogoWhite />
-          </Link>
-        </div>
-
-        {/* <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon" />
-        </button> */}
-
+        grid-template-columns: repeat(2, 1fr);grid-template-columns: repeat(2,
+        1fr);grid-template-columns: repeat(2, 1fr);grid-template-columns:
+        repeat(2, 1fr);
         <button
           className="navbar-toggler"
           type="button"
@@ -71,7 +55,6 @@ export default function Navbar() {
           {/* <span className="navbar-toggler-icon"></span> */}
           <i className="bi bi-list"></i>
         </button>
-
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">

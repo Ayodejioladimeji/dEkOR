@@ -10,6 +10,7 @@ import { PatchRequest, PostRequest } from "@/utils/requests";
 import Goback from "@/common/Goback";
 import AuthLayout from "./Authlayout";
 import { mergeCarts } from "@/utils/utils";
+import { Logo } from "../../../public/assets";
 
 // VALIDATION REGEX
 
@@ -189,36 +190,15 @@ const Login = () => {
                       </div>
                     </div>
                   </div>
-
-                  <button
-                    className="carousel-control-prev"
-                    type="button"
-                    data-bs-target="#carouselExampleRide"
-                    data-bs-slide="prev"
-                  >
-                    <span
-                      className="carousel-control-prev-icon"
-                      aria-hidden="true"
-                    ></span>
-                    <span className="visually-hidden">Previous</span>
-                  </button>
-                  <button
-                    className="carousel-control-next"
-                    type="button"
-                    data-bs-target="#carouselExampleRide"
-                    data-bs-slide="next"
-                  >
-                    <span
-                      className="carousel-control-next-icon"
-                      aria-hidden="true"
-                    ></span>
-                    <span className="visually-hidden">Next</span>
-                  </button>
                 </div>
               </div>
 
               <div className="auth-right">
                 <div className="auth-form">
+                  <Link href="/product" className="d-block mb-5">
+                    <Logo />
+                  </Link>
+
                   <h1>Welcome back!</h1>
 
                   <small>Stay trendy, Stay you.</small>
