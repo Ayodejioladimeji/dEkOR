@@ -1,5 +1,6 @@
 import connectDB from "../../utils/connectDB";
 import Order from "../../models/orderModel";
+import User from "../../models/userModel";
 import { NextApiRequest, NextApiResponse } from "next";
 import auth from "../../middleware/auth";
 
@@ -73,11 +74,11 @@ const getSingleOrder = async (req: NextApiRequest, res: NextApiResponse) => {
 
     // Find order by ID
     const order = await Order.findOne({ _id: id });
+    const orderUser = await User.findById({ _id: order.user });
 
     if (!order) {
       return res.json({});
     }
-
     const product = order.products.find((p) => p._id.toString() === productId);
 
     if (!product) {
@@ -85,6 +86,12 @@ const getSingleOrder = async (req: NextApiRequest, res: NextApiResponse) => {
         .status(404)
         .json({ message: "Product not found in the order" });
     }
+
+    const userData = {
+      name: orderUser?.name,
+      email: orderUser?.email,
+      avatar: orderUser?.avatar,
+    };
 
     const data = {
       product,
@@ -94,6 +101,8 @@ const getSingleOrder = async (req: NextApiRequest, res: NextApiResponse) => {
       paymentMethod: order?.paymentMethod,
       paymentReference: order?.paymentReference,
       orderDate: order?.createdAt,
+      orderCount: order?.products?.length,
+      user: userData,
     };
 
     return res.json(data);

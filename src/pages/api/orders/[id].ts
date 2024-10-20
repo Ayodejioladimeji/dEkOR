@@ -1,6 +1,7 @@
 import connectDB from "../utils/connectDB";
 import Order from "../models/orderModel";
 import { NextApiRequest, NextApiResponse } from "next";
+import auth from "../middleware/auth";
 
 connectDB();
 
@@ -20,6 +21,8 @@ export default async function handler(
 
 const getSingleOrder = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
+    await auth(req, res);
+
     const { id, productId } = req.query;
 
     // Find order by ID

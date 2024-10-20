@@ -32,45 +32,6 @@
       padding-left: 10px;
     }
 
-    .form-div {
-      label {
-        display: block;
-        @include body-text(14px, 400, $light-color);
-        margin-bottom: 5px;
-      }
-
-      input,
-      textarea {
-        @include input($border-color);
-        padding: 10px;
-        margin-bottom: 20px;
-        width: 100%;
-        border: 1px solid $border-color;
-        font-size: 14px;
-        color: $light-color;
-
-        &:focus {
-          border: 1px solid $primary-color;
-        }
-      }
-
-      select {
-        padding: 10px;
-        margin-bottom: 20px;
-        width: 100%;
-        border: 1px solid $border-color;
-        font-size: 14px;
-        color: $light-color;
-
-        &:focus {
-          border: 1px solid $primary-color;
-        }
-      }
-
-      textarea {
-        height: 150px;
-      }
-    }
 
     .order-details {
       display: flex;
@@ -219,13 +180,71 @@
     }
   }
 
+  .form-div {
+    label {
+      display: block;
+      @include body-text(14px, 400, $light-color);
+      margin-bottom: 5px;
+    }
+
+    input,
+    textarea {
+      @include input($border-color);
+      padding: 10px;
+      margin-bottom: 20px;
+      width: 100%;
+      border: 1px solid $border-color;
+      font-size: 14px;
+      color: $light-color;
+
+      &:focus {
+        border: 1px solid $primary-color;
+      }
+    }
+
+    select {
+      padding: 10px;
+      margin-bottom: 20px;
+      width: 100%;
+      border: 1px solid $border-color;
+      font-size: 14px;
+      color: $light-color;
+
+      &:focus {
+        border: 1px solid $primary-color;
+      }
+    }
+
+    textarea {
+      height: 150px;
+    }
+  }
+
   .image-section {
     width: 60%;
     // height: 100%;
-    overflow: auto;
+    // overflow:;
 
     @media (max-width: 767px) {
       width: 100%;
+    }
+
+    .user-profile {
+      background: $white;
+      padding: 20px;
+      margin-top: 30px;
+      border-radius: 8px !important;
+      margin-bottom:30px;
+
+      @media (max-width:500px) {
+        padding: 20px 10px;
+      }
+
+      h2 {
+        @include heading(18px, 600, $black);
+        margin-bottom: 20px;
+        padding-left: 10px;
+      }
     }
 
     .deliver-section {

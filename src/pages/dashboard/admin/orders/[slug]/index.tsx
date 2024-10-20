@@ -156,6 +156,17 @@ const OrderDetails = () => {
                     </p>
                   </div>
                   <div className="order-details">
+                    <p>Quantity</p>
+                    <p className="response">{data?.product?.quantity}</p>
+                  </div>
+                  <div className="order-details">
+                    <p>Order Count</p>
+                    <p className="response">
+                      {data?.orderCount}{" "}
+                      {data?.orderCount > 1 ? "Orders" : "order"}
+                    </p>
+                  </div>
+                  <div className="order-details">
                     <p>Amount Paid</p>
                     <p className="response fw-bold">
                       ₦{formatMoney(data?.totalAmount)}
@@ -167,7 +178,6 @@ const OrderDetails = () => {
                 <div className="row">
                   <h2>Product Section</h2>
 
-                  <div className="status">{}</div>
                   <div className="col-12">
                     <div className="form-div">
                       <label>Title</label>
@@ -383,6 +393,47 @@ const OrderDetails = () => {
                 </div>
               )}
             </div>
+
+            {!loading && (
+              <div className="user-profile">
+                <h2>User Information</h2>
+
+                <div className="image-section mb-4">
+                  <Image
+                    src={data?.user?.avatar}
+                    alt="avatar"
+                    width={100}
+                    height={100}
+                  />
+                </div>
+
+                <div className="col-12">
+                  <div className="form-div">
+                    <label>Name</label>
+                    <input
+                      type="text"
+                      placeholder=""
+                      value={data?.user?.name}
+                      readOnly
+                      disabled
+                    />
+                  </div>
+                </div>
+
+                <div className="col-12">
+                  <div className="form-div">
+                    <label>Email</label>
+                    <input
+                      type="text"
+                      placeholder=""
+                      value={data?.user?.email}
+                      readOnly
+                      disabled
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
