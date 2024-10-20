@@ -21,7 +21,18 @@ const Usercard = () => {
     setLoading(false);
   }, [state?.callback]);
 
-  if (loading) return undefined;
+  if (loading) {
+    return (
+      <div
+        style={{
+          borderRadius: "50%",
+          height: "40px",
+          width: "40px",
+          display: "block",
+        }}
+      ></div>
+    );
+  }
   //
 
   return (
@@ -44,6 +55,7 @@ const Usercard = () => {
             width={100}
             height={100}
             style={{ borderRadius: "50%", border: "1px solid #27493e" }}
+            unoptimized
           />
         </Link>
       )}

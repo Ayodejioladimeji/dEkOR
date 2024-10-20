@@ -4,11 +4,29 @@
   column-gap: 20px;
   overflow: auto;
 
+  @media (max-width:991px) {
+    padding: 20px 10px;
+  }
+
+  @media (max-width:767px) {
+    flex-direction: column-reverse;
+  }
+
+
+
   .information-section {
     background: $white;
     border-radius: 8px;
     padding: 20px;
     width: 60%;
+
+    @media (max-width:991px) {
+      padding: 20px 10px;
+    }
+
+    @media (max-width:767px) {
+      width: 100%;
+    }
 
     h2 {
       @include heading(18px, 600, $black);
@@ -52,7 +70,7 @@
       }
 
       textarea {
-        height: 100px;
+        height: 150px;
       }
     }
 
@@ -60,6 +78,14 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+
+      p{
+        font-size:16px;
+
+        @media (max-width:500px){
+          font-size:14px;
+        }
+      }
     }
 
     .main-color-input {
@@ -200,6 +226,10 @@
     // height: 100%;
     overflow: auto;
 
+    @media (max-width:767px) {
+      width: 100%;
+    }
+
     .deliver-section {
       background: $white;
       border-radius: 8px;
@@ -207,6 +237,10 @@
       margin-bottom: 30px;
       display: flex;
       justify-content: flex-end;
+
+        @media (max-width:991px) {
+            padding: 20px 10px;
+          }
 
       button {
         @include buttons(black);
@@ -221,6 +255,10 @@
       padding: 20px;
       text-align: center;
       position: relative;
+
+        @media (max-width:991px) {
+            padding: 20px 10px;
+          }
 
       button {
         background: transparent;

@@ -70,7 +70,7 @@ const Settings = () => {
       if (res?.status === 200 || res?.status === 201) {
         dispatch({ type: ACTIONS.CALLBACK, payload: !state?.callback });
         cogoToast.success(res?.data?.message);
-        localStorage.setItem("avatar", res?.data?.data?.avatar);
+        localStorage.setItem("avatar", image?.url);
         setImageLoading(false);
       } else {
         setImageLoading(false);
@@ -95,7 +95,6 @@ const Settings = () => {
     if (res?.status === 200 || res?.status === 201) {
       cogoToast.success(res?.data?.message);
       setButtonloading(false);
-      console.log(res?.data);
     } else {
       setButtonloading(false);
     }

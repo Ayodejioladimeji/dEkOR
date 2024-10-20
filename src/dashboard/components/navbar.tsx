@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useLayoutEffect, useState } from "react";
 import { DataContext } from "@/store/GlobalState";
 import { screenPixels } from "@/utils/screenpx";
 
@@ -13,12 +13,20 @@ export default function Navbar() {
   const [notify] = useState([]);
   const [notifyLoading] = useState(true);
   const [device, setDevice] = useState(false);
-  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  const [user, setUser] = useState<any>(null);
+  const [avatar, setAvatar] = useState("");
 
   // get screen size
   useEffect(() => {
     screenPixels("900px", setDevice);
   }, []);
+
+  useLayoutEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
+    const avatar = localStorage.getItem("avatar") || "";
+    setUser(user);
+    setAvatar(avatar);
+  }, [state?.callback]);
 
   // Logout user
   const handleLogout = () => {
@@ -148,7 +156,7 @@ export default function Navbar() {
               <div className="col-3 profile-show">
                 <div className="profile-img-container">
                   <Image
-                    src={user?.avatar}
+                    src={avatar || user?.avatar}
                     height={100}
                     width={100}
                     alt="profile-icon"
