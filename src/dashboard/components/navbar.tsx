@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useContext, useEffect, useLayoutEffect, useState } from "react";
 import { DataContext } from "@/store/GlobalState";
 import { screenPixels } from "@/utils/screenpx";
+import { LogoWhite } from "../../../public/assets";
 
 //
 
@@ -48,6 +49,12 @@ export default function Navbar() {
   return (
     <div className="dashboard-nav">
       <nav className="navbar navbar-expand-lg bg-light">
+        <div className="product-image">
+          <Link className="navbar-brand" href="/product">
+            <LogoWhite />
+          </Link>
+        </div>
+
         <button
           className="navbar-toggler"
           type="button"

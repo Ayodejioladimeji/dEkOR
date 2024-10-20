@@ -15,7 +15,7 @@ const Orders = () => {
     const getOrders = async () => {
       const res = await GetRequests("/orders", token);
       if (res?.status === 200) {
-        setOrders(res?.data);
+        setOrders(res?.data?.data);
         setLoading(false);
       } else {
         setLoading(false);
