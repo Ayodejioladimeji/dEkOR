@@ -72,3 +72,19 @@ export const mergeCarts = (dbCart, localCart) => {
 
   return combinedCart;
 };
+
+export const filterMethod = (mainData: any, inputData: string) => {
+  const lowerCaseInput = inputData.toLowerCase();
+
+  const res = mainData?.filter((item: any) => {
+    return Object.values(item).join(" ").toLowerCase().includes(lowerCaseInput);
+  });
+  return res;
+};
+
+export const filtMethod = (mainData: any, inputData: string) => {
+  const res = mainData?.filter((item: any) => {
+    return item?.toLowerCase().match(inputData);
+  });
+  return res;
+};

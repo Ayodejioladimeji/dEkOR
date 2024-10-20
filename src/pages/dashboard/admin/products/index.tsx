@@ -7,12 +7,14 @@ import AddProductModal from "@/dashboard/common/addproduct";
 import { GetRequests } from "@/utils/requests";
 import { DataContext } from "@/store/GlobalState";
 import { ACTIONS } from "@/store/Actions";
+import { filterMethod } from "@/utils/utils";
 
 const Products = () => {
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState<any>([]);
   const [addProductModal, setAddProductModal] = useState(false);
   const { state, dispatch } = useContext(DataContext);
+  const [searchInput, setSearchInput] = useState("");
 
   useEffect(() => {
     const token = localStorage.getItem("token") || "";
@@ -31,6 +33,8 @@ const Products = () => {
     getProducts();
   }, [dispatch, state?.callback]);
 
+  const filteredData = filterMethod(products, searchInput);
+
   //
 
   return (
@@ -40,7 +44,12 @@ const Products = () => {
 
         <div className="orders">
           <div className="orders-heading">
-            <input type="text" placeholder="Search" />
+            <input
+              type="text"
+              placeholder="Search"
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
+            />
 
             <button onClick={() => setAddProductModal(true)}>
               <i className="bi bi-plus-circle"></i>
@@ -53,14 +62,14 @@ const Products = () => {
               <CardSkeleton length={12} />
             ) : (
               <>
-                {products?.map((item: any) => {
+                {filteredData?.map((item: any) => {
                   return <Productcard {...item} key={item._id} />;
                 })}
               </>
             )}
           </div>
 
-          {!loading && products?.length === 0 && (
+          {!loading && filteredData?.length === 0 && (
             <div className="d-flex justify-content-center text-center mt-5 w-100">
               No product available
             </div>

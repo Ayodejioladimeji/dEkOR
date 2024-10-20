@@ -7,12 +7,14 @@ import AddProductModal from "@/dashboard/common/addproduct";
 import { GetRequests } from "@/utils/requests";
 import { DataContext } from "@/store/GlobalState";
 import { ACTIONS } from "@/store/Actions";
+import { filterMethod } from "@/utils/utils";
 
 const Products = () => {
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState<any>([]);
   const [addProductModal, setAddProductModal] = useState(false);
   const { state, dispatch } = useContext(DataContext);
+  const [searchInput, setSearchInput] = useState("");
 
   useEffect(() => {
     const token = localStorage.getItem("token") || "";
@@ -31,16 +33,24 @@ const Products = () => {
     getProducts();
   }, [dispatch, state?.callback]);
 
+  const filteredData = filterMethod(products, searchInput);
+  console.log(filteredData);
+
   //
 
   return (
     <DashboardLayout>
       <section className="sections">
-        <Topbar title="Products" subtitle="Manage User Orders" />
+        <Topbar title="Products" subtitle="Manage Products here" />
 
         <div className="orders">
           <div className="orders-heading">
-            <input type="text" placeholder="Search" />
+            <input
+              type="text"
+              placeholder="Search"
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
+            />
 
             <button onClick={() => setAddProductModal(true)}>
               <i className="bi bi-plus-circle"></i>
@@ -50,10 +60,10 @@ const Products = () => {
 
           <div className="order-box">
             {loading || state?.loading ? (
-              <CardSkeleton length={12} />
+              <CardSkeleton length={8} />
             ) : (
               <>
-                {products?.map((item: any) => {
+                {filteredData?.map((item: any) => {
                   return <Productcard {...item} key={item.id} />;
                 })}
               </>

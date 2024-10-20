@@ -40,9 +40,6 @@ export default function Navbar() {
   return (
     <div className="dashboard-nav">
       <nav className="navbar navbar-expand-lg bg-light">
-        grid-template-columns: repeat(2, 1fr);grid-template-columns: repeat(2,
-        1fr);grid-template-columns: repeat(2, 1fr);grid-template-columns:
-        repeat(2, 1fr);
         <button
           className="navbar-toggler"
           type="button"

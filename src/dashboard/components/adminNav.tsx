@@ -56,7 +56,7 @@ export default function AdminNavbar() {
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span className="navbar-toggler-icon" />
+          <i className="bi bi-list"></i>
         </button>
 
         <div className="collapse navbar-collapse" id="navbarSupportedContent">

@@ -13,11 +13,21 @@
     justify-content: space-between;
     margin-bottom: 50px;
 
+    @media (max-width:460px){
+      flex-direction:column
+    }
+
     input {
       @include input($border-color);
       width: 300px;
       border: 1px solid $border-color;
       font-size: 13px;
+      border-radius: 5px;
+      height:50px;
+
+      @media (max-width:460px) {
+          width: 100%;
+        }
     }
 
     button {
@@ -27,6 +37,12 @@
       display: flex;
       align-items: center;
       column-gap: 10px;
+      border-radius:5px!important;
+
+      @media (max-width:460px){
+        width:100%;
+        margin-top:10px;
+      }
     }
   }
 
@@ -104,6 +120,11 @@
           justify-content: center;
           background: rgba(0, 0, 0, 0.705);
           padding: 4px;
+
+          @media (max-width: 500px) {
+              top: 10px;
+              left: 10px;
+            }
 
           svg {
             color: $white;
