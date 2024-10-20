@@ -32,7 +32,6 @@
       padding-left: 10px;
     }
 
-
     .order-details {
       display: flex;
       align-items: center;
@@ -234,9 +233,9 @@
       padding: 20px;
       margin-top: 30px;
       border-radius: 8px !important;
-      margin-bottom:30px;
+      margin-bottom: 30px;
 
-      @media (max-width:500px) {
+      @media (max-width: 500px) {
         padding: 20px 10px;
       }
 
@@ -244,6 +243,13 @@
         @include heading(18px, 600, $black);
         margin-bottom: 20px;
         padding-left: 10px;
+      }
+
+      .user-image{
+        height:100px; 
+        width:100px;
+        border-radius:50%;
+        overflow:hidden
       }
     }
 

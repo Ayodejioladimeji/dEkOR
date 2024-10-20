@@ -22,7 +22,7 @@ const Products = () => {
     const getProducts = async () => {
       const res = await GetRequests("/product/admin", token);
       if (res?.status === 200) {
-        setProducts(res?.data);
+        setProducts(res?.data?.products);
         dispatch({ type: ACTIONS.LOADING, payload: false });
         setLoading(false);
       } else {

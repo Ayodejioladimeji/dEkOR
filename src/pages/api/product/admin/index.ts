@@ -26,9 +26,20 @@ const fetchProduct = async (req: NextApiRequest, res: NextApiResponse) => {
     if (check?.role !== "admin")
       return res.status(401).json({ message: "Authentication is not valid" });
 
-    // Fetch only products where isActive is true
-    const products = await Product.find().sort("-updatedAt");
-    res.json(products);
+    const page = parseInt(req.query.page as string, 10) || 1;
+    const pageSize = parseInt(req.query.pageSize as string, 10) || 10;
+
+    // Fetch total count of active products
+    const totalCount = await Product.countDocuments();
+
+    // Fetch paginated products where isActive is true
+    const products = await Product.find()
+      .select("-buyingPrice")
+      .sort("-updatedAt")
+      .skip((page - 1) * pageSize)
+      .limit(pageSize);
+
+    res.json({ products, totalCount, page, pageSize });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }

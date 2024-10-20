@@ -398,7 +398,7 @@ const OrderDetails = () => {
               <div className="user-profile">
                 <h2>User Information</h2>
 
-                <div className="image-section mb-4">
+                <div className="user-image mb-4">
                   <Image
                     src={data?.user?.avatar}
                     alt="avatar"
