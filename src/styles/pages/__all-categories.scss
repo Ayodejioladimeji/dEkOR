@@ -1,4 +1,4 @@
-.all-products {
+.all-categories {
   padding-top: 120px;
   padding-bottom: 80px;
 
@@ -29,7 +29,7 @@
     }
   }
 
-  .product-box {
+  .category-box {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     column-gap: 30px;
@@ -57,7 +57,7 @@
       grid-template-columns: 1fr;
     }
 
-    .product-loading {
+    .category-loading {
       height: 900px;
     }
   }
@@ -97,18 +97,6 @@
         font-weight: 600;
         margin-top: 20px;
       }
-    }
-
-    .start-shopping {
-      padding: 15px 35px;
-      background: $primary-color;
-      color: $white;
-      border-radius: 5px;
-      border: none;
-      outline: none;
-      text-align: center;
-      font-size: 20px;
-      margin-top: 20px;
     }
   }
 }

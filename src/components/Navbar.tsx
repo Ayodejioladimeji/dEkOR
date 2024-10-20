@@ -75,24 +75,13 @@ function Header() {
               <li className="nav-item">
                 <Link
                   className={`nav-link ${
-                    router.pathname === "/contact" ? "active" : ""
-                  }`}
-                  href="#"
-                >
-                  Contact
-                </Link>
-              </li>
-
-              {/* <li className="nav-item">
-                <Link
-                  className={`nav-link ${
                     router.pathname === "/categories" ? "active" : ""
                   }`}
-                  href="#"
+                  href="/categories"
                 >
                   Categories
                 </Link>
-              </li> */}
+              </li>
             </Nav>
           </ul>
 

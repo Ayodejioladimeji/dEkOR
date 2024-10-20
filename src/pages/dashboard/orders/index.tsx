@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import DashboardLayout from "../DashboardLayout";
 import CardSkeleton from "@/common/cardskeleton";
-import Ordercard from "@/dashboard/common/orderscard";
 import Topbar from "@/dashboard/components/topbar";
 import { GetRequests } from "@/utils/requests";
+import MainOrdercard from "@/dashboard/common/mainordercard";
 
 const Orders = () => {
   const [loading, setLoading] = useState(true);
@@ -42,7 +42,7 @@ const Orders = () => {
             ) : (
               <>
                 {orders?.map((item: any) => {
-                  return <Ordercard {...item} key={item.id} />;
+                  return <MainOrdercard {...item} key={item._id} />;
                 })}
               </>
             )}

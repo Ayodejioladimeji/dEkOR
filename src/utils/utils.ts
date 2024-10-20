@@ -1,9 +1,9 @@
 export const formatMoney = (amount) => {
-  let amountStr = amount.toString();
+  let amountStr = amount?.toString();
 
-  let parts = amountStr.split(".");
+  let parts = amountStr?.split(".");
   let integerPart = parts[0];
-  let fractionalPart = parts.length > 1 ? "." + parts[1] : "";
+  let fractionalPart = parts?.length > 1 ? "." + parts[1] : "";
 
   // Add commas to the integer part
   let formattedInteger = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
