@@ -1,6 +1,7 @@
 import connectDB from "../utils/connectDB";
 import Category from "../models/categoryModel";
 import auth from "../middleware/auth";
+import { NextApiRequest, NextApiResponse } from "next";
 
 connectDB();
 
@@ -43,11 +44,21 @@ const createCategory = async (req, res) => {
   }
 };
 
-const fetchCategory = async (req, res) => {
+const fetchCategory = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const categories = await Category.find().sort("-updatedAt");
-    res.json(categories);
+    const page = parseInt(req.query.page as string, 10) || 1;
+    const pageSize = parseInt(req.query.pageSize as string, 10) || 10;
+
+    // Fetch total count of active products
+    const totalCount = await Category.countDocuments();
+
+    const data = await Category.find()
+      .sort("-updatedAt")
+      .skip((page - 1) * pageSize)
+      .limit(pageSize);
+
+    res.json({ data, totalCount, page, pageSize });
   } catch (error) {
-    return res?.status(500).json({ message: error.message });
+    return res.status(500).json({ message: error.message });
   }
 };

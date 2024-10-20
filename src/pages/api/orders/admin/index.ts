@@ -33,7 +33,6 @@ const fetchOrders = async (req: NextApiRequest, res: NextApiResponse) => {
     const totalCount = await Order.countDocuments();
 
     const data = await Order.find()
-      .select("-buyingPrice")
       .sort("-updatedAt")
       .skip((page - 1) * pageSize)
       .limit(pageSize);
