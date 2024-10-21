@@ -5,19 +5,25 @@ import CardSkeleton from "../../common/cardskeleton";
 import Productcard from "../../common/productcard";
 // import Paginate from "@/components/pagination/Paginate";
 // import { useRouter } from "next/router";
-import { GetRequest } from "@/utils/requests";
+import { GetRequest, GetRequests } from "@/utils/requests";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 //
 
 const AllProducts = () => {
   const [products, setProducts] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState<number>(1);
+  const [hasMore, setHasMore] = useState<boolean>(true);
+  const [totalCount, setTotalCount] = useState<number>(0);
 
   useEffect(() => {
     const getProducts = async () => {
-      const res = await GetRequest("/product");
+      const res = await GetRequest("/product?page=1&pageSize=10");
       if (res?.status === 200) {
         setProducts(res?.data?.products);
+        setTotalCount(res?.data?.totalCount);
+        setHasMore(res?.data?.products.length < res?.data?.totalCount);
         setLoading(false);
       } else {
         setLoading(false);
@@ -27,12 +33,42 @@ const AllProducts = () => {
     getProducts();
   }, []);
 
+  const fetchProducts = async (newPage: number) => {
+    const token = localStorage.getItem("token") || "";
+    const res = await GetRequests(
+      `/product/admin?page=${newPage}&pageSize=10`,
+      token
+    );
+
+    if (res?.status === 200) {
+      // Append the new products to the existing products
+      setProducts((prevProducts) => [
+        ...prevProducts,
+        ...(res?.data?.products || []),
+      ]);
+      setHasMore(products.length + res?.data?.products.length < totalCount);
+      setPage(newPage);
+    } else {
+      setHasMore(false);
+    }
+  };
+
+  const fetchMoreData = () => {
+    if (hasMore) {
+      fetchProducts(page + 1);
+    }
+  };
+
   //
 
   return (
     <Layout>
       <div className="all-products">
-        <div className="container">
+        <div
+          className="container"
+          id="scrollableDiv"
+          style={{ height: "90vh", overflow: "auto" }}
+        >
           <div className="heading-section">
             <Breadcumb title="All Products" />
           </div>
@@ -42,17 +78,35 @@ const AllProducts = () => {
             <FilterIcon />
           </div> */}
 
-          <div className="product-box">
+          <>
             {loading ? (
-              <CardSkeleton length={12} />
+              <div className="product-box">
+                <CardSkeleton length={12} />
+              </div>
             ) : (
               <>
-                {products?.map((item: any) => {
-                  return <Productcard {...item} key={item._id} />;
-                })}
+                <InfiniteScroll
+                  dataLength={products?.length}
+                  next={fetchMoreData}
+                  hasMore={hasMore}
+                  loader={
+                    products?.length !== 0 && (
+                      <p className="my-5 text-xs text-center">
+                        Loading more products...
+                      </p>
+                    )
+                  }
+                  scrollableTarget="scrollableDiv"
+                >
+                  <div className="product-box">
+                    {products?.map((item: any) => (
+                      <Productcard {...item} key={item._id} />
+                    ))}
+                  </div>
+                </InfiniteScroll>
               </>
             )}
-          </div>
+          </>
 
           {!loading && products?.length === 0 && (
             <div
