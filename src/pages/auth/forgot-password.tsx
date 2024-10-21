@@ -6,67 +6,28 @@ import * as EmailValidator from "email-validator";
 import Link from "next/link";
 import Loading from "@/common/loading";
 import Image from "next/image";
-import { PatchRequest, PostRequest } from "@/utils/requests";
+import { PostRequest } from "@/utils/requests";
 import Goback from "@/common/Goback";
 import AuthLayout from "./Authlayout";
-import { mergeCarts } from "@/utils/utils";
 import { Logo } from "../../../public/assets";
+import cogoToast from "cogo-toast";
+import { useRouter } from "next/router";
 
 // VALIDATION REGEX
 
-const Login = () => {
+const ForgotPassword = () => {
   const [buttonloading, setButtonloading] = useState(false);
+  const router = useRouter();
 
   // handle submit
   const handleSubmit = async (payload: any) => {
     setButtonloading(true);
 
-    const res = await PostRequest("/auth/login", payload);
+    const res = await PostRequest("/auth/forgot-password", payload);
 
-    if (res?.status === 200) {
-      localStorage.setItem("user", JSON.stringify(res?.data?.user));
-
-      const localCartItems = JSON.parse(localStorage.getItem("cart")) || [];
-      const localFavItems = JSON.parse(localStorage.getItem("favourite")) || [];
-      const pathname = localStorage.getItem("pathname");
-
-      // Ensure the cart and favourite items are arrays before merging
-      const dbCartItems = Array.isArray(res?.data?.user?.cart)
-        ? res?.data?.user?.cart
-        : [];
-      const dbFavItems = Array.isArray(res?.data?.user?.favourite)
-        ? res?.data?.user?.favourite
-        : [];
-
-      // Merge the database cart with the local cart
-      const mergedCart = mergeCarts(dbCartItems, localCartItems);
-      const mergedFav = mergeCarts(dbFavItems, localFavItems);
-
-      // Save merged data to local storage
-      localStorage.setItem("cart", JSON.stringify(mergedCart));
-      localStorage.setItem("favourite", JSON.stringify(mergedFav));
-
-      localStorage.setItem("token", res.data.token);
-
-      if (pathname) {
-        window.location.href = pathname;
-      } else {
-        window.location.href = "/product";
-      }
-
-      // Save the cart items to the database
-      const token = localStorage.getItem("token") || "";
-      if (token) {
-        const payload = {
-          cartItems: mergedCart,
-        };
-        const favpayload = {
-          favItems: mergedFav,
-        };
-
-        await PatchRequest("/user/cart", payload, res?.data?.token);
-        await PatchRequest("/user/favourite", favpayload, res?.data?.token);
-      }
+    if (res?.status === 200 || res?.status === 201) {
+      cogoToast.success(res?.data?.message);
+      router.push("/auth/reset-password");
     } else {
       setButtonloading(false);
     }
@@ -79,7 +40,6 @@ const Login = () => {
       <Formik
         initialValues={{
           email: "",
-          password: "",
         }}
         onSubmit={(values) => {
           setTimeout(async () => {
@@ -95,11 +55,6 @@ const Login = () => {
             errors.email = "Email is Required";
           } else if (!EmailValidator.validate(values.email)) {
             errors.email = "Invalid email address";
-          }
-
-          //   THE PASSWORD SECTION
-          if (!values.password) {
-            errors.password = "Password is Required";
           }
 
           return errors;
@@ -199,7 +154,7 @@ const Login = () => {
                     <Logo />
                   </Link>
 
-                  <h1>Welcome back!</h1>
+                  <h1>Forgot Your Password?</h1>
 
                   <small>Stay trendy, Stay you.</small>
 
@@ -220,29 +175,6 @@ const Login = () => {
                     </div>
 
                     <div className="form-box">
-                      <label htmlFor="password">Password</label>
-                      <input
-                        name="password"
-                        type="password"
-                        placeholder="Enter your password"
-                        value={values.password}
-                        autoComplete="on"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                      />
-                      {errors.password && touched.password && (
-                        <div className="input_feedback">{errors.password}</div>
-                      )}
-
-                      <Link
-                        href="/auth/forgot-password"
-                        className="password-forgot my-3"
-                      >
-                        forgot password?
-                      </Link>
-                    </div>
-
-                    <div className="form-box">
                       <button type="submit" disabled={buttonloading}>
                         {buttonloading ? (
                           <Loading
@@ -252,7 +184,7 @@ const Login = () => {
                             secondaryColor="#fff"
                           />
                         ) : (
-                          "Login"
+                          "Submit"
                         )}
                       </button>
                     </div>
@@ -272,4 +204,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default ForgotPassword;
