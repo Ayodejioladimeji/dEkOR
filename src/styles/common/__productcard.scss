@@ -7,7 +7,6 @@
     position: relative;
     background: $light-color;
     border: 1px solid $border-color;
-    // display:none;
 
     @media (max-width: 767px) {
       border-radius: 8px;
@@ -97,12 +96,8 @@
     text-align: center;
 
     h3 {
-      @include body-text(23px, 500, $text-color);
+      @include body-text(20px, 500, $text-color);
       margin-bottom: 5px;
-
-      @media (max-width: 767px) {
-        font-size: 20px;
-      }
 
       @media (max-width: 565px) {
         font-size: 18px;
