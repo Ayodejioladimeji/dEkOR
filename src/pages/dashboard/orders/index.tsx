@@ -30,10 +30,7 @@ const Orders = () => {
   return (
     <DashboardLayout>
       <section className="sections">
-        <Topbar
-          title="Your Orders"
-          subtitle="View your orders here, you can also buy again"
-        />
+        <Topbar title="Your Orders" subtitle="View your orders here" />
 
         <div className="orders">
           <div className="order-box">
