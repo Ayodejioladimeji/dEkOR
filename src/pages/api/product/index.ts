@@ -117,16 +117,25 @@ const fetchSimilarProduct = async (
       return res.status(400).json({ message: "Category ID is required" });
     }
 
+    const page = parseInt(req.query.page as string, 10) || 1;
+    const pageSize = parseInt(req.query.pageSize as string, 10) || 10;
+
+    const totalCount = await Product.countDocuments({ isActive: true });
+
     const products = await Product.find({
       category: categoryId,
       isActive: true,
-    }).sort("-updatedAt");
+    })
+      .select("-buyingPrice")
+      .sort("-updatedAt")
+      .skip((page - 1) * pageSize)
+      .limit(pageSize);
 
     if (products.length === 0) {
       return res.json([]);
     }
 
-    res.json(products);
+    res.json({ data: products, totalCount, page, pageSize });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
