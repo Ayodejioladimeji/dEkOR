@@ -14,7 +14,7 @@ const Payments = () => {
   const [payments, setPayments] = useState<any>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalCount, setTotalCount] = useState(0);
-  const PageSize = 20;
+  const PageSize = 9;
   const router = useRouter();
   const { page } = router.query;
 
@@ -27,7 +27,7 @@ const Payments = () => {
         token
       );
       if (res?.status === 200) {
-        setPayments(res?.data);
+        setPayments(res?.data?.data);
         setTotalCount(res?.data?.totalCount);
 
         if (page === undefined) {
