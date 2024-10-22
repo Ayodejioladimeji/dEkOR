@@ -131,10 +131,6 @@ const fetchSimilarProduct = async (
       .skip((page - 1) * pageSize)
       .limit(pageSize);
 
-    if (products.length === 0) {
-      return res.json([]);
-    }
-
     res.json({ data: products, totalCount, page, pageSize });
   } catch (error) {
     return res.status(500).json({ message: error.message });
