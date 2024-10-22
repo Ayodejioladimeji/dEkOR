@@ -54,11 +54,6 @@ const AllProducts = () => {
             <Breadcumb title="All Products" />
           </div>
 
-          {/* <div className="filter">
-            <p>Filter</p>
-            <FilterIcon />
-          </div> */}
-
           <div className="product-box">
             {loading ? (
               <CardSkeleton length={10} />

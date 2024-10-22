@@ -99,10 +99,9 @@ const fetchOrders = async (req: NextApiRequest, res: NextApiResponse) => {
     const pageSize = parseInt(req.query.pageSize as string, 10) || 10;
 
     // Fetch total count of active products
-    const totalCount = await Order.countDocuments();
+    const totalCount = await Order.countDocuments({ user: user.id });
 
     const data = await Order.find({ user: user.id })
-      .select("-buyingPrice")
       .sort("-updatedAt")
       .skip((page - 1) * pageSize)
       .limit(pageSize);
