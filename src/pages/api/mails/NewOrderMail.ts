@@ -1,3 +1,5 @@
+import { formatMoney } from "@/utils/utils";
+
 const nodemailer = require("nodemailer");
 
 const transporter = nodemailer.createTransport({
@@ -13,7 +15,7 @@ interface EmailData {
   name: string;
   orderId: string;
   orderDate: string;
-  orderAmount: string;
+  orderAmount: number;
   status: string;
 }
 
@@ -84,7 +86,7 @@ export const NewOrderEmail = ({
     <h3>Order Details:</h3>
     <p><strong>Order ID:</strong> ${orderId}</p>
     <p><strong>Order Date:</strong> ${orderDate}</p>
-    <p><strong>Amount Paid:</strong> ${orderAmount}</p>
+    <p><strong>Amount Paid:</strong> ${formatMoney(orderAmount)}</p>
     <p><strong>Payment Status:</strong> ${status}</p>
 
     <p>Please review the order and ensure the necessary processing is carried out.</p>

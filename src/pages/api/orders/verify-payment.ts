@@ -75,7 +75,7 @@ const verifyPayment = async (req: NextApiRequest, res: NextApiResponse) => {
         name: user?.name,
         orderId: response?.data?.data?.reference,
         orderDate: moment(paidAt).format("lll"),
-        orderAmount: amount,
+        orderAmount: Number(amount) / 100,
         status,
       });
 
@@ -84,7 +84,7 @@ const verifyPayment = async (req: NextApiRequest, res: NextApiResponse) => {
         name: user?.name,
         orderId: response?.data?.data?.reference,
         orderDate: moment(paidAt).format("lll"),
-        orderAmount: amount,
+        orderAmount: Number(amount) / 100,
         status,
       });
 

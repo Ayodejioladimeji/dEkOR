@@ -21,11 +21,11 @@ const register = async (req, res) => {
     const { name, email, password } = req.body;
 
     const errMsg = valid(name, email, password);
-    if (errMsg) return res.status(400).json({ err: errMsg });
+    if (errMsg) return res.status(400).json({ message: errMsg });
 
     const user = await Users.findOne({ email });
     if (user)
-      return res.status(400).json({ err: "This email already exists." });
+      return res.status(400).json({ message: "This email already exists." });
 
     const passwordHash = await bcrypt.hash(password, 12);
 

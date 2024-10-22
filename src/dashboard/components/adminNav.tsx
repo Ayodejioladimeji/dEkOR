@@ -178,9 +178,9 @@ export default function AdminNavbar() {
                 <div className="profile-notification">
                   <div className="profile-box ">
                     <Link
-                      href="/settings"
+                      href="/dashboard/profile-settings"
                       className={`profile-link ${
-                        router.asPath.includes("/dashboard/admin/settings")
+                        router.asPath.includes("/dashboard/profile-settings")
                           ? "active"
                           : ""
                       }`}

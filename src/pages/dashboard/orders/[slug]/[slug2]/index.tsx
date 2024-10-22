@@ -157,6 +157,17 @@ const OrderDetails = () => {
                       ₦{formatMoney(Number(data?.totalAmount))}
                     </p>
                   </div>
+                  <div className="order-details">
+                    <p>Color</p>
+                    <p
+                      style={{
+                        height: "20px",
+                        width: "100px",
+                        background: data?.product?.selectedColor,
+                        border: "1px solid #eaeaea",
+                      }}
+                    ></p>
+                  </div>
                 </div>
                 <hr />
 

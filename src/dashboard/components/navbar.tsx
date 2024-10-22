@@ -174,9 +174,11 @@ export default function Navbar() {
                 <div className="profile-notification">
                   <div className="profile-box ">
                     <Link
-                      href="/settings"
+                      href="/dashboard/profle-settings"
                       className={`profile-link ${
-                        router.asPath.includes("/settings") ? "active" : ""
+                        router.asPath.includes("/dashboard/profle-settings")
+                          ? "active"
+                          : ""
                       }`}
                     >
                       My profile

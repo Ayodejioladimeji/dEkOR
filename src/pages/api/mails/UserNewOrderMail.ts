@@ -1,3 +1,5 @@
+import { formatMoney } from "@/utils/utils";
+
 const nodemailer = require("nodemailer");
 
 interface EmailData {
@@ -5,7 +7,7 @@ interface EmailData {
   name: string;
   orderId: string;
   orderDate: string;
-  orderAmount: string;
+  orderAmount: number;
   status: string;
 }
 
@@ -97,7 +99,7 @@ export const UserNewOrderEmail = ({
     <h3>Order Details:</h3>
     <p><strong>Order ID:</strong> ${orderId}</p>
     <p><strong>Order Date:</strong> ${orderDate}</p>
-    <p><strong>Total Amount:</strong> ${orderAmount}</p>
+    <p><strong>Total Amount:</strong> ${formatMoney(orderAmount)}</p>
     <p><strong>Payment Status:</strong> ${status}</p>
 
     <p>Your order will be delivered to you within 2 days. If you have any questions, feel free to reach out to our support team.</p>

@@ -30,11 +30,12 @@ const login = async (req, res) => {
     // Check if the user exists
     const user = await Users.findOne({ email });
     if (!user)
-      return res.status(400).json({ err: "This user does not exist." });
+      return res.status(400).json({ message: "This user does not exist." });
 
     // Check if the password matches
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ err: "Incorrect password." });
+    if (!isMatch)
+      return res.status(400).json({ message: "Incorrect password." });
 
     // Create tokens
     const token = createAccessToken({ id: user._id });

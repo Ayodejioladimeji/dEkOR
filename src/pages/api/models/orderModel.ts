@@ -37,6 +37,10 @@ const orderSchema = new mongoose.Schema(
           type: String,
           default: "pending-delivery",
         },
+        selectedColor: {
+          type: String,
+          required: true,
+        },
       },
     ],
     totalAmount: {
