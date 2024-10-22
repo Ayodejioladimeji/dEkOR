@@ -46,6 +46,8 @@ const CategoryProducts = () => {
     }
   }, [page, slug]);
 
+  console.log(products);
+
   //
 
   return (
