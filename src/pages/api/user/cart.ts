@@ -37,10 +37,6 @@ const addToCart = async (req, res) => {
 
     const { cartItems } = req.body;
 
-    // if (!cartItems || cartItems.length === 0) {
-    //     return res.status(400).json({ message: "Cart is empty" });
-    // }
-
     // Update user's cart in the database
     user.cart = [...cartItems];
     await user.save();

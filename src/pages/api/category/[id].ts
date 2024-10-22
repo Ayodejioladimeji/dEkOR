@@ -47,8 +47,11 @@ const deleteCategory = async (req, res) => {
   try {
     // check if its the admin that is creating the category
     const check = await auth(req, res);
-    if (check?.role === "user")
-      return res.status(401).json({ message: "Authentication is not valid" });
+    if (check?.role !== "super-admin")
+      return res.status(401).json({
+        message:
+          "Permission Denied!, You're not permitted to perform this action",
+      });
 
     const { id } = req.query;
 
