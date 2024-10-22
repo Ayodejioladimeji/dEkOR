@@ -1,0 +1,113 @@
+.payments {
+  background: $secondary-color;
+  width: 100%;
+  padding: 50px 20px;
+
+  @media (max-width: 500px) {
+    padding: 50px 10px;
+  }
+
+  .payment-box {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 30px;
+    row-gap: 30px;
+
+    @media (max-width: 1180px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: 600px) {
+      grid-template-columns: 1fr;
+      column-gap: 20px;
+      row-gap: 20px;
+    }
+
+    .payment-card {
+      padding: 15px 0px;
+      border: 1px solid $border-color;
+      border-radius: 15px;
+      background: $white;
+      position: relative;
+      transition: $transitions;
+      box-shadow: inset;
+
+      &:hover {
+        transform: scale(0.97);
+      }
+
+      .bi {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        color: $primary-color;
+      }
+
+      h3 {
+        @include body-text(18px, 500, $text-color);
+        margin-bottom: 20px;
+        padding: 0 10px;
+
+        @media (max-width: 500px) {
+          font-size: 16px;
+        }
+      }
+
+      .card-details {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 15px;
+        margin-bottom: 10px;
+
+        @media (max-width: 500px) {
+          padding: 0 10px;
+        }
+
+        h2 {
+          @include body-text(18px, 500, $primary-color);
+          padding: 0 10px;
+
+          @media (max-width: 500px) {
+            font-size: 16px;
+          }
+        }
+
+        p {
+          @include body-text(14px, 500, $light-color);
+
+          &.response {
+            text-transform: uppercase;
+          }
+
+          @media (max-width: 565px) {
+            margin-bottom: 10px;
+          }
+        }
+      }
+    }
+  }
+
+  .view-all {
+    @include buttons($primary-color);
+    margin: 80px auto 0 auto;
+    padding: 15px 30px;
+    width: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $white;
+    font-size: 20px;
+    font-weight: 600;
+    border-radius: 20px;
+
+    @media (max-width: 767px) {
+      font-size: 18px;
+      padding: 15px 30px;
+    }
+
+    @media (max-width: 350px) {
+      width: 100%;
+    }
+  }
+}

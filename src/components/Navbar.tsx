@@ -2,10 +2,11 @@ import { useRouter } from "next/router";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import { Cart, Heart, Logo, Profile, Search } from "../../public/assets";
+import { Cart, Heart, Logo, Search } from "../../public/assets";
 import { useContext } from "react";
 import { DataContext } from "@/store/GlobalState";
 import Link from "next/link";
+import Usercard from "@/common/usercard";
 
 //
 
@@ -16,7 +17,7 @@ function Header() {
   //
 
   return (
-    <Navbar collapseOnSelect expand="lg" className="navbar fixed-top py-4">
+    <Navbar collapseOnSelect expand="lg" className="home-navbar fixed-top py-4">
       <Container className="main-container">
         <div className="toggle-section">
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -42,14 +43,12 @@ function Header() {
             </Link>
           </li>
           <li className="nav-item">
-            {/* <Link href="/auth/login"> */}
-            <Profile />
-            {/* </Link> */}
+            <Usercard />
           </li>
         </ul>
 
         <Navbar.Collapse id="responsive-navbar-nav">
-          <ul className="navbar-nav nav-top ms-auto">
+          <ul className="home-navbar-nav nav-top ms-auto">
             <Nav>
               <li className="nav-item">
                 <Link
@@ -76,20 +75,9 @@ function Header() {
               <li className="nav-item">
                 <Link
                   className={`nav-link ${
-                    router.pathname === "/contact" ? "active" : ""
-                  }`}
-                  href="#"
-                >
-                  Contact
-                </Link>
-              </li>
-
-              <li className="nav-item">
-                <Link
-                  className={`nav-link ${
                     router.pathname === "/categories" ? "active" : ""
                   }`}
-                  href="#"
+                  href="/categories"
                 >
                   Categories
                 </Link>
@@ -97,7 +85,7 @@ function Header() {
             </Nav>
           </ul>
 
-          <ul className="navbar-nav web-nav ms-auto">
+          <ul className="home-navbar-nav web-nav ms-auto">
             <Nav>
               <li className="nav-item">
                 <Search />
@@ -115,9 +103,7 @@ function Header() {
                 </Link>
               </li>
               <li className="nav-item">
-                {/* <Link href="/auth/login"> */}
-                <Profile />
-                {/* </Link> */}
+                <Usercard />
               </li>
             </Nav>
           </ul>

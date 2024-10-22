@@ -1,0 +1,122 @@
+.addresses {
+  background: $secondary-color;
+  width: 100%;
+  padding: 20px;
+
+  @media (max-width: 600px) {
+    padding: 20px 10px;
+  }
+
+  small {
+    display: block;
+    margin-bottom: 20px;
+    text-decoration: underline;
+    color: $primary-color;
+    cursor: pointer;
+  }
+
+  .add-new {
+    @include buttons($black);
+    display: flex;
+    align-items: center;
+    column-gap: 5px;
+    font-size: 14px;
+    padding: 10px 20px;
+
+    .bi {
+      font-size: 20px;
+      font-weight: bold;
+    }
+  }
+
+  .address-box {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 30px;
+    row-gap: 30px;
+
+    @media (max-width: 991px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: 600px) {
+      grid-template-columns: 1fr;
+      column-gap: 20px;
+      row-gap: 20px;
+    }
+
+    .address-card {
+      padding: 20px 0px;
+      border: 1px solid $primary-color;
+      border-radius: 5px;
+      background: $white;
+      position: relative;
+      transition: $transitions;
+      cursor: pointer;
+
+      &:hover {
+        transform: scale(0.97);
+      }
+
+      .bi-check-circle-fill {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        color: $primary-color;
+        font-size: 20px;
+      }
+
+      h3 {
+        @include body-text(15px, 500, $text-color);
+        margin-bottom: 10px;
+        padding: 0 10px;
+      }
+
+      p {
+        @include body-text(13px, 500, $light-color);
+        padding: 0 10px;
+        margin-bottom: 5px;
+      }
+
+      .address-below {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 10px;
+
+        .bi-trash3 {
+          cursor: pointer;
+          color: red;
+        }
+
+        .bi-pencil-square {
+          cursor: pointer;
+          color: $primary-color;
+        }
+      }
+    }
+  }
+
+  .view-all {
+    @include buttons($primary-color);
+    margin: 80px auto 0 auto;
+    padding: 15px 30px;
+    width: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $white;
+    font-size: 20px;
+    font-weight: 600;
+    border-radius: 20px;
+
+    @media (max-width: 767px) {
+      font-size: 18px;
+      padding: 15px 30px;
+    }
+
+    @media (max-width: 350px) {
+      width: 100%;
+    }
+  }
+}

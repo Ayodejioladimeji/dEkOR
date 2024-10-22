@@ -1,0 +1,71 @@
+.confirm-modal {
+  margin-top: 80px;
+
+  @media (max-width: 600px) {
+    width: 95vw !important;
+    max-width: 95vw !important;
+    margin: 80px auto;
+  }
+
+  @media (max-width: 400px) {
+    width: 90vw !important;
+    max-width: 90vw !important;
+  }
+
+  .confirm {
+    padding: 30px 20px;
+    position: relative;
+
+    @media (max-width: 600px) {
+      padding: 30px 10px;
+    }
+
+    h6 {
+      @include heading(20px, 600, $black);
+      margin-top: 8px;
+    }
+
+    p {
+      @include body-text(15px, 400, $text-color);
+      margin-bottom: 20px;
+
+      @media (max-width: 500px) {
+        font-size: 13px;
+      }
+    }
+
+    .bi-x-circle {
+      position: absolute;
+      right: 24px;
+      top: 24px;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .btn-container {
+      display: flex;
+      align-items: center;
+      column-gap: 20px;
+      justify-content: flex-end;
+
+      button {
+        background: $black;
+        border: none;
+        outline: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        width: 120px;
+        font-weight: 600;
+        color: $white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:first-child {
+          background: $border-color !important;
+          color: $black !important;
+        }
+      }
+    }
+  }
+}

@@ -3,49 +3,46 @@ import Breadcumb from "../../common/breadcumb";
 import Layout from "../../components/Layout";
 import CardSkeleton from "../../common/cardskeleton";
 import Productcard from "../../common/productcard";
-import { FilterIcon } from "../../../public/assets";
+import { GetRequest } from "@/utils/requests";
 import Paginate from "@/components/pagination/Paginate";
 import { useRouter } from "next/router";
-import { GetRequest } from "@/utils/requests";
-const ORGANISATION_ID = process.env.NEXT_PUBLIC_ORGANISATION_ID;
-const APP_ID = process.env.NEXT_PUBLIC_APP_ID;
-const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
+
+/* eslint-disable */
 
 //
 
 const AllProducts = () => {
   const [products, setProducts] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const PageSize = 12;
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalCount, setTotalCount] = useState(0);
+  const PageSize = 20;
   const router = useRouter();
   const { page } = router.query;
 
-  //get all products on products page
+  //
+
   useEffect(() => {
-    if (router.isReady) {
-      const getProducts = async () => {
-        const res: any = await GetRequest(
-          `/products?organization_id=${ORGANISATION_ID}&reverse_sort=false&page=${
-            page === undefined ? currentPage : page
-          }&size=${PageSize}&Appid=${APP_ID}&Apikey=${API_KEY}`
-        );
+    const getProducts = async () => {
+      const res = await GetRequest(
+        `/product?page=${page === undefined ? currentPage : page}&pageSize=${PageSize}`
+      );
+      if (res?.status === 200) {
+        setProducts(res?.data?.products);
+        setTotalCount(res?.data?.totalCount);
 
-        if (res?.status === 200) {
-          setProducts(res?.data.items);
-          setTotalCount(res?.data?.total);
-
-          if (page === undefined) {
-            setCurrentPage(1);
-          }
-
-          setLoading(false);
+        if (page === undefined) {
+          setCurrentPage(1);
         }
-      };
-      getProducts();
-    }
-  }, [currentPage, page, router]);
+
+        setLoading(false);
+      } else {
+        setLoading(false);
+      }
+    };
+
+    getProducts();
+  }, [page]);
 
   //
 
@@ -57,22 +54,40 @@ const AllProducts = () => {
             <Breadcumb title="All Products" />
           </div>
 
-          <div className="filter">
+          {/* <div className="filter">
             <p>Filter</p>
             <FilterIcon />
-          </div>
+          </div> */}
 
           <div className="product-box">
             {loading ? (
-              <CardSkeleton length={12} />
+              <CardSkeleton length={10} />
             ) : (
               <>
-                {products?.map((item: any) => {
-                  return <Productcard {...item} key={item.id} />;
-                })}
+                {products?.map((item: any) => (
+                  <Productcard {...item} key={item._id} />
+                ))}
               </>
             )}
           </div>
+
+          {!loading && products?.length === 0 && (
+            <div
+              style={{
+                height: "50vh",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                flexDirection: "column",
+              }}
+            >
+              <i
+                className="bi bi-box-seam-fill"
+                style={{ fontSize: "45px" }}
+              ></i>
+              No Products Available
+            </div>
+          )}
 
           {/* pagination */}
           {!loading && products?.length !== 0 && totalCount > PageSize && (

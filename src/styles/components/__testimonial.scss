@@ -1,0 +1,50 @@
+.testimonial {
+  background: $secondary-color;
+  padding: 120px 20px;
+
+  @media (max-width: 767px) {
+    padding: 120px 0px;
+  }
+
+  .testimonial-card {
+    text-align: center;
+    opacity: 0.9;
+    position: relative;
+    background: $white;
+    margin: 30px 0;
+    padding: 30px 20px;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 8px;
+    border-bottom: 4px solid $primary-color;
+    margin-top: 60px;
+
+    @media (max-width: 1199px) {
+      height: 350px;
+      padding: 30px 10px;
+    }
+
+    h3 {
+      font-size: 32px;
+      margin-bottom: 20ppx;
+      font-weight: 600;
+
+      @media (max-width: 991px) {
+        font-size: 25px;
+      }
+    }
+
+    p {
+      font-size: 18px;
+      margin-bottom: 30px;
+      color: $text-color;
+
+      @media (max-width: 991px) {
+        font-size: 16px;
+      }
+    }
+  }
+}

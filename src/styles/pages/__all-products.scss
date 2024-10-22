@@ -2,6 +2,10 @@
   padding-top: 120px;
   padding-bottom: 80px;
 
+  @media (max-width: 278px) {
+    padding-top: 140px;
+  }
+
   .heading-section {
     height: 50px;
     font-weight: 500;
@@ -32,6 +36,10 @@
     row-gap: 60px;
     margin-top: 40px;
 
+    @media (min-width: 1440px) {
+      grid-template-columns: repeat(5, 1fr);
+    }
+
     @media (max-width: 991px) {
       grid-template-columns: repeat(3, 1fr);
     }
@@ -45,57 +53,12 @@
       row-gap: 20px;
     }
 
+    @media (max-width: 250px) {
+      grid-template-columns: 1fr;
+    }
+
     .product-loading {
-      background: orange;
       height: 900px;
-    }
-
-    .product-image {
-      height: 280px;
-      background: $border-color;
-
-      @media (max-width: 767px) {
-        height: 300px;
-        border-radius: 8px;
-      }
-
-      @media (max-width: 565px) {
-        height: 200px;
-      }
-
-      @media (max-width: 365px) {
-        height: 140px;
-      }
-    }
-
-    .product-content {
-      @media (min-width: 768px) {
-        h3 {
-          font-size: 18px;
-        }
-
-        p {
-          font-size: 16px;
-        }
-
-        button {
-          font-size: 14px;
-        }
-      }
-
-      @media (min-width: 1000px) {
-        h3 {
-          font-size: 24px;
-        }
-
-        p {
-          font-size: 20px;
-        }
-
-        button {
-          font-size: 16px;
-        }
-      }
     }
   }
 

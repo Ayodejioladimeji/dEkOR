@@ -45,6 +45,22 @@ body {
   }
 }
 
+input,
+select,
+textarea {
+  &:focus {
+    border: 1px solid $primary-color !important;
+  }
+}
+
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="password"],
+textarea {
+  font-size: 16px !important;
+}
+
 // styles. for product skeleton
 .skeletal-image {
   border-radius: 20px !important;
@@ -69,4 +85,95 @@ body {
   @media (max-width: 500px) {
     width: 100% !important;
   }
+}
+
+// the dashboard sections
+.sections {
+  margin-left: 240px;
+  transition: $transitions;
+  background: $secondary-color;
+  height: 100vh;
+  overflow: scroll;
+
+  @media (max-width: 991px) {
+    margin-left: 0;
+  }
+
+  .top-sections {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: $white;
+
+    @media (max-width: 991px) {
+      margin-top: 70px;
+      padding: 10px;
+    }
+
+    @media (max-width: 325px) {
+      flex-direction: column;
+      // align-items: flex-start;
+    }
+
+    h1 {
+      @include heading(20px, 600, $black);
+      margin-bottom: 5px;
+    }
+
+    p {
+      @include body-text(14px, 500, $text-color);
+
+      @media (max-width: 325px) {
+        margin-bottom: 20px;
+      }
+    }
+
+    .badge {
+      height: 18px;
+      max-width: 18px;
+      border-radius: 50%;
+      background: $primary-color;
+      color: $white;
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 500;
+    }
+  }
+}
+
+.custom-swiper-navigation {
+  position: relative;
+}
+
+.custom-swiper-navigation .swiper-button-next,
+.custom-swiper-navigation .swiper-button-prev {
+  position: absolute !important;
+  top: 80% !important;
+  z-index: 90 !important;
+  padding-bottom: 10px;
+}
+
+.custom-swiper-navigation .swiper-button-next {
+  color: green;
+  width: 30px;
+  height: 30px;
+  right: 0px;
+}
+
+.custom-swiper-navigation .swiper-button-prev {
+  color: green;
+  width: 30px;
+  height: 30px;
+  left: 0px !important;
+}
+
+.custom-swiper-navigation .swiper-button-next:hover,
+.custom-swiper-navigation .swiper-button-prev:hover {
+  color: darkgreen;
 }

@@ -1,29 +1,56 @@
 import Breadcumb from "@/common/breadcumb";
 import Layout from "@/components/Layout";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { CheckIcon, CircleIcon } from "../../../public/assets";
-import { calculateTotal, formatMoney } from "@/utils/utils";
+import { calculateTotal, EmptyImagesCheck, formatMoney } from "@/utils/utils";
 import { DataContext } from "@/store/GlobalState";
 import SuccessModal from "@/common/modals/success";
 import cogoToast from "cogo-toast";
+import { GetRequests, PatchRequest, PostRequest } from "@/utils/requests";
+import PaymentSkeleton from "@/common/paymentskeleton";
+import CheckoutAddressCard from "@/common/checkoutaddresscard";
+import Loading from "@/common/loading";
 
 const initialValues = {
   fullname: "",
-  email: "",
   phone: "",
   address: "",
-  country: "",
-  state: "",
+  region: "",
   city: "",
-  postalCode: "",
 };
 
 const Checkout = () => {
   const [shippingType, setShippingType] = useState("standard");
-  const [amount, setAmount] = useState(80);
+  const [amount, setAmount] = useState(1000);
   const { state } = useContext(DataContext);
   const [showmodal, setShowmodal] = useState(false);
   const [values, setValues] = useState(initialValues);
+  const [count, setCount] = useState(1);
+  const [addresses, setAddresses] = useState<any>([]);
+  const [loading, setLoading] = useState(true);
+  const [addressStatus, setAddressStatus] = useState("new");
+  const [defaultAddress, setDefaultAddress] = useState<any>(null);
+  const [buttonloading, setButtonloading] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token") || "";
+
+    const getAddress = async () => {
+      const res = await GetRequests("/address-book", token);
+      if (res?.status === 200 || res?.status === 201) {
+        setAddresses(res?.data);
+        setLoading(false);
+
+        // get default address
+        const defaults = res?.data?.find((item) => item.isDefault === true);
+        setDefaultAddress(defaults);
+      } else {
+        setLoading(false);
+      }
+    };
+
+    getAddress();
+  }, [state?.callback]);
 
   // handle change for inputs
   const handleChange = (e) => {
@@ -35,31 +62,83 @@ const Checkout = () => {
   const handleShipping = (item: string) => {
     setShippingType(item);
     if (item === "standard") {
-      setAmount(80);
+      setAmount(1000);
     } else {
-      setAmount(100);
+      setAmount(4000);
     }
   };
 
   // handle submit
-  const handleCheckout = () => {
-    console.log(values);
+  const handleCheckout = async () => {
+    // check if the product has images
+    const checkImage = EmptyImagesCheck(state?.cart);
+    if (!checkImage) {
+      return cogoToast.error("Product has no images, You can't proceed");
+    }
+
     if (
-      !values?.fullname ||
-      !values?.email ||
-      !values?.phone ||
-      !values.address ||
-      !values.country ||
-      !values.state ||
-      !values.city ||
-      !values.postalCode ||
-      values.country === "---"
+      addressStatus === "new" &&
+      (!values?.fullname ||
+        !values?.phone ||
+        !values.address ||
+        !values.region ||
+        !values.city)
     ) {
       return cogoToast.error(
         "Please provide all your shipping information in details"
       );
     }
-    setShowmodal(true);
+
+    if (
+      !defaultAddress &&
+      Object.values(values).some((value) => value === "")
+    ) {
+      return cogoToast.error(
+        "Please set a default address to proceed with the order"
+      );
+    }
+
+    const token = localStorage.getItem("token") || "";
+    setButtonloading(true);
+
+    // for new address
+    const addressObj = {
+      name: values?.fullname,
+      address: values.address,
+      region: values.region,
+      city: values.city,
+      phone: values.phone,
+    };
+
+    const newDefaults = {
+      name: defaultAddress?.name,
+      address: defaultAddress?.address,
+      region: defaultAddress?.region,
+      city: defaultAddress?.city?.value,
+      phone: defaultAddress?.phone,
+    };
+
+    const orderPayload = {
+      products: state?.cart,
+      totalAmount: calculateTotal(state?.cart) + amount,
+      shippingAddress: addressStatus === "new" ? addressObj : newDefaults,
+    };
+
+    const res = await PostRequest("/orders", orderPayload, token);
+    if (res?.status === 200 || res?.status === 201) {
+      window.location.href = res.data.paymentUrl;
+
+      // clear the user cart
+      const payload = {
+        cartItems: [],
+      };
+      localStorage.removeItem("cart");
+      await PatchRequest("/user/cart", payload, token);
+    } else {
+      setButtonloading(false);
+    }
+
+    // setShowmodal(true);
   };
 
   //
@@ -73,99 +152,117 @@ const Checkout = () => {
 
           <div className="row">
             <div className="col-12 col-12 col-lg-8">
-              <div className="form-box">
-                <label>Full Name</label>
-                <input
-                  type="text"
-                  placeholder="Enter your fullname"
-                  value={values.fullname}
-                  name="fullname"
-                  onChange={handleChange}
-                />
-              </div>
+              <h2>Delivery Information</h2>
 
-              <div className="form-box">
-                <label>Email Address</label>
-                <input
-                  type="text"
-                  placeholder="Enter your email"
-                  value={values.email}
-                  name="email"
-                  onChange={handleChange}
-                />
-              </div>
+              <div className="information">
+                <div className="top">
+                  <button
+                    onClick={() => {
+                      setCount(1), setAddressStatus("new");
+                    }}
+                    className={count === 1 ? "active" : ""}
+                  >
+                    New Address
+                  </button>
 
-              <div className="form-box">
-                <label>Phone Number</label>
-                <input
-                  type="text"
-                  placeholder="Enter your phone number"
-                  value={values.phone}
-                  name="phone"
-                  onChange={handleChange}
-                />
-              </div>
-
-              <div className="form-box">
-                <label>Address</label>
-                <input
-                  type="text"
-                  placeholder="Enter your address"
-                  value={values.address}
-                  name="address"
-                  onChange={handleChange}
-                />
-              </div>
-
-              <div className="row">
-                <div className="col-12 col-sm-6 col-md-6">
-                  <div className="form-box">
-                    <label>Country</label>
-                    <select
-                      className="form-select"
-                      value={values.country}
-                      name="country"
-                      onChange={handleChange}
-                    >
-                      <option defaultValue="">---</option>
-                      <option value="nigeria">Nigeria</option>
-                    </select>
-                  </div>
+                  <button
+                    onClick={() => {
+                      setCount(2), setAddressStatus("default");
+                    }}
+                    className={count === 2 ? "active" : ""}
+                  >
+                    Default address
+                  </button>
                 </div>
-                <div className="col-12 col-sm-6 col-md-6">
-                  <div className="form-box">
-                    <label>State</label>
-                    <input
-                      type="text"
-                      placeholder="Enter your state"
-                      value={values.state}
-                      name="state"
-                      onChange={handleChange}
-                    />
-                  </div>
-                </div>
-                <div className="col-12 col-sm-6 col-md-6">
-                  <div className="form-box">
-                    <label>City</label>
-                    <input
-                      type="text"
-                      placeholder="Enter your city"
-                      value={values.city}
-                      name="city"
-                      onChange={handleChange}
-                    />
-                  </div>
-                </div>
-                <div className="col-12 col-sm-6 col-md-6">
-                  <div className="form-box">
-                    <label>Postal Code</label>
-                    <input
-                      type="text"
-                      placeholder="Enter your postal code"
-                      value={values.postalCode}
-                      name="postalCode"
-                      onChange={handleChange}
-                    />
+
+                <div className="bottom">
+                  <div className="row">
+                    {count === 1 && (
+                      <div className="">
+                        <div className="form-box">
+                          <label>Full Name</label>
+                          <input
+                            type="text"
+                            placeholder="Enter your fullname"
+                            value={values.fullname}
+                            name="fullname"
+                            onChange={handleChange}
+                          />
+                        </div>
+
+                        <div className="form-box">
+                          <label>Phone Number</label>
+                          <input
+                            type="text"
+                            placeholder="Enter your phone number"
+                            value={values.phone}
+                            name="phone"
+                            onChange={handleChange}
+                          />
+                        </div>
+
+                        <div className="form-box">
+                          <label>Address</label>
+                          <input
+                            type="text"
+                            placeholder="Enter your address"
+                            value={values.address}
+                            name="address"
+                            onChange={handleChange}
+                          />
+                        </div>
+
+                        <div className="row">
+                          <div className="col-12 col-sm-6 col-md-6">
+                            <div className="form-box">
+                              <label>Region</label>
+                              <input
+                                type="text"
+                                placeholder="Enter your state"
+                                value={values.region}
+                                name="region"
+                                onChange={handleChange}
+                              />
+                            </div>
+                          </div>
+
+                          <div className="col-12 col-sm-6 col-md-6">
+                            <div className="form-box">
+                              <label>City</label>
+                              <input
+                                type="text"
+                                placeholder="Enter your city"
+                                value={values.city}
+                                name="city"
+                                onChange={handleChange}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {count === 2 && (
+                      <div className="">
+                        {loading ? (
+                          <PaymentSkeleton length={4} />
+                        ) : (
+                          <>
+                            {addresses?.map((item: any) => {
+                              return (
+                                <CheckoutAddressCard {...item} key={item._id} />
+                              );
+                            })}
+                          </>
+                        )}
+
+                        {!loading && addresses?.length === 0 && (
+                          <p className="text-gray-300 text-xs">
+                            You have no addresses
+                          </p>
+                        )}
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -188,7 +285,7 @@ const Checkout = () => {
                       )}
                       <p>Standard Shipping</p>
                     </div>
-                    <p>$80</p>
+                    <p>₦1000</p>
                   </div>
 
                   <div
@@ -203,23 +300,32 @@ const Checkout = () => {
                       )}
                       <p>Express Shipping</p>
                     </div>
-                    <p>$100</p>
+                    <p>₦4000</p>
                   </div>
                 </div>
 
                 <h4>Order Summary</h4>
                 <div className="order-items">
                   <h5>Subtotal</h5>
-                  <h5>${formatMoney(calculateTotal(state?.cart))}</h5>
+                  <h5>₦{formatMoney(calculateTotal(state?.cart))}</h5>
                 </div>
                 <div className="order-items">
                   <h5>Total</h5>
-                  <h5>${formatMoney(calculateTotal(state?.cart) + amount)}</h5>
+                  <h5>₦{formatMoney(calculateTotal(state?.cart) + amount)}</h5>
                 </div>
 
                 <button onClick={handleCheckout}>
-                  Checkout Payment ($
-                  {formatMoney(calculateTotal(state?.cart) + amount)})
+                  {buttonloading ? (
+                    <Loading
+                      height="30px"
+                      width="30px"
+                      primaryColor="#fff"
+                      secondaryColor="#fff"
+                    />
+                  ) : (
+                    ` Checkout Payment (₦
+                  ${formatMoney(calculateTotal(state?.cart) + amount)})`
+                  )}
                 </button>
               </div>
             </div>

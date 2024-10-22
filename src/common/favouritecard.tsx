@@ -6,7 +6,6 @@ import React, { useContext } from "react";
 import { Image } from "react-bootstrap";
 import { DeleteFavourite, ItemCart } from "../../public/assets";
 import { firstTwoWords, formatMoney } from "@/utils/utils";
-const IMAGE_URL = process.env.NEXT_PUBLIC_IMAGE_URL;
 
 //
 
@@ -17,8 +16,8 @@ const Favouritecard = (props: any) => {
   // add items to cart
   const addToCart = () => {
     // check if items is already added
-    const check = state?.cart.every((item) => {
-      return item.id !== props?.id;
+    const check = state?.cart.every((item: any) => {
+      return item._id !== props?._id;
     });
 
     if (check) {
@@ -36,7 +35,9 @@ const Favouritecard = (props: any) => {
 
   // remove item from favourites
   const removeFavourite = () => {
-    const newData = state?.favourite.filter((item) => item.id !== props?.id);
+    const newData = state?.favourite.filter(
+      (item: any) => item._id !== props?._id
+    );
     dispatch({ type: ACTIONS.TOGGLE, payload: true });
     dispatch({ type: ACTIONS.DELETEFAVOURITE, payload: newData });
     cogoToast.success("Item removed successfully");
@@ -47,7 +48,11 @@ const Favouritecard = (props: any) => {
     <div className="product-card">
       <div className="product-image">
         <Image
-          src={IMAGE_URL + "/images/" + props?.photos[0]?.url}
+          src={
+            props?.images?.length === 0
+              ? "/images/placehoder.jpg"
+              : props?.images[0]
+          }
           alt="product-image"
           width={100}
           height={100}
@@ -67,9 +72,9 @@ const Favouritecard = (props: any) => {
       </div>
 
       <div className="product-content">
-        <h3>{firstTwoWords(props?.name)}</h3>
-        <p>${formatMoney(Number(props?.current_price[0]?.USD[0]))}</p>
-        <button onClick={() => router.push(`/product/${props?.id}`)}>
+        <h3>{firstTwoWords(props?.title)}</h3>
+        <p>₦{formatMoney(Number(props?.sellingPrice))}</p>
+        <button onClick={() => router.push(`/product/${props?._id}`)}>
           Shop Now
         </button>
       </div>

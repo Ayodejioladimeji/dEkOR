@@ -1,0 +1,84 @@
+.overview {
+  background: $secondary-color;
+  width: 100%;
+  padding: 30px 20px 100px 20px;
+  overflow: hidden;
+
+  @media (max-width: 600px) {
+    padding: 50px 10px;
+  }
+
+  .summary {
+    margin-bottom: 20px;
+
+    .row {
+      padding: 0 !important;
+    }
+
+    small {
+      @include body-text(12px, 700, $light-color);
+      display: inline-block;
+      background-color: rgba(241, 243, 249, 1);
+      padding: 10px 15px;
+      margin-bottom: 10px;
+    }
+
+    .card {
+      border: 1px solid rgba(241, 243, 249, 1);
+      background-color: $white;
+      padding-bottom: 20px;
+      border-radius: 10px;
+      transition: $transitions;
+      cursor: pointer;
+      width: 100%;
+
+      &:hover {
+        border: 1px solid $primary-color;
+      }
+
+      p {
+        @include body-text(18px, 600, $white);
+        background: $primary-color;
+        padding: 10px;
+        border-radius: 10px 10px 0 0;
+        margin-bottom: 6px;
+
+        @media (max-width: 767px) {
+          font-size: 16px;
+        }
+      }
+
+      .card-count {
+        padding: 20px;
+      }
+
+      h4 {
+        @include heading(35px, 700, $black);
+
+        @media (max-width: 767px) {
+          font-size: 28px;
+        }
+      }
+
+      span {
+        padding: 5px 10px;
+        border-radius: 10px;
+        color: $white;
+        font-size: 12px;
+        font-weight: 600;
+
+        &.positive {
+          background-color: rgba(8, 135, 93, 1);
+        }
+
+        &.negative {
+          background-color: rgba(224, 45, 60, 1);
+        }
+      }
+    }
+
+    @media (max-width: 1233px) {
+      margin-bottom: 40px;
+    }
+  }
+}

@@ -6,7 +6,7 @@ import React, { useContext } from "react";
 import { Image } from "react-bootstrap";
 import { Favourite, ItemCart } from "../../public/assets";
 import { firstTwoWords, formatMoney } from "@/utils/utils";
-const IMAGE_URL = process.env.NEXT_PUBLIC_IMAGE_URL;
+import { PatchRequest } from "@/utils/requests";
 
 //
 
@@ -15,10 +15,10 @@ const Productcard = (props: any) => {
   const router = useRouter();
 
   // add items to cart
-  const addToCart = () => {
+  const addToCart = async () => {
     // check if items is already added
     const check = state?.cart.every((item) => {
-      return item.id !== props?.id;
+      return item._id !== props?._id;
     });
 
     if (check) {
@@ -27,18 +27,32 @@ const Productcard = (props: any) => {
         quantity: 1,
       };
 
+      // Combine the current cart with the new item
+
+      // Update the state
       cogoToast.success("Item added to your cart");
       dispatch({ type: ACTIONS.TOGGLE, payload: true });
       dispatch({ type: ACTIONS.CART, payload: cartData });
+
+      // Save the updated cart items to the database
+      const updatedCart = [...(state?.cart || []), cartData];
+      const token = localStorage.getItem("token") || "";
+      if (token) {
+        const payload = {
+          cartItems: updatedCart,
+        };
+
+        await PatchRequest("/user/cart", payload, token);
+      }
     } else {
       cogoToast.error("Item already added to your cart");
     }
   };
 
-  const addFavourite = () => {
+  const addFavourite = async () => {
     // check if items is already added
-    const check = state?.favourite.every((item) => {
-      return item.id !== props?.id;
+    const check = state?.favourite.every((item: any) => {
+      return item._id !== props?._id;
     });
 
     if (check) {
@@ -50,6 +64,17 @@ const Productcard = (props: any) => {
       dispatch({ type: ACTIONS.TOGGLE, payload: true });
       dispatch({ type: ACTIONS.FAVOURITE, payload: data });
       cogoToast.success("Item added to your favourite");
+
+      // Save the updated favourite items to the database
+      const updatedFavourite = [...(state?.favourite || []), data];
+      const token = localStorage.getItem("token") || "";
+      if (token) {
+        const payload = {
+          favItems: updatedFavourite,
+        };
+
+        await PatchRequest("/user/favourite", payload, token);
+      }
     } else {
       cogoToast.error("Item already added to your favourite");
     }
@@ -60,7 +85,11 @@ const Productcard = (props: any) => {
     <div className="product-card">
       <div className="product-image">
         <Image
-          src={IMAGE_URL + "/images/" + props?.photos[0]?.url}
+          src={
+            props?.images?.length === 0
+              ? "/images/placehoder.jpg"
+              : props?.images[0]
+          }
           alt="product-image"
           width={100}
           height={100}
@@ -80,9 +109,9 @@ const Productcard = (props: any) => {
       </div>
 
       <div className="product-content">
-        <h3>{firstTwoWords(props?.name)}</h3>
-        <p>${formatMoney(Number(props?.current_price[0]?.USD[0]))}</p>
-        <button onClick={() => router.push(`/product/${props?.id}`)}>
+        <h3>{firstTwoWords(props?.title)}</h3>
+        <p>₦{formatMoney(Number(props?.sellingPrice))}</p>
+        <button onClick={() => router.push(`/product/${props?._id}`)}>
           Shop Now
         </button>
       </div>

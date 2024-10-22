@@ -58,6 +58,12 @@ const reducers = (state: any, action: any) => {
         favourite: payload,
       };
 
+    case ACTIONS.CALLBACK:
+      return {
+        ...state,
+        callback: payload,
+      };
+
     default:
       return state;
   }

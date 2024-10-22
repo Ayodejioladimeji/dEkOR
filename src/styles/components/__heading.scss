@@ -2,12 +2,26 @@
   font-size: 40px;
   font-weight: 600;
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 15px;
 
   @media (max-width: 767px) {
-    font-size: 30px;
+    font-size: 28px;
   }
   @media (max-width: 500px) {
-    font-size: 27px;
+    font-size: 25px;
+  }
+}
+
+.header-paragraph {
+  @include body-text(18px, 400, $text-color);
+  text-align: center;
+  margin: 0 auto;
+
+  @media (min-width: 1240px) {
+    width: 75%;
+  }
+
+  @media (max-width: 991px) {
+    font-size: 16px;
   }
 }

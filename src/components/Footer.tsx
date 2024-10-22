@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { LogoWhite } from "../../public/assets";
 
 //
 
@@ -79,9 +78,10 @@ const Footer = () => {
         </div>
 
         <div className="footer-bottom">
-          <div className="logo-box">
-            <LogoWhite />
-          </div>
+          <small className="text-white">
+            copyright &copy; {new Date().getFullYear()} Dekor All rights
+            reserved.
+          </small>
         </div>
       </div>
     </footer>
