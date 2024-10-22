@@ -1,10 +1,13 @@
 import connectDB from "../utils/connectDB";
 import Order from "../models/orderModel";
+import User from "../models/userModel";
 import Transaction from "../models/transactionModel";
 import auth from "../middleware/auth";
 import { NextApiRequest, NextApiResponse } from "next";
 import axios from "axios";
 import { NewOrderEmail } from "../mails/NewOrderMail";
+import { UserNewOrderEmail } from "../mails/UserNewOrderMail";
+import moment from "moment";
 
 connectDB();
 
@@ -24,7 +27,9 @@ export default async function handler(
 
 const verifyPayment = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const user = await auth(req, res);
+    const userAuth = await auth(req, res);
+
+    const user = await User.findById(userAuth.id);
     if (!user) return res.status(401).json({ message: "Unauthorized" });
 
     const { reference } = req.query;
@@ -52,7 +57,7 @@ const verifyPayment = async (req: NextApiRequest, res: NextApiResponse) => {
 
       // save transactions
       const newTransaction = new Transaction({
-        user: user.id,
+        user: user._id,
         amount: response?.data?.data?.amount / 100,
         status: response?.data?.data?.status,
         reference: response?.data?.data?.reference,
@@ -63,16 +68,25 @@ const verifyPayment = async (req: NextApiRequest, res: NextApiResponse) => {
 
       newTransaction.save();
 
-      const { ref, status, amount, paidAt } = response.data;
+      const { status, amount, paidAt } = response.data.data;
 
-      NewOrderEmail(
-        process.env.GMAIL_USER,
-        user?.name,
-        ref,
-        paidAt,
-        amount,
-        status
-      );
+      NewOrderEmail({
+        email: process.env.GMAIL_USER,
+        name: user?.name,
+        orderId: response?.data?.data?.reference,
+        orderDate: moment(paidAt).format("lll"),
+        orderAmount: amount,
+        status,
+      });
+
+      UserNewOrderEmail({
+        email: user?.email,
+        name: user?.name,
+        orderId: response?.data?.data?.reference,
+        orderDate: moment(paidAt).format("lll"),
+        orderAmount: amount,
+        status,
+      });
 
       if (order) {
         order.paymentStatus = "paid";

@@ -64,6 +64,6 @@ const login = async (req, res) => {
     });
   } catch (err) {
     // Catch server errors
-    return res.status(500).json({ error: err.message });
+    return res.status(500).json({ message: err.message });
   }
 };

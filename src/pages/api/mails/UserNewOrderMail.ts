@@ -1,13 +1,5 @@
 const nodemailer = require("nodemailer");
 
-const transporter = nodemailer.createTransport({
-  service: "gmail", // Use Gmail's service
-  auth: {
-    user: process.env.GMAIL_USER,
-    pass: process.env.GMAIL_APP_PASSWORD,
-  },
-});
-
 interface EmailData {
   email: string;
   name: string;
@@ -17,8 +9,16 @@ interface EmailData {
   status: string;
 }
 
+const transporter = nodemailer.createTransport({
+  service: "gmail", // Use Gmail's service
+  auth: {
+    user: process.env.GMAIL_USER,
+    pass: process.env.GMAIL_APP_PASSWORD,
+  },
+});
+
 // Step 2: Define the email sending function
-export const NewOrderEmail = ({
+export const UserNewOrderEmail = ({
   email,
   name,
   orderId,
@@ -31,12 +31,12 @@ export const NewOrderEmail = ({
     to: email,
     subject: "New Order Notification",
     html: `
-    <!DOCTYPE html>
+      <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>New Order Notification</title>
+  <title>Order Confirmation</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -70,24 +70,37 @@ export const NewOrderEmail = ({
       font-size: 13px;
       color: #888888;
     }
+    .button {
+      display: inline-block;
+      padding: 10px 20px;
+      font-size: 16px;
+      color: #ffffff;
+      background-color: #2a9df4;
+      text-decoration: none;
+      border-radius: 5px;
+      margin-top: 20px;
+    }
+    .button:hover {
+      background-color: #2382d7;
+    }
   </style>
 </head>
 <body>
 
   <div class="email-container">
-    <h2>New Order Notification</h2>
+    <h2>Order Confirmation</h2>
 
-    <p>Hi Admin,</p>
+    <p>Hi ${name},</p>
 
-    <p>A new order has been successfully placed by <strong>${name}</strong> and payment has been confirmed. Below are the details of the order:</p>
+    <p>Thank you for your order! Your payment has been successfully received. Below are the details of your order:</p>
 
     <h3>Order Details:</h3>
     <p><strong>Order ID:</strong> ${orderId}</p>
     <p><strong>Order Date:</strong> ${orderDate}</p>
-    <p><strong>Amount Paid:</strong> ${orderAmount}</p>
+    <p><strong>Total Amount:</strong> ${orderAmount}</p>
     <p><strong>Payment Status:</strong> ${status}</p>
 
-    <p>Please review the order and ensure the necessary processing is carried out.</p>
+    <p>Your order will be delivered to you within 2 days. If you have any questions, feel free to reach out to our support team.</p>
 
     <p class="footer">Best regards, <br> Dekor Support Team</p>
   </div>

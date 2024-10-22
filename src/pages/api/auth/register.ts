@@ -38,6 +38,6 @@ const register = async (req, res) => {
     await newUser.save();
     res.json({ message: "Register Success!" });
   } catch (err) {
-    return res.status(500).json({ err: err.message });
+    return res.status(500).json({ message: err.message });
   }
 };
