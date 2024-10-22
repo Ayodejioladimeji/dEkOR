@@ -53,7 +53,7 @@ export const PostRequest = async (url: string, data?: any, token?: string) => {
 
     return res;
   } catch (error) {
-    cogoToast.error(error?.response?.data?.err);
+    cogoToast.error(error?.response?.data?.message);
     return error;
   }
 };

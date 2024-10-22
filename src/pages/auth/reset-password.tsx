@@ -18,12 +18,19 @@ const Login = () => {
   const router = useRouter();
 
   // handle submit
-  const handleSubmit = async (payload: any) => {
+  const handleSubmit = async (values: any) => {
+    const activation_token = localStorage.getItem("activation_token");
     setButtonloading(true);
 
-    const res = await PostRequest("/auth/login", payload);
+    const payload = {
+      activation_token,
+      auth_code: values.code,
+      password: values.password,
+    };
 
-    if (res?.status === 200) {
+    const res = await PostRequest("/auth/reset-password", payload);
+
+    if (res?.status === 200 || res?.status === 201) {
       router.push("/auth/login");
     } else {
       setButtonloading(false);
@@ -168,15 +175,15 @@ const Login = () => {
                     <div className="form-box">
                       <label htmlFor="email">OTP Code</label>
                       <input
-                        name="email"
+                        name="code"
                         type="text"
                         placeholder="bright@example.com"
-                        value={values.email}
+                        value={values.code}
                         onChange={handleChange}
                         onBlur={handleBlur}
                       />
-                      {errors.email && touched.email && (
-                        <div className="input_feedback">{errors.email}</div>
+                      {errors.code && touched.code && (
+                        <div className="input_feedback">{errors.code}</div>
                       )}
                     </div>
 
@@ -199,7 +206,7 @@ const Login = () => {
                     <div className="form-box">
                       <label htmlFor="password">Confirm Password</label>
                       <input
-                        name="password"
+                        name="password2"
                         type="password"
                         placeholder="Confirm your password"
                         value={values.password2}
@@ -213,7 +220,7 @@ const Login = () => {
                     </div>
 
                     <div className="form-box">
-                      <button type="submit" disabled={buttonloading}>
+                      <button type="submit">
                         {buttonloading ? (
                           <Loading
                             width="25px"
@@ -222,15 +229,10 @@ const Login = () => {
                             secondaryColor="#fff"
                           />
                         ) : (
-                          "Login"
+                          "Submit"
                         )}
                       </button>
                     </div>
-
-                    <small className="text-center">
-                      Not a customer?{" "}
-                      <Link href="/auth/register">Register</Link>
-                    </small>
                   </form>
                 </div>
               </div>

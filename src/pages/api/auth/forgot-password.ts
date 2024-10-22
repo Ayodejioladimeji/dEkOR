@@ -23,7 +23,7 @@ const forgotpassword = async (req, res) => {
     const user = await User.findOne({ email });
 
     if (!user)
-      return res.status(400).json({ err: "This email does not exists." });
+      return res.status(400).json({ message: "This email does not exists." });
 
     // Generate the one-time verication code
 

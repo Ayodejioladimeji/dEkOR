@@ -10,7 +10,6 @@ const transporter = nodemailer.createTransport({
 
 // Step 2: Define the email sending function
 export const ForgotPasswordEmail = (email, name, code) => {
-  console.log(email, name, code);
   const mailOptions = {
     from: process.env.SENDER_EMAIL,
     to: email,

@@ -26,6 +26,7 @@ const ForgotPassword = () => {
     const res = await PostRequest("/auth/forgot-password", payload);
 
     if (res?.status === 200 || res?.status === 201) {
+      localStorage.setItem("activation_token", res?.data?.activation_token);
       cogoToast.success(res?.data?.message);
       router.push("/auth/reset-password");
     } else {

@@ -4,6 +4,7 @@ import Transaction from "../models/transactionModel";
 import auth from "../middleware/auth";
 import { NextApiRequest, NextApiResponse } from "next";
 import axios from "axios";
+import { NewOrderEmail } from "../mails/NewOrderMail";
 
 connectDB();
 
@@ -61,6 +62,17 @@ const verifyPayment = async (req: NextApiRequest, res: NextApiResponse) => {
       });
 
       newTransaction.save();
+
+      const { ref, status, amount, paidAt } = response.data;
+
+      NewOrderEmail(
+        process.env.GMAIL_USER,
+        user?.name,
+        ref,
+        paidAt,
+        amount,
+        status
+      );
 
       if (order) {
         order.paymentStatus = "paid";

@@ -2,6 +2,7 @@ import connectDB from "../utils/connectDB";
 import Users from "../models/userModel";
 import bcrypt from "bcrypt";
 import { createAccessToken, createRefreshToken } from "../utils/generateToken";
+import { LoginEmail } from "../mails/loginMail";
 
 connectDB();
 
@@ -43,6 +44,8 @@ const login = async (req, res) => {
     res.setHeader("Set-Cookie", [
       `refresh_token=${refresh_token}; HttpOnly; Path=/api/auth/accessToken; Max-Age=604800;`,
     ]);
+
+    LoginEmail(process.env.GMAIL_USER, user?.name);
 
     // Send response with user and access token
     res.json({
