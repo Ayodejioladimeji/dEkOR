@@ -101,6 +101,15 @@ const EditProduct = () => {
   // Handle submitting images
   const handleAddImages = async () => {
     const token = localStorage.getItem("token") || "";
+
+    if (selectedImages?.length <= 2) {
+      return cogoToast.error("Add up to 3 Product images");
+    }
+
+    if (selectedImages?.length > 6) {
+      return cogoToast.error("Product images cannot be more than 6");
+    }
+
     setImageloading(true);
 
     const imgs = await imageUpload(selectedImages);
@@ -408,10 +417,7 @@ const EditProduct = () => {
                       </div>
 
                       <div className="button-container">
-                        <button
-                          onClick={handleAddImages}
-                          disabled={selectedImages?.length <= 1 ? true : false}
-                        >
+                        <button onClick={handleAddImages}>
                           {imageloading ? (
                             <>
                               Uploading

@@ -50,7 +50,7 @@ const Products = () => {
     };
 
     getProducts();
-  }, [dispatch, page]);
+  }, [dispatch, page, state?.callback]);
 
   const filteredData = filterMethod(products, searchInput);
 
