@@ -31,7 +31,7 @@ const EditProduct = () => {
     const getCategories = async () => {
       const res = await GetRequest("/category");
       if (res?.status === 200) {
-        setCategories(res?.data);
+        setCategories(res?.data?.data);
       }
     };
     getCategories();
@@ -72,7 +72,7 @@ const EditProduct = () => {
       productColors: product_colors,
     };
 
-    const res = await PutRequest(`/product/${slug}`, payload, token);
+    const res = await PutRequest(`/product/admin/${slug}`, payload, token);
     if (res?.status === 200 || res?.status === 201) {
       cogoToast.success(res?.data?.message);
     }

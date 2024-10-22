@@ -84,7 +84,9 @@ const Productcard = (props: any) => {
 
           <button
             onClick={() =>
-              router.push(`/dashboard/products/edit-product/${props?._id}`)
+              router.push(
+                `/dashboard/admin/products/edit-product/${props?._id}`
+              )
             }
             className="add-to-cart"
           >
