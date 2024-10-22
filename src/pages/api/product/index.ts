@@ -67,18 +67,41 @@ const fetchProduct = async (req: NextApiRequest, res: NextApiResponse) => {
     // Fetch total count of active products
     const totalCount = await Product.countDocuments({ isActive: true });
 
-    // Fetch paginated products where isActive is true
-    const products = await Product.find({ isActive: true })
-      .select("-buyingPrice")
-      .sort("-updatedAt")
-      .skip((page - 1) * pageSize)
-      .limit(pageSize);
+    // Randomly fetch paginated products where isActive is true
+    const products = await Product.aggregate([
+      { $match: { isActive: true } }, // Filter for active products
+      { $sample: { size: totalCount } }, // Randomly sample all active products
+      { $skip: (page - 1) * pageSize }, // Apply pagination skip
+      { $limit: pageSize }, // Apply pagination limit
+      { $project: { buyingPrice: 0 } }, // Exclude buyingPrice from the result
+    ]);
 
     res.json({ products, totalCount, page, pageSize });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
 };
+
+// const fetchProduct = async (req: NextApiRequest, res: NextApiResponse) => {
+//   try {
+//     const page = parseInt(req.query.page as string, 10) || 1;
+//     const pageSize = parseInt(req.query.pageSize as string, 10) || 10;
+
+//     // Fetch total count of active products
+//     const totalCount = await Product.countDocuments({ isActive: true });
+
+//     // Fetch paginated products where isActive is true
+//     const products = await Product.find({ isActive: true })
+//       .select("-buyingPrice")
+//       .sort("-updatedAt")
+//       .skip((page - 1) * pageSize)
+//       .limit(pageSize);
+
+//     res.json({ products, totalCount, page, pageSize });
+//   } catch (error) {
+//     return res.status(500).json({ message: error.message });
+//   }
+// };
 
 const addProductImages = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
