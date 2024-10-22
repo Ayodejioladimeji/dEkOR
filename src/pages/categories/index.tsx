@@ -6,27 +6,45 @@ import { ACTIONS } from "@/store/Actions";
 import Layout from "@/components/Layout";
 import Breadcumb from "@/common/breadcumb";
 import Categorycard from "@/common/categorycard";
+import { useRouter } from "next/router";
+import Paginate from "@/components/pagination/Paginate";
+
+/* eslint-disable */
 
 const Categories = () => {
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState<any>([]);
   const { state, dispatch } = useContext(DataContext);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [totalCount, setTotalCount] = useState(0);
+  const PageSize = 20;
+  const router = useRouter();
+  const { page } = router.query;
 
   useEffect(() => {
     const token = localStorage.getItem("token") || "";
 
     const fetchCategories = async () => {
-      const res = await GetRequests("/category", token);
+      const res = await GetRequests(
+        `/category?page=${page === undefined ? currentPage : page}&pageSize=${PageSize}`,
+        token
+      );
 
       if (res?.status === 200 || res?.status === 201) {
         setCategories(res?.data?.data);
+        setTotalCount(res?.data?.totalCount);
         dispatch({ type: ACTIONS.LOADING, payload: false });
+
+        if (page === undefined) {
+          setCurrentPage(1);
+        }
+
         setLoading(false);
       }
     };
 
     fetchCategories();
-  }, [dispatch, state?.callback]);
+  }, [dispatch, state?.callback, page]);
 
   //
 
@@ -65,6 +83,25 @@ const Categories = () => {
                 style={{ fontSize: "45px" }}
               ></i>
               No Category Available
+            </div>
+          )}
+
+          {/* pagination */}
+          {!loading && categories?.length !== 0 && totalCount > PageSize && (
+            <div className="page-navigation">
+              <div className="mt-3">
+                <Paginate
+                  className="pagination-bar"
+                  currentPage={
+                    !loading && page === undefined ? currentPage : Number(page)
+                  }
+                  totalCount={totalCount}
+                  pageSize={PageSize}
+                  onPageChange={(page) => setCurrentPage(page)}
+                  loading={loading}
+                  setLoading={setLoading}
+                />
+              </div>
             </div>
           )}
         </div>
