@@ -1,9 +1,9 @@
 export const formatMoney = (amount) => {
-  let amountStr = amount.toString();
+  let amountStr = amount?.toString();
 
-  let parts = amountStr.split(".");
+  let parts = amountStr?.split(".");
   let integerPart = parts[0];
-  let fractionalPart = parts.length > 1 ? "." + parts[1] : "";
+  let fractionalPart = parts?.length > 1 ? "." + parts[1] : "";
 
   // Add commas to the integer part
   let formattedInteger = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -71,4 +71,20 @@ export const mergeCarts = (dbCart, localCart) => {
   });
 
   return combinedCart;
+};
+
+export const filterMethod = (mainData: any, inputData: string) => {
+  const lowerCaseInput = inputData.toLowerCase();
+
+  const res = mainData?.filter((item: any) => {
+    return Object.values(item).join(" ").toLowerCase().includes(lowerCaseInput);
+  });
+  return res;
+};
+
+export const filtMethod = (mainData: any, inputData: string) => {
+  const res = mainData?.filter((item: any) => {
+    return item?.toLowerCase().match(inputData);
+  });
+  return res;
 };

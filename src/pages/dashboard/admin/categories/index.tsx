@@ -20,9 +20,11 @@ const Categories = () => {
     const fetchCategories = async () => {
       const res = await GetRequests("/category", token);
 
-      setCategories(res?.data);
-      dispatch({ type: ACTIONS.LOADING, payload: false });
-      setLoading(false);
+      if (res?.status === 200 || res?.status === 201) {
+        setCategories(res?.data?.data);
+        dispatch({ type: ACTIONS.LOADING, payload: false });
+        setLoading(false);
+      }
     };
 
     fetchCategories();
@@ -51,7 +53,7 @@ const Categories = () => {
             ) : (
               <>
                 {categories?.map((item: any) => {
-                  return <Categorycard {...item} key={item.id} />;
+                  return <Categorycard {...item} key={item._id} />;
                 })}
               </>
             )}

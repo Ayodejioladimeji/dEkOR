@@ -29,11 +29,23 @@
 
       @media (max-width: 991px) {
         display: flex;
+        column-gap: 15px;
+        padding-left: 0px;
+      }
+
+      @media (max-width: 278px) {
+        margin-top: 10px;
       }
 
       .nav-item {
         cursor: pointer;
         position: relative;
+
+        svg {
+          font-size: 5px;
+          height: 20px;
+          width: 20px;
+        }
 
         .badge {
           height: 18px;
@@ -76,15 +88,19 @@
         margin-right: 25px;
         cursor: pointer;
         position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+
+        @media (min-width: 992px) {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
 
         &:last-child {
           margin-right: 0;
         }
+
         .nav-link {
-          font-size: 20px;
+          font-size: 18px;
           border: none !important;
           font-weight: 400;
           cursor: pointer;
@@ -152,6 +168,11 @@
         width: 35px;
         border-radius: 50%;
         cursor: pointer;
+
+        @media (max-width: 350px) {
+          height: 30px;
+          width: 30px;
+        }
       }
     }
   }

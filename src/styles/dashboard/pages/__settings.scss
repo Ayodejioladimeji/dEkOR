@@ -3,9 +3,17 @@
   width: 100%;
   padding: 50px 20px;
 
+  @media (max-width: 500px) {
+    padding: 50px 10px;
+  }
+
   .form-box {
     margin: 20px auto 0 auto;
     width: 400px;
+
+    @media (max-width: 465px) {
+      width: 100%;
+    }
 
     label {
       display: block;
@@ -90,6 +98,7 @@
 
     @media (max-width: 768px) {
       width: 100%;
+      margin-top: 20px;
     }
   }
 

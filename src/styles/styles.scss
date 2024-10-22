@@ -15,6 +15,7 @@
 @import "./components/__top-deals";
 @import "./components/__similar-product";
 @import "./components/__testimonial";
+@import "./components/__paginate";
 
 // common
 @import "./common/__productcard";
@@ -27,6 +28,7 @@
 @import "./pages/__checkout";
 @import "./pages/__login";
 @import "./pages/__activate";
+@import "./pages/__all-categories";
 
 // dashboard pages
 @import "./dashboard/pages/__orders";
@@ -40,3 +42,4 @@
 @import "./dashboard/components/__navbar";
 @import "./dashboard/components/__confirmmodal";
 @import "./dashboard/components/__addressmodal";
+@import "./dashboard/components/__categorycard";

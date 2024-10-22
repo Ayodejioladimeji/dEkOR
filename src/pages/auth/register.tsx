@@ -11,6 +11,7 @@ import Image from "next/image";
 import { PostRequest } from "@/utils/requests";
 import Goback from "@/common/Goback";
 import AuthLayout from "./Authlayout";
+import { Logo } from "../../../public/assets";
 
 // VALIDATION REGEX
 
@@ -185,6 +186,10 @@ const Register = () => {
 
               <div className="auth-right">
                 <div className="auth-form">
+                  <Link href="/product" className="d-block mb-5">
+                    <Logo />
+                  </Link>
+
                   <h1>Register an Account</h1>
 
                   <small>Stay trendy, Stay you.</small>

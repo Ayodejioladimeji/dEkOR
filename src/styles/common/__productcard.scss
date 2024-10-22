@@ -1,20 +1,19 @@
 .product-card {
   .product-image {
-    height: 230px !important;
+    height: 230px;
     margin-bottom: 10px;
     border-radius: 30px;
     overflow: hidden;
     position: relative;
     background: $light-color;
     border: 1px solid $border-color;
-    // display:none;
 
     @media (max-width: 767px) {
       border-radius: 8px;
     }
 
     @media (max-width: 565px) {
-      height: 200px;
+      height: 150px;
     }
 
     @media (max-width: 365px) {
@@ -55,24 +54,24 @@
       background: $light-color;
       border: none;
       width: 100%;
-      height: 70px;
+      height: 60px;
       display: flex;
       align-items: center;
       justify-content: center;
       position: absolute;
       bottom: 0;
       transition: $transitions;
-      font-size: 20px;
+      font-size: 16px;
       color: $white;
       transform: translateY(100%);
       cursor: pointer;
 
       @media (max-width: 767px) {
         font-size: 16px;
+        height: 40px;
       }
 
       @media (max-width: 500px) {
-        height: 50px;
         font-size: 14px;
       }
     }
@@ -97,12 +96,8 @@
     text-align: center;
 
     h3 {
-      @include body-text(23px, 500, $text-color);
+      @include body-text(20px, 500, $text-color);
       margin-bottom: 5px;
-
-      @media (max-width: 767px) {
-        font-size: 20px;
-      }
 
       @media (max-width: 565px) {
         font-size: 18px;

@@ -100,7 +100,7 @@ textarea {
   }
 
   .top-sections {
-    padding: 20px;
+    padding: 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -108,25 +108,25 @@ textarea {
 
     @media (max-width: 991px) {
       margin-top: 70px;
-      padding: 20px 10px;
+      padding: 10px;
     }
 
-    @media (max-width: 425px) {
-      flex-direction: column-reverse;
-      align-items: flex-start;
+    @media (max-width: 325px) {
+      flex-direction: column;
+      // align-items: flex-start;
     }
 
     h1 {
-      @include heading(24px, 600, $black);
+      @include heading(20px, 600, $black);
       margin-bottom: 5px;
-
-      @media (max-width: 425px) {
-        margin-top: 10px;
-      }
     }
 
     p {
       @include body-text(14px, 500, $text-color);
+
+      @media (max-width: 325px) {
+        margin-bottom: 20px;
+      }
     }
 
     .badge {
@@ -147,9 +147,20 @@ textarea {
   }
 }
 
+.custom-swiper-navigation {
+  position: relative;
+}
+
+.custom-swiper-navigation .swiper-button-next,
+.custom-swiper-navigation .swiper-button-prev {
+  position: absolute !important;
+  top: 80% !important;
+  z-index: 90 !important;
+  padding-bottom: 10px;
+}
+
 .custom-swiper-navigation .swiper-button-next {
   color: green;
-  top: 30px;
   width: 30px;
   height: 30px;
   right: 0px;
@@ -157,7 +168,6 @@ textarea {
 
 .custom-swiper-navigation .swiper-button-prev {
   color: green;
-  top: 30px;
   width: 30px;
   height: 30px;
   left: 0px !important;

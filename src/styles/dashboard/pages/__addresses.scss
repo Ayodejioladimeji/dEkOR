@@ -3,6 +3,10 @@
   width: 100%;
   padding: 20px;
 
+  @media (max-width: 600px) {
+    padding: 20px 10px;
+  }
+
   small {
     display: block;
     margin-bottom: 20px;
@@ -36,6 +40,7 @@
     }
 
     @media (max-width: 600px) {
+      grid-template-columns: 1fr;
       column-gap: 20px;
       row-gap: 20px;
     }

@@ -19,7 +19,7 @@ const SimilarProduct = (props: Props) => {
         const res: any = await GetRequest(`/product?categoryId=${props?.id}`);
 
         if (res?.status === 200) {
-          setProducts(res?.data);
+          setProducts(res?.data?.data);
           setLoading(false);
         } else {
           setLoading(false);

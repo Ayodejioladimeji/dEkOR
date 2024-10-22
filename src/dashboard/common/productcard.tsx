@@ -11,6 +11,7 @@ import Image from "next/image";
 import { DeleteRequest, PatchRequest } from "@/utils/requests";
 import { DataContext } from "@/store/GlobalState";
 import { ACTIONS } from "@/store/Actions";
+import cogoToast from "cogo-toast";
 
 //
 
@@ -28,11 +29,12 @@ const Productcard = (props: any) => {
 
     const token = localStorage.getItem("token") || "";
 
-    const res = await PatchRequest(`/product/${props?._id}`, {}, token);
+    const res = await PatchRequest(`/product/admin/${props?._id}`, {}, token);
     if (res?.status === 200) {
       dispatch({ type: ACTIONS.CALLBACK, payload: !state?.callback });
       setActivateModal(false);
       setActivateloading(false);
+      cogoToast.success(res?.data?.message);
     } else {
       setActivateloading(false);
     }

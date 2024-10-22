@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useLayoutEffect, useState } from "react";
 import { DataContext } from "@/store/GlobalState";
 import { screenPixels } from "@/utils/screenpx";
 import { LogoWhite } from "../../../public/assets";
@@ -14,12 +14,20 @@ export default function Navbar() {
   const [notify] = useState([]);
   const [notifyLoading] = useState(true);
   const [device, setDevice] = useState(false);
-  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  const [user, setUser] = useState<any>(null);
+  const [avatar, setAvatar] = useState("");
 
   // get screen size
   useEffect(() => {
     screenPixels("900px", setDevice);
   }, []);
+
+  useLayoutEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
+    const avatar = localStorage.getItem("avatar") || "";
+    setUser(user);
+    setAvatar(avatar);
+  }, [state?.callback]);
 
   // Logout user
   const handleLogout = () => {
@@ -56,9 +64,9 @@ export default function Navbar() {
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span className="navbar-toggler-icon" />
+          {/* <span className="navbar-toggler-icon"></span> */}
+          <i className="bi bi-list"></i>
         </button>
-
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
@@ -80,6 +88,18 @@ export default function Navbar() {
               >
                 <i className="bi bi-box-seam"></i>
                 Orders
+              </Link>
+            </li>
+
+            <li className="nav-item">
+              <Link
+                href="/product"
+                className={`nav-link ${
+                  router.asPath.includes("/product") && "active"
+                }`}
+              >
+                <i className="bi bi-boxes"></i>
+                Products
               </Link>
             </li>
 
@@ -143,7 +163,7 @@ export default function Navbar() {
               <div className="col-3 profile-show">
                 <div className="profile-img-container">
                   <Image
-                    src={user?.avatar}
+                    src={avatar || user?.avatar}
                     height={100}
                     width={100}
                     alt="profile-icon"
@@ -154,9 +174,11 @@ export default function Navbar() {
                 <div className="profile-notification">
                   <div className="profile-box ">
                     <Link
-                      href="/settings"
+                      href="/dashboard/profle-settings"
                       className={`profile-link ${
-                        router.asPath.includes("/settings") ? "active" : ""
+                        router.asPath.includes("/dashboard/profle-settings")
+                          ? "active"
+                          : ""
                       }`}
                     >
                       My profile

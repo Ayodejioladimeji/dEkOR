@@ -17,7 +17,7 @@ const Products = () => {
       const res: any = await GetRequest(`/product`);
 
       if (res?.status === 200) {
-        setProducts(res?.data);
+        setProducts(res?.data?.products);
       }
       setLoading(false);
     };

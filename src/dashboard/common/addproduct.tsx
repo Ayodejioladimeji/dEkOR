@@ -31,7 +31,7 @@ const AddProductModal = ({ createModal, setCreateModal }) => {
     const getCategories = async () => {
       const res = await GetRequest("/category");
       if (res?.status === 200) {
-        const result = res?.data?.map((item) => ({
+        const result = res?.data?.data?.map((item) => ({
           label: item?.name,
           value: item?._id,
         }));

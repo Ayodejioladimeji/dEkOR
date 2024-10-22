@@ -3,7 +3,7 @@ import Layout from "@/components/Layout";
 import { ACTIONS } from "@/store/Actions";
 import { DataContext } from "@/store/GlobalState";
 import Image from "next/image";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { CheckIcon, DeleteIcon } from "../../../public/assets";
 import { useRouter } from "next/router";
 import cogoToast from "cogo-toast";
@@ -15,6 +15,39 @@ import { PatchRequest, PostRequest } from "@/utils/requests";
 const Cart = () => {
   const { state, dispatch } = useContext(DataContext);
   const router = useRouter();
+  const [selectedColors, setSelectedColors] = useState({});
+
+  // Function to set the color for a specific item
+  const setProductColor = (itemId: string, color: string) => {
+    setSelectedColors((prev) => ({
+      ...prev,
+      [itemId]: color,
+    }));
+
+    // Find the item in the cart and add the selected color to it
+    const item = state?.cart.find((cartItem: any) => cartItem._id === itemId);
+    if (item) {
+      addColorToProduct(item, color);
+    }
+  };
+
+  const addColorToProduct = async (data: any, selectedColor: string) => {
+    state?.cart.forEach((item: any) => {
+      if (item._id === data?._id) {
+        item.selectedColor = selectedColor;
+      }
+    });
+
+    const cartItem = state?.cart.find((item) => item._id === data?._id);
+
+    const cartData = {
+      ...data,
+      selectedColor: cartItem?.selectedColor,
+    };
+
+    dispatch({ type: ACTIONS.TOGGLE, payload: true });
+    dispatch({ type: ACTIONS.UPDATECART, payload: cartData });
+  };
 
   // increase cart item
   const increment = async (data: any) => {
@@ -111,6 +144,13 @@ const Cart = () => {
   // handle route
   const handleRoute = () => {
     const token = localStorage.getItem("token") || "";
+
+    // first check if the user chooses a color
+    const unselectedItem = state.cart.find((item) => !selectedColors[item._id]);
+
+    if (unselectedItem) {
+      return cogoToast.error("Please select a color for your product");
+    }
 
     if (token) {
       router.push("/checkout");
@@ -223,6 +263,24 @@ const Cart = () => {
                                 onClick={() => increment(item)}
                               ></i>
                             </div>
+
+                            <div className="color-div">
+                              {item?.productColors?.map(
+                                (color: any, index: number) => (
+                                  <div
+                                    key={index}
+                                    onClick={() =>
+                                      setProductColor(item._id, color)
+                                    } // Pass the itemId and selected color
+                                  >
+                                    <div
+                                      className={`actual-color ${selectedColors[item._id] === color ? "active-color" : ""}`}
+                                      style={{ background: color }}
+                                    ></div>
+                                  </div>
+                                )
+                              )}
+                            </div>
                           </div>
                         </div>
 
@@ -265,7 +323,7 @@ const Cart = () => {
 
                     <div className="order-items">
                       <h5>Total</h5>
-                      <h5>${formatMoney(calculateTotal(state?.cart))}</h5>
+                      <h5>₦{formatMoney(calculateTotal(state?.cart))}</h5>
                     </div>
 
                     <button onClick={handleRoute}>

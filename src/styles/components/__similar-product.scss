@@ -10,7 +10,11 @@
     }
 
     @media (max-width: 767px) {
-      font-size: 27px;
+      font-size: 25px;
+    }
+
+    @media (max-width: 500px) {
+      font-size: 20px;
     }
   }
 
@@ -31,6 +35,10 @@
     @media (max-width: 600px) {
       column-gap: 20px;
       row-gap: 20px;
+    }
+
+    @media (max-width: 278px) {
+      grid-template-columns: 1fr;
     }
   }
 }

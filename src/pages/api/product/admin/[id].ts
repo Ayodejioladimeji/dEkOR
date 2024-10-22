@@ -67,6 +67,18 @@ const activateProduct = async (req: NextApiRequest, res: NextApiResponse) => {
 
     const product = await Product.findById(id);
 
+    if (product?.productColors?.length === 0) {
+      return res.status(400).json({
+        message: "Provide available product colors before activating product",
+      });
+    }
+
+    if (product?.images?.length === 0) {
+      return res.status(400).json({
+        message: "Provide available product images before activating product",
+      });
+    }
+
     await Product.findOneAndUpdate(
       { _id: id },
       { isActive: product?.isActive ? false : true }

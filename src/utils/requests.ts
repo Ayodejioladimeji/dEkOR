@@ -14,9 +14,9 @@ export const GetRequest = async (url: string) => {
     return res;
   } catch (error) {
     console.log(error?.response?.data);
-    cogoToast.error(error?.response?.data?.message, {
-      hideAfter: 5,
-    });
+    // cogoToast.error(error?.response?.data?.message, {
+    //   hideAfter: 5,
+    // });
   }
 };
 
@@ -32,9 +32,9 @@ export const GetRequests = async (url: string, token: string) => {
     return res;
   } catch (error) {
     console.log(error?.response?.data);
-    cogoToast.error(error?.response?.data?.message, {
-      hideAfter: 5,
-    });
+    // cogoToast.error(error?.response?.data?.message, {
+    //   hideAfter: 5,
+    // });
   }
 };
 
@@ -53,7 +53,7 @@ export const PostRequest = async (url: string, data?: any, token?: string) => {
 
     return res;
   } catch (error) {
-    cogoToast.error(error?.response?.data?.err);
+    cogoToast.error(error?.response?.data?.message);
     return error;
   }
 };

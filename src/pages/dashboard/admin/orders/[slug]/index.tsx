@@ -1,399 +1,75 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import DashboardLayout from "../../../DashboardLayout";
+import CardSkeleton from "@/common/cardskeleton";
+import Ordercard from "@/dashboard/common/orderscard";
 import Topbar from "@/dashboard/components/topbar";
-import Image from "next/image";
-import { GetRequest, GetRequests, PatchRequest } from "@/utils/requests";
+import { GetRequests } from "@/utils/requests";
 import { useRouter } from "next/router";
-import { DataContext } from "@/store/GlobalState";
-import Loading from "@/common/loading";
-import { formatMoney } from "@/utils/utils";
-import ConfirmModal from "@/dashboard/common/confirmmodal";
-import cogoToast from "cogo-toast";
-import { ACTIONS } from "@/store/Actions";
 
-const OrderDetails = () => {
+const Orders = () => {
   const [loading, setLoading] = useState(true);
+  const [orders, setOrders] = useState<any>([]);
   const router = useRouter();
-  const { slug, productId } = router.query;
-  const { state, dispatch } = useContext(DataContext);
-  const [title, setTitle] = useState("");
-  const [sellingPrice, setSellingPrice] = useState("");
-  const [category, setCategory] = useState("");
-  const [description, setDescription] = useState("");
-  const [product_colors, setProduct_colors] = useState<string[]>([]);
-  const [selectedImages, setSelectedImages] = useState<any[]>([]);
-  const [data, setData] = useState(null);
-  const [confirm, setConfirm] = useState(false);
-  const [deliverloading, setDeliverloading] = useState(false);
+  const { slug } = router.query;
 
-  // Fetch product data by slug
   useEffect(() => {
-    if (slug) {
-      const token = localStorage.getItem("token") || "";
-
-      const getProduct = async () => {
-        const res = await GetRequests(
-          `/orders/admin/${slug}?productId=${productId}`,
-          token
-        );
-        const response = await GetRequest("/category");
-
-        if (res?.status === 200 || res?.status === 201) {
-          const data = res?.data;
-          setTitle(data?.product?.title);
-          setSellingPrice(data?.product?.sellingPrice);
-          setDescription(data?.product?.description);
-          setSelectedImages(data?.product?.images);
-          setProduct_colors(data?.product?.productColors || []);
-          setData(data);
-
-          if (response?.status === 200) {
-            const result = response?.data?.find(
-              (item: any) => item._id === data?.product?.category
-            );
-
-            setCategory(result?.name);
-          }
-        }
-        setLoading(false);
-      };
-      getProduct();
-    }
-  }, [productId, slug, state?.callback]);
-
-  // handle deliver
-  const handleDeliver = async () => {
     const token = localStorage.getItem("token") || "";
 
-    setDeliverloading(true);
+    const getOrders = async () => {
+      const res = await GetRequests("/orders/admin", token);
+      if (res?.status === 200 || res?.status === 201) {
+        const result = res?.data?.data?.find((item: any) => item._id === slug);
+        setOrders(result);
+        setLoading(false);
+      } else {
+        setLoading(false);
+      }
+    };
 
-    const res = await PatchRequest(
-      `/orders/admin/${slug}?productId=${productId}`,
-      "",
-      token
-    );
-    if (res?.status === 200 || res?.status === 201) {
-      dispatch({ type: ACTIONS.CALLBACK, payload: !state?.callback });
-      cogoToast.success(res?.data?.message);
-      setConfirm(false);
-      setDeliverloading(false);
-    }
-  };
+    getOrders();
+  }, [slug]);
 
   //
 
   return (
     <DashboardLayout>
       <section className="sections">
-        <Topbar
-          title="Order Details"
-          subtitle="View single order details"
-          goback
-        />
+        <Topbar title="User Order" subtitle="View user orders here" />
 
-        <div className="add-product">
-          <div className="information-section">
+        <div className="orders">
+          <div className="order-box">
             {loading ? (
-              <div
-                className="d-flex justify-content-center my-5"
-                style={{ height: "50vh" }}
-              >
-                <Loading
-                  height="40px"
-                  width="40px"
-                  primaryColor="#27493e"
-                  secondaryColor="#27493e"
-                />
-              </div>
+              <CardSkeleton length={6} />
             ) : (
               <>
-                <div className="row">
-                  <div className="order-details">
-                    <p>Payment Status</p>
-                    <p
-                      className="response text-white"
-                      style={{
-                        background:
-                          data?.paymentStatus === "paid" ? "green" : "orange",
-                        padding: "1px 15px",
-                        borderRadius: "4px",
-                        fontSize: "14px",
-                      }}
-                    >
-                      {data?.paymentStatus === "paid"
-                        ? "Success"
-                        : "Pending Payment"}
-                    </p>
-                  </div>
-                  <div className="order-details">
-                    <p>Delivery Status</p>
-                    <p
-                      className="response"
-                      style={{
-                        color:
-                          data?.product?.orderStatus === "pending-delivery"
-                            ? "orange"
-                            : "green",
-                      }}
-                    >
-                      {data?.product?.orderStatus}
-                    </p>
-                  </div>
-                  <div className="order-details">
-                    <p>Reference</p>
-                    <p
-                      className="response"
-                      style={{ textTransform: "uppercase" }}
-                    >
-                      {data?.paymentReference}
-                    </p>
-                  </div>
-                  <div className="order-details">
-                    <p>Amount Paid</p>
-                    <p className="response fw-bold">
-                      ₦{formatMoney(data?.totalAmount)}
-                    </p>
-                  </div>
-                </div>
-                <hr />
-
-                <div className="row">
-                  <h2>Product Section</h2>
-
-                  <div className="status">{}</div>
-                  <div className="col-12">
-                    <div className="form-div">
-                      <label>Title</label>
-                      <input
-                        type="text"
-                        placeholder=""
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                        disabled
-                      />
-                    </div>
-                  </div>
-
-                  <div className="col-6">
-                    <div className="form-div">
-                      <label>Selling Price</label>
-                      <input
-                        type="text"
-                        placeholder=""
-                        value={sellingPrice}
-                        onChange={(e) => setSellingPrice(e.target.value)}
-                        disabled
-                      />
-                    </div>
-                  </div>
-
-                  <div className="col-6">
-                    <div className="form-div">
-                      <label>Category</label>
-                      <input
-                        type="text"
-                        placeholder=""
-                        value={category}
-                        onChange={(e) => setCategory(e.target.value)}
-                        disabled
-                      />
-                    </div>
-                  </div>
-
-                  <div className="col">
-                    <div className="form-div">
-                      <label>Product Description</label>
-                      <textarea
-                        placeholder="Product description"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                        disabled
-                      />
-                    </div>
-                  </div>
-
-                  <div className="col-12">
-                    <div className="product-colors">
-                      {product_colors?.map((color: any, index: number) => (
-                        <div
-                          key={index}
-                          style={{ background: color }}
-                          className="product-colors-box"
-                        ></div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                {data?.paymentStatus === "paid" && (
-                  <>
-                    <hr />
-
-                    <div className="row">
-                      <h2>Shipping Address</h2>
-
-                      <div className="col-6">
-                        <div className="form-div">
-                          <label>Name</label>
-                          <input
-                            type="text"
-                            placeholder=""
-                            value={data?.shippingAddress?.name}
-                            disabled
-                          />
-                        </div>
-                      </div>
-
-                      <div className="col-6">
-                        <div className="form-div">
-                          <label>Phone</label>
-                          <input
-                            type="text"
-                            placeholder=""
-                            value={data?.shippingAddress?.phone}
-                            disabled
-                          />
-                        </div>
-                      </div>
-
-                      <div className="col-12">
-                        <div className="form-div">
-                          <label>Address</label>
-                          <input
-                            type="text"
-                            placeholder=""
-                            value={data?.shippingAddress?.address}
-                            disabled
-                          />
-                        </div>
-                      </div>
-
-                      <div className="col-6">
-                        <div className="form-div">
-                          <label>City</label>
-                          <input
-                            type="text"
-                            placeholder=""
-                            value={data?.shippingAddress?.city}
-                            disabled
-                          />
-                        </div>
-                      </div>
-                      <div className="col-6">
-                        <div className="form-div">
-                          <label>Region</label>
-                          <input
-                            type="text"
-                            placeholder=""
-                            value={data?.shippingAddress?.region}
-                            disabled
-                          />
-                        </div>
-                      </div>
-
-                      <div className="col-12">
-                        <div className="product-colors">
-                          {product_colors?.map((color: any, index: number) => (
-                            <div
-                              key={index}
-                              style={{ background: color }}
-                              className="product-colors-box"
-                            ></div>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </>
-                )}
+                {orders?.products?.map((item: any) => {
+                  return <Ordercard {...item} key={item._id} />;
+                })}
               </>
             )}
           </div>
 
-          <div className="image-section">
-            {data?.paymentStatus === "paid" && (
-              <div className="deliver-section">
-                <button onClick={() => setConfirm(true)}>Deliver Order</button>
-              </div>
-            )}
-
-            <div className="image-top">
-              {loading ? (
-                <div className="d-flex justify-content-center my-5">
-                  <Loading
-                    height="30px"
-                    width="30px"
-                    primaryColor="#27493e"
-                    secondaryColor="#27493e"
-                  />
-                </div>
-              ) : (
-                <div
-                  id="carouselExampleRide"
-                  className="carousel slide"
-                  data-bs-ride="true"
-                >
-                  <div className="carousel-inner">
-                    {selectedImages?.map((item: any, index: number) => (
-                      <div
-                        className={`carousel-item ${index === 0 ? "active" : ""}`}
-                        key={index}
-                      >
-                        <Image
-                          src={item}
-                          className="d-block w-100"
-                          alt="Order Image"
-                          width={100}
-                          height={100}
-                        />
-                      </div>
-                    ))}
-                  </div>
-
-                  <button
-                    className="carousel-control-prev"
-                    type="button"
-                    data-bs-target="#carouselExampleRide"
-                    data-bs-slide="prev"
-                  >
-                    <span
-                      className="carousel-control-prev-icon"
-                      aria-hidden="true"
-                    ></span>
-                    <span className="visually-hidden">Previous</span>
-                  </button>
-                  <button
-                    className="carousel-control-next"
-                    type="button"
-                    data-bs-target="#carouselExampleRide"
-                    data-bs-slide="next"
-                  >
-                    <span
-                      className="carousel-control-next-icon"
-                      aria-hidden="true"
-                    ></span>
-                    <span className="visually-hidden">Next</span>
-                  </button>
-                </div>
-              )}
+          {!loading && orders?.length === 0 && (
+            <div
+              style={{
+                height: "50vh",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                flexDirection: "column",
+              }}
+            >
+              <i
+                className="bi bi-box-seam-fill"
+                style={{ fontSize: "45px" }}
+              ></i>
+              You have no orders available
             </div>
-          </div>
+          )}
         </div>
-
-        {confirm && (
-          <ConfirmModal
-            title="Deliver Order"
-            subtitle="Are you sure you want to mark this order as delivered?"
-            buttonTitle="Deliver"
-            buttonColor="black"
-            onSubmit={handleDeliver}
-            loading={deliverloading}
-            setConfirmModal={setConfirm}
-            confirmModal={confirm}
-          />
-        )}
       </section>
     </DashboardLayout>
   );
 };
 
-export default OrderDetails;
+export default Orders;

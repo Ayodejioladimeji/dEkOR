@@ -37,8 +37,8 @@ const Categorycard = (props: any) => {
 
   return (
     <>
-      <div className="order-card">
-        <div className="order-image">
+      <div className="category-card">
+        <div className="category-image">
           <Image
             src={props?.image}
             alt="product-image"
@@ -59,7 +59,7 @@ const Categorycard = (props: any) => {
           </button>
         </div>
 
-        <div className="order-content">
+        <div className="category-content">
           <h3>{firstTwoWords(props?.name)}</h3>
         </div>
       </div>

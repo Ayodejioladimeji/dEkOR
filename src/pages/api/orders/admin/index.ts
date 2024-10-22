@@ -26,8 +26,18 @@ const fetchOrders = async (req: NextApiRequest, res: NextApiResponse) => {
       return res.status(401).json({ message: "Authentication is not valid" });
     }
 
-    const orders = await Order.find().sort("-updatedAt");
-    res.json(orders);
+    const page = parseInt(req.query.page as string, 10) || 1;
+    const pageSize = parseInt(req.query.pageSize as string, 10) || 10;
+
+    // Fetch total count of active products
+    const totalCount = await Order.countDocuments();
+
+    const data = await Order.find()
+      .sort("-updatedAt")
+      .skip((page - 1) * pageSize)
+      .limit(pageSize);
+
+    res.json({ data, totalCount, page, pageSize });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }

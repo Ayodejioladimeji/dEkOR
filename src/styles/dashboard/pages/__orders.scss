@@ -13,11 +13,21 @@
     justify-content: space-between;
     margin-bottom: 50px;
 
+    @media (max-width: 460px) {
+      flex-direction: column;
+    }
+
     input {
       @include input($border-color);
       width: 300px;
       border: 1px solid $border-color;
       font-size: 13px;
+      border-radius: 5px;
+      height: 50px;
+
+      @media (max-width: 460px) {
+        width: 100%;
+      }
     }
 
     button {
@@ -27,6 +37,12 @@
       display: flex;
       align-items: center;
       column-gap: 10px;
+      border-radius: 5px !important;
+
+      @media (max-width: 460px) {
+        width: 100%;
+        margin-top: 10px;
+      }
     }
   }
 
@@ -48,6 +64,10 @@
       grid-template-columns: repeat(2, 1fr);
       column-gap: 20px;
       row-gap: 20px;
+    }
+
+    @media (max-width: 325px) {
+      grid-template-columns: 1fr;
     }
 
     .order-card {
@@ -101,6 +121,11 @@
           background: rgba(0, 0, 0, 0.705);
           padding: 4px;
 
+          @media (max-width: 500px) {
+            top: 10px;
+            left: 10px;
+          }
+
           svg {
             color: $white;
           }
@@ -134,12 +159,7 @@
           transform: translateY(0);
           cursor: pointer;
 
-          @media (max-width: 767px) {
-            font-size: 16px;
-          }
-
-          @media (max-width: 500px) {
-            height: 50px;
+          @media (min-width: 767px) {
             font-size: 14px;
           }
 
@@ -155,6 +175,10 @@
           }
           &.green {
             background: green;
+          }
+
+          &.order-cart {
+            font-size: 14px;
           }
         }
       }
@@ -176,6 +200,10 @@
             font-size: 13px;
             margin-bottom: 10px;
           }
+        }
+
+        .date {
+          @include body-text(13px, 500, $text-color);
         }
 
         button {

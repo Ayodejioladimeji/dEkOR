@@ -3,51 +3,38 @@ import Breadcumb from "../../common/breadcumb";
 import Layout from "../../components/Layout";
 import CardSkeleton from "../../common/cardskeleton";
 import Productcard from "../../common/productcard";
-// import Paginate from "@/components/pagination/Paginate";
-// import { useRouter } from "next/router";
 import { GetRequest } from "@/utils/requests";
+import Paginate from "@/components/pagination/Paginate";
+import { useRouter } from "next/router";
+
+/* eslint-disable */
 
 //
 
 const AllProducts = () => {
   const [products, setProducts] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  // const PageSize = 12;
-  // const [currentPage, setCurrentPage] = useState(1);
-  // const [totalCount, setTotalCount] = useState(0);
-  // const router = useRouter();
-  // const { page } = router.query;
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [totalCount, setTotalCount] = useState(0);
+  const PageSize = 20;
+  const router = useRouter();
+  const { page } = router.query;
 
-  //get all products on products page
-  // useEffect(() => {
-  //   if (router.isReady) {
-  //     const getProducts = async () => {
-  //       const res: any = await GetRequest(
-  //         `/products?organization_id=${ORGANISATION_ID}&reverse_sort=false&page=${
-  //           page === undefined ? currentPage : page
-  //         }&size=${PageSize}&Appid=${APP_ID}&Apikey=${API_KEY}`
-  //       );
-
-  //       if (res?.status === 200) {
-  //         setProducts(res?.data.items);
-  //         setTotalCount(res?.data?.total);
-
-  //         if (page === undefined) {
-  //           setCurrentPage(1);
-  //         }
-
-  //         setLoading(false);
-  //       }
-  //     };
-  //     getProducts();
-  //   }
-  // }, [currentPage, page, router]);
+  //
 
   useEffect(() => {
     const getProducts = async () => {
-      const res = await GetRequest("/product");
+      const res = await GetRequest(
+        `/product?page=${page === undefined ? currentPage : page}&pageSize=${PageSize}`
+      );
       if (res?.status === 200) {
-        setProducts(res?.data);
+        setProducts(res?.data?.products);
+        setTotalCount(res?.data?.totalCount);
+
+        if (page === undefined) {
+          setCurrentPage(1);
+        }
+
         setLoading(false);
       } else {
         setLoading(false);
@@ -55,7 +42,7 @@ const AllProducts = () => {
     };
 
     getProducts();
-  }, []);
+  }, [page]);
 
   //
 
@@ -74,12 +61,12 @@ const AllProducts = () => {
 
           <div className="product-box">
             {loading ? (
-              <CardSkeleton length={12} />
+              <CardSkeleton length={10} />
             ) : (
               <>
-                {products?.map((item: any) => {
-                  return <Productcard {...item} key={item.id} />;
-                })}
+                {products?.map((item: any) => (
+                  <Productcard {...item} key={item._id} />
+                ))}
               </>
             )}
           </div>
@@ -103,7 +90,7 @@ const AllProducts = () => {
           )}
 
           {/* pagination */}
-          {/* {!loading && products?.length !== 0 && totalCount > PageSize && (
+          {!loading && products?.length !== 0 && totalCount > PageSize && (
             <div className="page-navigation">
               <div className="mt-3">
                 <Paginate
@@ -119,7 +106,7 @@ const AllProducts = () => {
                 />
               </div>
             </div>
-          )} */}
+          )}
         </div>
       </div>
     </Layout>

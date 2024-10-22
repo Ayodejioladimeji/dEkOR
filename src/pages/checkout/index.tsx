@@ -267,6 +267,7 @@ const Checkout = () => {
                 </div>
               </div>
             </div>
+
             <div className="col-12 col-12 col-lg-4">
               <div className="order-summary">
                 <h4>Shipping Type</h4>

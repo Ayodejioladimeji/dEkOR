@@ -42,8 +42,6 @@ const Productcard = (props: any) => {
           cartItems: updatedCart,
         };
 
-        console.log(payload);
-
         await PatchRequest("/user/cart", payload, token);
       }
     } else {

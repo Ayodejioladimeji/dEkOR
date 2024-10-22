@@ -4,11 +4,27 @@
   column-gap: 20px;
   overflow: auto;
 
+  @media (max-width: 991px) {
+    padding: 20px 10px;
+  }
+
+  @media (max-width: 767px) {
+    flex-direction: column-reverse;
+  }
+
   .information-section {
     background: $white;
     border-radius: 8px;
     padding: 20px;
     width: 60%;
+
+    @media (max-width: 991px) {
+      padding: 20px 10px;
+    }
+
+    @media (max-width: 767px) {
+      width: 100%;
+    }
 
     h2 {
       @include heading(18px, 600, $black);
@@ -16,50 +32,18 @@
       padding-left: 10px;
     }
 
-    .form-div {
-      label {
-        display: block;
-        @include body-text(14px, 400, $light-color);
-        margin-bottom: 5px;
-      }
-
-      input,
-      textarea {
-        @include input($border-color);
-        padding: 10px;
-        margin-bottom: 20px;
-        width: 100%;
-        border: 1px solid $border-color;
-        font-size: 14px;
-        color: $light-color;
-
-        &:focus {
-          border: 1px solid $primary-color;
-        }
-      }
-
-      select {
-        padding: 10px;
-        margin-bottom: 20px;
-        width: 100%;
-        border: 1px solid $border-color;
-        font-size: 14px;
-        color: $light-color;
-
-        &:focus {
-          border: 1px solid $primary-color;
-        }
-      }
-
-      textarea {
-        height: 100px;
-      }
-    }
-
     .order-details {
       display: flex;
       align-items: center;
       justify-content: space-between;
+
+      p {
+        font-size: 16px;
+
+        @media (max-width: 500px) {
+          font-size: 14px;
+        }
+      }
     }
 
     .main-color-input {
@@ -121,86 +105,163 @@
       padding: 10px 20px;
     }
 
-         .top {
-           display: flex;
-           align-items: center;
-           column-gap: 30px;
-           border-radius: 4px;
-           margin-bottom: 40px;
-    
-           @media (max-width: 500px) {
-             width: 500px;
-           }
-    
-           button {
-             @include body-text(14px, 400, $text-color);
-             background: transparent;
-             border: none;
-             padding-bottom: 5px;
-             border-bottom: 4px solid transparent;
-             transition: $transitions;
-             border-radius:0;
+    .top {
+      display: flex;
+      align-items: center;
+      column-gap: 30px;
+      border-radius: 4px;
+      margin-bottom: 40px;
 
-    
-             &.active {
-               border-bottom: 4px solid $primary-color;
-             }
-           }
-         }
-    
-         .bottom {
-    
-           h4 {
-             @include heading(20px, 600, $text-color);
-             margin-bottom: 16px;
-           }
-    
-           p {
-             @include body-text(16px, 400, $text-color);
-             margin-bottom: 16px;
-           }
-    
-           .checkout-address-card {
-             padding: 20px 0px;
-             border: 1px solid $primary-color;
-             border-radius: 5px;
-             background: $white;
-             position: relative;
-             transition: $transitions;
-             cursor: pointer;
-             width: 350px;
-    
-             &:hover {
-               transform: scale(0.99);
-             }
-    
-             .bi-check-circle-fill {
-               position: absolute;
-               right: 10px;
-               top: 10px;
-               color: $primary-color;
-               font-size: 20px;
-             }
-    
-             h3 {
-               @include body-text(16px, 500, $text-color);
-               margin-bottom: 10px;
-               padding: 0 10px;
-             }
-    
-             p {
-               @include body-text(14px, 500, $light-color);
-               padding: 0 10px;
-               margin-bottom: 5px;
-             }
-           }
-         }
+      @media (max-width: 500px) {
+        width: 500px;
+      }
+
+      button {
+        @include body-text(14px, 400, $text-color);
+        background: transparent;
+        border: none;
+        padding-bottom: 5px;
+        border-bottom: 4px solid transparent;
+        transition: $transitions;
+        border-radius: 0;
+
+        &.active {
+          border-bottom: 4px solid $primary-color;
+        }
+      }
+    }
+
+    .bottom {
+      h4 {
+        @include heading(20px, 600, $text-color);
+        margin-bottom: 16px;
+      }
+
+      p {
+        @include body-text(16px, 400, $text-color);
+        margin-bottom: 16px;
+      }
+
+      .checkout-address-card {
+        padding: 20px 0px;
+        border: 1px solid $primary-color;
+        border-radius: 5px;
+        background: $white;
+        position: relative;
+        transition: $transitions;
+        cursor: pointer;
+        width: 350px;
+
+        @media (max-width: 500px) {
+          width: 100%;
+        }
+
+        &:hover {
+          transform: scale(0.99);
+        }
+
+        .bi-check-circle-fill {
+          position: absolute;
+          right: 10px;
+          top: 10px;
+          color: $primary-color;
+          font-size: 20px;
+        }
+
+        h3 {
+          @include body-text(16px, 500, $text-color);
+          margin-bottom: 10px;
+          padding: 0 10px;
+        }
+
+        p {
+          @include body-text(14px, 500, $light-color);
+          padding: 0 10px;
+          margin-bottom: 5px;
+        }
+      }
+    }
+  }
+
+  .form-div {
+    label {
+      display: block;
+      @include body-text(14px, 400, $light-color);
+      margin-bottom: 5px;
+    }
+
+    input,
+    textarea {
+      @include input($border-color);
+      padding: 10px;
+      margin-bottom: 20px;
+      width: 100%;
+      border: 1px solid $border-color;
+      font-size: 14px;
+      color: $light-color;
+
+      &:focus {
+        border: 1px solid $primary-color;
+      }
+    }
+
+    select {
+      padding: 10px;
+      margin-bottom: 20px;
+      width: 100%;
+      border: 1px solid $border-color;
+      font-size: 14px;
+      color: $light-color;
+
+      &:focus {
+        border: 1px solid $primary-color;
+      }
+    }
+
+    textarea {
+      height: 150px;
+    }
   }
 
   .image-section {
     width: 60%;
     // height: 100%;
-    overflow: auto;
+    // overflow:;
+
+    @media (max-width: 767px) {
+      width: 100%;
+    }
+
+    .user-profile {
+      background: $white;
+      padding: 20px;
+      margin-top: 30px;
+      border-radius: 8px !important;
+      margin-bottom: 30px;
+
+      @media (max-width: 500px) {
+        padding: 20px 10px;
+      }
+
+      h2 {
+        @include heading(18px, 600, $black);
+        margin-bottom: 20px;
+        padding-left: 10px;
+      }
+
+      .user-image {
+        height: 60px;
+        width: 60px;
+        border-radius: 50%;
+        overflow: hidden;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+    }
 
     .deliver-section {
       background: $white;
@@ -209,6 +270,10 @@
       margin-bottom: 30px;
       display: flex;
       justify-content: flex-end;
+
+      @media (max-width: 991px) {
+        padding: 20px 10px;
+      }
 
       button {
         @include buttons(black);
@@ -223,6 +288,10 @@
       padding: 20px;
       text-align: center;
       position: relative;
+
+      @media (max-width: 991px) {
+        padding: 20px 10px;
+      }
 
       button {
         background: transparent;

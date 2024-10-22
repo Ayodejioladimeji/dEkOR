@@ -3,8 +3,8 @@
   width: 100%;
 
   @media (max-width: 600px) {
-    width: 90vw !important;
-    max-width: 90vw !important;
+    width: 95vw !important;
+    max-width: 95vw !important;
     margin: 80px auto;
   }
 
@@ -18,6 +18,10 @@
     border-radius: 10px;
     padding: 30px 20px;
     width: 100% !important;
+
+    @media (max-width: 350px) {
+      padding: 30px 10px;
+    }
 
     h6 {
       @include heading(20px, 600, $black);

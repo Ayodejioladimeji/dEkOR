@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import DashboardLayout from "../DashboardLayout";
 import CardSkeleton from "@/common/cardskeleton";
-import Ordercard from "@/dashboard/common/orderscard";
 import Topbar from "@/dashboard/components/topbar";
 import { GetRequests } from "@/utils/requests";
+import MainOrdercard from "@/dashboard/common/mainordercard";
 
 const Orders = () => {
   const [loading, setLoading] = useState(true);
@@ -15,7 +15,7 @@ const Orders = () => {
     const getOrders = async () => {
       const res = await GetRequests("/orders", token);
       if (res?.status === 200) {
-        setOrders(res?.data);
+        setOrders(res?.data?.data);
         setLoading(false);
       } else {
         setLoading(false);
@@ -30,10 +30,7 @@ const Orders = () => {
   return (
     <DashboardLayout>
       <section className="sections">
-        <Topbar
-          title="Your Orders"
-          subtitle="View your orders here, you can also buy again"
-        />
+        <Topbar title="Your Orders" subtitle="View your orders here" />
 
         <div className="orders">
           <div className="order-box">
@@ -42,7 +39,7 @@ const Orders = () => {
             ) : (
               <>
                 {orders?.map((item: any) => {
-                  return <Ordercard {...item} key={item.id} />;
+                  return <MainOrdercard {...item} key={item._id} />;
                 })}
               </>
             )}

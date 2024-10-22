@@ -2,6 +2,10 @@
   padding-top: 120px;
   padding-bottom: 80px;
 
+  @media (max-width: 278px) {
+    padding-top: 140px;
+  }
+
   .heading-section {
     height: 50px;
     font-weight: 500;
@@ -32,6 +36,10 @@
     row-gap: 60px;
     margin-top: 40px;
 
+    @media (min-width: 1440px) {
+      grid-template-columns: repeat(5, 1fr);
+    }
+
     @media (max-width: 991px) {
       grid-template-columns: repeat(3, 1fr);
     }
@@ -43,6 +51,10 @@
     @media (max-width: 600px) {
       column-gap: 20px;
       row-gap: 20px;
+    }
+
+    @media (max-width: 250px) {
+      grid-template-columns: 1fr;
     }
 
     .product-loading {
