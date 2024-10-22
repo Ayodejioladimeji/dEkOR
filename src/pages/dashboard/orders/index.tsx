@@ -14,7 +14,7 @@ const Orders = () => {
   const [orders, setOrders] = useState<any>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalCount, setTotalCount] = useState(0);
-  const PageSize = 5;
+  const PageSize = 20;
   const router = useRouter();
   const { page } = router.query;
 

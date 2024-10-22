@@ -28,6 +28,12 @@ const Orders = () => {
       );
       if (res?.status === 200) {
         setOrders(res?.data?.data);
+        setTotalCount(res?.data?.totalCount);
+
+        if (page === undefined) {
+          setCurrentPage(1);
+        }
+
         setLoading(false);
       } else {
         setLoading(false);
