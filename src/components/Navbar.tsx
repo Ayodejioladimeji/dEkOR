@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import { Cart, Heart, Logo, Search } from "../../public/assets";
+import { Cart, Heart, Logo } from "../../public/assets";
 import { useContext } from "react";
 import { DataContext } from "@/store/GlobalState";
 import Link from "next/link";
@@ -27,9 +27,6 @@ function Header() {
         </div>
 
         <ul className="mobile-navbar">
-          <li className="nav-item">
-            <Search />
-          </li>
           <li className="nav-item">
             <Link href="/favourites">
               <Heart />
@@ -87,9 +84,6 @@ function Header() {
 
           <ul className="home-navbar-nav web-nav ms-auto">
             <Nav>
-              <li className="nav-item">
-                <Search />
-              </li>
               <li className="nav-item">
                 <Link href="/favourites">
                   <Heart />

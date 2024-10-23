@@ -44,6 +44,12 @@
       }
     }
 
+    .add-new{
+      color:$primary-color;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
     select {
       @include select("transparent", $border-color);
       color: $black;

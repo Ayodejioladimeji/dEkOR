@@ -188,7 +188,7 @@
         cursor: pointer;
 
         h3 {
-          @include body-text(18px, 500, $text-color);
+          @include body-text(14px, 500, $text-color);
           margin-bottom: 5px;
         }
 
@@ -197,7 +197,7 @@
           margin-bottom: 10px;
 
           @media (max-width: 565px) {
-            font-size: 13px;
+            font-size: 12px;
             margin-bottom: 10px;
           }
         }

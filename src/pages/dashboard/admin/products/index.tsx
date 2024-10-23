@@ -8,7 +8,10 @@ import { GetRequests } from "@/utils/requests";
 import { DataContext } from "@/store/GlobalState";
 import { ACTIONS } from "@/store/Actions";
 import { filterMethod } from "@/utils/utils";
-import InfiniteScroll from "react-infinite-scroll-component";
+import { useRouter } from "next/router";
+import Paginate from "@/components/pagination/Paginate";
+
+/* eslint-disable */
 
 const Products = () => {
   const [loading, setLoading] = useState(true);
@@ -16,20 +19,30 @@ const Products = () => {
   const [addProductModal, setAddProductModal] = useState(false);
   const { state, dispatch } = useContext(DataContext);
   const [searchInput, setSearchInput] = useState("");
-  const [page, setPage] = useState<number>(1);
-  const [hasMore, setHasMore] = useState<boolean>(true);
-  const [totalCount, setTotalCount] = useState<number>(0);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [totalCount, setTotalCount] = useState(0);
+  const PageSize = 15;
+  const router = useRouter();
+  const { page } = router.query;
 
   useEffect(() => {
     const token = localStorage.getItem("token") || "";
 
     const getProducts = async () => {
-      const res = await GetRequests(`/product/admin?page=1&pageSize=10`, token);
+      const res = await GetRequests(
+        `/product/admin?page=${page === undefined ? currentPage : page}&pageSize=${PageSize}`,
+        token
+      );
       if (res?.status === 200) {
         setProducts(res?.data?.products);
-        setTotalCount(res?.data?.totalCount);
-        setHasMore(res?.data?.products.length < res?.data?.totalCount);
         dispatch({ type: ACTIONS.LOADING, payload: false });
+
+        setTotalCount(res?.data?.totalCount);
+
+        if (page === undefined) {
+          setCurrentPage(1);
+        }
+
         setLoading(false);
       } else {
         setLoading(false);
@@ -37,33 +50,7 @@ const Products = () => {
     };
 
     getProducts();
-  }, [dispatch]);
-
-  const fetchProducts = async (newPage: number) => {
-    const token = localStorage.getItem("token") || "";
-    const res = await GetRequests(
-      `/product/admin?page=${newPage}&pageSize=10`,
-      token
-    );
-
-    if (res?.status === 200) {
-      // Append the new products to the existing products
-      setProducts((prevProducts) => [
-        ...prevProducts,
-        ...(res?.data?.products || []),
-      ]);
-      setHasMore(products.length + res?.data?.products.length < totalCount);
-      setPage(newPage);
-    } else {
-      setHasMore(false);
-    }
-  };
-
-  const fetchMoreData = () => {
-    if (hasMore) {
-      fetchProducts(page + 1);
-    }
-  };
+  }, [dispatch, page, state?.callback]);
 
   const filteredData = filterMethod(products, searchInput);
 
@@ -72,11 +59,7 @@ const Products = () => {
       <section className="sections">
         <Topbar title="Products" subtitle="Manage User Orders" />
 
-        <div
-          className="orders"
-          id="scrollableDiv"
-          style={{ height: "90vh", overflow: "auto" }}
-        >
+        <div className="orders">
           <div className="orders-heading">
             <input
               type="text"
@@ -90,39 +73,40 @@ const Products = () => {
             </button>
           </div>
 
-          <>
+          <div className="order-box">
             {loading || state?.loading ? (
-              <div className="order-box">
-                <CardSkeleton length={12} />
-              </div>
+              <CardSkeleton length={9} />
             ) : (
               <>
-                <InfiniteScroll
-                  dataLength={products?.length}
-                  next={fetchMoreData}
-                  hasMore={hasMore}
-                  loader={
-                    products?.length !== 0 && (
-                      <p className="my-5 text-xs text-center">
-                        Loading more products...
-                      </p>
-                    )
-                  }
-                  scrollableTarget="scrollableDiv"
-                >
-                  <div className="order-box">
-                    {filteredData?.map((item: any) => (
-                      <Productcard {...item} key={item._id} />
-                    ))}
-                  </div>
-                </InfiniteScroll>
+                {filteredData?.map((item: any) => (
+                  <Productcard {...item} key={item._id} />
+                ))}
               </>
             )}
-          </>
+          </div>
 
           {!loading && filteredData?.length === 0 && (
             <div className="d-flex justify-content-center text-center mt-5 w-100">
               No products available
+            </div>
+          )}
+
+          {/* pagination */}
+          {!loading && filteredData?.length !== 0 && totalCount > PageSize && (
+            <div className="page-navigation">
+              <div className="mt-3">
+                <Paginate
+                  className="pagination-bar"
+                  currentPage={
+                    !loading && page === undefined ? currentPage : Number(page)
+                  }
+                  totalCount={totalCount}
+                  pageSize={PageSize}
+                  onPageChange={(page) => setCurrentPage(page)}
+                  loading={loading}
+                  setLoading={setLoading}
+                />
+              </div>
             </div>
           )}
         </div>

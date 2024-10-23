@@ -1,9 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useContext, useEffect, useLayoutEffect, useState } from "react";
+import { useContext, useLayoutEffect, useState } from "react";
 import { DataContext } from "@/store/GlobalState";
-import { screenPixels } from "@/utils/screenpx";
 import { LogoWhite } from "../../../public/assets";
 
 //
@@ -13,14 +12,8 @@ export default function AdminNavbar() {
   const { state } = useContext(DataContext);
   const [notify] = useState([]);
   const [notifyLoading] = useState(true);
-  const [device, setDevice] = useState(false);
   const [user, setUser] = useState<any>(null);
   const [avatar, setAvatar] = useState("");
-
-  // get screen size
-  useEffect(() => {
-    screenPixels("900px", setDevice);
-  }, []);
 
   useLayoutEffect(() => {
     const user = JSON.parse(localStorage.getItem("user") || "{}");
@@ -37,11 +30,11 @@ export default function AdminNavbar() {
 
   // navigate
   const navigate = () => {
-    if (device) {
-      router.push("/settings/notifications");
-    } else {
-      return;
-    }
+    // if (device) {
+    //   router.push("/settings/notifications");
+    // } else {
+    //   return;
+    // }
   };
 
   //

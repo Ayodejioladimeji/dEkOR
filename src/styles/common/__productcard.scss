@@ -96,11 +96,11 @@
     text-align: center;
 
     h3 {
-      @include body-text(20px, 500, $text-color);
+      @include body-text(14px, 500, $text-color);
       margin-bottom: 5px;
 
       @media (max-width: 565px) {
-        font-size: 18px;
+        font-size: 12px;
       }
     }
 
