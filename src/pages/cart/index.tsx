@@ -7,7 +7,7 @@ import React, { useContext, useState } from "react";
 import { CheckIcon, DeleteIcon } from "../../../public/assets";
 import { useRouter } from "next/router";
 import cogoToast from "cogo-toast";
-import { calculateTotal, formatMoney } from "@/utils/utils";
+import { calculateTotal, firstTwoWords, formatMoney } from "@/utils/utils";
 import MoreProduct from "../../components/MoreProducts";
 import Loading from "@/common/loading";
 import { PatchRequest, PostRequest } from "@/utils/requests";
@@ -241,7 +241,7 @@ const Cart = () => {
                           </div>
 
                           <div className="cart-content">
-                            <h4>{item?.title}</h4>
+                            <h4>{firstTwoWords(item?.title)}</h4>
                             <h3>
                               ₦
                               {formatMoney(

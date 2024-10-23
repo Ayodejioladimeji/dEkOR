@@ -23,10 +23,17 @@ const fetchTransactions = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const user = await auth(req, res);
 
-    const transaction = await Transaction.find({ user: user.id }).sort(
-      "-updatedAt"
-    );
-    res.json(transaction);
+    const page = parseInt(req.query.page as string, 10) || 1;
+    const pageSize = parseInt(req.query.pageSize as string, 10) || 10;
+
+    const totalCount = await Transaction.countDocuments({ user: user.id });
+
+    const data = await Transaction.find({ user: user.id })
+      .sort("-updatedAt")
+      .skip((page - 1) * pageSize)
+      .limit(pageSize);
+
+    res.json({ data, totalCount, page, pageSize });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }

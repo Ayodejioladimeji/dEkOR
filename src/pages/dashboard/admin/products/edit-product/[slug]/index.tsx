@@ -29,9 +29,9 @@ const EditProduct = () => {
   // Fetch categories
   useEffect(() => {
     const getCategories = async () => {
-      const res = await GetRequest("/category");
+      const res = await GetRequest("/category?pageSize=100");
       if (res?.status === 200) {
-        setCategories(res?.data);
+        setCategories(res?.data?.data);
       }
     };
     getCategories();
@@ -72,7 +72,7 @@ const EditProduct = () => {
       productColors: product_colors,
     };
 
-    const res = await PutRequest(`/product/${slug}`, payload, token);
+    const res = await PutRequest(`/product/admin/${slug}`, payload, token);
     if (res?.status === 200 || res?.status === 201) {
       cogoToast.success(res?.data?.message);
     }
@@ -101,6 +101,11 @@ const EditProduct = () => {
   // Handle submitting images
   const handleAddImages = async () => {
     const token = localStorage.getItem("token") || "";
+
+    if (selectedImages?.length > 6) {
+      return cogoToast.error("Product images cannot be more than 6");
+    }
+
     setImageloading(true);
 
     const imgs = await imageUpload(selectedImages);
@@ -408,10 +413,7 @@ const EditProduct = () => {
                       </div>
 
                       <div className="button-container">
-                        <button
-                          onClick={handleAddImages}
-                          disabled={selectedImages?.length <= 1 ? true : false}
-                        >
+                        <button onClick={handleAddImages}>
                           {imageloading ? (
                             <>
                               Uploading

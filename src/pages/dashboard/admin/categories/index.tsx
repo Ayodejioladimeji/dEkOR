@@ -7,12 +7,14 @@ import Categorycard from "@/dashboard/common/categorycard";
 import { GetRequests } from "@/utils/requests";
 import { DataContext } from "@/store/GlobalState";
 import { ACTIONS } from "@/store/Actions";
+import { filterMethod } from "@/utils/utils";
 
 const Categories = () => {
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState<any>([]);
   const [categoryModal, setCategoryModal] = useState(false);
   const { state, dispatch } = useContext(DataContext);
+  const [searchInput, setSearchInput] = useState("");
 
   useEffect(() => {
     const token = localStorage.getItem("token") || "";
@@ -30,6 +32,8 @@ const Categories = () => {
     fetchCategories();
   }, [dispatch, state?.callback]);
 
+  const filteredData = filterMethod(categories, searchInput);
+
   //
 
   return (
@@ -39,7 +43,12 @@ const Categories = () => {
 
         <div className="orders">
           <div className="orders-heading">
-            <input type="text" placeholder="Search category" />
+            <input
+              type="text"
+              placeholder="Search category"
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
+            />
 
             <button onClick={() => setCategoryModal(true)}>
               <i className="bi bi-plus-circle"></i>
@@ -52,14 +61,14 @@ const Categories = () => {
               <CardSkeleton length={12} />
             ) : (
               <>
-                {categories?.map((item: any) => {
+                {filteredData?.map((item: any) => {
                   return <Categorycard {...item} key={item._id} />;
                 })}
               </>
             )}
           </div>
 
-          {!loading && categories?.length === 0 && (
+          {!loading && filteredData?.length === 0 && (
             <div className="d-flex justify-content-center text-center mt-5 w-100">
               No categories available
             </div>
