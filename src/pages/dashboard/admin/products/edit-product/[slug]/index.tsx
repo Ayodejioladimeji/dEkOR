@@ -29,7 +29,7 @@ const EditProduct = () => {
   // Fetch categories
   useEffect(() => {
     const getCategories = async () => {
-      const res = await GetRequest("/category");
+      const res = await GetRequest("/category?pageSize=100");
       if (res?.status === 200) {
         setCategories(res?.data?.data);
       }
@@ -101,10 +101,6 @@ const EditProduct = () => {
   // Handle submitting images
   const handleAddImages = async () => {
     const token = localStorage.getItem("token") || "";
-
-    if (selectedImages?.length <= 2) {
-      return cogoToast.error("Add up to 3 Product images");
-    }
 
     if (selectedImages?.length > 6) {
       return cogoToast.error("Product images cannot be more than 6");

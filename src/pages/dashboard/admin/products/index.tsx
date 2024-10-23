@@ -92,7 +92,7 @@ const Products = () => {
           )}
 
           {/* pagination */}
-          {!loading && products?.length !== 0 && totalCount > PageSize && (
+          {!loading && filteredData?.length !== 0 && totalCount > PageSize && (
             <div className="page-navigation">
               <div className="mt-3">
                 <Paginate

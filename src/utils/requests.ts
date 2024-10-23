@@ -71,10 +71,10 @@ export const DeleteRequest = async (url: string, token?: string) => {
     return res;
   } catch (error: any) {
     cogoToast.error(error?.response?.data?.message);
-    if (error?.response?.status === 401) {
-      localStorage.clear();
-      window.location.href = "/auth/login";
-    }
+    // if (error?.response?.status === 401) {
+    //   localStorage.clear();
+    //   window.location.href = "/auth/login";
+    // }
     return error;
   }
 };
@@ -92,10 +92,10 @@ export const PutRequest = async (url: string, data?: any, token?: string) => {
     return res;
   } catch (error: any) {
     cogoToast.error(error?.response?.data?.message);
-    if (error?.response?.status === 401) {
-      localStorage.clear();
-      window.location.href = "/auth/login";
-    }
+    // if (error?.response?.status === 401) {
+    //   localStorage.clear();
+    //   window.location.href = "/auth/login";
+    // }
     return error;
   }
 };
@@ -113,10 +113,10 @@ export const PatchRequest = async (url: string, data?: any, token?: string) => {
     return res;
   } catch (error: any) {
     cogoToast.error(error?.response?.data?.message);
-    if (error?.response?.status === 401) {
-      localStorage.clear();
-      window.location.href = "/auth/login";
-    }
+    // if (error?.response?.status === 401) {
+    //   localStorage.clear();
+    //   window.location.href = "/auth/login";
+    // }
     return error;
   }
 };

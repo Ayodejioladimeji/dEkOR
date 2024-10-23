@@ -44,19 +44,19 @@ export function screenPixels(size, setState) {
 export const firstTwoWords = (str: string) => {
   const words = str?.split(" ");
 
-  if (!words || words.length < 2) {
+  if (!words || words.length < 4) {
     return str;
   }
 
   // Get the first two words and check their combined length
-  const firstTwo = words.slice(0, 2).join(" ");
+  const firstTwo = words.slice(0, 4).join(" ");
 
-  if (firstTwo.length > 10) {
+  if (firstTwo.length > 15) {
     return firstTwo;
   }
 
   // Otherwise, return the first three words
-  return words.slice(0, 3).join(" ");
+  return words.slice(0, 5).join(" ");
 };
 
 // check if product has empty images

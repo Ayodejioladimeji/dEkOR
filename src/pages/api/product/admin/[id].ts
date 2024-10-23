@@ -110,7 +110,7 @@ const deleteProduct = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     // check if its the admin that is creating the category
     const check = await auth(req, res);
-    if (check?.role === "super-admin")
+    if (check?.role !== "super-admin")
       return res.status(401).json({
         message:
           "Permission Denied!, You're not permitted to perform this action",
