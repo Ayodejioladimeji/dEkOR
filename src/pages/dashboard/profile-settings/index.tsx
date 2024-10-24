@@ -5,7 +5,7 @@ import Topbar from "@/dashboard/components/topbar";
 import cogoToast from "cogo-toast";
 import Loading from "@/common/loading";
 import { GetRequests, PatchRequest, PutRequest } from "@/utils/requests";
-import { singleUpload } from "@/pages/api/utils/singleUpload";
+import { singleUpload } from "@/pages/lib/singleUpload";
 import { DataContext } from "@/store/GlobalState";
 import { ACTIONS } from "@/store/Actions";
 //
