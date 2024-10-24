@@ -42,6 +42,7 @@
         cursor: pointer;
         border: 1px solid $border-color;
         background: $border-color;
+        object-fit: cover;
 
         @media (max-width: 450px) {
           height: 140px;

@@ -183,3 +183,24 @@ textarea {
 .custom-swiper-navigation .swiper-button-prev:hover {
   color: darkgreen;
 }
+
+// bread cumb
+.breadcrumb-item {
+  @media (max-width: 767px) {
+    font-size: 13px;
+  }
+
+  &.active {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    @media (max-width: 460px) {
+      width: 200px;
+    }
+
+    @media (max-width: 350px) {
+      width: 100px;
+    }
+  }
+}
