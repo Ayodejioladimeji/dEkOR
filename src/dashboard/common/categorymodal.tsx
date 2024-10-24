@@ -1,14 +1,10 @@
 import React, { useContext, useState } from "react";
-// import { DataContext } from "@/store/GlobalState";
-// import { ACTIONS } from "@/store/Actions";
-// import { PostRequest } from "@/utils/requests";
-// import cogoToast from "cogo-toast";
 import Loading from "@/common/loading";
 import "react-phone-number-input/style.css";
 import { Modal } from "react-bootstrap";
 import Image from "next/image";
 import cogoToast from "cogo-toast";
-import { singleUpload } from "@/pages/api/utils/singleUpload";
+import { singleUpload } from "@/pages/lib/singleUpload";
 import { PostRequest } from "@/utils/requests";
 import { DataContext } from "@/store/GlobalState";
 import { ACTIONS } from "@/store/Actions";

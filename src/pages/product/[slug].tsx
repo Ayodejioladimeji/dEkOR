@@ -240,12 +240,12 @@ const Product = () => {
 
               <div className="col-12 col-lg-6 content-details">
                 <div className="title">
-                  <h1>{product?.title}</h1>
+                  <h1 className="mb-3">{product?.title}</h1>
                   <Ratings />
                 </div>
                 <p>{product?.description}</p>
 
-                <h3>${formatMoney(Number(product?.sellingPrice))}</h3>
+                <h3>₦{formatMoney(Number(product?.sellingPrice))}</h3>
 
                 <h4>Quantity</h4>
                 <div className="quantities">
