@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import { DataContext } from "@/store/GlobalState";
 import cogoToast from "cogo-toast";
 import Loading from "@/common/loading";
-import { imageUpload } from "@/pages/api/utils/imageUpload";
+import { imageUpload } from "@/pages/lib/imageUpload";
 
 const EditProduct = () => {
   const [loading, setLoading] = useState(true);
